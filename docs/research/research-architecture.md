@@ -322,6 +322,15 @@ the default, and a fixture sets it explicitly. The design system's `data-og-text
 setting itself — it cannot then be forced in a fixture, and the references are rendered with reduced
 motion on (§1.2).
 
+*As built (B-06):* `OldgeTheme(skin, reducedMotion, texture, pressFlash)` in
+`oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/`; `OldgeMotion` returns zero for every
+duration under reduced motion, so a component that reads its durations there cannot forget the
+switch. The platform default is read by an `expect` — Android's animator duration scale, iOS's
+`UIAccessibilityIsReduceMotionEnabled`, the browser's `prefers-reduced-motion`, and `false` on the
+desktop JVM, which has no such setting. Text styles centre the text in its line height without
+trimming (`LineHeightStyle(Center, None)`), the browser's layout of a CSS `line-height`; whether that
+lands the glyphs where Chrome does is B-08's measurement, not an assumption.
+
 ### D8. The grain is a generated tile, not a runtime shader
 
 A tile generated once per (skin, density) into an `ImageBitmap` and drawn through an `ImageShader`

@@ -36,6 +36,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/composeResources/font/` | the seven bundled font files; their licences are in `composeResources/files/` |
 | `scripts/fonts/` | the DejaVu subset and the coverage generator (fontTools, run by hand; the tests hold their output) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Turbulence.kt` | the grain and speckle alpha, a port of `feTurbulence` that matches Chrome (research §1.3) |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/` | `OldgeTheme`, `OldgeSkin`, `OldgeTypography`, `OldgeMotion`, the platform reduced-motion `expect` |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/tokens/OldgeTokens.kt` | the generated token layer (`scripts/generate_tokens.py`; `checkOldgeTokens` in `check`) |
 | `scripts/design-references.mjs` | renders the parity references into `snapshots/design/` (`make references`); `scripts/tokens-css.mjs` compiles the tokens for it |
 | `gradle/libs.versions.toml` | sborka, viddik, the Android SDK levels — and nothing the `wip` catalog carries |
@@ -89,5 +90,9 @@ to publish (B-01).
 * **A test that reads a file outside its module declares it as an input** (`desktopTest` declares
   `reference/design-system/`), or Gradle leaves the test UP-TO-DATE over a changed file and `check`
   stays green — measured in B-05.
+* **`compileIosMainKotlinMetadata` runs without -Werror**, and only it: CMP 1.12.0's graph puts
+  androidx.lifecycle 2.11.0 and JetBrains' lifecycle fork 2.9.6 — one `unique_name` — on the shared
+  iOS metadata, and the KLIB loader warns. Per-target iOS compilations keep -Werror. Remove the block
+  when a CMP release stops producing the pair.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration
   fails with "SDK location not found".

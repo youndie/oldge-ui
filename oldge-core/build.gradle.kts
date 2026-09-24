@@ -127,3 +127,19 @@ tasks
                     task.name.contains("Ktlint", ignoreCase = true)
             )
     }.configureEach { dependsOn(commonKsp) }
+
+// The shared iOS metadata compilation, and only it, without warnings-as-errors. CMP 1.12.0's own graph
+// puts two lifecycle klibs with one `unique_name` on it — JetBrains' lifecycle fork 2.9.6 redirects
+// to androidx.lifecycle 2.11.0 for iOS (`dependencyInsight` on iosArm64CompileKlibraries shows the
+// redirect) — and the KLIB loader's warning about that is not something this module can fix. The
+// per-target iOS compilations keep -Werror, so a warning in this library's own code still fails.
+// viddik met the same pair and made the same cut (its compileIosMainKotlinMetadata).
+tasks
+    .matching {
+        it.name in
+            setOf("compileIosMainKotlinMetadata", "compileAppleMainKotlinMetadata", "compileNativeMainKotlinMetadata")
+    }.configureEach {
+        (this as org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>).compilerOptions.allWarningsAsErrors.set(
+            false,
+        )
+    }
