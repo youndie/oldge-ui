@@ -1,0 +1,15 @@
+<!-- @dsCard group="Формы" height=300 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>TextField — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.TextField, { label: 'Имя профиля', defaultValue: 'Павел', help: 'Видно только вам' }),
+    h(B.TextField, { label: 'Поиск', icon: 'search', placeholder: 'Файлы, папки, теги' }),
+    h(B.TextField, { label: 'Эл. почта', type: 'email', defaultValue: 'pavel@', error: 'Адрес неполный: нет домена' })));
+</script>
+</body>
+</html>

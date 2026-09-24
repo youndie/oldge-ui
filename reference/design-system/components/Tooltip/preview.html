@@ -1,0 +1,15 @@
+<!-- @dsCard group="Обратная связь" height=110 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Tooltip — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo', style: { paddingTop: 48, paddingLeft: 90 } },
+    h('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' } },
+      h(B.Tooltip, { label: 'Синхронизировать сейчас', defaultOpen: true }, h(B.OrbButton, { icon: 'refresh', label: 'Синхронизировать' })),
+      h(B.Tooltip, { label: 'Справка' }, h(B.OrbButton, { icon: 'help', label: 'Справка', tone: 'chrome' })))));
+</script>
+</body>
+</html>

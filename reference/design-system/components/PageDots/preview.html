@@ -1,0 +1,14 @@
+<!-- @dsCard group="Навигация" height=90 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>PageDots — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function Demo() { var i = React.useState(2);
+    return h('div', { className: 'og-demo' }, h(B.PageDots, { count: 5, index: i[0], onChange: i[1] })); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

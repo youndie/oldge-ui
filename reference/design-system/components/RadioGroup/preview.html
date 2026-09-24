@@ -1,0 +1,14 @@
+<!-- @dsCard group="Формы" height=180 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>RadioGroup — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.RadioGroup, { label: 'Качество загрузки', defaultValue: 'hi', options: [
+      { value: 'orig', label: 'Оригинал' }, { value: 'hi', label: 'Высокое' }, { value: 'save', label: 'Экономия трафика' }] })));
+</script>
+</body>
+</html>

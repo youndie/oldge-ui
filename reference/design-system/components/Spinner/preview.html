@@ -1,0 +1,13 @@
+<!-- @dsCard group="Обратная связь" height=130 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Spinner — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h('div', { style: { display: 'flex', gap: 24, alignItems: 'flex-end' } }, h(B.Spinner, { size: 'sm' }), h(B.Spinner, null), h(B.Spinner, { size: 'lg', label: 'Загружаю…' }))));
+</script>
+</body>
+</html>

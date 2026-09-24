@@ -1,0 +1,35 @@
+<!-- @dsCard group="Стресс-экраны" height=720 subtitle="Край: 320 dp и длинные немецкие строки" page -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>EdgeNarrow — preview</title>
+<style>
+.phone { width: 390px; height: 760px; margin: 16px; display: flex; flex-direction: column; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-window); position: relative;
+    background: radial-gradient(120% 60% at 100% 100%, var(--glow), transparent 60%), linear-gradient(var(--body-hi), var(--ground) 70%); }
+  .scroll { flex: 1; min-height: 0; overflow: auto; padding: 0 var(--space-4) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
+  .scroll > * { flex-shrink: 0; }
+  .display { margin: var(--space-2) 0 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px var(--space-2); }
+</style></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function App() {
+    var s = React.useState('auto'), nav = React.useState('set');
+    return h('div', { className: 'phone og-textured', lang: 'de', style: { width: 320, height: 680 } },
+      h(B.WindowBar, { onBack: function () {}, title: 'Datenschutzeinstellungen', subtitle: 'Konto und Synchronisierung', actions: [{ icon: 'help', label: 'Hilfe' }] }),
+      h('div', { className: 'scroll', style: { paddingTop: 12 } },
+        h(B.RadioGroup, { label: 'Modus', value: s[0], onChange: s[1], options: [{ value: 'auto', label: 'Automatisch' }, { value: 'push', label: 'Nur Benachrichtigungen' }, { value: 'off', label: 'Aus' }] }),
+        h(B.List, null,
+          h(B.ListItem, { icon: 'user', title: 'Personalisierte Werbung anzeigen', trailing: h(B.Switch, { label: h('span', { className: 'og-sr' }, 'Werbung'), defaultChecked: true }) }),
+          h(B.ListItem, { icon: 'cloud', title: 'Standortverlauf', value: 'Nur während der Nutzung', chevron: true, onPress: function () {} })),
+        h(B.ChipGroup, { label: 'Themen' }, h(B.Chip, { kind: 'filter', selected: true }, 'Sicherheitsbenachrichtigungen'), h(B.Chip, { kind: 'filter' }, 'Systemaktualisierungen')),
+        h(B.Banner, { boxed: true, icon: 'warn', title: 'Speicherplatz fast voll', actions: [h(B.Button, { key: 'a', size: 'sm' }, 'Später erinnern'), h(B.Button, { key: 'b', size: 'sm' }, 'Speicher freigeben')] }, 'Neue Fotos werden nicht mehr gesichert.'),
+        h('div', { className: 'og-actions' }, h(B.Button, null, 'Änderungen verwerfen'), h(B.Button, { variant: 'primary' }, 'Speichern und fortfahren'))),
+      h(B.BottomNav, { value: nav[0], onChange: nav[1], items: [
+        { id: 'home', icon: 'home', label: 'Startseite' }, { id: 'bell', icon: 'bell', label: 'Benachrichtigungen' }, { id: 'set', icon: 'gear', label: 'Einstellungen' }, { id: 'me', icon: 'user', label: 'Profil' }] }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!-- @dsCard group="Контейнеры" height=340 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Accordion — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.Accordion, { title: 'Приложения', icon: 'grid' },
+      h(B.List, { bare: true },
+        h(B.ListItem, { dense: true, icon: 'doc', title: 'Документы', onPress: function () {} }),
+        h(B.ListItem, { dense: true, icon: 'image', title: 'Фотоальбом', onPress: function () {} }),
+        h(B.ListItem, { dense: true, icon: 'note', title: 'Музыка', onPress: function () {} }))),
+    h(B.Accordion, { title: 'Инструменты', icon: 'gear', defaultOpen: false }, 'Скрыто'),
+    h(B.Accordion, { title: 'Справка', icon: 'help', defaultOpen: false }, 'Скрыто')));
+</script>
+</body>
+</html>

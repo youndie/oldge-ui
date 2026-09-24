@@ -1,0 +1,14 @@
+<!-- @dsCard group="Обратная связь" height=100 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Avatar — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' } }, h(B.Avatar, { size: 'sm', name: 'Анна Ким' }), h(B.Avatar, { name: 'Павел Вотяков', status: 'online' }), h(B.Avatar, { name: 'Иван Ли', status: 'busy' }),
+      h(B.Avatar, { size: 'lg', name: 'Мария Орлова', status: 'away' }), h(B.Avatar, { icon: 'user' }))));
+</script>
+</body>
+</html>

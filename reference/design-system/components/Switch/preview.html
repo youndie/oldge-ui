@@ -1,0 +1,15 @@
+<!-- @dsCard group="Формы" height=170 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Switch — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.Switch, { label: 'Автосинхронизация', hint: 'Только при зарядке', defaultChecked: true }),
+    h(B.Switch, { label: 'Тёмный скин ночью' }),
+    h(B.Switch, { label: 'Недоступно', disabled: true })));
+</script>
+</body>
+</html>

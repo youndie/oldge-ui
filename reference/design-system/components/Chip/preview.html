@@ -1,0 +1,22 @@
+<!-- @dsCard group="Действия" height=150 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Chip — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function Demo() {
+    var f = React.useState({ doc: true, img: false, mus: false }), t = React.useState(['Работа', 'Отчёты', '2026']);
+    function tog(k) { var n = Object.assign({}, f[0]); n[k] = !n[k]; f[1](n); }
+    return h('div', { className: 'og-demo' },
+      h(B.ChipGroup, { label: 'Фильтр' },
+        h(B.Chip, { kind: 'filter', selected: f[0].doc, onPress: function () { tog('doc'); } }, 'Документы'),
+        h(B.Chip, { kind: 'filter', selected: f[0].img, onPress: function () { tog('img'); } }, 'Фото'),
+        h(B.Chip, { kind: 'filter', selected: f[0].mus, onPress: function () { tog('mus'); } }, 'Музыка'),
+        h(B.Chip, { icon: 'plus' }, 'Новый фильтр')),
+      h(B.ChipGroup, { label: 'Теги' }, t[0].map(function (x) { return h(B.Chip, { key: x, kind: 'input', onRemove: function () { t[1](t[0].filter(function (y) { return y !== x; })); } }, x); }))); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!-- @dsCard group="Обратная связь" height=290 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>ProgressBar — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.ProgressBar, { label: 'Загрузка · 18 из 40 файлов', value: 0.45, detail: '2,4 МБ/с · осталось 1:12' }),
+    h(B.ProgressBar, { label: 'Проверка', value: 1, status: 'done', detail: 'Готово — ошибок нет' }),
+    h(B.ProgressBar, { label: 'Отправка', value: 0.31, status: 'error', detail: 'Ошибка: нет соединения' }),
+    h(B.ProgressBar, { label: 'Подключение…' })));
+</script>
+</body>
+</html>

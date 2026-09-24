@@ -1,0 +1,15 @@
+<!-- @dsCard group="Навигация" height=330 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Menu — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo', style: { minHeight: 300 } },
+    h(B.Menu, { defaultOpen: true, label: 'Действия с файлом', trigger: h(B.Button, { icon: 'menu' }, 'Файл'), items: [
+      { id: 'open', label: 'Открыть', icon: 'doc', hint: '⌘O' }, { id: 'share', label: 'Отправить…', icon: 'upload' },
+      { id: 'ren', label: 'Переименовать', icon: 'edit' }, { divider: true }, { id: 'del', label: 'Удалить', icon: 'trash', danger: true }] })));
+</script>
+</body>
+</html>

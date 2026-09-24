@@ -1,0 +1,15 @@
+<!-- @dsCard group="Формы" height=170 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Checkbox — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.Checkbox, { label: 'Запомнить это устройство', defaultChecked: true }),
+    h(B.Checkbox, { label: 'Присылать сводку по почте' }),
+    h(B.Checkbox, { label: 'Шифрование (управляется организацией)', disabled: true, defaultChecked: true })));
+</script>
+</body>
+</html>

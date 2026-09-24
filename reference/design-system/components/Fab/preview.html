@@ -1,0 +1,17 @@
+<!-- @dsCard group="Действия" height=110 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Fab — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function Demo() { var o = React.useState(false);
+    return h('div', { className: 'og-demo' }, h('div', { style: { display: 'flex', gap: 12, alignItems: 'center' } },
+      h(B.Fab, { icon: 'plus', ariaLabel: 'Создать', expanded: o[0], onClick: function () { o[1](!o[0]); } }),
+      h(B.Fab, { icon: 'edit', label: 'Написать' }),
+      h(B.Fab, { icon: 'refresh', tone: 'chrome', ariaLabel: 'Обновить' }))); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

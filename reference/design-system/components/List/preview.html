@@ -1,0 +1,18 @@
+<!-- @dsCard group="Контейнеры" height=300 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>List — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function Demo() { var s = React.useState('b'); var sw = h(B.Switch, { label: h('span', { className: 'og-sr' }, 'Автосинхронизация'), defaultChecked: true });
+    return h('div', { className: 'og-demo' }, h(B.List, { label: 'Аккаунт' },
+      h(B.ListItem, { icon: 'user', title: 'Профиль', subtitle: 'Павел · pavel@example.com', chevron: true, onPress: function () {} }),
+      h(B.ListItem, { icon: 'cloud', title: 'Синхронизация', subtitle: 'Последняя — 5 минут назад', trailing: sw }),
+      h(B.ListItem, { icon: 'lock', title: 'Пароль и вход', value: 'Изменить', chevron: true, onPress: function () {} }),
+      h(B.ListItem, { icon: 'folder', title: 'Резервная копия', subtitle: 'Выбрано', selected: s[0] === 'b', onPress: function () { s[1]('b'); } }))); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

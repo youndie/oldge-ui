@@ -1,0 +1,14 @@
+<!-- @dsCard group="Обратная связь" height=560 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>EmptyState — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.EmptyState, { title: 'Всё прочитано', icon: 'mail' }, 'Новые письма появятся здесь.'),
+    h(B.EmptyState, { tone: 'error', title: 'Не удалось загрузить', action: h(B.Button, { icon: 'refresh' }, 'Повторить') }, 'Сервер не ответил за 30 секунд.')));
+</script>
+</body>
+</html>

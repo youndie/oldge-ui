@@ -1,0 +1,15 @@
+<!-- @dsCard group="Обратная связь" height=200 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Meter — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.Meter, { label: 'Хранилище', value: 0.37, valueText: '23,4 / 64 ГБ' }),
+    h(B.Meter, { label: 'Сигнал', value: 0.72, valueText: '−61 dBm', segments: 12 }),
+    h(B.Meter, { label: 'Нагрузка', value: 0.94, valueText: '94%' })));
+</script>
+</body>
+</html>

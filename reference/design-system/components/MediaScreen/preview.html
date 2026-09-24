@@ -1,0 +1,46 @@
+<!-- @dsCard group="Стресс-экраны" height=800 subtitle="Медиа на весь экран: без рамы, наложенный бар, точки страниц, скрытие по тапу" page -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>MediaScreen — preview</title>
+<style>
+.phone { width: 390px; height: 760px; margin: 16px; display: flex; flex-direction: column; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-window); position: relative;
+    background: radial-gradient(120% 60% at 100% 100%, var(--glow), transparent 60%), linear-gradient(var(--body-hi), var(--ground) 70%); }
+  .scroll { flex: 1; min-height: 0; overflow: auto; padding: 0 var(--space-4) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
+  .scroll > * { flex-shrink: 0; }
+  .display { margin: var(--space-2) 0 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px var(--space-2); }
+  .media { position: absolute; inset: 0; display: grid; place-items: center; transition: background var(--og-t3) var(--og-out); }
+  .media__glyph { color: rgba(255,255,255,0.28); animation: og-pop-soft var(--og-t3) var(--og-spring); }
+  .media__top { position: absolute; top: 0; left: 0; right: 0; z-index: 2; animation: og-fade var(--og-t2) var(--og-out); }
+  .media__bottom { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 48px 16px 20px; background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.75)); color: #fff; display: flex; flex-direction: column; gap: 4px; animation: og-fade var(--og-t2) var(--og-out); }
+  .media__cap { margin: 0; font: 700 1.0625rem/1.375rem var(--font-title); text-shadow: 0 1px 2px #000; }
+  .media__cap span { display: block; font: 400 0.75rem/1rem var(--font-ui); opacity: .85; }
+  .media__acts { display: flex; justify-content: center; gap: 12px; }
+</style></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  var SHOTS = [['Озеро на рассвете', 'var(--bezel-hi)'], ['Серпантин', 'var(--accent-lo)'], ['Старый город', 'var(--pill-lo)'], ['Ночной порт', 'var(--bezel)'], ['Пляж', 'var(--chrome-lo)']];
+  function App() {
+    var i = React.useState(1), liked = React.useState(false), ui = React.useState(true), x0 = React.useRef(null);
+    var s = SHOTS[i[0]];
+    return h('div', { className: 'phone', style: { background: '#000' } },
+      h('div', { className: 'media', style: { background: 'radial-gradient(120% 80% at 30% 20%, ' + s[1] + ', #000 75%)' },
+        onClick: function () { ui[1](!ui[0]); },
+        onPointerDown: function (e) { x0.current = e.clientX; },
+        onPointerUp: function (e) { if (x0.current === null) return; var dx = e.clientX - x0.current; x0.current = null; if (Math.abs(dx) > 40) { i[1](Math.max(0, Math.min(SHOTS.length - 1, i[0] + (dx < 0 ? 1 : -1)))); } } },
+        h(B.Icon, { key: i[0], name: 'image', size: 96, className: 'media__glyph' })),
+      ui[0] && h('div', { className: 'media__top' }, h(B.WindowBar, { overlay: true, onBack: function () {}, title: 'Отпуск 2006', subtitle: (i[0] + 1) + ' из 148', actions: [{ icon: 'more', label: 'Ещё' }] })),
+      ui[0] && h('div', { className: 'media__bottom' },
+        h('p', { className: 'media__cap' }, s[0], h('span', null, 'Черногория · 14 июля 2006')),
+        h(B.PageDots, { count: SHOTS.length, index: i[0], onChange: i[1], onDark: true }),
+        h('div', { className: 'media__acts' },
+          h(B.OrbButton, { tone: liked[0] ? 'accent' : 'bezel', icon: 'heart', label: liked[0] ? 'Убрать из избранного' : 'В избранное', 'aria-pressed': liked[0] ? 'true' : 'false', onClick: function (e) { e.stopPropagation(); liked[1](!liked[0]); } }),
+          h(B.OrbButton, { icon: 'share', label: 'Поделиться' }),
+          h(B.OrbButton, { icon: 'download', label: 'Скачать' }))));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

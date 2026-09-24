@@ -1,0 +1,41 @@
+<!-- @dsCard group="Стресс-экраны" height=800 subtitle="Вход: пароль с показом, ошибка, код из СМС, альтернативные способы" page -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>AuthScreen — preview</title>
+<style>
+.phone { width: 390px; height: 760px; margin: 16px; display: flex; flex-direction: column; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-window); position: relative;
+    background: radial-gradient(120% 60% at 100% 100%, var(--glow), transparent 60%), linear-gradient(var(--body-hi), var(--ground) 70%); }
+  .scroll { flex: 1; min-height: 0; overflow: auto; padding: 0 var(--space-4) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
+  .scroll > * { flex-shrink: 0; }
+  .display { margin: var(--space-2) 0 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px var(--space-2); }
+</style></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function App() {
+    var mode = React.useState('pass'), code = React.useState('4829');
+    return h('div', { className: 'phone og-textured' },
+      h(B.WindowBar, { icon: 'key', title: 'Вход', actions: [{ icon: 'help', label: 'Справка' }] }),
+      h('div', { className: 'scroll', style: { paddingTop: 16 } },
+        h('h2', { className: 'display', style: { margin: 0 } }, 'С возвращением'),
+        h('p', { className: 'og-muted', style: { margin: 0 } }, 'Войдите, чтобы продолжить синхронизацию.'),
+        h(B.Segmented, { label: 'Способ входа', value: mode[0], onChange: mode[1], options: [{ id: 'pass', label: 'Пароль' }, { id: 'code', label: 'Код' }] }),
+        mode[0] === 'pass' ? h(React.Fragment, null,
+          h(B.TextField, { label: 'Эл. почта', type: 'email', defaultValue: 'pavel@example.com', autoComplete: 'email' }),
+          h(B.TextField, { label: 'Пароль', reveal: true, defaultValue: 'hunter22', error: 'Неверный пароль. Осталось 2 попытки', autoComplete: 'current-password' }),
+          h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' } }, h(B.Checkbox, { label: 'Запомнить', defaultChecked: true }), h(B.Button, { variant: 'plain', size: 'sm' }, 'Забыли пароль?')))
+        : h(React.Fragment, null,
+          h(B.CodeInput, { label: 'Код из СМС', value: code[0], onChange: code[1], help: 'Отправили на +382 •• ••• 41' }),
+          h('div', { style: { display: 'flex', alignItems: 'center', gap: 8 } }, h(B.Readout, { size: 'sm', label: 'Повтор через', value: '0:42' }), h(B.Button, { variant: 'plain', size: 'sm', disabled: true }, 'Отправить ещё раз'))),
+        h(B.Button, { variant: 'primary', size: 'lg', block: true }, 'Войти'),
+        h(B.Divider, { label: 'или' }),
+        h(B.Button, { block: true, icon: 'key' }, 'Войти по ключу доступа'),
+        h(B.Button, { block: true, icon: 'mail' }, 'Прислать ссылку на почту'),
+        h('p', { className: 'og-muted', style: { margin: '4px 0 0', textAlign: 'center', fontSize: '0.8125rem' } }, 'Нет аккаунта? ', h(B.Button, { variant: 'plain', size: 'sm' }, 'Создать'))));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

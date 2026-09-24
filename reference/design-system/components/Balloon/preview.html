@@ -1,0 +1,14 @@
+<!-- @dsCard group="Обратная связь" height=210 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Balloon — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.Balloon, { icon: 'ok', title: 'Копия создана', onClose: function () {} }, 'Сохранено 1 204 файла. Следующая копия — завтра в 03:00.'),
+    h(B.Balloon, { icon: 'info', tail: 'top', title: 'Доступен новый скин' }, 'Нажмите, чтобы применить Media.')));
+</script>
+</body>
+</html>

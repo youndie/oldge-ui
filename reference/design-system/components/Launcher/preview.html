@@ -1,0 +1,43 @@
+<!-- @dsCard group="Экраны" height=800 subtitle="Главный экран в духе пусковых оболочек середины 2000-х" page -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Launcher — preview</title>
+<style>
+.phone { width: 390px; height: 760px; margin: 16px; display: flex; flex-direction: column; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-window); position: relative;
+    background: radial-gradient(120% 60% at 100% 100%, var(--glow), transparent 60%), linear-gradient(var(--body-hi), var(--ground) 70%); }
+  .scroll { flex: 1; min-height: 0; overflow: auto; padding: 0 var(--space-4) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
+  .scroll > * { flex-shrink: 0; }
+  .display { margin: var(--space-2) 0 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px var(--space-2); }
+</style></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function App() {
+    var cat = React.useState('doc'), nav = React.useState('home');
+    return h('div', { className: 'phone og-textured' },
+      h(B.WindowBar, { icon: 'grid', title: 'Центр задач', center: h(B.Badge, { tone: 'neutral' }, 'Облако'), actions: [{ icon: 'help', label: 'Справка' }, { icon: 'minus', label: 'Свернуть' }] }),
+      h(B.CategoryTabs, { value: cat[0], onChange: cat[1], items: [
+        { id: 'fav', icon: 'star', label: 'Избранное' }, { id: 'doc', icon: 'doc', label: 'Документы' }, { id: 'music', icon: 'note', label: 'Музыка' },
+        { id: 'photo', icon: 'image', label: 'Фото' }, { id: 'video', icon: 'film', label: 'Видео' }, { id: 'more', icon: 'plus', label: 'Ещё' }] }),
+      h('div', { className: 'scroll' },
+        h('div', { className: 'grid' },
+          h(B.ActionTile, { icon: 'doc', title: 'Новый документ', description: 'Пустой или из шаблона' }),
+          h(B.ActionTile, { icon: 'upload', tone: 'accent', title: 'Загрузить файлы' }),
+          h(B.ActionTile, { icon: 'download', title: 'Загрузки', description: '12 новых' }),
+          h(B.ActionTile, { icon: 'refresh', tone: 'bezel', title: 'Обновить' })),
+        h(B.Accordion, { title: 'Недавние', icon: 'star' },
+          h(B.List, { bare: true },
+            h(B.ListItem, { dense: true, icon: 'doc', title: 'Отчёт за квартал', value: '09:14', onPress: function () {} }),
+            h(B.ListItem, { dense: true, icon: 'image', title: 'Скан паспорта.png', value: 'вчера', onPress: function () {} }),
+            h(B.ListItem, { dense: true, icon: 'note', title: 'Голосовая заметка', value: 'пн', onPress: function () {} }))),
+        h(B.Accordion, { title: 'Инструменты', icon: 'gear', defaultOpen: false }, null),
+        h(B.Meter, { label: 'Хранилище', value: 0.37, valueText: '23,4 / 64 ГБ' })),
+      h(B.BottomNav, { value: nav[0], onChange: nav[1], items: [
+        { id: 'home', icon: 'home', label: 'Главная' }, { id: 'search', icon: 'search', label: 'Поиск' }, { id: 'bell', icon: 'bell', label: 'События' }, { id: 'me', icon: 'user', label: 'Профиль' }] }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

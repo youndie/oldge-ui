@@ -1,0 +1,41 @@
+<!-- @dsCard group="Стресс-экраны" height=800 subtitle="Чат: пузыри, группировка, статусы, «печатает», поле ввода в раме" page -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>ChatScreen — preview</title>
+<style>
+.phone { width: 390px; height: 760px; margin: 16px; display: flex; flex-direction: column; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-window); position: relative;
+    background: radial-gradient(120% 60% at 100% 100%, var(--glow), transparent 60%), linear-gradient(var(--body-hi), var(--ground) 70%); }
+  .scroll { flex: 1; min-height: 0; overflow: auto; padding: 0 var(--space-4) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
+  .scroll > * { flex-shrink: 0; }
+  .display { margin: var(--space-2) 0 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px var(--space-2); }
+  .og-composer--dock { border-radius: 0 0 var(--radius-xl) var(--radius-xl); }
+</style></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function App() {
+    var msgs = React.useState([
+      { from: 'them', t: 'Привет! Скинула фото из поездки', time: '09:12' },
+      { from: 'them', t: 'Там 148 штук, но лучшие я отметила звёздочкой. Посмотри вечером, если будет время, и скажи какие печатать в альбом', time: '09:12', tail: true },
+      { from: 'me', t: 'Уже смотрю. Горы — огонь', time: '09:14', status: 'read' },
+      { from: 'me', t: 'Можно я возьму пару на обои?', time: '09:14', status: 'read' }]);
+    function send(t) { msgs[1](msgs[0].concat([{ from: 'me', t: t, time: '09:20', status: 'sent' }])); }
+    var list = msgs[0].map(function (m, i) {
+      var next = msgs[0][i + 1], last = !next || next.from !== m.from;
+      return h(B.ChatBubble, { key: i, from: m.from, time: last ? m.time : null, status: last ? m.status : null, tail: last,
+        avatar: m.from === 'them' ? (last ? h(B.Avatar, { size: 'sm', name: 'Анна Ким' }) : h('span', { style: { display: 'inline-block', width: 32 } })) : null }, m.t);
+    });
+    return h('div', { className: 'phone og-textured' },
+      h(B.WindowBar, { onBack: function () {}, lead: h(B.Avatar, { size: 'sm', name: 'Анна Ким', status: 'online' }), title: 'Анна Ким', subtitle: 'в сети', actions: [{ icon: 'more', label: 'Ещё' }] }),
+      h('div', { className: 'scroll', style: { gap: 6, paddingTop: 8, justifyContent: 'flex-end' } },
+        h(B.Divider, { label: 'Сегодня' }),
+        list,
+        h(B.TypingIndicator, { name: 'Анна', avatar: h(B.Avatar, { size: 'sm', name: 'Анна Ким' }) })),
+      h(B.Composer, { onSend: send, className: 'og-composer--dock' }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "v": 3,
+  "assetGroups": {},
+  "blobs": {},
+  "createdOnFiles": {
+    "at": "2026-09-24T20:00:29Z",
+    "v": 1
+  },
+  "docs": {
+    "sections": []
+  },
+  "groups": [],
+  "lastChange": {
+    "by": "Pavel",
+    "at": "2026-09-24T21:57:36Z",
+    "via": "Cowork",
+    "note": "6 стресс-экранов (вход, длинный список, чат, медиа, 320 dp + немецкий, шрифт 200%); +9 компонентов; текст в rem; исправления по находкам"
+  },
+  "layout": "files",
+  "libraries": [
+    {
+      "name": "react",
+      "version": "18"
+    },
+    {
+      "name": "react-dom",
+      "version": "18"
+    }
+  ],
+  "namespace": "OldgeUI",
+  "sections": {},
+  "title": "oldge-ui"
+}

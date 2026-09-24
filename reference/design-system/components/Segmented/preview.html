@@ -1,0 +1,14 @@
+<!-- @dsCard group="Действия" height=80 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Segmented — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function Demo() { var s = React.useState('week');
+    return h('div', { className: 'og-demo' }, h(B.Segmented, { label: 'Период', value: s[0], onChange: s[1], options: [{ id: 'day', label: 'День' }, { id: 'week', label: 'Неделя' }, { id: 'month', label: 'Месяц' }] })); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

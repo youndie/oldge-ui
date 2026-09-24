@@ -1,0 +1,47 @@
+<!-- @dsCard group="Стресс-экраны" height=800 subtitle="Длинный список: липкие секции, свайп, pull-to-refresh, подгрузка, пустое состояние и ошибка" page -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>InboxScreen — preview</title>
+<style>
+.phone { width: 390px; height: 760px; margin: 16px; display: flex; flex-direction: column; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-window); position: relative;
+    background: radial-gradient(120% 60% at 100% 100%, var(--glow), transparent 60%), linear-gradient(var(--body-hi), var(--ground) 70%); }
+  .scroll { flex: 1; min-height: 0; overflow: auto; padding: 0 var(--space-4) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
+  .scroll > * { flex-shrink: 0; }
+  .display { margin: var(--space-2) 0 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px var(--space-2); }
+</style></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  var PEOPLE = [['Анна Ким','Фото с поездки: 148 штук, выбрала лучшие','09:14'],['Банк','Выписка за сентябрь готова','08:02'],['Иван Ли','Созвон переносим на четверг, ок?','07:40'],
+    ['Сервис','Код входа: 482 910','вчера'],['Мария Орлова','Черновик договора во вложении','вчера'],['Лента','3 новых комментария','вчера'],
+    ['Павел','Напоминание: резервная копия','пн'],['Магазин','Заказ передан в доставку','пн'],['Анна Ким','Ну что, едем?','вс']];
+  function row(p, i, open) {
+    return h(B.SwipeRow, { key: i, defaultOpen: open, actions: [{ icon: 'folder', label: 'Архив' }, { icon: 'trash', label: 'Удалить', tone: 'danger' }] },
+      h(B.ListItem, { icon: h(B.Avatar, { size: 'sm', name: p[0] }), title: p[0], subtitle: p[1], value: p[2], onPress: function () {} }));
+  }
+  function App() {
+    var f = React.useState('all'), nav = React.useState('mail'), busy = React.useState(true);
+    React.useEffect(function () { if (!busy[0]) return; var t = setTimeout(function () { busy[1](false); }, 1600); return function () { clearTimeout(t); }; }, [busy[0]]);
+    var body = f[0] === 'unread' ? h(B.EmptyState, { title: 'Всё прочитано', icon: 'mail' }, 'Новые письма появятся здесь.')
+      : f[0] === 'arch' ? h(B.EmptyState, { tone: 'error', title: 'Архив не загрузился', action: h(B.Button, { icon: 'refresh' }, 'Повторить') }, 'Сервер не ответил за 30 секунд. Проверьте соединение.')
+      : h(B.PullRefresh, { refreshing: busy[0], onRefresh: function () { busy[1](true); } },
+          h(B.ListSection, { title: 'Сегодня', meta: '3 новых' }, h(B.List, null, PEOPLE.slice(0, 3).map(function (p, i) { return row(p, i, i === 1); }))),
+          h(B.ListSection, { title: 'Вчера' }, h(B.List, null, PEOPLE.slice(3, 6).map(function (p, i) { return row(p, i); }))),
+          h(B.ListSection, { title: 'Ранее' }, h(B.List, null, PEOPLE.slice(6).map(function (p, i) { return row(p, i); }))),
+          h('div', { style: { display: 'flex', justifyContent: 'center', padding: 16 } }, h(B.Spinner, { size: 'sm', label: 'Загружаю ещё…' })));
+    return h('div', { className: 'phone og-textured' },
+      h(B.WindowBar, { icon: 'mail', title: 'Входящие', subtitle: '128 писем', actions: [{ icon: 'search', label: 'Поиск' }, { icon: 'more', label: 'Ещё' }] }),
+      h('div', { style: { padding: '12px 16px 8px' } }, h(B.ChipGroup, { scroll: true, label: 'Фильтр' },
+        h(B.Chip, { kind: 'filter', selected: f[0] === 'all', onPress: function () { f[1]('all'); } }, 'Все'),
+        h(B.Chip, { kind: 'filter', selected: f[0] === 'unread', onPress: function () { f[1]('unread'); } }, 'Непрочитанные'),
+        h(B.Chip, { kind: 'filter', selected: f[0] === 'arch', onPress: function () { f[1]('arch'); } }, 'Архив'))),
+      h('div', { style: { flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', padding: '0 16px' } }, body),
+      h(B.BottomNav, { value: nav[0], onChange: nav[1], items: [
+        { id: 'mail', icon: 'mail', label: 'Почта' }, { id: 'search', icon: 'search', label: 'Поиск' }, { id: 'bell', icon: 'bell', label: 'События' }, { id: 'me', icon: 'user', label: 'Профиль' }] }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

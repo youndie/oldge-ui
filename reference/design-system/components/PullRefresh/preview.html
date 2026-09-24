@@ -1,0 +1,20 @@
+<!-- @dsCard group="Обратная связь" height=260 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>PullRefresh — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function Demo() { var r = React.useState(true);
+    React.useEffect(function () { if (!r[0]) return; var t = setTimeout(function () { r[1](false); }, 1800); return function () { clearTimeout(t); }; }, [r[0]]);
+    return h('div', { className: 'og-demo' }, h('div', { className: 'og-panel', style: { height: 220 } },
+      h(B.PullRefresh, { refreshing: r[0], onRefresh: function () { r[1](true); }, height: 164 },
+        h(B.List, { bare: true },
+          h(B.ListItem, { icon: 'refresh', title: 'Потяните вниз', subtitle: 'Диск раскрутится и обновит список' }),
+          h(B.ListItem, { icon: 'doc', title: 'Отчёт за квартал', value: '09:14' }),
+          h(B.ListItem, { icon: 'image', title: 'Скан.png', value: 'вчера' }))))); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

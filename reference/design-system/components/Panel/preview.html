@@ -1,0 +1,14 @@
+<!-- @dsCard group="Контейнеры" height=240 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Panel — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.Panel, { title: 'Хранилище' }, h('div', null, 'Использовано 23,4 ГБ из 64 ГБ.'), h(B.Meter, { label: 'Диск', value: 0.37, valueText: '37%' })),
+    h(B.Panel, { sunken: true }, h('div', { className: 'og-muted' }, 'Утопленная панель — для вывода и журналов.'))));
+</script>
+</body>
+</html>

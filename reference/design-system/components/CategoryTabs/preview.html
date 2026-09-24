@@ -1,0 +1,16 @@
+<!-- @dsCard group="Навигация" height=130 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>CategoryTabs — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function Demo() { var s = React.useState('doc');
+    return h('div', { className: 'og-demo', style: { padding: 0 } }, h(B.CategoryTabs, { value: s[0], onChange: s[1], items: [
+      { id: 'fav', icon: 'star', label: 'Избранное' }, { id: 'doc', icon: 'doc', label: 'Документы' }, { id: 'music', icon: 'note', label: 'Музыка' },
+      { id: 'photo', icon: 'image', label: 'Фото' }, { id: 'video', icon: 'film', label: 'Видео' }, { id: 'more', icon: 'plus', label: 'Ещё' }] })); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

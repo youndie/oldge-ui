@@ -1,0 +1,18 @@
+<!-- @dsCard group="Контейнеры" height=330 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>BottomSheet — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function Demo() { var o = React.useState(false);
+    return h('div', { className: 'og-demo' },
+      h(B.BottomSheet, { inline: true, title: 'Отправить файл', onClose: function () {} },
+        h(B.List, { bare: true }, h(B.ListItem, { dense: true, icon: 'user', title: 'Контакту', onPress: function () {} }), h(B.ListItem, { dense: true, icon: 'cloud', title: 'Ссылкой', onPress: function () {} }))),
+      h(B.Button, { onClick: function () { o[1](true); } }, 'Открыть шторку поверх'),
+      o[0] && h(B.BottomSheet, { title: 'Шторка', onClose: function () { o[1](false); } }, 'Въезжает снизу с пружиной; тап по затемнению закрывает.')); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

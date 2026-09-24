@@ -1,0 +1,17 @@
+<!-- @dsCard group="Навигация" height=150 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Stepper — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  function Demo() { var s = React.useState(1);
+    return h('div', { className: 'og-demo' }, h(B.Stepper, { current: s[0], steps: ['Файлы', 'Настройки', 'Проверка', 'Готово'] }),
+      h('div', { style: { display: 'flex', gap: 8, justifyContent: 'flex-end' } },
+        h(B.Button, { size: 'sm', disabled: s[0] === 0, onClick: function () { s[1](s[0] - 1); } }, 'Назад'),
+        h(B.Button, { size: 'sm', variant: 'primary', disabled: s[0] === 3, onClick: function () { s[1](s[0] + 1); } }, 'Далее'))); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

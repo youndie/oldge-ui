@@ -1,0 +1,14 @@
+<!-- @dsCard group="Контейнеры" height=120 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>ListItem — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' }, h(B.List, null,
+    h(B.ListItem, { icon: 'bell', title: 'Уведомления', value: 'Вкл.', chevron: true, onPress: function () {} }),
+    h(B.ListItem, { icon: 'download', title: 'Загрузки', trailing: h(B.Badge, { tone: 'accent', count: true }, '12') }))));
+</script>
+</body>
+</html>

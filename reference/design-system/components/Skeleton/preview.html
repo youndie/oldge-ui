@@ -1,0 +1,15 @@
+<!-- @dsCard group="Обратная связь" height=420 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Skeleton — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo', 'aria-busy': 'true' },
+    h(B.Skeleton, { variant: 'row' }),
+    h(B.Skeleton, { variant: 'card' }),
+    h(B.Skeleton, { lines: 4, index: 5 })));
+</script>
+</body>
+</html>
