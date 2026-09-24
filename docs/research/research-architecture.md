@@ -69,6 +69,8 @@ reference, or a reference with no component, is countable (B-09).
 | **The design system's reduced-motion rule does not reach every moving element.** It matches `[class*="og-"]`, so the TypingIndicator's dots (bare `<i>` inside `.og-typing__dots`, `animation: og-typing … infinite`) keep bouncing, and a page's own classes (`.media__glyph`, `.media__top`, `.media__bottom` in MediaScreen) keep animating — measured as 72 px differing in ChatScreen and 22,770 px in MediaScreen_Crystal between two renders. The renderer applies the design's own rule to every element. | `reference/design-system/components/bundle.css` line 758; `components/MediaScreen/preview.html` |
 | **A preview's layout can depend on the frame it is shown in.** BottomSheet's body is `max-height: 70vh`, so rendered in a frame sized to its content the body clips itself and the button below it disappears. The renderer uses the card's own frame — the `@dsCard` height, growing to fit — which is what the artifact shows. NavDrawer's `min(304px, 86vw)` is the only other viewport-relative size, and it depends on the width alone. | `bundle.css` (`.og-sheet__body`, `.og-drawer`) |
 | DatePicker marks "today" from `new Date()` inside the bundle; the renderer pins `Date` to 2026-09-24T12:00, the demo's own date. | `bundle.js` line 514 |
+| **The body's background is positioned by the root element's box, whose height is the content's.** A preview whose content is shorter than its card — or, like the material probes, entirely positioned — drew the `glow` at the content's corner, or not at all. The renderer sets `html { min-height: 100% }`, so the glow sits in the frame's bottom-right corner, where the design puts it and where the Compose body draws it (B-07). | `scripts/design-references.mjs`; the MaterialBody probe went from 7–13 % to 0.00 % |
+| One render in 177 caught DatePicker's month header mid-way through a 1 ms transition; a 100 ms settle after two animation frames removed it (two full renders, 0 of 195 PNGs differ). | `scripts/design-references.mjs` (`SETTLE_MS`) |
 | A page preview is a `.phone` element (390×760, EdgeNarrow 320×680, EdgeScale 390×860) in a 16 px card margin with `shadow-window`; the reference is clipped to the `.phone` element, since the fixture is the screen alone. | `components/*/preview.html` |
 
 **Consequences.**
@@ -128,9 +130,14 @@ implies.
 | `Modifier.dropShadow` and `Modifier.innerShadow` are in **commonMain** of CMP ui 1.12.0 (package `androidx.compose.ui.draw`), with `Shadow`, `DropShadowPainter`, `InnerShadowPainter` in `androidx.compose.ui.graphics.shadow`. | `ui-metadata-1.12.0.jar!/commonMain/default/linkdata/package_androidx.compose.ui.draw/7_draw.knm`; `ui-graphics-metadata-1.12.0.jar!/commonMain/…/package_androidx.compose.ui.graphics.shadow/` |
 | `ShaderBrush`, `ImageShader`, `LinearGradientShader`, `RenderEffect` are in commonMain; **no `RuntimeShader`/`RuntimeEffect` is** — only skiko's `org.jetbrains.skia.RuntimeEffect` on the skiko targets and `android.graphics.RuntimeShader` on Android. | `ui-graphics-metadata-1.12.0.jar!/commonMain/…/package_androidx.compose.ui.graphics/`; `skiko-awt-0.150.1.jar!/org/jetbrains/skia/RuntimeEffect.class` |
 
-**Consequences.** A 1 px inset bevel is two 1 px strokes inside the shape's outline, and whether
-`innerShadow` with zero blur and a 1 px offset draws exactly that is a **hypothesis** (B-07): the
-cheaper and certainly exact alternative is drawing the two edges ourselves in `drawWithCache`. A
+**Consequences.** A 1 px inset bevel is two 1 px strokes inside the shape's outline. *Measured in
+B-07, on the Panel probe (an `og-panel` and an `og-lcd` box rendered by Chrome from the design
+system's own classes):* the inset shadow drawn as a path difference — the padding box minus itself
+moved by the offset — is **0.04–0.07 %** from Chrome in the three skins; `Modifier.innerShadow` with
+zero blur and the same offset is **3.3–4.1 %**, wrong along the whole outline. The difference is
+what ships (`oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/CssBox.kt`);
+`innerShadow` was removed rather than kept as an unused option. Blurred drop shadows do use
+`Modifier.dropShadow`, and the orb probe (rim, `shadow-orb`, core, highlight) lands at 0.22–0.38 %. A
 runtime shader would be an `expect`/`actual` on every target, so the grain is a generated
 `ImageBitmap` tile through an `ImageShader` — common code, one implementation, no per-platform
 shader language (D8).
@@ -330,6 +337,24 @@ switch. The platform default is read by an `expect` — Android's animator durat
 desktop JVM, which has no such setting. Text styles centre the text in its line height without
 trimming (`LineHeightStyle(Center, None)`), the browser's layout of a CSS `line-height`; whether that
 lands the glyphs where Chrome does is B-08's measurement, not an assumption.
+
+*As built (B-07), the materials, each measured against a Chrome render of a probe built from the
+design system's own classes (`scripts/probes/`, parity fixtures in
+`oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/material/MaterialProbes.kt`):*
+
+| Material | Probe | Parity, three skins |
+|---|---|---|
+| screen body: gradient, elliptical glow, grain | MaterialBody | 0.00 % |
+| frame: gradient, bevel, weave (Toxic), speckle (Crystal) | MaterialBezel | 0.00 % |
+| panel and LCD glass: border, inset bevel | MaterialPanel | 0.04–0.07 % |
+| glossy button: 3- and 2-stop gloss, highlight, accent rim | MaterialGloss | 0.19–0.20 % |
+| orb: 160° chrome rim, drop shadow, core, highlight | MaterialOrb | 0.22–0.38 % |
+| LCD value glow | MaterialLcdGlow | 3.4 % — the digits' own text residual: Crystal, which has no glow, is 3.39 % too |
+
+The glow's blur is converted at 0.5 (CSS blur → Compose text-shadow `blurRadius`), chosen by the
+halo's energy — left half minus right half of the probe, in each renderer — matching Chrome's to
+0.2 %. A gloss transition interpolates in premultiplied sRGB, which is how a browser interpolates
+legacy colours; `animateColorAsState` interpolates in Oklab and would miss every mid-state.
 
 ### D8. The grain is a generated tile, not a runtime shader
 

@@ -36,6 +36,11 @@ const FONTS = join(ROOT, 'oldge-core/src/commonMain/composeResources/font');
 const VENDOR = join(ROOT, 'scripts/vendor');
 const SKINS = ['toxic', 'media', 'crystal'];
 const WIDTH = 390;
+/**
+ * A wait after two animation frames before a page is measured or photographed. Without it one
+ * render in 177 caught DatePicker's header mid-way through a 1 ms transition (B-07).
+ */
+const SETTLE_MS = 100;
 /** "Now" for every preview: the DatePicker demo's own date, at noon so no time zone moves the day. */
 const NOW = '2026-09-24T12:00:00';
 
@@ -56,7 +61,7 @@ const FAMILIES = {
 };
 
 function args() {
-  const a = { only: '*', texture: 'on', out: join(ROOT, 'oldge-core/src/desktopTest/snapshots/design'), chrome: process.env.CHROME };
+  const a = { only: '*', texture: 'on', out: join(ROOT, 'oldge-core/src/desktopTest/snapshots/design'), previews: join(DS, 'components'), chrome: process.env.CHROME };
   const argv = process.argv.slice(2);
   for (let i = 0; i < argv.length; i += 2) a[argv[i].replace(/^--/, '')] = argv[i + 1];
   a.chrome ??= '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -82,6 +87,11 @@ export function wrap(preview, skin, { tokensCss, texture }) {
 <style>${faces}</style>
 <style>${tokensCss}</style>
 <style>:root { ${families} }</style>
+<style>/* The body's background is painted on the canvas but positioned by the root element's box, whose
+  height is the content's: a preview shorter than its card, or one whose content is all positioned,
+  drew the glow at the content's corner or not at all. The design puts it in the screen's bottom-
+  right corner, which is where the Compose body draws it; the root is made to fill the frame (B-07). */
+html { min-height: 100%; }</style>
 <style>${bundleCss}</style>
 <style>/* The design system's own reduced-motion rule, applied to every element: bundle.css matches only
   [class*="og-"], so the TypingIndicator's dots (bare <i>) and a page's own classes (.media__*) kept
@@ -187,12 +197,12 @@ async function render(cdp, file, width, page, frameHeight) {
     const measure = async () => JSON.parse((await cdp.send('Runtime.evaluate', {
       awaitPromise: true,
       returnByValue: true,
-      expression: `document.fonts.ready.then(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(JSON.stringify({
+      expression: `document.fonts.ready.then(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => r(JSON.stringify({
         w: document.documentElement.scrollWidth, h: document.documentElement.scrollHeight,
         fonts: [...document.fonts].map((f) => f.family + ' ' + f.weight + ' ' + f.status),
         text: document.body.innerText.trim().length,
         phone: (() => { const e = document.querySelector('.phone'); if (!e) return null; const r = e.getBoundingClientRect();
-          return { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.width), h: Math.round(r.height) }; })() }))))))`,
+          return { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.width), h: Math.round(r.height) }; })() })), ${SETTLE_MS})))))`,
     }, sessionId)).result.value);
     let m = await measure();
     const w = Math.max(width, m.w);
@@ -218,8 +228,11 @@ async function main() {
   const tokensCss = compileTokensCss(tokens);
   const index = JSON.parse(readFileSync(join(DS, 'design-system.json'), 'utf8'));
   const only = glob(a.only);
-  const names = readdirSync(join(DS, 'components'), { withFileTypes: true })
-    .filter((d) => d.isDirectory() && d.name !== 'Cover' && existsSync(join(DS, 'components', d.name, 'preview.html')))
+  // --previews scripts/probes renders this repository's material probes (B-07) the same way: small
+  // pages built from the design system's own classes, so a material has a reference of its own.
+  const previews = resolve(a.previews);
+  const names = readdirSync(previews, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && d.name !== 'Cover' && existsSync(join(previews, d.name, 'preview.html')))
     .map((d) => d.name)
     .sort();
   const work = join(ROOT, 'build/design-references');
@@ -231,7 +244,7 @@ async function main() {
   const warnings = [];
   try {
     for (const name of names) {
-      const preview = readFileSync(join(DS, 'components', name, 'preview.html'), 'utf8');
+      const preview = readFileSync(join(previews, name, 'preview.html'), 'utf8');
       const page = /@dsCard[^>]*\bpage\b/.test(preview.split('\n')[0]);
       for (const skin of SKINS) {
         const stem = `${name}_${skinName(skin)}`;
@@ -247,6 +260,7 @@ async function main() {
         if (/\bnew Date\(\)|DatePicker/.test(preview)) notes.push(`Date pinned to ${NOW}`);
         for (const n of notes) warnings.push(`${stem}: ${n}`);
         manifest.references[stem] = {
+          ...(previews === join(DS, 'components') ? {} : { source: `${previews.slice(ROOT.length + 1)}/${name}/preview.html` }),
           width: r.width,
           height: r.height,
           page,
@@ -267,6 +281,7 @@ async function main() {
     'fonts: the bundled faces of B-02 in place of Tahoma / Trebuchet MS and the Google Fonts @import (research D6)',
     'prefers-reduced-motion, with the design system\'s own reduced-motion rule applied to every element, not only [class*="og-"]',
     'frame: 390 px wide, the @dsCard height growing to fit; a page is clipped to its .phone element',
+    'html { min-height: 100% }: the body background (and its glow) spans the frame, not the content',
     `Date pinned to ${NOW}`,
   ];
   manifest.now = NOW;

@@ -1,7 +1,7 @@
 ---
 id: B-07
 title: "Materials: gloss, bevels, shadows, LCD glass, chrome rings, the textured body"
-status: open
+status: done
 priority: P0
 size: L
 stage: stage-1-core
@@ -39,3 +39,23 @@ The design system's look is six materials, and every component is a combination 
   under `reducedMotion`.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/`, `reference/design-system/components/bundle.css` (`.og-gloss`,
   `.og-bezel`, `.og-orb__core`, `--og-grain-mask`).
+
+## Findings (2026-09-25)
+
+- Every material is one CSS-box painter (`CssBox.kt`) configured per material: the browser's radius
+  rule, background laid out over the padding box and clipped to the border box, inset shadows as a
+  path difference inside the padding box, spread rings outside the border box, the `.og-gloss`
+  band. Parity per material in research D8 "As built".
+- The bevel measurement the item asked for: path difference 0.04–0.07 %, `innerShadow` 3.3–4.1 %
+  on the Panel probe. `innerShadow` was removed.
+- Probes (`scripts/probes/`, rendered by `design-references.mjs --previews scripts/probes`) are this
+  repository's HTML built only from the design system's classes; the manifest records their source.
+  Six probes × three skins, each a golden and a parity fixture.
+- Two renderer changes, both recorded in research §1.2: `html { min-height: 100% }` (the body's glow
+  was positioned by the content's height; 139 component references changed, only in their
+  background — spot-checked on Divider, Button, BottomSheet, EmptyState in three skins), and a 100 ms
+  settle (one flaky DatePicker frame). Two full renders then: 0 of 195 differ.
+- The gloss clock test caught a real defect: the progress was eased twice (`tween`'s default
+  FastOutSlowIn under the design's ease-out). Linear progress, the curve applied once.
+- The LCD glow factor (0.5) was chosen by halo energy, not by the parity number, which the digits
+  dominate; B-08's floor is where the text residual gets its own number.

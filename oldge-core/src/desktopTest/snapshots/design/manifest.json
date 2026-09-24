@@ -4,91 +4,91 @@
       "width": 390,
       "height": 340,
       "page": false,
-      "sha256": "ac2497973e02c0da27f4ac59ae58a5c1f7e3fbb5a60bacc49a8941ede153c0fb"
+      "sha256": "091df3c80e04c7810d8e5052fcdf3ca9375f2c029d26ac408373c20ecabbae33"
     },
     "Accordion_Media": {
       "width": 390,
       "height": 340,
       "page": false,
-      "sha256": "9acb8df6ebb1ec591b16c20305bcacac47fa06de6c3088d4bbffad810b3bf9e4"
+      "sha256": "4ca258d607b112164c0412416bea4e5a670491ebdfd44d7b525139b82a019973"
     },
     "Accordion_Toxic": {
       "width": 390,
       "height": 340,
       "page": false,
-      "sha256": "64644b951ccfe456f91457d5009649858c4793a825316694d9f9c8ac5e3ce844"
+      "sha256": "fe433aa3269c7e35dfc867c42a9b8a9e456077054c4d56dfee7b50679fe04ee7"
     },
     "ActionTile_Crystal": {
       "width": 390,
       "height": 310,
       "page": false,
-      "sha256": "8240ce6e4832851c779a5f7a014d653eabd5b41b2d8285fb0070d09cd0bf52ad"
+      "sha256": "0b397a56a8b5ad098ac95ba676c826e62d61caa8d625ca0405d59946ac3d832b"
     },
     "ActionTile_Media": {
       "width": 390,
       "height": 310,
       "page": false,
-      "sha256": "8549df7fa9675cd3853fe9a496323b7c423e4c0373e6a9692c66637f85e03ba7"
+      "sha256": "30eeff6c083ba25cc7e06f4041c630109c40a883e815e30ec4c153d12a5415cf"
     },
     "ActionTile_Toxic": {
       "width": 390,
       "height": 310,
       "page": false,
-      "sha256": "49784ba71250403f229f46a77497aae883c3e781b5f89efc050dcfa882f5becc"
+      "sha256": "bdd61f8ab5c0a660c8c5de3b5ecce808b4d812262ca55e80211618446fe0c839"
     },
     "AuthScreen_Crystal": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "4d6b7c35c3ac7b308e21f3e8928882eb37208b91a696134ea56a0d174dfe1f52"
+      "sha256": "db1a57b77e996985ae028459fe361d9b9ff7a46f3758725cefddd588920b6a8d"
     },
     "AuthScreen_Media": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "118d59bd0dd74d0b332ca4053631f52fbfc4a0e8fa7274a3099bd4bccfb5199e"
+      "sha256": "083e7f5cceee13f236c370b52650abfd9edf2bdfc0b3fa66168cf1454567bbae"
     },
     "AuthScreen_Toxic": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "6313379c2948348f336573c63955335989183db741f15cf048d1e41c7314ff1a"
+      "sha256": "d789c2750b83b8c986a1fa6bc49ee772ea84a8d50d33d4ce5471e26e5ff57f5a"
     },
     "Avatar_Crystal": {
       "width": 390,
       "height": 100,
       "page": false,
-      "sha256": "ccf6ea8c0030e55498fed73a68e79f1cdb1057932143a55ea6448fc972f7ee05"
+      "sha256": "3b9bc3d430efec3d33921c5d71dfff233f5f32d1bd419c34f4aba6c3947d355a"
     },
     "Avatar_Media": {
       "width": 390,
       "height": 100,
       "page": false,
-      "sha256": "d482abcc71f5a272393cc80f0932c915c8a0b01ef1467f83ce9f9fa94bf74691"
+      "sha256": "3521b98ca36eea89fb6dbb92aeb1ec7acdc39ceaa86dc6ced7327c60c0d3a0d8"
     },
     "Avatar_Toxic": {
       "width": 390,
       "height": 100,
       "page": false,
-      "sha256": "305c39876d8bd61609ed54acd63657b033765efc3c311e6c49805daadf2a8288"
+      "sha256": "15fa6ba2733c51dc784cf070553240ec66faf2b10e59f4b9128bc27986703b10"
     },
     "Badge_Crystal": {
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "7abd6a1fa376d0d329719ce9f4df63f1aae9c38d32ff2e920e3696dae2d51d93"
+      "sha256": "493a628adb47c2a1d803ce24e438d81d6e7bd83f1198c48a8585ec75fbc29a1d"
     },
     "Badge_Media": {
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "357423a9fd4501119bc16e4a6a068ef09f9354cc8fac4d9fa93796453807abe4"
+      "sha256": "0e69a26f8e7b75f9a2b1f716b40186efe680346b369359f77b648374d61d0915"
     },
     "Badge_Toxic": {
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "5bd93525fed48f57cba040151544a0c0f64d4f3c4f51265b9a99ef902562554d"
+      "sha256": "2ada5ae2abd1d98b63706ede1257429134930306f6eadcf12ee9cff043783f5d"
     },
     "Balloon_Crystal": {
       "width": 390,
@@ -112,73 +112,73 @@
       "width": 390,
       "height": 170,
       "page": false,
-      "sha256": "b6c5386542944f669e90f1653e9c97e96f6bd2ab090b005739d48e4a775fe343"
+      "sha256": "bed9f684ab50381f23c04477bad52a5edcd0c752356a8f92b7878c2f929a0f2b"
     },
     "Banner_Media": {
       "width": 390,
       "height": 170,
       "page": false,
-      "sha256": "0ab446456553257b7f543f16dfb483ebabc3f77dbfdba78f33b6af40e70100c8"
+      "sha256": "9e83075c1c92c15ec0e1c2424273603729aacf08f9fbd5ad0bc44675753f1e79"
     },
     "Banner_Toxic": {
       "width": 390,
       "height": 170,
       "page": false,
-      "sha256": "3108b1ec02346d81dff405885f952de9517b7bfc32144321c453539af5541ee1"
+      "sha256": "cf62432610febd83183ecb707882a847605f89f707e3d7cc6768869baab2a173"
     },
     "BottomNav_Crystal": {
       "width": 390,
       "height": 100,
       "page": false,
-      "sha256": "a507ff06255b0f2ebdd92e0426c3fb67c27666d5adfb395573cf1fefd69efa17"
+      "sha256": "6e5dd5db91706946a1a9cc0950147d0e4f2936e7b599a54dbd5bd073e6c219b8"
     },
     "BottomNav_Media": {
       "width": 390,
       "height": 100,
       "page": false,
-      "sha256": "95b4e334e69ba91729ce556803c605d5d03e0bf1c47fbf2cbaf3984766a87a82"
+      "sha256": "b0ea59619396e3bf62a52dda082726a00fed868d03e4bd6aedaefc0946a3612e"
     },
     "BottomNav_Toxic": {
       "width": 390,
       "height": 100,
       "page": false,
-      "sha256": "7456fed44fb9179731fd45e9c319c15d5cc7eae4f1bbc693052040c96224e823"
+      "sha256": "5fde4dea39f1381416076130cd2ac829c27e693823e8343ae7e20ea48d561321"
     },
     "BottomSheet_Crystal": {
       "width": 390,
       "height": 330,
       "page": false,
-      "sha256": "c784b49bacc540ce2a215f69b67e99879537594e5bc233a556bb696237797102"
+      "sha256": "273bd39aa7189bd3cb7bc6a3889ae94f67bd6d71994d6384365c5bcbe5fc4727"
     },
     "BottomSheet_Media": {
       "width": 390,
       "height": 330,
       "page": false,
-      "sha256": "37d7fd155d0ba1a781505ec0864f06b21515ffe93913cf06f3b145f2d6dbf519"
+      "sha256": "64cc6e99c3d694aa472cb9da4772fd76023b26ae953dbc92d12968f655f56a19"
     },
     "BottomSheet_Toxic": {
       "width": 390,
       "height": 330,
       "page": false,
-      "sha256": "d3557989fed80ff004d9c7a21c8a8ba52702786726437de16f6a9506eb06bf28"
+      "sha256": "64015847f3fa59f1cad2550252f64bc3a3c6761e52358589a2109670cc3e2641"
     },
     "Button_Crystal": {
       "width": 390,
       "height": 200,
       "page": false,
-      "sha256": "b84f5e9392fa47338f42db3f501154e81ca98683fba85a847ed3afc9187478a6"
+      "sha256": "13b7639fdee63fc7938e024f2d4cf164649daf7ac0974509dadb34d6b67f37bf"
     },
     "Button_Media": {
       "width": 390,
       "height": 200,
       "page": false,
-      "sha256": "25bc442d07c296efe02380b6c88c4cdff333cc314a030f17d5ffa2a929ece18a"
+      "sha256": "59c9bcf70eb3d56572dc2905cc036be0d27b4b8e529776445a2ddb4a1a26de76"
     },
     "Button_Toxic": {
       "width": 390,
       "height": 200,
       "page": false,
-      "sha256": "c7deca58949ef34b8217b4e81e26fa5b6ae19acf125c328ede324336ec28e198"
+      "sha256": "72c5061a1cb56e8db482bfcb07b98b293142d5352984e0d78c4413984299d722"
     },
     "Card_Crystal": {
       "width": 390,
@@ -202,55 +202,55 @@
       "width": 390,
       "height": 130,
       "page": false,
-      "sha256": "cbcda8f1aed1cf11cbf65936a1941c18c380770f0ed867c4ca65446f660c4860"
+      "sha256": "3e19549be81d40dc81796fa96bf0951c721350641f2b9b13a57dccd202d65505"
     },
     "CategoryTabs_Media": {
       "width": 390,
       "height": 130,
       "page": false,
-      "sha256": "e7eaa4b9f96592184caf151737e928da524f5e5cc0224f3420c37a11ecbc3e4b"
+      "sha256": "f4a6c10089a5fa3788b33e2b8fd14b287b1358fdf044e9f6a096fc69a35d1762"
     },
     "CategoryTabs_Toxic": {
       "width": 390,
       "height": 130,
       "page": false,
-      "sha256": "b63e8f65d65dd2273fdb93359c4be28d2320ac8f9ac80067c6dde794f51e63c2"
+      "sha256": "2e4616c8ece313ece30e84d833a7e2bafb885dba4c3478028a063108f3e8c79a"
     },
     "ChatBubble_Crystal": {
       "width": 390,
       "height": 260,
       "page": false,
-      "sha256": "0e60b103d5e066812bfdc46262b9f9de15dbe5a49284b0790ccbceea84a508fd"
+      "sha256": "821f45351e5aed391051770529e50108671f07d73415575b0cf347c3c0acbee8"
     },
     "ChatBubble_Media": {
       "width": 390,
       "height": 260,
       "page": false,
-      "sha256": "2f27304daecb2584f028a7c6430e216aecbafbf28da3c6c8c16df15da63a62cd"
+      "sha256": "e4606a5b38ca5e120d802553af130ac066a4128b3f17c6f3f10753f2364da398"
     },
     "ChatBubble_Toxic": {
       "width": 390,
       "height": 260,
       "page": false,
-      "sha256": "9fdc1b55e33c8d2038c6663e0616839a8283dcaea738a9ef54ae30da23e71c27"
+      "sha256": "03e788f7861b307040a865268da04a5dcb37525815b0c7b01d802e1186f8c074"
     },
     "ChatScreen_Crystal": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "0a681a54beda6bc2bf83a4165e09b69061e78a8b6888ed861010fb5f99825515"
+      "sha256": "a77272f5a0aa186c80a8d24b8da13d2d4ef2ac0e652a3089291c5565e4b2feeb"
     },
     "ChatScreen_Media": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "5ecf3635c17e4b27a4c6edea7027485faa976ff17731bd2ebabbb1d29d2ed7a3"
+      "sha256": "293f63f6c795c56aa4a5f9a404ee2a094f39323a8209d2ecac9b6d3a1f4cb67d"
     },
     "ChatScreen_Toxic": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "ab8a0c29112413d4a76895044f974e1881275333b680d044648dc8c8d58805c6"
+      "sha256": "7b977bbef5875ecf983c2c3dac5522f5ae3139795d16f1251db38df30cce1383"
     },
     "Checkbox_Crystal": {
       "width": 390,
@@ -310,7 +310,7 @@
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "4cd6767f95b8f277a6aac9f1e0a0b4d32fa5ed3d5bc4a49a2fc82521f4dbf3e6",
+      "sha256": "973296c2f944bc1273d70b85297a56bfdfc713d89b50f893ecded3c80adcb66d",
       "notes": [
         "no text rendered"
       ]
@@ -319,7 +319,7 @@
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "dcd2aa2e0a60a81f5a5cba5a4dacdac592383e44e911282d85601b1bcf2b94ef",
+      "sha256": "ee7b231905ceadc0372681b42dc3d5a8ea01c8c56d2085a8d90046c0161e5277",
       "notes": [
         "no text rendered"
       ]
@@ -328,7 +328,7 @@
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "cc2cba3bcbb7fc3586fff725463b4c132e082c04883af9bfe008006bcce7f839",
+      "sha256": "5575e58ed9a0804ba6094e06be25edb3fbcc01149edb0e6dd1e39701ced7ef09",
       "notes": [
         "no text rendered"
       ]
@@ -337,7 +337,7 @@
       "width": 390,
       "height": 370,
       "page": false,
-      "sha256": "43b545fd3751fc5239171a323bc9bc1e2d8ec12d8cf74bcdb69a436879f40bc1",
+      "sha256": "fc98b178d33fa6b93eb9d16f1aa03b300ba4ac07285f7b0ced789c60f32afedf",
       "notes": [
         "Date pinned to 2026-09-24T12:00:00"
       ]
@@ -346,7 +346,7 @@
       "width": 390,
       "height": 370,
       "page": false,
-      "sha256": "f8e243021655cc9b474be29dfaa27454dabd8e4544e1cce2ceaa07b750e7d73d",
+      "sha256": "0071bc40203d8092c92dc414f0dfcc0775e66c1edcebf4084ae9e2b68c0ccea3",
       "notes": [
         "Date pinned to 2026-09-24T12:00:00"
       ]
@@ -355,7 +355,7 @@
       "width": 390,
       "height": 370,
       "page": false,
-      "sha256": "b889c3bc22f5acf152ccb553bb0cf7d6344aec39aef1bb0ca467869416489c1c",
+      "sha256": "289d65efd339d9e01a894939e109769c18db826f7988258e1728ecd44dbc9dea",
       "notes": [
         "Date pinned to 2026-09-24T12:00:00"
       ]
@@ -364,19 +364,19 @@
       "width": 390,
       "height": 270,
       "page": false,
-      "sha256": "0af3117ea7da5d0123240ed5185ee4e66c9fee87812195d237b23c59b5ceafb6"
+      "sha256": "eb418f245b1bf107f1cfcbebf7a5853f8fc9fe1bd700c96a8366b71944f02888"
     },
     "Dialog_Media": {
       "width": 390,
       "height": 270,
       "page": false,
-      "sha256": "c3f929a98d6f1b50fd302a413d27d25d3a126e4311575da01498cddcced4a44f"
+      "sha256": "81b479d381afbd2fb5061c112da29fadcbb5b81b7943e00932c7c2c93617a1a2"
     },
     "Dialog_Toxic": {
       "width": 390,
       "height": 270,
       "page": false,
-      "sha256": "5ee1e5e2037ad4821345c4cafb8a808c31dd1e954b4a643162361bcd6187e462"
+      "sha256": "efb757dfd8e3d29bb67020e2b27e487edc6748ff82521026ecd5d68cdb0184ca"
     },
     "Divider_Crystal": {
       "width": 390,
@@ -400,91 +400,91 @@
       "width": 320,
       "height": 680,
       "page": true,
-      "sha256": "df9519fea1da64a5600a84c6917c9ead7dd5942c214cc081abe2d143896ffc78"
+      "sha256": "99f91a39c15f698ca4adac7a2e3cb995f65f8d728096db0cfb5fd19995d5ade8"
     },
     "EdgeNarrow_Media": {
       "width": 320,
       "height": 680,
       "page": true,
-      "sha256": "86de79a80f6e5a4c912980d38bcad390826686903c48e5f1a602047a49f54d82"
+      "sha256": "c903bdb84ba76f0e2957f0d11a7da9871281f3f714472d96f365db2181ffb01c"
     },
     "EdgeNarrow_Toxic": {
       "width": 320,
       "height": 680,
       "page": true,
-      "sha256": "7572b5610be91c0565a2af6932bcf3278c5d52eb1c4fb6ae14928b941848f84e"
+      "sha256": "68868e71e01264e4403aea50ae4f771125ad79b989081a23ed9351ef94af6aef"
     },
     "EdgeScale_Crystal": {
       "width": 390,
       "height": 860,
       "page": true,
-      "sha256": "c3d3b64f3eeb7556bef23b880cbe6f4e14236b5ebb5fa7697918f3894200e219"
+      "sha256": "11dfce9e13deb45d57669502c54bbdd18a15d0950e011e4141986d07f41a6ff4"
     },
     "EdgeScale_Media": {
       "width": 390,
       "height": 860,
       "page": true,
-      "sha256": "d8bddf2b87a3868984265f338d5988f968930f0def171df3d37067748cf2e0f5"
+      "sha256": "0d52e7a256f5cc12424afcda98f79d5ad54046fba3a6aac39b5433933c973452"
     },
     "EdgeScale_Toxic": {
       "width": 390,
       "height": 860,
       "page": true,
-      "sha256": "17f18892213462292531282c3870e0993862ed36f88519ce5fbf18f66660b9ff"
+      "sha256": "55ee5d66b2a86e09020bbb4561dba758fe108c6c2982906e3fd7730a3793a030"
     },
     "EmptyState_Crystal": {
       "width": 390,
       "height": 560,
       "page": false,
-      "sha256": "94b97a26d039962640757c61087114150e4c801b0fddf69d39a3fcd108507bac"
+      "sha256": "48fa1b7281f29c71e2bf95b766992e8dafd7784e7a4f8a8b08cee23ca9fc305a"
     },
     "EmptyState_Media": {
       "width": 390,
       "height": 560,
       "page": false,
-      "sha256": "288e762b9e40106689df125c83ea3fff252d9abbe1277f2d5494fe9080a13082"
+      "sha256": "700e14f3ad595ee24f7e1686bd6d6c3407c4fd64a600a16091a4a9a5c28c36aa"
     },
     "EmptyState_Toxic": {
       "width": 390,
       "height": 560,
       "page": false,
-      "sha256": "dcc8919c55a07e7617ef7119bdb5eb087c7b91c872de895b003786ee7f74c1ed"
+      "sha256": "0b14d4180c3a7edd4b89c4b1fff9d09a968dc5bf050f959116579766ff8900f0"
     },
     "Fab_Crystal": {
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "6dbbdfd087fade367b117fae248da322dde73d9bdd4936a25b469a60c8441b74"
+      "sha256": "ad5f846a275e9754f801b04a8b64a391de84d43314d710de64813d38efa2c70c"
     },
     "Fab_Media": {
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "a31a9ca90ba95c00b536065f534c217b9cf057b94ecb24edfa53529056dd8cbd"
+      "sha256": "bdb45ca46c8cd70d538567eff1378b30d592a35a8d4fae42de28516acd5c050a"
     },
     "Fab_Toxic": {
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "638c5a74ea1d9af14e24f52e6d09109c529976641db286381a26c99c37991375"
+      "sha256": "e9f6baf205b1a8a2b3ee45e14087d1070bf62008035dde363523816ec05c7b37"
     },
     "FeedScreen_Crystal": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "9d1b6555dcb7e4e4fa15d913d35ae3e28aba57f29fbe50400c8837cee09c5a53"
+      "sha256": "ce757f5a07ff9476e776fed6d20a5ad2d6c7e8ff9d840b13910fe93813ed1372"
     },
     "FeedScreen_Media": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "1628bdf2ac8b3d12eb5c95e3f0b9bc3dde3ed333541f5af764eb27c86b46664b"
+      "sha256": "611af3896de336a74aa8d95d79fb05b398dcb5796d2dc75578a699bd054cf57a"
     },
     "FeedScreen_Toxic": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "43263035d57b6bde0c2e8d36e3eb0acde52985d8b1d5bedae5bd0cca0a79a81b"
+      "sha256": "d7687c9e379462d8e2fde04397fde006f05f4204008e2dbf2814ca4abfc0cb36"
     },
     "Icon_Crystal": {
       "width": 390,
@@ -508,55 +508,55 @@
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "e1e920bab64e7a027c7556af35a6ce91cab2b1e693682dcca6b9acf4f04366b6"
+      "sha256": "529f2c9c571074945d0e395f6e1fba90675e3c4d7d22621165a74d229a3043b3"
     },
     "InboxScreen_Media": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "96854ba64ed885510295b37b4449861363f4c8cdf624365740b1afd9faacde74"
+      "sha256": "d85e42681aae1b56255dd8a04528080330db5138cbb847bcddc9f5c692ece63e"
     },
     "InboxScreen_Toxic": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "2c6aa1a0ec2f3eeb3ba063391fdc895a41931e08ae61daf71622cbffbaeeab0b"
+      "sha256": "0493d8e658bd927374d3ade9ee21e2f0a88e333024bd74a70229efd1295dc840"
     },
     "Launcher_Crystal": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "46b7c1798f4100482116fde29dc7ab358affd177f6eaf04ca9e4599cfb2e1065"
+      "sha256": "4319996ec1da6514d3163800c7ded8cd5f7e771b96fd4021329daad4c72984d4"
     },
     "Launcher_Media": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "96b3fa7a4a618b5003a0d7193fa3034e8843cbdba96d54d9029eb4c26a51548f"
+      "sha256": "a906da41901e541a0c257508ce71c94592fff7175a84321bac8caa2cc4b30762"
     },
     "Launcher_Toxic": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "a9ff000bb0bee45faa71a6691c4592b6c92545e2e1a5bca75ffcfe324ec4036b"
+      "sha256": "76a1c2d9b9c4289539a98b405056904191747da902f8fd2486522c6d5ac74840"
     },
     "List_Crystal": {
       "width": 390,
       "height": 300,
       "page": false,
-      "sha256": "a6453ed5d11180b983244280339e8cfd68de6460f6f160fc0e5a8071350c9323"
+      "sha256": "da9d28bb905e35fab4286fb54832c52ce53f1c2df4ecc1d5712a4636c147986e"
     },
     "List_Media": {
       "width": 390,
       "height": 300,
       "page": false,
-      "sha256": "f50e0b3dcf338b70e59b6d0ca63bfe80750a9e0e3bfd74fbcdd334c7859d2633"
+      "sha256": "e6f2dd4eb1255c8cde20457a42907a22a3b8ce291bac9acf161f1174054cf76e"
     },
     "List_Toxic": {
       "width": 390,
       "height": 300,
       "page": false,
-      "sha256": "eb7fd5f557f662c4755e397311682b7deca6740294cd9219018c02d3244db879"
+      "sha256": "9adb6e61405e8abaea5c5fdc6e3d758e402d858585764df88381b3830d40244f"
     },
     "ListItem_Crystal": {
       "width": 390,
@@ -580,55 +580,226 @@
       "width": 390,
       "height": 300,
       "page": false,
-      "sha256": "4f3c485c7610f250dac96e58197b52f4bf68984281aaeb5f65a691dc9ca6f9e9"
+      "sha256": "ed5b8122d7081900f0501a1d47180bf7ab19cca834f695d5bb6f78d7914eef73"
     },
     "ListSection_Media": {
       "width": 390,
       "height": 300,
       "page": false,
-      "sha256": "ca6023f9e62e3f7ff0ec7be441fd120021055bd3247937f0f7e9a7b69909f7f6"
+      "sha256": "bb779c85f92a17afbfd48347b45205b8a4fd49411135781aeaff9fe26ed5222f"
     },
     "ListSection_Toxic": {
       "width": 390,
       "height": 300,
       "page": false,
-      "sha256": "8fb1813327d3c0fa6a719df25e1c3419c85fcf494eb0e0871dcb24eb8fe7699b"
+      "sha256": "21c6b2c3d4ab277d547a0a40c290ceb5be7a771d36e5efd8b02b090dfb470110"
+    },
+    "MaterialBezel_Crystal": {
+      "source": "scripts/probes/MaterialBezel/preview.html",
+      "width": 390,
+      "height": 76,
+      "page": false,
+      "sha256": "7a21970761fd1fc9b0e678674684781b6ca90fcff55271377a7421c399ccbd8a",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialBezel_Media": {
+      "source": "scripts/probes/MaterialBezel/preview.html",
+      "width": 390,
+      "height": 76,
+      "page": false,
+      "sha256": "bec0375d5b75229cc62ebd39825aaf106185ad4eba3ceed54f4e14a6a7b34c89",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialBezel_Toxic": {
+      "source": "scripts/probes/MaterialBezel/preview.html",
+      "width": 390,
+      "height": 76,
+      "page": false,
+      "sha256": "aa88efe229e5e88690c52a216d30f0ade30ba54d3a3489dc6c8286e5888f947d",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialBody_Crystal": {
+      "source": "scripts/probes/MaterialBody/preview.html",
+      "width": 390,
+      "height": 200,
+      "page": false,
+      "sha256": "54215f747e1c190f25a1991d8526e4d107f4aa7db5884d6a8c787acb8363eb88",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialBody_Media": {
+      "source": "scripts/probes/MaterialBody/preview.html",
+      "width": 390,
+      "height": 200,
+      "page": false,
+      "sha256": "3ad4a4da5905f11e19d470bdb1f3f2e4a8c359904a51d301e6765ddf26374d1b",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialBody_Toxic": {
+      "source": "scripts/probes/MaterialBody/preview.html",
+      "width": 390,
+      "height": 200,
+      "page": false,
+      "sha256": "9f43e13c0411cbf0559ce6d0c40d57f61bbf13a51904434be94112bd7a71def3",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialGloss_Crystal": {
+      "source": "scripts/probes/MaterialGloss/preview.html",
+      "width": 390,
+      "height": 76,
+      "page": false,
+      "sha256": "7db163f6e98c0219ad14a96320f63a384edee254bc3b671e3e21c3a9a7e156f6",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialGloss_Media": {
+      "source": "scripts/probes/MaterialGloss/preview.html",
+      "width": 390,
+      "height": 76,
+      "page": false,
+      "sha256": "2f47a8ad01019ea7a045d48ec99b88a06ed761e315aa42c2a3374bdfa7b74d2b",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialGloss_Toxic": {
+      "source": "scripts/probes/MaterialGloss/preview.html",
+      "width": 390,
+      "height": 76,
+      "page": false,
+      "sha256": "8db03156440e6270e7527e1947db46fd12508d551b53e47b4440614edda62f61",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialLcdGlow_Crystal": {
+      "source": "scripts/probes/MaterialLcdGlow/preview.html",
+      "width": 390,
+      "height": 88,
+      "page": false,
+      "sha256": "6322796f6e819baa6d739776a05cc53558138bf9002737d2d6ed2fa964340907"
+    },
+    "MaterialLcdGlow_Media": {
+      "source": "scripts/probes/MaterialLcdGlow/preview.html",
+      "width": 390,
+      "height": 88,
+      "page": false,
+      "sha256": "f5b75376d2e328482115fd766bed54a6cae963eefcdd712cc52cc4d3458c5407"
+    },
+    "MaterialLcdGlow_Toxic": {
+      "source": "scripts/probes/MaterialLcdGlow/preview.html",
+      "width": 390,
+      "height": 88,
+      "page": false,
+      "sha256": "8c8e20fe51b20638536fc0001ccd84351c9a8fea9711825d75f238ebdb8b6326"
+    },
+    "MaterialOrb_Crystal": {
+      "source": "scripts/probes/MaterialOrb/preview.html",
+      "width": 390,
+      "height": 80,
+      "page": false,
+      "sha256": "dd6c1037f47d2c8c51fdac5723a36c576fcf24ec4ca06591b2ea7689d87b0dd4",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialOrb_Media": {
+      "source": "scripts/probes/MaterialOrb/preview.html",
+      "width": 390,
+      "height": 80,
+      "page": false,
+      "sha256": "b2d21954c2451f21e41c77b46e87fed8d783a319ca31eea73690909f9c1e8c75",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialOrb_Toxic": {
+      "source": "scripts/probes/MaterialOrb/preview.html",
+      "width": 390,
+      "height": 80,
+      "page": false,
+      "sha256": "cbf471c150dd3280ec57acc7bdda0de6e216a3820957601af6d96a60dd60ac8b",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialPanel_Crystal": {
+      "source": "scripts/probes/MaterialPanel/preview.html",
+      "width": 390,
+      "height": 96,
+      "page": false,
+      "sha256": "b014c16e81f5dfb5a58ac19dcc7b8c11fcfcd1bb933e9bc4c9fcc3fae307c967",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialPanel_Media": {
+      "source": "scripts/probes/MaterialPanel/preview.html",
+      "width": 390,
+      "height": 96,
+      "page": false,
+      "sha256": "e83f8511ca51bd8d0a431207865870781948a073113e304b656f719255c6df47",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "MaterialPanel_Toxic": {
+      "source": "scripts/probes/MaterialPanel/preview.html",
+      "width": 390,
+      "height": 96,
+      "page": false,
+      "sha256": "9ca99264e6b11224e2a785afe900eab3791c28a5056c703a1654d71dfed6261d",
+      "notes": [
+        "no text rendered"
+      ]
     },
     "MediaScreen_Crystal": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "e9ea8ce50dc957d0de6f1b4e7bb890d6bf17463423cc870404ed5d513ca6a326"
+      "sha256": "f96ff4e4d43419edfc7214689d7e66b6656548fb8ca97b54411c7ba3d81e2b44"
     },
     "MediaScreen_Media": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "fa0e6cadc822b65dc71bd06702db130676cdd20a35479b55a2cfe488f3ce63af"
+      "sha256": "08e1e0147fbdf59b99b8fc94cbb661bfb936717c01dc1d5139197bd5212e9b44"
     },
     "MediaScreen_Toxic": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "ed0f52f0a5ff905636c3bec3ffb507fbe06180098aafcfcf4cd547a0c2f59208"
+      "sha256": "950d795d0ed09149c497b39b8074f4bc8d717f4235bc9e45b5515a46682a9cc2"
     },
     "Menu_Crystal": {
       "width": 390,
       "height": 330,
       "page": false,
-      "sha256": "e655e9404f200478cb42032dba339343b6bc0a9f5a827a7030bd92d9764fda48"
+      "sha256": "3a689c4aa8ad9fc803ca673b7f5a08fdf4a3188aba6d1b954120874b19b035cf"
     },
     "Menu_Media": {
       "width": 390,
       "height": 330,
       "page": false,
-      "sha256": "281d5e4f1046f5d0203ca8cdd8e4ad311ff01c5b546a8a0c89427bfbd391ef7f"
+      "sha256": "a57b4329f629cb849d72b6d633c9588f7544ffceeb7875541ae7665cf2d7e910"
     },
     "Menu_Toxic": {
       "width": 390,
       "height": 330,
       "page": false,
-      "sha256": "59765d3a5bb4cdf188efdd2abff9313f147f614e812211ce3968c3d4f12bca70"
+      "sha256": "6977398f5e0ac82c2593941646d6474a3427c6470b5bc34ccee173422639bee2"
     },
     "Meter_Crystal": {
       "width": 390,
@@ -652,25 +823,25 @@
       "width": 390,
       "height": 520,
       "page": false,
-      "sha256": "08c51cd94ae533570945fce3cc3a79bdfd0528af0b15226dc5afcdedb3227580"
+      "sha256": "69de0fae45f3deb9794dff9b5b6289b7ea42835eddca381796aa912d6c2959d1"
     },
     "NavDrawer_Media": {
       "width": 390,
       "height": 520,
       "page": false,
-      "sha256": "7ed70d21bece20b453ef997e9fd94fd8635574e86d0216eb7f48b8097f6d1c48"
+      "sha256": "628230a451d5a0843745a49441fa5468e12f5b5bc4bd89060b0f0df48ccc9838"
     },
     "NavDrawer_Toxic": {
       "width": 390,
       "height": 520,
       "page": false,
-      "sha256": "756bbb1004fdb1b524c6fc879595be162bb5b25b0771a322f6b1ad7e5e25b47c"
+      "sha256": "027d5a7ddd28f6d8760eeb11cc119361065e73c6d9fba911ddd785be22322725"
     },
     "OrbButton_Crystal": {
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "52d4cf12aee7ce1d5817309a4786416b8004829c901bf963d4e42183f6b78696",
+      "sha256": "55127a6442b2658cbb79feecdbcda115f18633ed2b2bbe32a5da82fa2239e504",
       "notes": [
         "no text rendered"
       ]
@@ -679,7 +850,7 @@
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "80bab622000842bddb1699e1796f17e80197218868efcb19185ca099d3296408",
+      "sha256": "afa8dbe2b449884595d1ed9fc46bda6ae3414cb6465ec14fada19b4cba5c768a",
       "notes": [
         "no text rendered"
       ]
@@ -688,7 +859,7 @@
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "59d9cbbe229341cf46e80db92f4ab423a5bb42d863302a4073dff7e3ff855702",
+      "sha256": "01f9fe20f15c67ff5b0db75117a573ffdf39497612ca5fe6b1b3f5aa4b899608",
       "notes": [
         "no text rendered"
       ]
@@ -697,7 +868,7 @@
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "f44eab6de723ed85cbb86295a570c79b2a291441dc7fe653b64676bbbf760369",
+      "sha256": "9b88dc8cb1de72de73acad9ce31a61d47202a67c18565d6cc92f211b79070f46",
       "notes": [
         "no text rendered"
       ]
@@ -706,7 +877,7 @@
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "50d1092bd5a6f24aa6a755e688cbe48030985063674342a58746d7c0a05f27e1",
+      "sha256": "ba4ebe9c52e98392aefddfd76ba24c295b71d56a18eb36f0f1eb999ebaf53442",
       "notes": [
         "no text rendered"
       ]
@@ -715,7 +886,7 @@
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "8796bf8ee5e3ab61aa300fb175646acf2ae3d02493476e3913a080896f7da584",
+      "sha256": "bd4b2be94fea12319b06c28904978076dd947ace2ebc611e19794f71fd98dde9",
       "notes": [
         "no text rendered"
       ]
@@ -742,37 +913,37 @@
       "width": 390,
       "height": 290,
       "page": false,
-      "sha256": "ca301faf5b208ae58fb685d93d8640e6a081c18c172d42e67b00ed545ad73deb"
+      "sha256": "075b330d1fa3abc93d4a5e85a15827f8c7ef02ee37d37d7aa2d6d8246b29bb0e"
     },
     "ProgressBar_Media": {
       "width": 390,
       "height": 290,
       "page": false,
-      "sha256": "f67eed0f31c80661ae28b6b4549730b2ff3fdae68577d393fb04efe4a21b23c4"
+      "sha256": "74a5b0a043e99990215165d07bb8388452bf8573be3fbd9ea7a9c40cc7616df7"
     },
     "ProgressBar_Toxic": {
       "width": 390,
       "height": 290,
       "page": false,
-      "sha256": "cf0b3cc808ff170e423cc38acf1d0eed291d2abd3ec912b37677ed965381973e"
+      "sha256": "daeb4018ec37eca35d74acfc75f7e68691337a64cf929dd99724890a7031d1ed"
     },
     "PullRefresh_Crystal": {
       "width": 390,
       "height": 260,
       "page": false,
-      "sha256": "2c9898068d8b2c24f73ac64298050ab0fe7bfee7d1ff22edfc740e13dd013d2a"
+      "sha256": "355be28ef0a0783f70db2d312df572cb9c339bccda6b158548418c19ea2fdbc8"
     },
     "PullRefresh_Media": {
       "width": 390,
       "height": 260,
       "page": false,
-      "sha256": "f945d3f1c76007200454a19528fbb41594ae99907765f832a3065f94105969bc"
+      "sha256": "26fe1af97c2e612cf6c758bbb31d003f2c495a71e15b594da44b6516f41b5b9a"
     },
     "PullRefresh_Toxic": {
       "width": 390,
       "height": 260,
       "page": false,
-      "sha256": "943a9fe53420676cbfec76b6d201fd8c29ed70b551b4e28f25793980a843d663"
+      "sha256": "01e822d5095457f8eb91f92b5694ce0e3dbcc04df8f5a68058fa9d6d8d7e859f"
     },
     "RadioGroup_Crystal": {
       "width": 390,
@@ -796,97 +967,97 @@
       "width": 390,
       "height": 180,
       "page": false,
-      "sha256": "803f662d392532ffd1c55fc0e8818c9f9977457b3831151b0f24bdab727ef84c"
+      "sha256": "974be56ccdbc93ef681e96d2482dcd2b5c315b8136c352507f93fbe007a004dd"
     },
     "Readout_Media": {
       "width": 390,
       "height": 180,
       "page": false,
-      "sha256": "cd741188e45ce8b90bd3805be5e2881c2b58c9cc047a769b5057f2a509d6aa3a"
+      "sha256": "6545a629cf3b2678f67c26beabc27a4d207d4ca45227bb40464aea56925ae30c"
     },
     "Readout_Toxic": {
       "width": 390,
       "height": 180,
       "page": false,
-      "sha256": "e797a045e08d88be69a540a4bca6aac825577ffcd0431d5265957341285599db"
+      "sha256": "21c545dd0a2cdd4ef24259afa9ba2a32a1b0ad0e76946948891c3e27dfd2a9c7"
     },
     "SearchBar_Crystal": {
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "26606bcd21f7e08b5a67a4333963d2d2caf00e272a20bf5d29a98aa7186d5d9e"
+      "sha256": "10640f8a5900d4b5119fe0632239ffd65b95b94c14369fe1c339b50ad5aefcaa"
     },
     "SearchBar_Media": {
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "fa3954a4266dfd016cd0458fe5a7f2b4e362ffd95b8d585bfe94901555f75af0"
+      "sha256": "005a4cf108400fb8fde3d634983b49ada9ce0bf861a747184a1bf4a4aa990d1a"
     },
     "SearchBar_Toxic": {
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "5a18920a3a502dff69ca9d3647245d155d5e6e06d3c39ab94fe22a506ede45b7"
+      "sha256": "6ceba95c5df3848966e4fd74e8da3505ddbce8941279364b660259a0df9b9862"
     },
     "Segmented_Crystal": {
       "width": 390,
       "height": 80,
       "page": false,
-      "sha256": "911fb2d738fd972eaccb1f474ea5f1da3ce29ea6a077622deb2051690be87b78"
+      "sha256": "4ae2d73fda8272a608c0ac0c73a814da2d0a62f2ebb293c3ff26c9dd402f0672"
     },
     "Segmented_Media": {
       "width": 390,
       "height": 80,
       "page": false,
-      "sha256": "38bf2cffa92956852f4222f23c46d6da6c2799f6f18d05c28a86aed668288214"
+      "sha256": "03e6d9e4c3f51b83ad36be190a7be2a5f57cd61bb00685560e616ce99937fb7f"
     },
     "Segmented_Toxic": {
       "width": 390,
       "height": 80,
       "page": false,
-      "sha256": "a2acf342aa413b3c7cdfc2407d3bc88f58dc939600b8cba655c3defd3b2ebcd4"
+      "sha256": "abefa358b0a5eca5e1078a1a437cfaf7cec75eeeefc419d50d2e18d677c950ed"
     },
     "Select_Crystal": {
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "2867bca94f24a7d76cce09ad736bf964ab8cf379a8d0ee466cef103be3034720"
+      "sha256": "4fc62a48cc8cc67bcbe35d4d95a30c4dc70a55afe55c6da97d4691a97175034d"
     },
     "Select_Media": {
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "90d97f5951fc334cd5e79bb81b3b82c606072e4db6af25f8514b58891f592a9c"
+      "sha256": "70493db90d0c2292396f73d66f109f561cace8c0dd8545d8a027ce8f52157e74"
     },
     "Select_Toxic": {
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "292a49976f61fe6ad691408cabda7fe4c36370d4dc4cefe95d366330e1512c65"
+      "sha256": "d68428e7eba18a25e656143bf9a0d889f19dcfbb8d902bc37ef7fdc033f43132"
     },
     "SettingsScreen_Crystal": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "60f287e94b0e46e1ae63fd4a3075f0cf2a9b6fc2bb8d2ac360bab504a0dc849c"
+      "sha256": "5759f2cc986e397eb4ca6189450882fc7fe0a55f8809b8644fbbda564c5776c3"
     },
     "SettingsScreen_Media": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "02e7ad5ce4e71324538b192be8fcd5b755b030ae2b9f4e0378408ceb96f97bd2"
+      "sha256": "1aaf3a458caf2b70ea51539b75b7856a85581368fc2dac5f8e202bd925506fd2"
     },
     "SettingsScreen_Toxic": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "72308bc0da75599edcba8fa1db13564e3438c2a8f22b772a6da70a51c993e06c"
+      "sha256": "928cfc7175a2a2596649dd2a7763dc69f194dbdc0b16b207bb1c52cf6ee701f4"
     },
     "Skeleton_Crystal": {
       "width": 390,
       "height": 420,
       "page": false,
-      "sha256": "a911f2401c615b76ac118134d71230108858a3efe291335330a82cecdfcac2ce",
+      "sha256": "474004275bbe1359b489d21fb0a93e6e94745db2482e8a91bc38130369ce3c8c",
       "notes": [
         "no text rendered"
       ]
@@ -895,7 +1066,7 @@
       "width": 390,
       "height": 420,
       "page": false,
-      "sha256": "a78fb484c81aa5fdd0d21fd669b6dea950455523bbf29a3f9c21ac7298af8b7a",
+      "sha256": "977e87262e48a536bc1747998f767331c7130e86e5fc785a267a5f480a947068",
       "notes": [
         "no text rendered"
       ]
@@ -904,7 +1075,7 @@
       "width": 390,
       "height": 420,
       "page": false,
-      "sha256": "c93b19999774723ee3a8233873a02018a9fb3f62b13b2db66ea99d2b351316ab",
+      "sha256": "6db02314bcba8ad26004bcd0b8e44206929379fdbe5029f446e6b7af9f115302",
       "notes": [
         "no text rendered"
       ]
@@ -913,91 +1084,91 @@
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "a64babce6325675cd61f530063aa23d1c30f48289be85a4fd84e7a6ebca7c4b4"
+      "sha256": "7d65be68757aae7bf23e21831880331567441f7e6e42c4ae6bcb98e1789c3502"
     },
     "Slider_Media": {
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "8c42cc834f1aed823cf1e4560e32bf3607b13d2bc2b8b21f6ddcf4f0a7af0e7a"
+      "sha256": "aa19afb54641b47df9a24c0e8df8d28619fa9553d54c7504f5c65bdbd478d5cf"
     },
     "Slider_Toxic": {
       "width": 390,
       "height": 110,
       "page": false,
-      "sha256": "84ed2ac0456fdf8ea74fed51c4dc7aa2b0c6defedb28b889da0f9623dd03499c"
+      "sha256": "cbc6908d800a14205b82914a7ab85fc5ae94fc7f147f5b68aefc9440b193dc9e"
     },
     "Snackbar_Crystal": {
       "width": 390,
       "height": 140,
       "page": false,
-      "sha256": "cb0437e462db36f9f35e30bad52419c19ee628b2adef36f6e223aa5816ee46ae"
+      "sha256": "2e2b9767dc4d1a442f1a5435e66e837c0942878c6e9e29b766d266d52a54089d"
     },
     "Snackbar_Media": {
       "width": 390,
       "height": 140,
       "page": false,
-      "sha256": "43ad7b43593bc987b7c403ee9b0b63b910b2de06d17d7c545c381b0deca7d058"
+      "sha256": "87e0a6f5b130c2ec64e6c4c93c028fb2a07de58d9990c56e0664a3e2f389dfcb"
     },
     "Snackbar_Toxic": {
       "width": 390,
       "height": 140,
       "page": false,
-      "sha256": "b3ab295b337f93bb450bfffb998a88eaa0f358e849c4bf966b176cfbec84743a"
+      "sha256": "9a8a46e7fb5714a23378ff84f64b6e5728d6990089dd43a6eeb1faf539f0d13d"
     },
     "Spinner_Crystal": {
       "width": 390,
       "height": 130,
       "page": false,
-      "sha256": "acbb84bf7c4d7b327c20fd7f992843ab3b50b0310531423ce2939ea8813f58b9"
+      "sha256": "c94636a7fa35174a7b0573675a1e69b203aa5e540cd9f81cdac86b487ad8ad01"
     },
     "Spinner_Media": {
       "width": 390,
       "height": 130,
       "page": false,
-      "sha256": "40dd22d022f037c973324369fb6118693d1fcea9318bee69bbf72502d46ae954"
+      "sha256": "219650921ab8cd9ab07ff4240eeb10d61da7687006a6c9699e6b562a50ba5bba"
     },
     "Spinner_Toxic": {
       "width": 390,
       "height": 130,
       "page": false,
-      "sha256": "a248195b988f9654d4e216ba0894fe59856f81e1f62de216ad4bfbb5eec001cb"
+      "sha256": "b4c47c89c8cf5d6aec33e8408a9d5defa1d70a8010d1d1be955045af45bc5818"
     },
     "Stepper_Crystal": {
       "width": 390,
       "height": 150,
       "page": false,
-      "sha256": "ebf136f4c959ccdecff2a18d7c9bce582c4837f986b828c045307ea521e45b3f"
+      "sha256": "d8402822510dc88c0980bc20a3101228b0022345a69415f919c133a35ccec13a"
     },
     "Stepper_Media": {
       "width": 390,
       "height": 150,
       "page": false,
-      "sha256": "17f587b3ef1a7d4a927b88d83a953620647d59ff87744ccb5042419724c0ad6f"
+      "sha256": "99d14a45888f4164c813463e96b28d83fdec6ce2a0de22ded6bf51872ef3b494"
     },
     "Stepper_Toxic": {
       "width": 390,
       "height": 150,
       "page": false,
-      "sha256": "e9b1111c0bfd2d74a737a243a71d07111cb040d3e526d40568a99d0c478e556d"
+      "sha256": "287beb8e2aeb26285ed29c4500895b9187adace728c72bbad9aeac51d556e14c"
     },
     "SwipeRow_Crystal": {
       "width": 390,
       "height": 200,
       "page": false,
-      "sha256": "8ba98e2c9f14b15e27ba18558320feb8824c2fd6ac3fa0654dedf7965b327f6e"
+      "sha256": "3f4bf764215154ce9d45de55ebaaa58ddec345f4e9af8df07d99d1b04aba6983"
     },
     "SwipeRow_Media": {
       "width": 390,
       "height": 200,
       "page": false,
-      "sha256": "a65455e9fd7643843b7a728adc607c29df5e477b511dc4c9305fae8b5d55df80"
+      "sha256": "b7d98710500f969740333faeadc881468442e93e4acd014a545412524da734bd"
     },
     "SwipeRow_Toxic": {
       "width": 390,
       "height": 200,
       "page": false,
-      "sha256": "69a3a94862549ae4f98a4ed5fad7d89a2380b410dc3713c46ca2d998ea06f64f"
+      "sha256": "e9f9a5427e63653cd716c41e0b1e4d886104cef9331ec45c2b967c416da2022b"
     },
     "Switch_Crystal": {
       "width": 390,
@@ -1021,37 +1192,37 @@
       "width": 390,
       "height": 190,
       "page": false,
-      "sha256": "ac01ea9aff8210107df8e20a563af271a25a421ad6e58575a78aa69248954de3"
+      "sha256": "ad4097182ae137d6a8b323738fa99b6bc61d82e3ea4b3c3444aaacdf6c7a2ca2"
     },
     "Tabs_Media": {
       "width": 390,
       "height": 190,
       "page": false,
-      "sha256": "a87686a35ac18cd8b80a61c6432175b2336b462d4894c5a06f646652730e63db"
+      "sha256": "dedac3fd555d37ecb47190fd0eb06324ed496b4ec5e8aa645b98abbf85cad142"
     },
     "Tabs_Toxic": {
       "width": 390,
       "height": 190,
       "page": false,
-      "sha256": "f9ec25bc2078337d6ca17406aaa3c424a803d2cfc65715199c6d3eff25440f37"
+      "sha256": "e91c25331f554423d13900d39c68a7ae5186b8d0f9fca9e5a7e7d80757678195"
     },
     "TextField_Crystal": {
       "width": 390,
       "height": 300,
       "page": false,
-      "sha256": "75bce3fbda82cf72267051effa40dfbf44017bc18e2973656fb85917cdcd9cd9"
+      "sha256": "3729ae66eedf15cfacbc703ea3fd7900d50f16b2b9b6f3d5d63385d4fcd8f17a"
     },
     "TextField_Media": {
       "width": 390,
       "height": 300,
       "page": false,
-      "sha256": "c245a6512a53ad6848a5e48bee5df1406840494f58f33c31d6427a484204e7df"
+      "sha256": "d422944e95175439d28f80b4042028ea991c55794d57274b40c9b5bf276427d6"
     },
     "TextField_Toxic": {
       "width": 390,
       "height": 300,
       "page": false,
-      "sha256": "93f85331ea05256b33a507100ecbc4eb216f10de3e0b8e52ee491ff83cfea86f"
+      "sha256": "4e8cfc1ab5aee71b612a8027e3464ab7e9a5334a3c7660a61741c78d37a6e641"
     },
     "Tooltip_Crystal": {
       "width": 390,
@@ -1075,37 +1246,37 @@
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "76e47f8bfbf8b85bb0199af7ac072e8df152cc6dc69d71a3b17fbb18c4e6f2d5"
+      "sha256": "88e3cf4c9f75d01b61639eaa4078409417a28d9a8fadfc93453e71222f508fc7"
     },
     "TypingIndicator_Media": {
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "9959ed00baa62f77564f9c13dd5d7ac7d09820984bfd4c5a4bb35252b96a894b"
+      "sha256": "efbe123d5bb78e493e7e3412de6f0587ae35ad94dfef0ef3af8b0aa599f3c3a6"
     },
     "TypingIndicator_Toxic": {
       "width": 390,
       "height": 90,
       "page": false,
-      "sha256": "140ed3236a4047efa0371d389ef0cee4899b3d005756fe5f02af907fb793bb9a"
+      "sha256": "919b8c13512b1f6eac626c0ae6d86311e879ac6cfdd581dbdddd8f0c57c7c5b7"
     },
     "WindowBar_Crystal": {
       "width": 390,
       "height": 230,
       "page": false,
-      "sha256": "650bc5131b803f74adca99064cde3eaf071f9627a7e9809b666f5437eec70b9c"
+      "sha256": "629bed9fdde0d5207785e9cf86745dc7ae56eb3b9e0e02c2413acee920de376f"
     },
     "WindowBar_Media": {
       "width": 390,
       "height": 230,
       "page": false,
-      "sha256": "be068a7dcf273ea4842550ac173c48da12a3a362c9404c0828d713fef7aef148"
+      "sha256": "658b4c873a8eabb326e7d89285e43d40cb79c51c7eaa5acaefad21f1620cd734"
     },
     "WindowBar_Toxic": {
       "width": 390,
       "height": 230,
       "page": false,
-      "sha256": "deebaaf19ad66bf25dfc69dd7fffdc46ff9fbc5993ab2e09dc0335f29e9a08f1"
+      "sha256": "6a83d4c19f58ad1600aba378d72868b26477b18543759d3a87595e87f266e1e7"
     }
   },
   "designSystem": {
@@ -1120,6 +1291,7 @@
     "fonts: the bundled faces of B-02 in place of Tahoma / Trebuchet MS and the Google Fonts @import (research D6)",
     "prefers-reduced-motion, with the design system's own reduced-motion rule applied to every element, not only [class*=\"og-\"]",
     "frame: 390 px wide, the @dsCard height growing to fit; a page is clipped to its .phone element",
+    "html { min-height: 100% }: the body background (and its glow) spans the frame, not the content",
     "Date pinned to 2026-09-24T12:00:00"
   ]
 }

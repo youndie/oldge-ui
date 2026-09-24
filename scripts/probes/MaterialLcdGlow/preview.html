@@ -1,0 +1,13 @@
+<!-- @dsCard group="Probes" height=88 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>MaterialLcdGlow — probe</title>
+<style>.g { position: absolute; left: 16px; top: 16px; width: 160px; height: 56px; box-sizing: border-box; }
+  .v { position: absolute; left: 12px; top: 10px; font: 400 2.125rem/2.125rem var(--font-lcd); letter-spacing: .04em; color: var(--lcd-ink); text-shadow: var(--shadow-lcd-glow); white-space: nowrap; }
+  .n { text-shadow: none; }</style></head>
+<body>
+<!-- The readout's glow: the same digits with the design's text-shadow, and (right) without it. -->
+<div class="og-lcd g"><span class="v">12:47</span></div>
+<div class="og-lcd g" style="left:200px"><span class="v n">12:47</span></div>
+</body>
+</html>
