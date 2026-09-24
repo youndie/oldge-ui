@@ -101,7 +101,7 @@ ${head}
 </html>`;
 }
 
-class Cdp {
+export class Cdp {
   constructor(ws) {
     this.ws = ws;
     this.id = 0;
@@ -138,7 +138,7 @@ class Cdp {
   }
 }
 
-async function launch(chrome) {
+export async function launch(chrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome") {
   const profile = mkdtempSync(join(tmpdir(), 'oldge-refs-'));
   const proc = spawn(chrome, [
     '--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`, '--allow-file-access-from-files',

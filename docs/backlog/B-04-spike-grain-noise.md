@@ -1,7 +1,7 @@
 ---
 id: B-04
 title: "Spike: can the grain be Chrome's feTurbulence, pixel for pixel?"
-status: open
+status: done
 priority: P0
 size: S
 stage: stage-0-spikes
@@ -34,3 +34,20 @@ different noise is a faint diff over the whole reference, which is exactly what 
   as a line in `backlog.md` → "Decisions not to re-litigate".
 - Anchors: `reference/design-system/components/bundle.css` (`--og-grain-mask`),
   `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/`.
+
+## Findings (2026-09-25)
+
+- **The hypothesis holds**, with three Chrome behaviours the specification does not state (research
+  §1.3 has the table and the mutations): stitching over the filter region rounded down to whole
+  pixels, sampling at `(x + 1, y + 1)`, 8-bit quantisation before the colour matrix. Speckle exact,
+  grain within ±2; each behaviour, removed, fails the test.
+- The search was done in a numpy prototype first (seconds per variant instead of a Gradle run); the
+  Kotlin port reproduced its numbers on the first run. The prototype masked the lattice index before
+  the stitch comparison — a bug that did not matter, because the visible tile never reaches the wrap;
+  the Kotlin follows the specification.
+- Outcome for the texture switch: **on**, in both the renderer (its default) and B-08's harness —
+  recorded in `backlog.md` → "Decisions not to re-litigate".
+- The Chrome tiles are rendered by `scripts/research/noise-tiles.mjs` into
+  `snapshots/design/texture/`, beside the two SVGs read out of `bundle.css`; the test reads the
+  parameters from those SVGs. B-09's guard must skip that subdirectory: it holds no references.
+- Only the alpha is generated; drawing it as a mask over `grain` / `bezel-speckle` is B-07.

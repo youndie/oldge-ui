@@ -102,8 +102,23 @@ reference, or a reference with no component, is countable (B-09).
 every textured pixel, at low amplitude but over the whole screen — exactly the kind of diff that
 hides a real one. The SVG 1.1 specification publishes the reference implementation of
 `feTurbulence` in C, so a Kotlin port with the same seed can in principle generate the same tile.
-**Hypothesis, checked in B-04.** The fallback, if the port does not match: references and parity
-fixtures both render with texture off, and the texture is guarded by its own golden instead.
+~~Hypothesis~~ **Confirmed in B-04, with three corrections to the specification's reading.** The
+SVG 1.1 reference implementation ported to Kotlin (`oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Turbulence.kt`)
+reproduces Chrome 153's tiles: the 128 px speckle **exactly** (16,384 of 16,384 pixels), the 160 px
+grain within ±2 (25,590 of 25,600 exact, none beyond ±2). What it took, each found by measuring
+against `oldge-core/src/desktopTest/snapshots/design/texture/*_chrome.png` rather than by reading Blink:
+
+| Chrome's behaviour | What a literal port gets instead | Where verified |
+|---|---|---|
+| Stitching is over the **filter region** — the box plus 10 % a side — rounded down to whole pixels: 192 px for the grain (so 0.85 becomes 163/192), 153 px for the speckle, not 153.6 | mean error 46 of 255 at the tile's own 160 px: uncorrelated noise | `TurbulenceTileTest`; mutation `FILTER_REGION_SCALE = 1.0` → max deviation 181 / 255 |
+| The noise is sampled at `(x + 1, y + 1)` | at the pixel centre (+0.5): max deviation 216 | mutation `SAMPLE_OFFSET = 0.5` |
+| The noise is quantised to 8 bits **before** the colour matrix | the speckle's slope of 9 turns one level into nine: 434 px beyond ±2 | mutation without the quantisation |
+
+The statistics alone were never the problem: the first, misaligned port already had Chrome's mean
+(102.19 against 102.15) and share of zeros (1.42 % against 1.49 %), which is what said the algorithm
+and the seed were right and the coordinates were not. Inside the visible tile the stitching wrap is
+never reached, so the stitch itself cannot be verified from these renders — only the frequency it
+implies.
 
 ### 1.4 Depth is inset bevels, not soft shadows — and Compose 1.12 has both in common code
 
@@ -296,7 +311,8 @@ motion on (§1.2).
 
 A tile generated once per (skin, density) into an `ImageBitmap` and drawn through an `ImageShader`
 with repeat tiling: common code, deterministic, and the "pre-generated tile with density taken into
-account" the README allows. Whether the tile can be the SVG turbulence itself is B-04. *Rejected:*
+account" the README allows. **The tile is the SVG turbulence itself** — B-04 measured the port
+against Chrome (§1.3), so parity fixtures and references both render with texture on. *Rejected:*
 SkSL/AGSL — no common runtime-shader API in CMP 1.12 (§1.4), and a shader layer needs
 `viddikStableGlyphs()` around any text inside it.
 
