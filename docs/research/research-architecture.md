@@ -230,6 +230,34 @@ these are lessons it recorded in its own files, cited so they can be re-read rat
 | `androidResources { enable = true }` in every module with an Android target, or the AAR ships without its fonts, green. | `kvadrant-ui/CLAUDE.md` (B-37) |
 | AGP must be declared in the **root** build file, `apply false`, or the Compose plugin cannot see its classes. | `kvadrant-ui/build.gradle.kts` |
 
+### 1.10 What parity's residual looks like here
+
+Measured in B-08 on Divider — body text, an etched hairline, a pixel-face label, no icon — once the
+diff showed nothing but glyph edges ([parity-floor/](parity-floor/): `Divider_<Skin>_ACTUAL.png` and
+`_DIFF.png` for each skin):
+
+| Skin | mismatch (±16 per channel) |
+|---|---|
+| Toxic | **0.75 %** |
+| Media | **0.74 %** |
+| Crystal | **0.73 %** |
+
+Two causes had to go before the number meant only that, and both are now part of the library or
+the harness:
+
+| Cause | Before → after | Where |
+|---|---|---|
+| A line with a companion-face run grew from 12 px to 13 px and moved everything below it by a pixel: Compose lets the companion's metrics set the line box, CSS builds it from the element's own font and aligns the run on its baseline. `OldgeScriptText` measures the line as the design's face alone and places the joined text on that baseline. | 3.1 % → 1.16 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/ScriptText.kt` |
+| viddik's `ViddikPlatformTextStyle` turns subpixel positioning off, so every glyph's advance is rounded and a line drifts from Chrome's, which positions by subpixel on this mac. The harness keeps viddik's antialiasing and hinting pins and turns subpixel positioning on — a measured departure from kvadrant-ui's `portableTypography`. | 1.16 % → 0.74 % | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/harness/OldgeDemo.kt` |
+
+**How to read a later number.** The residual scales with the area of text, not with the component:
+Divider's 0.74 % is a floor for little text, and the LCD glow probe — large digits and nothing else
+wrong — is 3.4 % (research D8, "As built"). A fixed percentage cannot separate a wrong component
+with little text from a right one with much, so the tolerance stays at 5 % and ±16, set explicitly in
+`oldge-core/build.gradle.kts`, and **`designStrict` is off**: parity is a report, and every
+component item compares its `_DIFF` with these images — red that is not on glyph edges is a finding,
+whatever the percentage says.
+
 ## 2. Decisions
 
 ### D1. `Oldge` in every identifier

@@ -1,7 +1,7 @@
 ---
 id: B-08
 title: "The parity harness, and the floor measured on Divider"
-status: open
+status: done
 priority: P0
 size: M
 stage: stage-1-core
@@ -38,3 +38,18 @@ done, and every later number is read against it.
 - AC: research §1.10 exists, names the floor per skin, and shows the `_DIFF` images.
 - Anchors: `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/harness/OldgeDemo.kt`, `reference/design-system/components/Divider/preview.html`,
   `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/Divider.kt`, `oldge-core/build.gradle.kts`.
+
+## Findings (2026-09-25)
+
+- The floor, per skin, and its two removed causes are research §1.10; the images are in
+  `docs/research/parity-floor/`.
+- Fixture sizes are copied into the annotation (it takes constants) and held by `FixtureSizeTest`
+  against `design/manifest.json` through viddik's generated registry; a Divider height changed to
+  150 fails it naming the stem.
+- `OldgeScriptText` is new library code, not harness: every lcd and pixel text needs it (a readout,
+  a tag, a label), which the components of stage 2 will use.
+- The Divider's `2px` is two 1 dp hairlines (`HAIRLINE * 2`): `NoTokenLiteralsTest` flagged the
+  literal because it equals `radius-xs`, and saying what it is was the fix, not an exemption.
+- Token table: hairlines `colors.line` over `colors.gloss`; margin `spacing.space2`; label gap
+  `spacing.space2`, style `type.pixelTag` in `colors.inkMuted`, upper-cased; demo column padding
+  `spacing.space4`, gap `spacing.space3`, text `type.body` in `colors.ink`.

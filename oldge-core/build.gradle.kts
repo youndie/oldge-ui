@@ -70,6 +70,14 @@ compose.resources {
 
 viddik {
     verifyOnCheck.set(true)
+    // Design parity (research §1.10). The floor — what "only glyph edges" measures here — is 0.73–0.75 %
+    // on Divider, a component with little text; a probe of large LCD digits is 3.4 % with nothing but
+    // text wrong. One percentage cannot tell a broken component with little text from a correct one
+    // with much, so the tolerance stays at viddik's 5 %, written here to say it was chosen, and parity
+    // stays a report: every component item reads its number against the floor in its commit body.
+    designTolerancePercent.set(5.0)
+    designChannelTolerance.set(16)
+    designStrict.set(false)
 }
 
 // B-05. The token layer is generated from the vendored tokens.json and committed; this fails `check`
