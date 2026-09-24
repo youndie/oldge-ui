@@ -1,7 +1,7 @@
 ---
 id: B-01
 title: "Skeleton: modules, targets, the sborka conventions, viddik, one gate"
-status: open
+status: done
 priority: P0
 size: M
 stage: stage-1-core
@@ -47,3 +47,15 @@ paid for: copy its wiring, not its history (research §1.9).
   prints) green.
 - Anchors: `settings.gradle.kts`, `build.gradle.kts`, `oldge-core/build.gradle.kts`,
   `kvadrant-ui/settings.gradle.kts`, `kvadrant-ui/kvadrant-core/build.gradle.kts`.
+
+## Findings (2026-09-25)
+
+- #44 reproduced before the workaround: `./gradlew build` failed on `kspCommonMainKotlinMetadata`'s
+  output with every per-target KSP and compile task named. Ordering compilation alone then failed
+  ktlint's commonMain check the same way; the final rule is in `oldge-core/build.gradle.kts` and
+  `docs/services/oldge-core.md` §6.
+- `wasmJs` needs `binaries.executable()` for the Compose plugin's own check (CMP-4906), library or
+  not.
+- `sample`'s `main` needs `public` and a return type: sborka's explicit API applies to every module.
+- The canary stays (`OldgeCanary`, `Canary_Square`) until B-09 guards the set; a 1-unit channel
+  mutation passed `check` (±2 tolerance), a real colour change failed it with 576/576 px.

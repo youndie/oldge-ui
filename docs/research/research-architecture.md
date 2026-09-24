@@ -278,7 +278,13 @@ SkSL/AGSL — no common runtime-shader API in CMP 1.12 (§1.4), and a shader lay
 0.6.0's record-only-what-fails and glyph check are worth having from the first golden. Its #44 bug
 is worked around in `oldge-core/build.gradle.kts` by ordering the per-target KSP tasks after
 `kspCommonMainKotlinMetadata` — what the plugin itself does when `showroomTargets` is on — with a
-comment naming the issue, removed when 0.6.1 ships (B-35). *Rejected:* 0.5.0 — it would have to be
+comment naming the issue, removed when 0.6.1 ships (B-35).
+
+*Amended in B-01:* ordering the per-target KSP tasks was not enough. Every task that reads commonMain
+fails the same way — the compile tasks, and then ktlint's commonMain check, which is not a
+`SourceTask` — so the workaround orders KSP, compilation, `SourceTask`s and ktlint's tasks by name.
+It is wider than the plugin's own ordering because the plugin only needs to cover the tasks that
+run when the directory is real; here it is real for nobody and read by everything. *Rejected:* 0.5.0 — it would have to be
 re-recorded against on the bump anyway, and it lacks #30, so every record rewrites every golden.
 
 ### D10. Targets: desktop, Android, iOS, wasm — and the suite is desktop

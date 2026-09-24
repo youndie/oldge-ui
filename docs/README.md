@@ -53,3 +53,7 @@ person — the machine only guards the membership.
 ### Research (1)
 
 - [x] [research-architecture](research/research-architecture.md) — what the design system is, what can and cannot be shipped as specified (fonts), how references are rendered, the toolchain, decisions D1–D10, risks
+
+### Services (1/1)
+
+- [x] [oldge-core](services/oldge-core.md) — the library module: targets, the two catalogs, the suite, the viddik #44 workaround
