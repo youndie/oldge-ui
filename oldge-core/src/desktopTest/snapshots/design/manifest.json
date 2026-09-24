@@ -1,0 +1,1125 @@
+{
+  "references": {
+    "Accordion_Crystal": {
+      "width": 390,
+      "height": 340,
+      "page": false,
+      "sha256": "ac2497973e02c0da27f4ac59ae58a5c1f7e3fbb5a60bacc49a8941ede153c0fb"
+    },
+    "Accordion_Media": {
+      "width": 390,
+      "height": 340,
+      "page": false,
+      "sha256": "9acb8df6ebb1ec591b16c20305bcacac47fa06de6c3088d4bbffad810b3bf9e4"
+    },
+    "Accordion_Toxic": {
+      "width": 390,
+      "height": 340,
+      "page": false,
+      "sha256": "64644b951ccfe456f91457d5009649858c4793a825316694d9f9c8ac5e3ce844"
+    },
+    "ActionTile_Crystal": {
+      "width": 390,
+      "height": 310,
+      "page": false,
+      "sha256": "8240ce6e4832851c779a5f7a014d653eabd5b41b2d8285fb0070d09cd0bf52ad"
+    },
+    "ActionTile_Media": {
+      "width": 390,
+      "height": 310,
+      "page": false,
+      "sha256": "8549df7fa9675cd3853fe9a496323b7c423e4c0373e6a9692c66637f85e03ba7"
+    },
+    "ActionTile_Toxic": {
+      "width": 390,
+      "height": 310,
+      "page": false,
+      "sha256": "49784ba71250403f229f46a77497aae883c3e781b5f89efc050dcfa882f5becc"
+    },
+    "AuthScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "4d6b7c35c3ac7b308e21f3e8928882eb37208b91a696134ea56a0d174dfe1f52"
+    },
+    "AuthScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "118d59bd0dd74d0b332ca4053631f52fbfc4a0e8fa7274a3099bd4bccfb5199e"
+    },
+    "AuthScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "6313379c2948348f336573c63955335989183db741f15cf048d1e41c7314ff1a"
+    },
+    "Avatar_Crystal": {
+      "width": 390,
+      "height": 100,
+      "page": false,
+      "sha256": "ccf6ea8c0030e55498fed73a68e79f1cdb1057932143a55ea6448fc972f7ee05"
+    },
+    "Avatar_Media": {
+      "width": 390,
+      "height": 100,
+      "page": false,
+      "sha256": "d482abcc71f5a272393cc80f0932c915c8a0b01ef1467f83ce9f9fa94bf74691"
+    },
+    "Avatar_Toxic": {
+      "width": 390,
+      "height": 100,
+      "page": false,
+      "sha256": "305c39876d8bd61609ed54acd63657b033765efc3c311e6c49805daadf2a8288"
+    },
+    "Badge_Crystal": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "7abd6a1fa376d0d329719ce9f4df63f1aae9c38d32ff2e920e3696dae2d51d93"
+    },
+    "Badge_Media": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "357423a9fd4501119bc16e4a6a068ef09f9354cc8fac4d9fa93796453807abe4"
+    },
+    "Badge_Toxic": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "5bd93525fed48f57cba040151544a0c0f64d4f3c4f51265b9a99ef902562554d"
+    },
+    "Balloon_Crystal": {
+      "width": 390,
+      "height": 222,
+      "page": false,
+      "sha256": "947ef49b64c668c8a98c2dbbf6bff9b5fb358caf65d4da0e098b4b932910dfd2"
+    },
+    "Balloon_Media": {
+      "width": 390,
+      "height": 222,
+      "page": false,
+      "sha256": "7786313ee2341fdd6ba0c813d3d7069ae114b1e83ef74f59dbebe5e8d2c8e8cb"
+    },
+    "Balloon_Toxic": {
+      "width": 390,
+      "height": 222,
+      "page": false,
+      "sha256": "62863960e544aba2dd0409f56d17e87d75f365930cf7162e401ccfe2b2a18c9c"
+    },
+    "Banner_Crystal": {
+      "width": 390,
+      "height": 170,
+      "page": false,
+      "sha256": "b6c5386542944f669e90f1653e9c97e96f6bd2ab090b005739d48e4a775fe343"
+    },
+    "Banner_Media": {
+      "width": 390,
+      "height": 170,
+      "page": false,
+      "sha256": "0ab446456553257b7f543f16dfb483ebabc3f77dbfdba78f33b6af40e70100c8"
+    },
+    "Banner_Toxic": {
+      "width": 390,
+      "height": 170,
+      "page": false,
+      "sha256": "3108b1ec02346d81dff405885f952de9517b7bfc32144321c453539af5541ee1"
+    },
+    "BottomNav_Crystal": {
+      "width": 390,
+      "height": 100,
+      "page": false,
+      "sha256": "a507ff06255b0f2ebdd92e0426c3fb67c27666d5adfb395573cf1fefd69efa17"
+    },
+    "BottomNav_Media": {
+      "width": 390,
+      "height": 100,
+      "page": false,
+      "sha256": "95b4e334e69ba91729ce556803c605d5d03e0bf1c47fbf2cbaf3984766a87a82"
+    },
+    "BottomNav_Toxic": {
+      "width": 390,
+      "height": 100,
+      "page": false,
+      "sha256": "7456fed44fb9179731fd45e9c319c15d5cc7eae4f1bbc693052040c96224e823"
+    },
+    "BottomSheet_Crystal": {
+      "width": 390,
+      "height": 330,
+      "page": false,
+      "sha256": "c784b49bacc540ce2a215f69b67e99879537594e5bc233a556bb696237797102"
+    },
+    "BottomSheet_Media": {
+      "width": 390,
+      "height": 330,
+      "page": false,
+      "sha256": "37d7fd155d0ba1a781505ec0864f06b21515ffe93913cf06f3b145f2d6dbf519"
+    },
+    "BottomSheet_Toxic": {
+      "width": 390,
+      "height": 330,
+      "page": false,
+      "sha256": "d3557989fed80ff004d9c7a21c8a8ba52702786726437de16f6a9506eb06bf28"
+    },
+    "Button_Crystal": {
+      "width": 390,
+      "height": 200,
+      "page": false,
+      "sha256": "b84f5e9392fa47338f42db3f501154e81ca98683fba85a847ed3afc9187478a6"
+    },
+    "Button_Media": {
+      "width": 390,
+      "height": 200,
+      "page": false,
+      "sha256": "25bc442d07c296efe02380b6c88c4cdff333cc314a030f17d5ffa2a929ece18a"
+    },
+    "Button_Toxic": {
+      "width": 390,
+      "height": 200,
+      "page": false,
+      "sha256": "c7deca58949ef34b8217b4e81e26fa5b6ae19acf125c328ede324336ec28e198"
+    },
+    "Card_Crystal": {
+      "width": 390,
+      "height": 546,
+      "page": false,
+      "sha256": "753cc6661ce4625e8a11969acd6b95c60acdc81350296f9c6a714f28c5b8d4a0"
+    },
+    "Card_Media": {
+      "width": 390,
+      "height": 546,
+      "page": false,
+      "sha256": "7ab1cad91479d92942dc7b56b82b06efb659842ed52ea899ecacded03727eeb2"
+    },
+    "Card_Toxic": {
+      "width": 390,
+      "height": 546,
+      "page": false,
+      "sha256": "1b0c3dee5c2097795efb401c5b780ec8709a7e844f0f49526768a0637bcb6211"
+    },
+    "CategoryTabs_Crystal": {
+      "width": 390,
+      "height": 130,
+      "page": false,
+      "sha256": "cbcda8f1aed1cf11cbf65936a1941c18c380770f0ed867c4ca65446f660c4860"
+    },
+    "CategoryTabs_Media": {
+      "width": 390,
+      "height": 130,
+      "page": false,
+      "sha256": "e7eaa4b9f96592184caf151737e928da524f5e5cc0224f3420c37a11ecbc3e4b"
+    },
+    "CategoryTabs_Toxic": {
+      "width": 390,
+      "height": 130,
+      "page": false,
+      "sha256": "b63e8f65d65dd2273fdb93359c4be28d2320ac8f9ac80067c6dde794f51e63c2"
+    },
+    "ChatBubble_Crystal": {
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "0e60b103d5e066812bfdc46262b9f9de15dbe5a49284b0790ccbceea84a508fd"
+    },
+    "ChatBubble_Media": {
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "2f27304daecb2584f028a7c6430e216aecbafbf28da3c6c8c16df15da63a62cd"
+    },
+    "ChatBubble_Toxic": {
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "9fdc1b55e33c8d2038c6663e0616839a8283dcaea738a9ef54ae30da23e71c27"
+    },
+    "ChatScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "0a681a54beda6bc2bf83a4165e09b69061e78a8b6888ed861010fb5f99825515"
+    },
+    "ChatScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "5ecf3635c17e4b27a4c6edea7027485faa976ff17731bd2ebabbb1d29d2ed7a3"
+    },
+    "ChatScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "ab8a0c29112413d4a76895044f974e1881275333b680d044648dc8c8d58805c6"
+    },
+    "Checkbox_Crystal": {
+      "width": 390,
+      "height": 188,
+      "page": false,
+      "sha256": "9fd4d6dbc582980bd4da1555428ab00e3b681ebc559e3df4fb731719232bdc6a"
+    },
+    "Checkbox_Media": {
+      "width": 390,
+      "height": 188,
+      "page": false,
+      "sha256": "0ca5546ab5dd03a023d36d51174cfdf862177e0bb621c56d1319dfebb5ffd3af"
+    },
+    "Checkbox_Toxic": {
+      "width": 390,
+      "height": 188,
+      "page": false,
+      "sha256": "bd884f93f8fb5e3ab4a234f1756a5d6fb4df88d2680cc2795635cb203e83f6aa"
+    },
+    "Chip_Crystal": {
+      "width": 390,
+      "height": 156,
+      "page": false,
+      "sha256": "eee40b9b048907d0bdb4375856e133650871bcc3e60681dbe7018b59343bfdb9"
+    },
+    "Chip_Media": {
+      "width": 390,
+      "height": 156,
+      "page": false,
+      "sha256": "eec3bffe7a98b27fdd360e829f3b4f2153cb3b1c50607ba52cdf46510c9914f0"
+    },
+    "Chip_Toxic": {
+      "width": 390,
+      "height": 156,
+      "page": false,
+      "sha256": "578472fc2dd8273e5bcee684ee79f7419fa9b8d915230f24bfa6c8d7b0ff12df"
+    },
+    "CodeInput_Crystal": {
+      "width": 390,
+      "height": 248,
+      "page": false,
+      "sha256": "a0e7aa731077736c5512f3528608422150584e5c220955e4795b340809bc18ed"
+    },
+    "CodeInput_Media": {
+      "width": 390,
+      "height": 248,
+      "page": false,
+      "sha256": "b4d4889dddc50c3b8e976d0e535452ce9a5fa4747687ff00c85a3a57ac49f38d"
+    },
+    "CodeInput_Toxic": {
+      "width": 390,
+      "height": 248,
+      "page": false,
+      "sha256": "5a30e18ed2266979f96d7725703439d449acb5ed7a6d99cc6ac37ac9e4dabc8f"
+    },
+    "Composer_Crystal": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "4cd6767f95b8f277a6aac9f1e0a0b4d32fa5ed3d5bc4a49a2fc82521f4dbf3e6",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "Composer_Media": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "dcd2aa2e0a60a81f5a5cba5a4dacdac592383e44e911282d85601b1bcf2b94ef",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "Composer_Toxic": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "cc2cba3bcbb7fc3586fff725463b4c132e082c04883af9bfe008006bcce7f839",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "DatePicker_Crystal": {
+      "width": 390,
+      "height": 370,
+      "page": false,
+      "sha256": "43b545fd3751fc5239171a323bc9bc1e2d8ec12d8cf74bcdb69a436879f40bc1",
+      "notes": [
+        "Date pinned to 2026-09-24T12:00:00"
+      ]
+    },
+    "DatePicker_Media": {
+      "width": 390,
+      "height": 370,
+      "page": false,
+      "sha256": "f8e243021655cc9b474be29dfaa27454dabd8e4544e1cce2ceaa07b750e7d73d",
+      "notes": [
+        "Date pinned to 2026-09-24T12:00:00"
+      ]
+    },
+    "DatePicker_Toxic": {
+      "width": 390,
+      "height": 370,
+      "page": false,
+      "sha256": "b889c3bc22f5acf152ccb553bb0cf7d6344aec39aef1bb0ca467869416489c1c",
+      "notes": [
+        "Date pinned to 2026-09-24T12:00:00"
+      ]
+    },
+    "Dialog_Crystal": {
+      "width": 390,
+      "height": 270,
+      "page": false,
+      "sha256": "0af3117ea7da5d0123240ed5185ee4e66c9fee87812195d237b23c59b5ceafb6"
+    },
+    "Dialog_Media": {
+      "width": 390,
+      "height": 270,
+      "page": false,
+      "sha256": "c3f929a98d6f1b50fd302a413d27d25d3a126e4311575da01498cddcced4a44f"
+    },
+    "Dialog_Toxic": {
+      "width": 390,
+      "height": 270,
+      "page": false,
+      "sha256": "5ee1e5e2037ad4821345c4cafb8a808c31dd1e954b4a643162361bcd6187e462"
+    },
+    "Divider_Crystal": {
+      "width": 390,
+      "height": 154,
+      "page": false,
+      "sha256": "9f106e2cf8a3263a36e6ac7f80a2f4413502c9b7edd32f24be4a29cd0c2e4e94"
+    },
+    "Divider_Media": {
+      "width": 390,
+      "height": 154,
+      "page": false,
+      "sha256": "8aa1421434cb5d360749afc9c7152a6cf45c0b1c3ca8346583eb5125ebb00358"
+    },
+    "Divider_Toxic": {
+      "width": 390,
+      "height": 154,
+      "page": false,
+      "sha256": "ae4a307bb412313c9f9395d53d86ca3ef46fa65de946df5e8b9297f199ee9350"
+    },
+    "EdgeNarrow_Crystal": {
+      "width": 320,
+      "height": 680,
+      "page": true,
+      "sha256": "df9519fea1da64a5600a84c6917c9ead7dd5942c214cc081abe2d143896ffc78"
+    },
+    "EdgeNarrow_Media": {
+      "width": 320,
+      "height": 680,
+      "page": true,
+      "sha256": "86de79a80f6e5a4c912980d38bcad390826686903c48e5f1a602047a49f54d82"
+    },
+    "EdgeNarrow_Toxic": {
+      "width": 320,
+      "height": 680,
+      "page": true,
+      "sha256": "7572b5610be91c0565a2af6932bcf3278c5d52eb1c4fb6ae14928b941848f84e"
+    },
+    "EdgeScale_Crystal": {
+      "width": 390,
+      "height": 860,
+      "page": true,
+      "sha256": "c3d3b64f3eeb7556bef23b880cbe6f4e14236b5ebb5fa7697918f3894200e219"
+    },
+    "EdgeScale_Media": {
+      "width": 390,
+      "height": 860,
+      "page": true,
+      "sha256": "d8bddf2b87a3868984265f338d5988f968930f0def171df3d37067748cf2e0f5"
+    },
+    "EdgeScale_Toxic": {
+      "width": 390,
+      "height": 860,
+      "page": true,
+      "sha256": "17f18892213462292531282c3870e0993862ed36f88519ce5fbf18f66660b9ff"
+    },
+    "EmptyState_Crystal": {
+      "width": 390,
+      "height": 560,
+      "page": false,
+      "sha256": "94b97a26d039962640757c61087114150e4c801b0fddf69d39a3fcd108507bac"
+    },
+    "EmptyState_Media": {
+      "width": 390,
+      "height": 560,
+      "page": false,
+      "sha256": "288e762b9e40106689df125c83ea3fff252d9abbe1277f2d5494fe9080a13082"
+    },
+    "EmptyState_Toxic": {
+      "width": 390,
+      "height": 560,
+      "page": false,
+      "sha256": "dcc8919c55a07e7617ef7119bdb5eb087c7b91c872de895b003786ee7f74c1ed"
+    },
+    "Fab_Crystal": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "6dbbdfd087fade367b117fae248da322dde73d9bdd4936a25b469a60c8441b74"
+    },
+    "Fab_Media": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "a31a9ca90ba95c00b536065f534c217b9cf057b94ecb24edfa53529056dd8cbd"
+    },
+    "Fab_Toxic": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "638c5a74ea1d9af14e24f52e6d09109c529976641db286381a26c99c37991375"
+    },
+    "FeedScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "9d1b6555dcb7e4e4fa15d913d35ae3e28aba57f29fbe50400c8837cee09c5a53"
+    },
+    "FeedScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "1628bdf2ac8b3d12eb5c95e3f0b9bc3dde3ed333541f5af764eb27c86b46664b"
+    },
+    "FeedScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "43263035d57b6bde0c2e8d36e3eb0acde52985d8b1d5bedae5bd0cca0a79a81b"
+    },
+    "Icon_Crystal": {
+      "width": 390,
+      "height": 580,
+      "page": false,
+      "sha256": "c78a8ba2dc881ea3760f5a1e960e0fc954b44dc55731831a8ad930e959371f8f"
+    },
+    "Icon_Media": {
+      "width": 390,
+      "height": 580,
+      "page": false,
+      "sha256": "54c38837ece4333e4494d72a28bae0bb28a0713e6b63ac91d96624c320f8e3ca"
+    },
+    "Icon_Toxic": {
+      "width": 390,
+      "height": 580,
+      "page": false,
+      "sha256": "fa4c74b7d837398433ac55e0dea4ae8eafa0a5b513d13155c8bd0238eb6c650d"
+    },
+    "InboxScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "e1e920bab64e7a027c7556af35a6ce91cab2b1e693682dcca6b9acf4f04366b6"
+    },
+    "InboxScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "96854ba64ed885510295b37b4449861363f4c8cdf624365740b1afd9faacde74"
+    },
+    "InboxScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "2c6aa1a0ec2f3eeb3ba063391fdc895a41931e08ae61daf71622cbffbaeeab0b"
+    },
+    "Launcher_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "46b7c1798f4100482116fde29dc7ab358affd177f6eaf04ca9e4599cfb2e1065"
+    },
+    "Launcher_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "96b3fa7a4a618b5003a0d7193fa3034e8843cbdba96d54d9029eb4c26a51548f"
+    },
+    "Launcher_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "a9ff000bb0bee45faa71a6691c4592b6c92545e2e1a5bca75ffcfe324ec4036b"
+    },
+    "List_Crystal": {
+      "width": 390,
+      "height": 300,
+      "page": false,
+      "sha256": "a6453ed5d11180b983244280339e8cfd68de6460f6f160fc0e5a8071350c9323"
+    },
+    "List_Media": {
+      "width": 390,
+      "height": 300,
+      "page": false,
+      "sha256": "f50e0b3dcf338b70e59b6d0ca63bfe80750a9e0e3bfd74fbcdd334c7859d2633"
+    },
+    "List_Toxic": {
+      "width": 390,
+      "height": 300,
+      "page": false,
+      "sha256": "eb7fd5f557f662c4755e397311682b7deca6740294cd9219018c02d3244db879"
+    },
+    "ListItem_Crystal": {
+      "width": 390,
+      "height": 138,
+      "page": false,
+      "sha256": "4d354f4b7ac83bc3ba3315296b4131c0440e08f7bc5d8f7602a22d19d60f8d9b"
+    },
+    "ListItem_Media": {
+      "width": 390,
+      "height": 138,
+      "page": false,
+      "sha256": "90a789d130c2d69ac5403a5f109483c6c961edd8932db40a6a4bb98b59f134aa"
+    },
+    "ListItem_Toxic": {
+      "width": 390,
+      "height": 138,
+      "page": false,
+      "sha256": "5fdf985eb82c8bb99e6c99d7e33df40c6763e95f89693d9966da2bde6e31c0e3"
+    },
+    "ListSection_Crystal": {
+      "width": 390,
+      "height": 300,
+      "page": false,
+      "sha256": "4f3c485c7610f250dac96e58197b52f4bf68984281aaeb5f65a691dc9ca6f9e9"
+    },
+    "ListSection_Media": {
+      "width": 390,
+      "height": 300,
+      "page": false,
+      "sha256": "ca6023f9e62e3f7ff0ec7be441fd120021055bd3247937f0f7e9a7b69909f7f6"
+    },
+    "ListSection_Toxic": {
+      "width": 390,
+      "height": 300,
+      "page": false,
+      "sha256": "8fb1813327d3c0fa6a719df25e1c3419c85fcf494eb0e0871dcb24eb8fe7699b"
+    },
+    "MediaScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "e9ea8ce50dc957d0de6f1b4e7bb890d6bf17463423cc870404ed5d513ca6a326"
+    },
+    "MediaScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "fa0e6cadc822b65dc71bd06702db130676cdd20a35479b55a2cfe488f3ce63af"
+    },
+    "MediaScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "ed0f52f0a5ff905636c3bec3ffb507fbe06180098aafcfcf4cd547a0c2f59208"
+    },
+    "Menu_Crystal": {
+      "width": 390,
+      "height": 330,
+      "page": false,
+      "sha256": "e655e9404f200478cb42032dba339343b6bc0a9f5a827a7030bd92d9764fda48"
+    },
+    "Menu_Media": {
+      "width": 390,
+      "height": 330,
+      "page": false,
+      "sha256": "281d5e4f1046f5d0203ca8cdd8e4ad311ff01c5b546a8a0c89427bfbd391ef7f"
+    },
+    "Menu_Toxic": {
+      "width": 390,
+      "height": 330,
+      "page": false,
+      "sha256": "59765d3a5bb4cdf188efdd2abff9313f147f614e812211ce3968c3d4f12bca70"
+    },
+    "Meter_Crystal": {
+      "width": 390,
+      "height": 218,
+      "page": false,
+      "sha256": "319ef723507eafbde7495fd158d3a7a7763252ed5b0f7ebea0d2fa470ea930b8"
+    },
+    "Meter_Media": {
+      "width": 390,
+      "height": 218,
+      "page": false,
+      "sha256": "2f3e7d4505c252102bf980a0c6e757fc914ff12a7d689f70269e89e6bb621ec6"
+    },
+    "Meter_Toxic": {
+      "width": 390,
+      "height": 218,
+      "page": false,
+      "sha256": "269c94ad0879e3c356ee4d74769bf2c86e3ecdadd5ac731aa3f35e7798ed29b8"
+    },
+    "NavDrawer_Crystal": {
+      "width": 390,
+      "height": 520,
+      "page": false,
+      "sha256": "08c51cd94ae533570945fce3cc3a79bdfd0528af0b15226dc5afcdedb3227580"
+    },
+    "NavDrawer_Media": {
+      "width": 390,
+      "height": 520,
+      "page": false,
+      "sha256": "7ed70d21bece20b453ef997e9fd94fd8635574e86d0216eb7f48b8097f6d1c48"
+    },
+    "NavDrawer_Toxic": {
+      "width": 390,
+      "height": 520,
+      "page": false,
+      "sha256": "756bbb1004fdb1b524c6fc879595be162bb5b25b0771a322f6b1ad7e5e25b47c"
+    },
+    "OrbButton_Crystal": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "52d4cf12aee7ce1d5817309a4786416b8004829c901bf963d4e42183f6b78696",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "OrbButton_Media": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "80bab622000842bddb1699e1796f17e80197218868efcb19185ca099d3296408",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "OrbButton_Toxic": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "59d9cbbe229341cf46e80db92f4ab423a5bb42d863302a4073dff7e3ff855702",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "PageDots_Crystal": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "f44eab6de723ed85cbb86295a570c79b2a291441dc7fe653b64676bbbf760369",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "PageDots_Media": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "50d1092bd5a6f24aa6a755e688cbe48030985063674342a58746d7c0a05f27e1",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "PageDots_Toxic": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "8796bf8ee5e3ab61aa300fb175646acf2ae3d02493476e3913a080896f7da584",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "Panel_Crystal": {
+      "width": 390,
+      "height": 246,
+      "page": false,
+      "sha256": "c1a76b5308cc07ab33682a6474bf072904638645bc81d63b482a7014620262cb"
+    },
+    "Panel_Media": {
+      "width": 390,
+      "height": 246,
+      "page": false,
+      "sha256": "be1644811da4383909cb0eb805b38c50943d7cf0e2ccf583dca9974364374022"
+    },
+    "Panel_Toxic": {
+      "width": 390,
+      "height": 246,
+      "page": false,
+      "sha256": "af2ff7d72a6ca5b3aa3ff1627123938b1d18b202f5731fe2566e4b7ed89142c7"
+    },
+    "ProgressBar_Crystal": {
+      "width": 390,
+      "height": 290,
+      "page": false,
+      "sha256": "ca301faf5b208ae58fb685d93d8640e6a081c18c172d42e67b00ed545ad73deb"
+    },
+    "ProgressBar_Media": {
+      "width": 390,
+      "height": 290,
+      "page": false,
+      "sha256": "f67eed0f31c80661ae28b6b4549730b2ff3fdae68577d393fb04efe4a21b23c4"
+    },
+    "ProgressBar_Toxic": {
+      "width": 390,
+      "height": 290,
+      "page": false,
+      "sha256": "cf0b3cc808ff170e423cc38acf1d0eed291d2abd3ec912b37677ed965381973e"
+    },
+    "PullRefresh_Crystal": {
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "2c9898068d8b2c24f73ac64298050ab0fe7bfee7d1ff22edfc740e13dd013d2a"
+    },
+    "PullRefresh_Media": {
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "f945d3f1c76007200454a19528fbb41594ae99907765f832a3065f94105969bc"
+    },
+    "PullRefresh_Toxic": {
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "943a9fe53420676cbfec76b6d201fd8c29ed70b551b4e28f25793980a843d663"
+    },
+    "RadioGroup_Crystal": {
+      "width": 390,
+      "height": 182,
+      "page": false,
+      "sha256": "fd83e2a192bc974af27768a071f45432e10c65d6cc13c6c9fc9f1f6bacd61e3b"
+    },
+    "RadioGroup_Media": {
+      "width": 390,
+      "height": 182,
+      "page": false,
+      "sha256": "66ac7f795d508fa87f6134a4d057d5c98fccad9536afa177c0cae02b7c432777"
+    },
+    "RadioGroup_Toxic": {
+      "width": 390,
+      "height": 182,
+      "page": false,
+      "sha256": "9d83a8b6fcbb06b592628ff0dbf2436ab0c0d8dd51c0e519b12de26adfa7a69f"
+    },
+    "Readout_Crystal": {
+      "width": 390,
+      "height": 180,
+      "page": false,
+      "sha256": "803f662d392532ffd1c55fc0e8818c9f9977457b3831151b0f24bdab727ef84c"
+    },
+    "Readout_Media": {
+      "width": 390,
+      "height": 180,
+      "page": false,
+      "sha256": "cd741188e45ce8b90bd3805be5e2881c2b58c9cc047a769b5057f2a509d6aa3a"
+    },
+    "Readout_Toxic": {
+      "width": 390,
+      "height": 180,
+      "page": false,
+      "sha256": "e797a045e08d88be69a540a4bca6aac825577ffcd0431d5265957341285599db"
+    },
+    "SearchBar_Crystal": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "26606bcd21f7e08b5a67a4333963d2d2caf00e272a20bf5d29a98aa7186d5d9e"
+    },
+    "SearchBar_Media": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "fa3954a4266dfd016cd0458fe5a7f2b4e362ffd95b8d585bfe94901555f75af0"
+    },
+    "SearchBar_Toxic": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "5a18920a3a502dff69ca9d3647245d155d5e6e06d3c39ab94fe22a506ede45b7"
+    },
+    "Segmented_Crystal": {
+      "width": 390,
+      "height": 80,
+      "page": false,
+      "sha256": "911fb2d738fd972eaccb1f474ea5f1da3ce29ea6a077622deb2051690be87b78"
+    },
+    "Segmented_Media": {
+      "width": 390,
+      "height": 80,
+      "page": false,
+      "sha256": "38bf2cffa92956852f4222f23c46d6da6c2799f6f18d05c28a86aed668288214"
+    },
+    "Segmented_Toxic": {
+      "width": 390,
+      "height": 80,
+      "page": false,
+      "sha256": "a2acf342aa413b3c7cdfc2407d3bc88f58dc939600b8cba655c3defd3b2ebcd4"
+    },
+    "Select_Crystal": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "2867bca94f24a7d76cce09ad736bf964ab8cf379a8d0ee466cef103be3034720"
+    },
+    "Select_Media": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "90d97f5951fc334cd5e79bb81b3b82c606072e4db6af25f8514b58891f592a9c"
+    },
+    "Select_Toxic": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "292a49976f61fe6ad691408cabda7fe4c36370d4dc4cefe95d366330e1512c65"
+    },
+    "SettingsScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "60f287e94b0e46e1ae63fd4a3075f0cf2a9b6fc2bb8d2ac360bab504a0dc849c"
+    },
+    "SettingsScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "02e7ad5ce4e71324538b192be8fcd5b755b030ae2b9f4e0378408ceb96f97bd2"
+    },
+    "SettingsScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "72308bc0da75599edcba8fa1db13564e3438c2a8f22b772a6da70a51c993e06c"
+    },
+    "Skeleton_Crystal": {
+      "width": 390,
+      "height": 420,
+      "page": false,
+      "sha256": "a911f2401c615b76ac118134d71230108858a3efe291335330a82cecdfcac2ce",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "Skeleton_Media": {
+      "width": 390,
+      "height": 420,
+      "page": false,
+      "sha256": "a78fb484c81aa5fdd0d21fd669b6dea950455523bbf29a3f9c21ac7298af8b7a",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "Skeleton_Toxic": {
+      "width": 390,
+      "height": 420,
+      "page": false,
+      "sha256": "c93b19999774723ee3a8233873a02018a9fb3f62b13b2db66ea99d2b351316ab",
+      "notes": [
+        "no text rendered"
+      ]
+    },
+    "Slider_Crystal": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "a64babce6325675cd61f530063aa23d1c30f48289be85a4fd84e7a6ebca7c4b4"
+    },
+    "Slider_Media": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "8c42cc834f1aed823cf1e4560e32bf3607b13d2bc2b8b21f6ddcf4f0a7af0e7a"
+    },
+    "Slider_Toxic": {
+      "width": 390,
+      "height": 110,
+      "page": false,
+      "sha256": "84ed2ac0456fdf8ea74fed51c4dc7aa2b0c6defedb28b889da0f9623dd03499c"
+    },
+    "Snackbar_Crystal": {
+      "width": 390,
+      "height": 140,
+      "page": false,
+      "sha256": "cb0437e462db36f9f35e30bad52419c19ee628b2adef36f6e223aa5816ee46ae"
+    },
+    "Snackbar_Media": {
+      "width": 390,
+      "height": 140,
+      "page": false,
+      "sha256": "43ad7b43593bc987b7c403ee9b0b63b910b2de06d17d7c545c381b0deca7d058"
+    },
+    "Snackbar_Toxic": {
+      "width": 390,
+      "height": 140,
+      "page": false,
+      "sha256": "b3ab295b337f93bb450bfffb998a88eaa0f358e849c4bf966b176cfbec84743a"
+    },
+    "Spinner_Crystal": {
+      "width": 390,
+      "height": 130,
+      "page": false,
+      "sha256": "acbb84bf7c4d7b327c20fd7f992843ab3b50b0310531423ce2939ea8813f58b9"
+    },
+    "Spinner_Media": {
+      "width": 390,
+      "height": 130,
+      "page": false,
+      "sha256": "40dd22d022f037c973324369fb6118693d1fcea9318bee69bbf72502d46ae954"
+    },
+    "Spinner_Toxic": {
+      "width": 390,
+      "height": 130,
+      "page": false,
+      "sha256": "a248195b988f9654d4e216ba0894fe59856f81e1f62de216ad4bfbb5eec001cb"
+    },
+    "Stepper_Crystal": {
+      "width": 390,
+      "height": 150,
+      "page": false,
+      "sha256": "ebf136f4c959ccdecff2a18d7c9bce582c4837f986b828c045307ea521e45b3f"
+    },
+    "Stepper_Media": {
+      "width": 390,
+      "height": 150,
+      "page": false,
+      "sha256": "17f587b3ef1a7d4a927b88d83a953620647d59ff87744ccb5042419724c0ad6f"
+    },
+    "Stepper_Toxic": {
+      "width": 390,
+      "height": 150,
+      "page": false,
+      "sha256": "e9b1111c0bfd2d74a737a243a71d07111cb040d3e526d40568a99d0c478e556d"
+    },
+    "SwipeRow_Crystal": {
+      "width": 390,
+      "height": 200,
+      "page": false,
+      "sha256": "8ba98e2c9f14b15e27ba18558320feb8824c2fd6ac3fa0654dedf7965b327f6e"
+    },
+    "SwipeRow_Media": {
+      "width": 390,
+      "height": 200,
+      "page": false,
+      "sha256": "a65455e9fd7643843b7a728adc607c29df5e477b511dc4c9305fae8b5d55df80"
+    },
+    "SwipeRow_Toxic": {
+      "width": 390,
+      "height": 200,
+      "page": false,
+      "sha256": "69a3a94862549ae4f98a4ed5fad7d89a2380b410dc3713c46ca2d998ea06f64f"
+    },
+    "Switch_Crystal": {
+      "width": 390,
+      "height": 188,
+      "page": false,
+      "sha256": "86052f630e43d4f662adc611b3b66becaffefe27fa638da5d251158fd4d6feb9"
+    },
+    "Switch_Media": {
+      "width": 390,
+      "height": 188,
+      "page": false,
+      "sha256": "36947134acb68a54f0767312839d94503753ef721f214bd87f51d70699c25813"
+    },
+    "Switch_Toxic": {
+      "width": 390,
+      "height": 188,
+      "page": false,
+      "sha256": "bdcd5bff0aa19064bbe9bc293bdd5bf6cbe4f989b14caa15f02a092b004141f0"
+    },
+    "Tabs_Crystal": {
+      "width": 390,
+      "height": 190,
+      "page": false,
+      "sha256": "ac01ea9aff8210107df8e20a563af271a25a421ad6e58575a78aa69248954de3"
+    },
+    "Tabs_Media": {
+      "width": 390,
+      "height": 190,
+      "page": false,
+      "sha256": "a87686a35ac18cd8b80a61c6432175b2336b462d4894c5a06f646652730e63db"
+    },
+    "Tabs_Toxic": {
+      "width": 390,
+      "height": 190,
+      "page": false,
+      "sha256": "f9ec25bc2078337d6ca17406aaa3c424a803d2cfc65715199c6d3eff25440f37"
+    },
+    "TextField_Crystal": {
+      "width": 390,
+      "height": 300,
+      "page": false,
+      "sha256": "75bce3fbda82cf72267051effa40dfbf44017bc18e2973656fb85917cdcd9cd9"
+    },
+    "TextField_Media": {
+      "width": 390,
+      "height": 300,
+      "page": false,
+      "sha256": "c245a6512a53ad6848a5e48bee5df1406840494f58f33c31d6427a484204e7df"
+    },
+    "TextField_Toxic": {
+      "width": 390,
+      "height": 300,
+      "page": false,
+      "sha256": "93f85331ea05256b33a507100ecbc4eb216f10de3e0b8e52ee491ff83cfea86f"
+    },
+    "Tooltip_Crystal": {
+      "width": 390,
+      "height": 112,
+      "page": false,
+      "sha256": "8f7663955715ac653fc4ec4bac7ba868ee3f5872825248b53cd10960dced7d76"
+    },
+    "Tooltip_Media": {
+      "width": 390,
+      "height": 112,
+      "page": false,
+      "sha256": "7c66d866cb196167842956d25fbac218f9632fde027a35ea6ad62767347c3a8d"
+    },
+    "Tooltip_Toxic": {
+      "width": 390,
+      "height": 112,
+      "page": false,
+      "sha256": "96c987a7e29b7f527c0dc5026c69ce80dc9a41d6070e2dc8f5ea9c03a603b922"
+    },
+    "TypingIndicator_Crystal": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "76e47f8bfbf8b85bb0199af7ac072e8df152cc6dc69d71a3b17fbb18c4e6f2d5"
+    },
+    "TypingIndicator_Media": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "9959ed00baa62f77564f9c13dd5d7ac7d09820984bfd4c5a4bb35252b96a894b"
+    },
+    "TypingIndicator_Toxic": {
+      "width": 390,
+      "height": 90,
+      "page": false,
+      "sha256": "140ed3236a4047efa0371d389ef0cee4899b3d005756fe5f02af907fb793bb9a"
+    },
+    "WindowBar_Crystal": {
+      "width": 390,
+      "height": 230,
+      "page": false,
+      "sha256": "650bc5131b803f74adca99064cde3eaf071f9627a7e9809b666f5437eec70b9c"
+    },
+    "WindowBar_Media": {
+      "width": 390,
+      "height": 230,
+      "page": false,
+      "sha256": "be068a7dcf273ea4842550ac173c48da12a3a362c9404c0828d713fef7aef148"
+    },
+    "WindowBar_Toxic": {
+      "width": 390,
+      "height": 230,
+      "page": false,
+      "sha256": "deebaaf19ad66bf25dfc69dd7fffdc46ff9fbc5993ab2e09dc0335f29e9a08f1"
+    }
+  },
+  "designSystem": {
+    "artifact": "CL8BafGgX4GgYdJXNEZttC",
+    "lastChange": "2026-09-24T21:57:36Z"
+  },
+  "chrome": "Chrome/153.0.8010.49",
+  "texture": "on",
+  "now": "2026-09-24T12:00:00",
+  "wrapper": [
+    "tokens.css compiled from tokens.json by scripts/tokens-css.mjs (the artifact publishes none)",
+    "fonts: the bundled faces of B-02 in place of Tahoma / Trebuchet MS and the Google Fonts @import (research D6)",
+    "prefers-reduced-motion, with the design system's own reduced-motion rule applied to every element, not only [class*=\"og-\"]",
+    "frame: 390 px wide, the @dsCard height growing to fit; a page is clipped to its .phone element",
+    "Date pinned to 2026-09-24T12:00:00"
+  ]
+}

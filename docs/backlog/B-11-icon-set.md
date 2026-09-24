@@ -1,6 +1,6 @@
 ---
 id: B-11
-title: "The 40 icons as ImageVectors, generated from the bundle"
+title: "The 47 icons as ImageVectors, generated from the bundle"
 status: open
 priority: P0
 size: S
@@ -8,12 +8,12 @@ stage: stage-1-core
 blocked_by: [B-08, B-09]
 ---
 
-# B-11 — The 40 icons as ImageVectors, generated from the bundle
+# B-11 — The 47 icons as ImageVectors, generated from the bundle
 
-The icon set is 40 single-path glyphs on a 24×24 grid in `bundle.js` (research §1.1). Nearly
+The icon set is 47 single-path glyphs (the README lists 40; research §1.1) on a 24×24 grid in `bundle.js` (research §1.1). Nearly
 every component uses one, so it comes before them.
 
-- **The decision and its reason.** Generate `OldgeIcons.Home … OldgeIcons.Error` from the
+- **The decision and its reason.** Generate `OldgeIcons.Home … OldgeIcons.Mail` from the
   bundle's icon table (path data parsed with Compose's path parser, fill `currentColor` →
   `LocalContentColor`), plus `OldgeIcon(icon, contentDescription, size = 24.dp)`. The generator
   reads the vendored `bundle.js`, so a changed icon fails a test until regenerated (as B-05).

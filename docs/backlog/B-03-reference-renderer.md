@@ -1,7 +1,7 @@
 ---
 id: B-03
 title: "Render the reference PNGs from the design system's previews"
-status: open
+status: done
 priority: P0
 size: M
 stage: stage-0-spikes
@@ -48,3 +48,23 @@ artboards (research §1.2, D3). This item writes the renderer and commits its ou
 - Anchors: `scripts/design-references.mjs`, `oldge-core/src/desktopTest/snapshots/design/manifest.json`,
   `reference/design-system/components/bundle.css`,
   `kotlin-fullstack/skills/design-to-compose/scripts/canvas-references.mjs` (the prior art).
+
+## Findings (2026-09-25)
+
+- 177 references and `manifest.json` committed; a second render into a scratch directory was
+  **byte-identical** (0 of 177 differ). Every PNG was looked at, on 3-skin contact sheets, before
+  and after the last change to the renderer.
+- Three causes of a wrong or unstable reference, each recorded in research §1.2 with the fix: the
+  design system's reduced-motion rule misses non-`og-` elements (ChatScreen, MediaScreen moved
+  between renders); BottomSheet's `max-height: 70vh` clips itself in a content-sized frame, so the
+  frame is the card's `@dsCard` height; DatePicker reads the clock, so `Date` is pinned.
+- React 18.3.1 is vendored in `scripts/vendor/` from the start rather than after a failed second
+  render: offline reproducibility is the requirement, and the network is the variable most likely
+  to move.
+- `tokens.css` needed the per-style classes too (`.display`, `.pixel-tag` …) — the stress screens
+  use them; the compiler has node tests in `make check` (`node --test 'scripts/*.test.mjs'`).
+- Pages are clipped to `.phone`: 390×760 except EdgeNarrow 320×680 and EdgeScale 390×860.
+- The research said 40 icons; the bundle has 47 (research §1.1 and B-11 corrected).
+- `viddikDesignParity` now fails with "No design reference matched any fixture" — expected until
+  B-08 adds the first fixture with a reference; `viddikVerify` ignores `design/` (green, `--rerun`).
+- Not in `make check`: the render needs Chrome and rewrites 177 files; `make references` runs it.

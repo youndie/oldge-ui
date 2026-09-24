@@ -44,7 +44,7 @@ goes at the point of divergence and keeps the reason the first idea failed.
 | Every preview's line 1 is `<!-- @dsCard group="…" height=N … -->`; the groups are Действия, Иконки, Контейнеры, Навигация, Обратная связь, Формы, Чат, Стресс-экраны, Экраны. A component preview is an `og-demo` column: `max-width: 390px`, padding `space-4`, gap `space-3`. | `components/*/preview.html`; `components/bundle.css` (`.og-demo`) |
 | **Three skins** — `toxic` (first, the default), `media`, `crystal` — are the colour themes. 46 colour tokens, most with a value per skin; shadows per skin too. | `tokens.json` → `color.themes`, `color.tokens`, `shadow.tokens` |
 | Token families: color 46, spacing 7 (`space-1…6` = 4, 8, 12, 16, 24, 32 px; `hit-min` 44 px), radius 6 (2, 4, 8, 12, 20, 999 px), shadow 7, duration 6 (90, 160, 260, 420, 600, 1200 ms), easing 4 (`cubic-bezier(0.34, 1.56, 0.64, 1)`, `cubic-bezier(0.68, -0.6, 0.32, 1.6)`, `cubic-bezier(0.2, 0.8, 0.2, 1)`, `linear`), type 11 styles in 2 groups. | `tokens.json` |
-| 40 icons, one SVG path each on a 24×24 grid: home search gear user bell star doc image note film folder disc flame cloud lock grid download upload refresh plus minus edit trash play pause levels back chevron down chevrons menu close check help info warn ok error. | `components/bundle.js` (the icon table, `home: 'M12 3l9.5 8.5…'`) |
+| **47 icons**, one SVG path each on a 24×24 grid: home search gear user bell star doc image note film folder disc flame cloud lock grid download upload refresh plus minus edit trash play pause levels back chevron down chevrons menu close check help info warn ok error eye eye-off attach send more heart share key mail. *Corrected in B-03: this row said 40 — the README's list, which stops at `error`; the bundle's table has seven more, and the Icon preview draws all 47.* | `components/bundle.js` (the icon table, `home: 'M12 3l9.5 8.5…'`) |
 
 **Consequence.** The inventory is fixed and enumerable, so the backlog can cover it completely and
 a check can prove that it did: 50 component previews and 9 pages × 3 skins — 177 PNGs — is the reference set, and a component with no
@@ -61,6 +61,16 @@ reference, or a reference with no component, is countable (B-09).
 | `bundle.css` loads Share Tech Mono and Silkscreen from Google Fonts by `@import`, and names Tahoma / Trebuchet MS for everything else, which Chrome on this mac resolves to the system's Microsoft fonts. | `components/bundle.css` line 1; `tokens.json` → `type.families` |
 | Under `prefers-reduced-motion` every entrance is instant, Switch and Accordion lose their transitions, and one component changes its *static* look: the indeterminate ProgressBar becomes a full bar at 50 % opacity. | `bundle.css`, the five `@media (prefers-reduced-motion: reduce)` blocks |
 
+**Measured in B-03, and three of them are the design system's own defects:**
+
+| Fact | Where verified |
+|---|---|
+| The whole set — 50 component previews and 9 pages × 3 skins, 177 PNGs — renders in ~40 s, and **a second render is byte-identical** to the first (0 of 177 differ), once the three causes below are handled. | `scripts/design-references.mjs`; `oldge-core/src/desktopTest/snapshots/design/manifest.json` (sha256 per stem) |
+| **The design system's reduced-motion rule does not reach every moving element.** It matches `[class*="og-"]`, so the TypingIndicator's dots (bare `<i>` inside `.og-typing__dots`, `animation: og-typing … infinite`) keep bouncing, and a page's own classes (`.media__glyph`, `.media__top`, `.media__bottom` in MediaScreen) keep animating — measured as 72 px differing in ChatScreen and 22,770 px in MediaScreen_Crystal between two renders. The renderer applies the design's own rule to every element. | `reference/design-system/components/bundle.css` line 758; `components/MediaScreen/preview.html` |
+| **A preview's layout can depend on the frame it is shown in.** BottomSheet's body is `max-height: 70vh`, so rendered in a frame sized to its content the body clips itself and the button below it disappears. The renderer uses the card's own frame — the `@dsCard` height, growing to fit — which is what the artifact shows. NavDrawer's `min(304px, 86vw)` is the only other viewport-relative size, and it depends on the width alone. | `bundle.css` (`.og-sheet__body`, `.og-drawer`) |
+| DatePicker marks "today" from `new Date()` inside the bundle; the renderer pins `Date` to 2026-09-24T12:00, the demo's own date. | `bundle.js` line 514 |
+| A page preview is a `.phone` element (390×760, EdgeNarrow 320×680, EdgeScale 390×860) in a 16 px card margin with `shadow-window`; the reference is clipped to the `.phone` element, since the fixture is the screen alone. | `components/*/preview.html` |
+
 **Consequences.**
 
 1. The reference pipeline is this repository's code, not the artifact's: compile tokens, wrap the
@@ -74,9 +84,10 @@ reference, or a reference with no component, is countable (B-09).
    (D3, D6). The wrapper overrides `--font-ui`, `--font-title`, `--font-lcd`, `--font-pixel` with
    `@font-face` rules pointing at the repository's own font files, and does not use the Google
    Fonts `@import`.
-4. A preview's `height=N` is a card height that "grows to fit", not the content size. The reference
-   is rendered at the content's measured height, and the fixture takes that size from the
-   reference manifest.
+4. A preview's `height=N` is a card height that "grows to fit". The reference is rendered in exactly
+   that frame (*amended in B-03*: this said "at the content's measured height", which clipped
+   BottomSheet — above), and the fixture takes its size from the reference manifest; a component
+   fixture is therefore mostly body below a demo column, as in the artifact's card.
 
 ### 1.3 The grain is Chrome's `feTurbulence`, and a different noise is a diff everywhere
 
