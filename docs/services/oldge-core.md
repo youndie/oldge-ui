@@ -16,7 +16,7 @@ publishes: []
 ## 1. Responsibility
 
 The library: the token layer, the theme with its three skins, the bundled fonts, the material
-primitives (gloss, bevels, grain), the press feedback, the icon set and the 52 components of the
+primitives (gloss, bevels, grain), the press feedback, the icon set and the 51 components of the
 design system in [`reference/design-system/`](../../reference/design-system/). It also owns the
 screenshot suite and the parity fixtures, in `desktopTest`.
 
@@ -32,6 +32,9 @@ to publish (B-01).
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/` | the library, package `io.github.youndie.oldge` |
 | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/` | fixtures and desktop tests |
 | `oldge-core/src/desktopTest/snapshots/` | goldens; `design/` under it holds the parity references (B-03) |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/` | the font families, the companion join (`oldgeTextOf`), the generated `FontCoverage` |
+| `oldge-core/src/commonMain/composeResources/font/` | the seven bundled font files; their licences are in `composeResources/files/` |
+| `scripts/fonts/` | the DejaVu subset and the coverage generator (fontTools, run by hand; the tests hold their output) |
 | `gradle/libs.versions.toml` | sborka, viddik, the Android SDK levels — and nothing the `wip` catalog carries |
 | `settings.gradle.kts` | the sborka settings plugin and its version |
 
@@ -76,5 +79,9 @@ to publish (B-01).
   acceptance for anything touching this block is `./gradlew build`.
 * **A one-unit colour change is invisible to the goldens**: the per-channel tolerance is ±2, so the
   mutation that proves the gate must move a channel further than that.
+* **A face in a `FontFamily` never falls back to another face in it.** A glyph the face lacks is
+  drawn by the host, differently on every machine — so the `lcd` and `pixel` families' text must go
+  through `oldgeTextOf` with its companion (research §1.6, D6). `DesignStringCoverageTest` fails
+  when the design or a fixture uses a character no bundled face of a family can draw.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration
   fails with "SDK location not found".

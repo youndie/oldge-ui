@@ -14,6 +14,10 @@ Multiplatform implementation. This document says what was verified before any Ko
 against what, which decisions were taken on that basis and what each one rejected, and which
 questions are still open and which backlog item answers each.
 
+*Item numbers corrected in B-02:* this document was written before the backlog's final numbering,
+and nine of its references pointed one or two items off (the grain spike is B-04, the token
+generator B-05, the press feedback B-10, the parity floor B-08). They now match `backlog.md`.
+
 It is amended, not rewritten. When the implementation contradicts something here, the correction
 goes at the point of divergence and keeps the reason the first idea failed.
 
@@ -29,13 +33,13 @@ goes at the point of divergence and keeps the reason the first idea failed.
 
 ## 1. Verified facts
 
-### 1.1 The brief is a design system of 52 components, 9 screens and 3 skins
+### 1.1 The brief is a design system of 51 components, 9 screens and 3 skins
 
 | Fact | Where verified |
 |---|---|
 | The design system is the claude.ai artifact `CL8BafGgX4GgYdJXNEZttC`, type "Design System", version `1790287085-ae36`, title `oldge-ui`, namespace `OldgeUI`, last changed 2026-09-24T21:57:36Z. | `reference/design-system/design-system.json` |
 | Vendored whole on 2026-09-25: `README.md` (the brand book), `tokens.json`, and per component `components/<Name>/README.md` + `preview.html`, plus `bundle.css` (85,792 B), `bundle.js` (53,670 B) and `index.d.ts`. | `reference/design-system/` |
-| **52 components** exported by the bundle (`ChipGroup` rides with `Chip` and has no preview of its own): Icon, Button, OrbButton, Segmented, WindowBar, CategoryTabs, BottomNav, Panel, Accordion, List, ListItem, ActionTile, Dialog, TextField, Select, Checkbox, RadioGroup, Switch, Slider, ProgressBar, Meter, Readout, Badge, Balloon, Card, Chip, ChipGroup, Fab, Menu, BottomSheet, NavDrawer, Tabs, Snackbar, Tooltip, SearchBar, Spinner, Divider, Avatar, Stepper, DatePicker, Banner, Skeleton, CodeInput, EmptyState, ListSection, SwipeRow, PullRefresh, ChatBubble, TypingIndicator, Composer, PageDots. | `reference/design-system/components/index.d.ts` (`export … function`) |
+| **51 components** exported by the bundle, **50 with a preview** (`ChipGroup` rides with `Chip` and has no preview of its own) — *corrected in B-02: this row said 52, a miscount of the list beside it; `grep -c` over the exports gives 51*: Icon, Button, OrbButton, Segmented, WindowBar, CategoryTabs, BottomNav, Panel, Accordion, List, ListItem, ActionTile, Dialog, TextField, Select, Checkbox, RadioGroup, Switch, Slider, ProgressBar, Meter, Readout, Badge, Balloon, Card, Chip, ChipGroup, Fab, Menu, BottomSheet, NavDrawer, Tabs, Snackbar, Tooltip, SearchBar, Spinner, Divider, Avatar, Stepper, DatePicker, Banner, Skeleton, CodeInput, EmptyState, ListSection, SwipeRow, PullRefresh, ChatBubble, TypingIndicator, Composer, PageDots. | `reference/design-system/components/index.d.ts` (`export … function`) |
 | **9 page previews** marked `page` in their card marker: six stress screens (AuthScreen, InboxScreen, ChatScreen, MediaScreen, EdgeNarrow, EdgeScale) and three showcase screens (Launcher, FeedScreen, SettingsScreen); plus a `Cover`. | line 1 of each `components/<Name>/preview.html` |
 | Every preview's line 1 is `<!-- @dsCard group="…" height=N … -->`; the groups are Действия, Иконки, Контейнеры, Навигация, Обратная связь, Формы, Чат, Стресс-экраны, Экраны. A component preview is an `og-demo` column: `max-width: 390px`, padding `space-4`, gap `space-3`. | `components/*/preview.html`; `components/bundle.css` (`.og-demo`) |
 | **Three skins** — `toxic` (first, the default), `media`, `crystal` — are the colour themes. 46 colour tokens, most with a value per skin; shadows per skin too. | `tokens.json` → `color.themes`, `color.tokens`, `shadow.tokens` |
@@ -43,7 +47,7 @@ goes at the point of divergence and keeps the reason the first idea failed.
 | 40 icons, one SVG path each on a 24×24 grid: home search gear user bell star doc image note film folder disc flame cloud lock grid download upload refresh plus minus edit trash play pause levels back chevron down chevrons menu close check help info warn ok error. | `components/bundle.js` (the icon table, `home: 'M12 3l9.5 8.5…'`) |
 
 **Consequence.** The inventory is fixed and enumerable, so the backlog can cover it completely and
-a check can prove that it did: 52 components × 3 skins is the reference set, and a component with no
+a check can prove that it did: 50 component previews and 9 pages × 3 skins — 177 PNGs — is the reference set, and a component with no
 reference, or a reference with no component, is countable (B-09).
 
 ### 1.2 References can be rendered from the previews, but `tokens.css` has to be compiled here
@@ -87,7 +91,7 @@ reference, or a reference with no component, is countable (B-09).
 every textured pixel, at low amplitude but over the whole screen — exactly the kind of diff that
 hides a real one. The SVG 1.1 specification publishes the reference implementation of
 `feTurbulence` in C, so a Kotlin port with the same seed can in principle generate the same tile.
-**Hypothesis, checked in B-02.** The fallback, if the port does not match: references and parity
+**Hypothesis, checked in B-04.** The fallback, if the port does not match: references and parity
 fixtures both render with texture off, and the texture is guarded by its own golden instead.
 
 ### 1.4 Depth is inset bevels, not soft shadows — and Compose 1.12 has both in common code
@@ -118,7 +122,7 @@ shader language (D8).
 `Brush.verticalGradient(0f to g1, 0.55f to g2, 1f to g3)`; the press flash is an
 `IndicationNodeFactory` (present in foundation commonMain — found by name in
 `foundation-metadata-1.12.0.jar!/commonMain/…/package_androidx.compose.foundation/07_foundation.knm`,
-not yet by decoded signature, so its exact shape is B-09's to confirm) installed as the theme's
+not yet by decoded signature, so its exact shape is B-10's to confirm) installed as the theme's
 `LocalIndication`, which is also how kvadrant-ui made one press feedback reach every clickable
 (`kvadrant-ui/CLAUDE.md`, "The focus ring lives in the indication").
 
@@ -140,7 +144,9 @@ Russian letters U+0410–U+044F, U+0401, U+0451.
 | **Fira Sans Bold** against Trebuchet MS Bold: RU −2.3 %, LA −5.9 %, static, OFL. Ubuntu Bold is closer (RU +3.3 %, LA −1.0 %, line height 1.149 vs 1.161) but under the Ubuntu Font Licence, not OFL. | measurement; `google/fonts:ufl/ubuntu/METADATA.pb` (`license: "UFL"`) |
 | **PT Mono** as the Cyrillic companion of Share Tech Mono: same vertical proportions (cap .700, x-height .500, line height 1.120 vs 1.127), full Cyrillic, static, OFL — but a 0.60 em advance against 0.54 em. Oxanium, Aldrich, Chakra Petch, Orbitron, VT323, Major Mono Display, Kode Mono have no Cyrillic; Jura and Exo 2 have Cyrillic and proportional digits. | measurement; `google/fonts:ofl/ptmono/OFL.txt` |
 | **Tiny5** as the Cyrillic companion of Silkscreen: same cap height (0.625 em), full Cyrillic, static Regular only, OFL, grid 1/8 em. Pixelify Sans is missing О and П (U+041E, U+041F; upstream issue #4 and PR #5 open). | measurement; `google/fonts:ofl/tiny5`; `eifetx/Pixelify-Sans` issue #4 |
-| Not verified: whether Compose falls back per glyph inside one `FontFamily`, or silently to a system face. | — (B-01) |
+| **Compose does not fall back to a second font in the same `FontFamily`; the host draws the missing glyphs.** Set in Silkscreen alone, «Х» and «Л» render as two different inked shapes — real glyphs, not a `.notdef` box, and Silkscreen has none — and `FontFamily(Silkscreen, Tiny5)` renders «SYNC ХРАНИЛИЩЕ» pixel-identical to Silkscreen alone. Widths at 20 sp: «ХРАНИЛИЩЕ» 129.72 px by the host, 112.50 px in Tiny5; «ГБ» 23.62 px by the host, 24.00 px in PT Mono (both monospace at 0.6 em, so width alone cannot tell those two apart — the join test compares pixels too). *Answered in B-02; this row said "not verified".* | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/type/CompanionJoinTest.kt` |
+| The measurement above re-run on the **bundled, subset** DejaVu files gives the same numbers to two decimals (RU 30.65 / 33.63 em, x/cap .750). | `scripts/research/font_metrics.py` |
+| AWT's `Font.canDisplay` reports Default_Ignorable code points (U+200B, U+FE00–FE0F, U+FEFF …), controls and separators as displayable in **every** font, cmap or not — 63 code points each for Share Tech Mono and Silkscreen. | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/type/FontCoverageTest.kt` |
 
 **Consequences.** The Compose library cannot draw what Chrome drew on this mac, so the reference
 must be rendered with the library's fonts, not the other way round (§1.2, consequence 3). And the
@@ -219,7 +225,7 @@ system's live previews, and the wrapper is what makes them static.
 
 ### D4. Tokens are generated from `tokens.json`, never typed
 
-A generator (B-06) reads `reference/design-system/tokens.json` and writes the Kotlin token layer:
+A generator (B-05) reads `reference/design-system/tokens.json` and writes the Kotlin token layer:
 `OldgeColors` per skin, spacing, radii, shadows parsed into bevel/drop-shadow specs, durations,
 easings as `CubicBezierEasing`, type styles. A test regenerates and compares, so the vendored file
 and the code cannot drift. *Rejected:* typing 46 × 3 colours by hand; kvadrant-ui's D12 made the
@@ -246,7 +252,17 @@ whether Compose falls back per glyph is unverified (§1.6) and a fallback to a s
 failure that makes a golden stable on one machine only. Measured cost, accepted: PT Mono is 11 %
 wider per glyph than Share Tech Mono, so a mixed-script readout is uneven; Tiny5 is 25 % narrower
 than Silkscreen. The subsetting (Latin + Cyrillic + the punctuation the design uses), the static
-instances and the licence files are B-01.
+instances and the licence files are B-02.
+
+**As built (B-02).** Seven files for the six faces (DejaVu in two weights), ~980 KB; only DejaVu
+is subset (to Latin-1, Latin Extended-A, Cyrillic and UI punctuation, 56 + 51 KB), because the
+Bitstream Vera licence asks for a rename only when a modified font's name contains "Bitstream" or
+"Vera" (`oldge-core/src/commonMain/composeResources/files/DejaVu-LICENSE.txt`, lines 22–26); the OFL
+faces ship unmodified. The companion decision is **coverage read from the design face's cmap**
+(`FontCoverage.kt`, generated, held to the files by `FontCoverageTest`), not "is it Cyrillic".
+viddik's `glyphCheck` was evaluated and **not enabled**: it checks a fixture's text against one font
+file, and a fixture here draws in up to seven; `DesignStringCoverageTest` holds every family to every
+string the previews and the fixtures render instead.
 
 *Rejected:* Ubuntu Bold for `title` — metrically closer, but a second licence family (UFL) for one
 weight; PT Mono or Tiny5 for the whole family — it would replace the design's named face even for
@@ -269,7 +285,7 @@ motion on (§1.2).
 
 A tile generated once per (skin, density) into an `ImageBitmap` and drawn through an `ImageShader`
 with repeat tiling: common code, deterministic, and the "pre-generated tile with density taken into
-account" the README allows. Whether the tile can be the SVG turbulence itself is B-02. *Rejected:*
+account" the README allows. Whether the tile can be the SVG turbulence itself is B-04. *Rejected:*
 SkSL/AGSL — no common runtime-shader API in CMP 1.12 (§1.4), and a shader layer needs
 `viddikStableGlyphs()` around any text inside it.
 
@@ -298,9 +314,9 @@ has no wasm artefact.
 
 | Risk | What it would cost | Mitigation machinery | Item |
 |---|---|---|---|
-| The reference and the Compose render differ by font rendering alone above parity's default 5 % | Every number is noise; a real gap hides in it | The floor is measured on one component a person declares done, with the same bundled fonts on both sides; every later number is read against it | B-04 |
-| Grain noise cannot be matched | A low-amplitude diff over every body pixel | Port `feTurbulence` from the SVG spec; fallback: texture off in parity, a golden for the texture | B-02 |
-| A Cyrillic glyph falls back to a system font in one family | A golden that is stable here and differs elsewhere, silently | viddik `glyphCheck` against each bundled family; a coverage test over every string in every fixture | B-01, B-12 |
+| The reference and the Compose render differ by font rendering alone above parity's default 5 % | Every number is noise; a real gap hides in it | The floor is measured on one component a person declares done, with the same bundled fonts on both sides; every later number is read against it | B-08 |
+| Grain noise cannot be matched | A low-amplitude diff over every body pixel | Port `feTurbulence` from the SVG spec; fallback: texture off in parity, a golden for the texture | B-04 |
+| A Cyrillic glyph falls back to a system font in one family | A golden that is stable here and differs elsewhere, silently | viddik `glyphCheck` against each bundled family; a coverage test over every string in every fixture | B-02, B-09 |
 | `innerShadow` does not draw a crisp 1 px bevel | Every raised and sunken surface is off by a pixel ring | Draw the bevel edges directly; measured against the reference on Panel and Button | B-07 |
 | The design system changes after it was vendored | References and code describe an old version | The manifest records the version; re-vendoring is an explicit item, never a silent overwrite | B-36 |
 | viddik's #44 workaround outlives the fix | A build line nobody can explain | The comment names the issue; B-35 removes it on the 0.6.1 bump | B-35 |
@@ -308,7 +324,7 @@ has no wasm artefact.
 ## 4. What happens next
 
 [backlog.md](../../backlog.md): stage 0 answers the four questions above that can change how every
-component is built (B-01…B-04), stage 1 builds the theme and its materials, stage 2 the components in
+component is built (B-02…B-04, then the floor in B-08), stage 1 builds the theme and its materials, stage 2 the components in
 the design system's own groups, stage 3 the screens that stress them.
 
 ## Code anchors

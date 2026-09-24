@@ -36,8 +36,8 @@ artboards (research §1.2, D3). This item writes the renderer and commits its ou
   Design canvas of static `.dc.html` artboards; the wrapper here is what makes a live preview
   static.
 
-- AC: `make references` renders all 52 component previews and 9 page previews in 3 skins —
-  183 PNGs — and every one is looked at (the Read tool) before commit; a blank, a broken
+- AC: `make references` renders all 50 component previews and 9 page previews in 3 skins —
+  177 PNGs — and every one is looked at (the Read tool) before commit; a blank, a broken
   layout or a visible fallback glyph is a finding written into the commit body, not a PNG
   committed silently.
 - AC: rendering twice produces byte-identical PNGs (or the difference is measured and the

@@ -28,7 +28,7 @@ against the inventory research §1.1 fixed.
 
 - AC: deleting one golden, one reference, or one fixture each fails the test with the name in
   the message (three mutations in the commit body).
-- AC: the not-yet-built list is exactly the 52 components minus those with fixtures at this
+- AC: the not-yet-built list is exactly the 51 components minus those with fixtures at this
   commit.
 - Anchors: `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/behaviour/ScreenshotSuiteTest.kt`,
   `kvadrant-ui/kvadrant-core/src/desktopTest/kotlin/` (its `ScreenshotSuiteTest`).

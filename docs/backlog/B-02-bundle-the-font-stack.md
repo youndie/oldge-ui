@@ -1,7 +1,7 @@
 ---
 id: B-02
 title: "Bundle six faces for four families, joined per script run"
-status: open
+status: done
 priority: P0
 size: M
 stage: stage-0-spikes
@@ -43,3 +43,20 @@ the two free faces it names have no Cyrillic at all. D6 is the answer; this item
 - AC: the AAR of `oldge-core` contains the six font files (`unzip -l` in the commit body).
 - Anchors: `oldge-core/src/commonMain/composeResources/font/`, `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/`,
   `kvadrant-ui/kvadrant-core/src/commonMain/kotlin/` (its per-script join, research D8 there).
+
+## Findings (2026-09-25)
+
+- Answer to research §1.6's open question, by measurement: no per-glyph fallback inside a
+  `FontFamily`; the host draws what the face lacks (research §1.6, `CompanionJoinTest`).
+- "Each run's resolved family" cannot be read from `TextLayoutResult`, so the join test measures
+  it: a run's width inside the joined string equals its width alone in the intended face, and the
+  joined render differs in pixels from the design face alone (width cannot separate PT Mono from the
+  host's monospace — both 0.6 em). Mutation (the join replaced by `append(run)`): all three render
+  tests and two `ScriptRunsTest` cases fail; restored, green.
+- The coverage scan found a miscount in research §1.1: **51** components (50 with previews), not 52;
+  corrected there and in B-03 (177 references, not 183), B-09, B-42, `backlog.md`,
+  `docs/services/oldge-core.md`. Nine stale item numbers in the research are corrected too.
+- `glyphCheck` not enabled — reason in research D6, "As built".
+- AAR: seven `.ttf` and six licence texts under `assets/composeResources/io.github.youndie.oldge.resources/`.
+- Fixture strings are scanned only in files that carry `@ViddikScreenshot`, so a unit test's own
+  strings (the supplementary-plane case) do not count as design text.

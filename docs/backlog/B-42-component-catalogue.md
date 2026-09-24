@@ -20,6 +20,6 @@ against the sources.
   names a component that no longer exists. Link it from `CLAUDE.md`'s "How to start a session".
 - Rejected: a hand-written table — the kind of list that is wrong within a sprint.
 
-- AC: the catalogue lists all 52 components; editing one row by hand fails the check.
+- AC: the catalogue lists all 51 components; editing one row by hand fails the check.
 - Anchors: `docs/components.md`, `scripts/component_catalog.py`,
   `kvadrant-ui/scripts/component_catalog.py`.

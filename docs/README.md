@@ -17,7 +17,7 @@ layered; links run top to bottom, and today only two layers exist.
 **Deliberately absent:** `features/`, `screens/`, `api/`. A component library has no API layer, and
 what a component is and how it looks is already specified — in the design system this repository
 vendors in [`reference/design-system/`](../reference/design-system/), one README and one preview per
-component. Copying that into feature and screen documents would produce 52 documents that repeat a
+component. Copying that into feature and screen documents would produce 51 documents that repeat a
 brief nobody here maintains. The component catalogue (B-42) is generated instead.
 
 **Backlog** — [backlog.md](../backlog.md): the index and the order of work; the items themselves are
