@@ -58,6 +58,8 @@ kotlin {
             // that published.
             implementation(compose.desktop.currentOs)
             implementation(wip.compose.ui.test)
+            // OldgeTokensTest reads tokens.json on its own, as a second reading of the generator's source.
+            implementation(wip.kotlinx.serialization.json)
         }
     }
 }
@@ -70,12 +72,34 @@ viddik {
     verifyOnCheck.set(true)
 }
 
+// B-05. The token layer is generated from the vendored tokens.json and committed; this fails `check`
+// when the two have drifted. Standard-library python, so any machine with a python3 runs it.
+val checkOldgeTokens by tasks.registering(Exec::class) {
+    description = "Fail if OldgeTokens.kt no longer matches reference/design-system/tokens.json."
+    val root = rootProject.layout.projectDirectory
+    inputs.file(root.file("scripts/generate_tokens.py"))
+    inputs.file(root.file("reference/design-system/tokens.json"))
+    inputs.file(layout.projectDirectory.file("src/commonMain/kotlin/io/github/youndie/oldge/tokens/OldgeTokens.kt"))
+    outputs.upToDateWhen { true }
+    workingDir = root.asFile
+    commandLine("python3", "scripts/generate_tokens.py", "--check")
+}
+
+tasks.named("check") { dependsOn(checkOldgeTokens) }
+
 // A test that reads the golden directory must declare it, or Gradle leaves the test UP-TO-DATE over a
 // changed set and reports the last run's verdict (kvadrant-ui's lesson).
 tasks.named<Test>("desktopTest") {
     inputs
         .dir(layout.projectDirectory.dir("src/desktopTest/snapshots"))
         .withPropertyName("viddikSnapshots")
+        .withPathSensitivity(PathSensitivity.RELATIVE)
+    // OldgeTokensTest reads tokens.json and DesignStringCoverageTest the previews. Undeclared, a
+    // changed design system left the test UP-TO-DATE and `check` green over it — measured in B-05,
+    // where a mutated colour failed only the generator's --check.
+    inputs
+        .dir(rootProject.layout.projectDirectory.dir("reference/design-system"))
+        .withPropertyName("designSystem")
         .withPathSensitivity(PathSensitivity.RELATIVE)
 }
 

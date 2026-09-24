@@ -144,6 +144,11 @@ shader language (D8).
 | The press feedback is a gloss flash from the touch point, bounded by the element's shape, fading over `dur-press` (600 ms); a squash to 0.86–0.95 in `dur-instant` and a spring back in `dur-base`; `data-og-press="none"` on an ancestor turns the flash off. | `bundle.js` lines 11–17; README "Движение" |
 | The primary button additionally runs a diagonal glint across itself on press. | README "Движение"; `bundle.css` `og-shine` |
 
+*Answered in B-05:* Compose's `CubicBezierEasing` accepts control points whose y leaves 0…1 and the
+curve really overshoots — `ease-spring` peaks above 1.05, `ease-bounce` dips below −0.05
+(`oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/tokens/OldgeTokensTest.kt`), so the
+design system's two playful curves are the tokens themselves, not approximations.
+
 **Consequence.** A glossy surface in Compose is three `animateColorAsState` values feeding one
 `Brush.verticalGradient(0f to g1, 0.55f to g2, 1f to g3)`; the press flash is an
 `IndicationNodeFactory` (present in foundation commonMain — found by name in
@@ -256,6 +261,16 @@ A generator (B-05) reads `reference/design-system/tokens.json` and writes the Ko
 easings as `CubicBezierEasing`, type styles. A test regenerates and compares, so the vendored file
 and the code cannot drift. *Rejected:* typing 46 × 3 colours by hand; kvadrant-ui's D12 made the
 same call for the same reason.
+
+*As built (B-05):* `scripts/generate_tokens.py` writes a committed
+`oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/tokens/OldgeTokens.kt` — `OldgeColors` and
+`OldgeShadows` with one companion instance per skin, `OldgeSpacing`, `OldgeRadii`, `OldgeDurations`,
+`OldgeEasings`, `OldgeTypeStyles` as rem/em data — and `./gradlew check` runs it with `--check`.
+Committed rather than generated into `build/`, so a token change reads as a Kotlin diff beside the
+JSON diff. `OldgeTokensTest` is a second, independent reading of the JSON, and it found a real
+defect in the first: Python's `round()` rounds half to even, so `rgba(0,0,0,0.7)` became alpha 178
+where a browser stores 179. The KDoc names each token and points at `tokens.json` for its usage
+note, which is in Russian; the code stays in English.
 
 ### D5. 1 CSS px = 1 dp; 1 rem = 16 sp
 

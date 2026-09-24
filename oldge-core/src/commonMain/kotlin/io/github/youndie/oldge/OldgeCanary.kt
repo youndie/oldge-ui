@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import io.github.youndie.oldge.tokens.OldgeColors
+import io.github.youndie.oldge.tokens.OldgeSpacing
 
 /**
  * A lime square, and nothing else. It exists so that the screenshot suite has a fixture before the
@@ -15,5 +15,6 @@ import androidx.compose.ui.unit.dp
  */
 @Composable
 public fun OldgeCanary(modifier: Modifier = Modifier) {
-    Box(modifier.size(24.dp).background(Color(0xFFA4FF1F)))
+    // Token values, not literals, so the canary obeys the rule every component does (B-05).
+    Box(modifier.size(OldgeSpacing.space5).background(OldgeColors.Toxic.accent))
 }

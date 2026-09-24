@@ -36,6 +36,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/composeResources/font/` | the seven bundled font files; their licences are in `composeResources/files/` |
 | `scripts/fonts/` | the DejaVu subset and the coverage generator (fontTools, run by hand; the tests hold their output) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Turbulence.kt` | the grain and speckle alpha, a port of `feTurbulence` that matches Chrome (research §1.3) |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/tokens/OldgeTokens.kt` | the generated token layer (`scripts/generate_tokens.py`; `checkOldgeTokens` in `check`) |
 | `scripts/design-references.mjs` | renders the parity references into `snapshots/design/` (`make references`); `scripts/tokens-css.mjs` compiles the tokens for it |
 | `gradle/libs.versions.toml` | sborka, viddik, the Android SDK levels — and nothing the `wip` catalog carries |
 | `settings.gradle.kts` | the sborka settings plugin and its version |
@@ -85,5 +86,8 @@ to publish (B-01).
   drawn by the host, differently on every machine — so the `lcd` and `pixel` families' text must go
   through `oldgeTextOf` with its companion (research §1.6, D6). `DesignStringCoverageTest` fails
   when the design or a fixture uses a character no bundled face of a family can draw.
+* **A test that reads a file outside its module declares it as an input** (`desktopTest` declares
+  `reference/design-system/`), or Gradle leaves the test UP-TO-DATE over a changed file and `check`
+  stays green — measured in B-05.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration
   fails with "SDK location not found".

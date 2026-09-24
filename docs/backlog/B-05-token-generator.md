@@ -1,7 +1,7 @@
 ---
 id: B-05
 title: "Generate the token layer from tokens.json"
-status: open
+status: done
 priority: P0
 size: M
 stage: stage-1-core
@@ -36,3 +36,20 @@ generated, never typed.
   (a grep in the test over `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/`, excluding the generated directory).
 - Anchors: `reference/design-system/tokens.json`, `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/tokens/`,
   `kvadrant-ui/kvadrant-core/build.gradle.kts` (its token generator).
+
+## Findings (2026-09-25)
+
+- Chosen: a committed file from a standard-library script with `--check` in `./gradlew check`
+  (kvadrant-ui's D12), over a Gradle task writing into `build/` — reviewable as a diff, indexed
+  without a build. Research D4 "As built".
+- The independent reading caught a generator defect before anything used it: half-to-even rounding
+  of rgba alpha (0.7 → 178 instead of 179). Fixed to round half up.
+- The test task did not declare `reference/design-system/` as an input, so a mutated colour first
+  failed only `checkOldgeTokens` and left `OldgeTokensTest` UP-TO-DATE. Declared; the mutation
+  (`accent` toxic `#a4ff1f` → `#a4ff20`) now fails both, restored, green. The same declaration
+  protects `DesignStringCoverageTest`.
+- `NoTokenLiteralsTest`: a `12.dp` put into the canary fails it with the file and line; the canary
+  itself now uses `OldgeSpacing.space5` and `OldgeColors.Toxic.accent` (the same 24 dp and
+  `#a4ff1f`, so its golden did not move).
+- Easings: overshoot confirmed (research §1.5).
+- Spacing keeps its prefix (`space1` … `hitMin`): stripped, the names would be bare digits.
