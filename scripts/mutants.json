@@ -1890,6 +1890,42 @@
    "replace": "{ },",
    "tests": "*SampleAppBehaviourTest*",
    "expect": "the_page_choice_shows_the_page_and_a_skin_chosen_in_settings_is_the_apps"
+  },
+  {
+   "id": "a11y-sheet-scrim-a-button",
+   "item": "B-43",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeBottomSheet.kt",
+   "find": ".oldgeScrimTaps { onClose?.invoke() },",
+   "replace": ".clickable { onClose?.invoke() },",
+   "tests": "*AccessibilityTest*",
+   "expect": "every_control_is_44_dp_to_touch_has_a_role_and_a_label_and_says_its_state_in_words"
+  },
+  {
+   "id": "a11y-hit-area-no-height",
+   "item": "B-43",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/press/HitArea.kt",
+   "find": "val v = vertical.roundToPx()",
+   "replace": "val v = 0 * vertical.roundToPx()",
+   "tests": "*AccessibilityTest*",
+   "expect": "every_control_is_44_dp_to_touch_has_a_role_and_a_label_and_says_its_state_in_words"
+  },
+  {
+   "id": "a11y-hidden-switch-label-gone",
+   "item": "B-43",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSwitch.kt",
+   "find": ".then(if (showLabel) Modifier else Modifier.semantics { contentDescription = label }),",
+   "replace": ".then(if (showLabel) Modifier else Modifier),",
+   "tests": "*AccessibilityTest*",
+   "expect": "every_control_is_44_dp_to_touch_has_a_role_and_a_label_and_says_its_state_in_words"
+  },
+  {
+   "id": "contrast-muted-ink-dark",
+   "item": "B-43",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/tokens/OldgeTokens.kt",
+   "find": "inkMuted = Color(0xFFA8BD96),",
+   "replace": "inkMuted = Color(0xFF3A4436),",
+   "tests": "*ContrastTest*",
+   "expect": "the_design_systems_contrast_claims_hold_but_for_the_known_shortfalls"
   }
  ]
 }

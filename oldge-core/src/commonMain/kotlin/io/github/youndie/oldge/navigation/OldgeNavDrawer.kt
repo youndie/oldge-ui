@@ -54,6 +54,7 @@ import io.github.youndie.oldge.material.grain
 import io.github.youndie.oldge.material.lerpShadows
 import io.github.youndie.oldge.material.premultipliedLerp
 import io.github.youndie.oldge.press.OldgeIndication
+import io.github.youndie.oldge.press.oldgeScrimTaps
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.type.FontCoverage
@@ -122,7 +123,7 @@ public fun OldgeNavDrawer(
                 .fillMaxSize()
                 .graphicsLayer { alpha = fade.value }
                 .drawBehind { drawRect(SCRIM) }
-                .clickable(remember { MutableInteractionSource() }, indication = null, onClick = onClose),
+                .oldgeScrimTaps(onClose),
         )
         Drawer(entries, value, onChange, title, subtitle, avatar, label, Modifier.fillMaxHeight(), slideIn = true)
     }

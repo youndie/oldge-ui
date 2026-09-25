@@ -38,6 +38,7 @@ import io.github.youndie.oldge.material.CssCorners
 import io.github.youndie.oldge.material.bezel
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.material.windowBody
+import io.github.youndie.oldge.press.oldgeScrimTaps
 import io.github.youndie.oldge.theme.LocalOldgeTextStyle
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.oldge.tokens.OldgeRadii
@@ -78,7 +79,7 @@ public fun OldgeBottomSheet(
                 .fillMaxSize()
                 .graphicsLayer { alpha = fade.value }
                 .drawBehind { drawRect(SCRIM) }
-                .clickable(remember { MutableInteractionSource() }, indication = null) { onClose?.invoke() },
+                .oldgeScrimTaps { onClose?.invoke() },
         )
         // `.og-sheet__body { max-height: 70vh }`: 70 % of the screen the sheet is over.
         Sheet(title, onClose, content, Modifier, overlay = true, bodyMax = maxHeight * BODY_SHARE)

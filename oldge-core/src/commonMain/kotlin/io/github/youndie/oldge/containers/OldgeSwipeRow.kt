@@ -41,6 +41,7 @@ import io.github.youndie.oldge.icons.OldgeIcon
 import io.github.youndie.oldge.material.CssBackground
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.press.OldgeIndication
+import io.github.youndie.oldge.press.oldgeScrimTaps
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.oldge.type.OldgeText
 import kotlinx.coroutines.launch
@@ -152,7 +153,7 @@ public fun OldgeSwipeRow(
                 Box(
                     Modifier
                         .matchParentSize()
-                        .clickable(remember { MutableInteractionSource() }, indication = null) { settle(open = false) },
+                        .oldgeScrimTaps { settle(open = false) },
                 )
             }
         }

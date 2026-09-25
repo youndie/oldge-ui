@@ -42,6 +42,7 @@ import io.github.youndie.oldge.material.CssBackground
 import io.github.youndie.oldge.material.bezel
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.material.windowBody
+import io.github.youndie.oldge.press.oldgeScrimTaps
 import io.github.youndie.oldge.theme.LocalOldgeTextStyle
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.oldge.tokens.OldgeRadii
@@ -92,7 +93,7 @@ public fun OldgeDialog(
                 .graphicsLayer { alpha = fade.value }
                 .drawBehind { drawRect(SCRIM) }
                 // It takes the taps under it; a modal closes only by its own buttons.
-                .clickable(remember { MutableInteractionSource() }, indication = null) {},
+                .oldgeScrimTaps {},
         )
         Window(title, icon, onClose, actions, content, Modifier.padding(OldgeTheme.spacing.space4), modal = true)
     }

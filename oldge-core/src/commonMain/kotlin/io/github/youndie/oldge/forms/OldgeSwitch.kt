@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -197,7 +198,15 @@ private fun Lamp(
                 alpha = if (blink.value < 1f && run < 0.5f) BLINK_LOW else 1f
             },
     ) {
-        OldgeScriptText(if (on) "ON" else "OFF", style, type.families.pixelCompanion, FontCoverage.silkscreen)
+        // The word is for the eye, so that colour is never alone; a screen reader hears the switch's
+        // own on or off state, and the lamp's word would repeat it and stand in for a missing name (B-43).
+        OldgeScriptText(
+            if (on) "ON" else "OFF",
+            style,
+            type.families.pixelCompanion,
+            FontCoverage.silkscreen,
+            Modifier.clearAndSetSemantics {},
+        )
     }
 }
 
