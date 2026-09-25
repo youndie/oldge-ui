@@ -1,6 +1,5 @@
 package io.github.youndie.oldge.forms
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -19,12 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RadialGradientShader
-import androidx.compose.ui.graphics.Shader
-import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.isTraversalGroup
@@ -41,8 +35,6 @@ import io.github.youndie.oldge.press.oldgePressScale
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.type.OldgeText
-import kotlin.math.hypot
-import kotlin.math.max
 
 /**
  * A checkbox — the design system's `Checkbox`: a sunken square with a green check, and the whole row
@@ -178,23 +170,8 @@ private fun RadioDot() {
         Modifier
             .oldgePopIn()
             .size(DOT)
-            .background(DotBrush(c.accentHi, c.accentLo), CircleShape),
+            .cssBox(OldgeRadii.pill, CssBackground.Radial(listOf(0f to c.accentHi, 1f to c.accentLo), DOT_X, DOT_Y)),
     )
-}
-
-private class DotBrush(
-    private val from: Color,
-    private val to: Color,
-) : ShaderBrush() {
-    override fun createShader(size: Size): Shader {
-        val centre = Offset(size.width * DOT_X, size.height * DOT_Y)
-        val radius = hypot(max(centre.x, size.width - centre.x), max(centre.y, size.height - centre.y))
-        return RadialGradientShader(centre, radius, listOf(from, to))
-    }
-
-    override fun equals(other: Any?): Boolean = other is DotBrush && other.from == from && other.to == to
-
-    override fun hashCode(): Int = from.hashCode() * 31 + to.hashCode()
 }
 
 private const val MIN_OPTIONS = 2

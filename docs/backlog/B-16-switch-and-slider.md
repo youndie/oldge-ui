@@ -1,7 +1,7 @@
 ---
 id: B-16
 title: "Switch and Slider"
-status: open
+status: done
 priority: P1
 size: M
 stage: stage-2-components
@@ -41,3 +41,38 @@ Switch: a sunken capsule with a chrome knob and an ON/OFF lamp (one of the two f
   - `reference/design-system/components/Switch/README.md`, `reference/design-system/components/Switch/preview.html`
   - `reference/design-system/components/Slider/README.md`, `reference/design-system/components/Slider/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/`
+
+## Findings (2026-09-25)
+
+- Parity (±16, floor 0.72 %), on the first run:
+  - Switch: 1.05 / 1.06 / 1.13 % (Toxic / Media / Crystal);
+  - Slider: 1.30 / 1.30 / 1.41 %.
+
+  The `_DIFF`s are red on glyph and knob or ball edges. The Slider's head is the 13 px label style,
+  which is B-46's.
+- `cssBox` paints `radial-gradient(circle at x y, …)` (`CssBackground.Radial`: farthest-corner
+  radius, stops in fractions of it). The Switch knob, the Slider ball and the radio dot use it; the
+  radio dot's private brush from B-15 is gone and its golden did not move.
+- The lamp is one of the design's two fixed-size texts (research §1.7): 8 px on 10 px as dp
+  converted to sp, so the system font scale does not grow it. No fixture runs at a font scale other
+  than 1, so pixels do not verify this yet. EdgeScale (B-39) will.
+- The Slider follows the README's "a native range input": 1000 steps, arrows move one, Page
+  Up/Down a tenth, Home/End the ends. A screen reader gets the label, `valueText` as the state and
+  `setProgress`. A press anywhere on the 44 dp strip moves the ball to the finger, on the thumb
+  travel Chrome uses: 1 px inside the track, `travel = width − 2 − 26`.
+- `OldgeSwitch` takes an `interactionSource`, so a golden can hold it pressed. The held knob is
+  30 px, and when on it starts at 22 so its right edge stays put (`SwitchStates`).
+- The READMEs' rules, in the API or `SwitchSliderBehaviourTest`:
+  - the whole Switch row is a 44 dp switch and acts at once (no confirm step);
+  - a disabled switch ignores taps;
+  - the Slider is named, reads its value text, can be set, answers the native keys, and moves the
+    ball to the finger;
+  - «use a Checkbox when a Save confirms» is a KDoc line.
+- Mutations, each failing, restored:
+  - in `SwitchSliderBehaviourTest`: the switch role, disabled made enabled, the key step, the
+    finger-to-value mapping, the value text;
+  - in the goldens: the held knob width, the trough's hard stop, the knob's gradient stop.
+- Values the tokens do not hold, marked `// css literal:`:
+  - Switch: track 56 × 30, knob 24 / 30 held, knob positions 2 / 28 / 22, lamp inset 9 and
+    8 px / 10 px;
+  - Slider: head gap 2, trough 8, ball 26.

@@ -154,6 +154,32 @@ internal sealed interface CssBackground {
         val stops: List<Pair<Float, Color>>,
         val angleDegrees: Float = 180f,
     ) : CssBackground
+
+    /**
+     * `radial-gradient(circle at <x> <y>, …)`: a circle centred at [centreX], [centreY] (fractions
+     * of the box) reaching the farthest corner, CSS's default size; [stops] are fractions of that
+     * radius.
+     */
+    data class Radial(
+        val stops: List<Pair<Float, Color>>,
+        val centreX: Float,
+        val centreY: Float,
+    ) : CssBackground
+}
+
+/** The brush a [CssBackground.Radial] paints with, over a box at [origin] of [size]. */
+internal fun CssBackground.Radial.brush(
+    size: Size,
+    origin: Offset = Offset.Zero,
+): Brush {
+    val centre = origin + Offset(size.width * centreX, size.height * centreY)
+    val dx = maxOf(size.width * centreX, size.width * (1 - centreX))
+    val dy = maxOf(size.height * centreY, size.height * (1 - centreY))
+    return Brush.radialGradient(
+        colorStops = stops.toTypedArray(),
+        center = centre,
+        radius = kotlin.math.hypot(dx, dy),
+    )
 }
 
 /** A two- or three-stop vertical gloss: `hi`, `mid` at 55 % when there is one, `lo`. */
@@ -272,6 +298,10 @@ internal fun DrawScope.drawBackground(
                     Offset(origin.left, origin.top),
                 ),
             )
+        }
+
+        is CssBackground.Radial -> {
+            drawPath(path, background.brush(Size(origin.width, origin.height), Offset(origin.left, origin.top)))
         }
     }
 }
