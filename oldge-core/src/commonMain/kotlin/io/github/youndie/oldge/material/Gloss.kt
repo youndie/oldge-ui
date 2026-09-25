@@ -11,7 +11,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.tokens.OldgeShadow
 
 /**
  * The three stops of a glossy fill: `hi`, `mid` at 55 % (a two-stop gloss has none), `lo`.
@@ -95,4 +97,42 @@ internal fun premultipliedLerp(
         y: Float,
     ) = ((x * a.alpha) + ((y * b.alpha) - (x * a.alpha)) * t) / alpha
     return Color(channel(a.red, b.red), channel(a.green, b.green), channel(a.blue, b.blue), alpha)
+}
+
+/** Two gloss states blended at [t], in premultiplied sRGB as CSS blends them. */
+internal fun lerpGloss(
+    a: GlossStops,
+    b: GlossStops,
+    t: Float,
+): GlossStops =
+    GlossStops(
+        hi = premultipliedLerp(a.hi, b.hi, t),
+        mid = if (a.mid == null && b.mid == null) null else premultipliedLerp(a.midOrImplied, b.midOrImplied, t),
+        lo = premultipliedLerp(a.lo, b.lo, t),
+    )
+
+/**
+ * Two shadow lists blended at [t] layer by layer, as CSS transitions a `box-shadow` whose lists have
+ * the same length and kinds; lists that differ switch at the midpoint, which is CSS's discrete step.
+ */
+internal fun lerpShadows(
+    a: List<OldgeShadow>,
+    b: List<OldgeShadow>,
+    t: Float,
+): List<OldgeShadow> {
+    if (a.size != b.size || a.zip(b).any { (x, y) -> x.inset != y.inset }) return if (t < 0.5f) a else b
+
+    fun lerp(
+        x: Dp,
+        y: Dp,
+    ) = x + (y - x) * t
+    return a.zip(b).map { (x, y) ->
+        x.copy(
+            offsetX = lerp(x.offsetX, y.offsetX),
+            offsetY = lerp(x.offsetY, y.offsetY),
+            blur = lerp(x.blur, y.blur),
+            spread = lerp(x.spread, y.spread),
+            color = premultipliedLerp(x.color, y.color, t),
+        )
+    }
 }

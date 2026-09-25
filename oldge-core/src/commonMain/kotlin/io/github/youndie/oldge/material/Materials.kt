@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithCache
@@ -152,6 +153,9 @@ internal fun OrbMaterial(
     size: Dp,
     rim: Dp,
     modifier: Modifier = Modifier,
+    coreShadows: List<OldgeShadow> = listOf(CORE_RING),
+    highlight: Float = 1f,
+    coreModifier: Modifier = Modifier,
     content: @Composable () -> Unit = {},
 ) {
     val c = OldgeTheme.colors
@@ -167,8 +171,11 @@ internal fun OrbMaterial(
                 ),
                 shadows = OldgeTheme.shadows.orb,
             ).padding(rim)
-            .cssBox(pill, core, shadows = listOf(CORE_RING))
-            .drawBehind { drawOrbHighlight(c.gloss) },
+            .cssBox(pill, core, shadows = coreShadows)
+            .drawBehind { drawOrbHighlight(c.gloss.copy(alpha = c.gloss.alpha * highlight)) }
+            .then(coreModifier),
+        // `.og-orb__core { display: grid; place-items: center }`.
+        contentAlignment = Alignment.Center,
     ) { content() }
 }
 

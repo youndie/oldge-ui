@@ -42,6 +42,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Turbulence.kt` | the grain and speckle alpha, a port of `feTurbulence` that matches Chrome (research §1.3) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/` | `OldgeTheme`, `OldgeSkin`, `OldgeTypography`, `OldgeMotion`, the platform reduced-motion `expect` |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/icons/` | `OldgeIcon` and the generated `OldgeIcons` (`scripts/generate_icons.py`; `checkOldgeIcons` in `check`) |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/` | `OldgeButton`, `OldgeIconButton`, `OldgeOrbButton` (B-12); `ButtonBehaviourTest` holds the READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt` | text on the CSS baseline — use it, not `BasicText`, for any text a reference shows |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/tokens/OldgeTokens.kt` | the generated token layer (`scripts/generate_tokens.py`; `checkOldgeTokens` in `check`) |
 | `scripts/design-references.mjs` | renders the parity references into `snapshots/design/` (`make references`); `scripts/tokens-css.mjs` compiles the tokens for it |
@@ -102,5 +103,12 @@ to publish (B-01).
   androidx.lifecycle 2.11.0 and JetBrains' lifecycle fork 2.9.6 — one `unique_name` — on the shared
   iOS metadata, and the KLIB loader warns. Per-target iOS compilations keep -Werror. Remove the block
   when a CMP release stops producing the pair.
+* **A pressed golden must wait a frame before it presses.** viddik runs effects on an unconfined
+  dispatcher, so a fixture's `LaunchedEffect` that emits `PressInteraction.Press` at once runs before
+  the control's `collectIsPressedAsState` subscribes, and the interaction flow keeps no replay: the
+  press is dropped and the golden photographs the rest state, green for ever. `pressed()` in
+  `actions/ButtonFixtures.kt` waits with `withFrameNanos` first. Found in B-12, by a mutation of the
+  pressed look that survived; the check for any state golden is removing the state and watching it
+  go red.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration
   fails with "SDK location not found".

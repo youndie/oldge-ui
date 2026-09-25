@@ -263,6 +263,21 @@ the harness:
 | **Blink rounds a face's ascent and descent to whole pixels and floors the half-leading; Compose centres with the unrounded values.** Silkscreen at 10 px in a 12 px line: CSS baseline 9, Compose 9.9 — every pixel label a pixel low. `OldgeText` places text on the CSS baseline, from the bundled faces' metrics (`BundledFontMetrics`, generated, held to the files by `CssBaselineTest`); `OldgeScriptText` uses the same rule. Found in B-11 on the Icon preview, whose labels carried 96 % of its diff. | Icon 3.16 % → 1.54 %; Divider 0.74 % → 0.72 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt` |
 | viddik's `ViddikPlatformTextStyle` turns subpixel positioning off, so every glyph's advance is rounded and a line drifts from Chrome's, which positions by subpixel on this mac. The harness keeps viddik's antialiasing and hinting pins and turns subpixel positioning on — a measured departure from kvadrant-ui's `portableTypography`. | 1.16 % → 0.74 % | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/harness/OldgeDemo.kt` |
 
+*As built, B-12.* Button measured 4.36–4.43 % after its one real cause went (below), six times the
+floor, and the rest is this section's rule at its worst rather than a new cause: a button row is
+mostly label, and every label is laid out on whole pixels. Compose reports a text's width rounded
+**up** to a pixel and places it at a whole pixel; Chrome keeps both fractional and snaps only the
+box's painted edges. So each labelled button in a row is up to a pixel wider than Chrome's and
+everything after it moves: on the preview's second row the boxes drift 0, +1, +1, +2 px, and every
+centred label sits up to half a pixel from Chrome's. The `_DIFF` is red only on glyph edges and on
+the vertical box edges of the drifted row. Matching it needs fractional layout, which Compose does
+not have; reporting a rounded rather than a ceiled width would halve the drift and change every
+text-bearing component, and was not done in a component item.
+
+| Cause | Before → after | Where |
+|---|---|---|
+| A button's content box started inside the padding but not inside the 1 px border; CSS's `box-sizing: border-box` puts the border inside the width, so every button was 2 px narrow and a row drifted 2 px per button. | Button 6.71–6.80 % → 4.36–4.43 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt` |
+
 **How to read a later number.** The residual scales with the area of text, and with how much of it
 is edges: a pixel face is all edges, and a centred label sits at a fractional x in Chrome and a whole
 pixel in Compose — the Icon preview's 47 pixel-face labels leave 1.53–1.54 % with the glyphs

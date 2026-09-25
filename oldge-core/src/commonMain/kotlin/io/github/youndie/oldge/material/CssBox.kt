@@ -3,6 +3,7 @@ package io.github.youndie.oldge.material
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.draw.innerShadow
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.RoundRect
@@ -53,6 +54,7 @@ internal fun Modifier.cssBox(
 ): Modifier {
     val all = shadows + extraOuter
     val blurred = all.filter { !it.inset && it.blur > 0.dp }
+    val blurredInsets = all.filter { it.inset && it.blur > 0.dp }
     val shape =
         androidx.compose.foundation.shape
             .RoundedCornerShape(radius)
@@ -77,7 +79,7 @@ internal fun Modifier.cssBox(
             val padding =
                 cssRoundRect(Offset(b, b), Size(size.width - 2 * b, size.height - 2 * b), (r - b).coerceAtLeast(0f))
             val rings = all.filter { !it.inset && it.blur == 0.dp }
-            val insets = all.filter { it.inset }
+            val insets = all.filter { it.inset && it.blur == 0.dp }
             onDrawBehind {
                 for (ring in rings) drawSpreadRing(outer, r, ring)
                 drawBackground(background, outer, padding)
@@ -86,6 +88,21 @@ internal fun Modifier.cssBox(
                 if (b > 0f) drawBorder(outer, padding, borderColor)
             }
         }
+    // A blurred inset (an orb's pressed core) cannot be drawn as a path difference; innerShadow
+    // draws it. It lost the 1 px bevel measurement (research §1.4), and no reference shows a pressed
+    // state to measure this one against.
+    for (inset in blurredInsets) {
+        modifier =
+            modifier.innerShadow(
+                shape,
+                Shadow(
+                    radius = inset.blur,
+                    color = inset.color,
+                    spread = inset.spread,
+                    offset = DpOffset(inset.offsetX, inset.offsetY),
+                ),
+            )
+    }
     return modifier
 }
 

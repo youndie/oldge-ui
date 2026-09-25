@@ -8,19 +8,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.theme.OldgeTheme
 
 /**
  * The squash: [pressed] scale while held, `dur-instant` in and `dur-base` out, both on
  * `ease-spring` — bundle.css transitions `transform` on the spring and shortens the duration while
- * `:active`. The amount is the component's (0.86 an orb's rim, 0.94 a button, 0.95 a segment), which
- * is why this is a modifier and not part of [OldgeIndication]. Under reduced motion the scale still
+ * `:active`, with [pressedOffsetY] travelling with it (a button's 1 px). The amount is the
+ * component's (0.86 an orb's rim, 0.94 a button, 0.95 a segment), which is why this is a modifier and not part of [OldgeIndication]. Under reduced motion the scale still
  * follows the press, instantly, as the design's 1 ms transitions do.
  */
 @Composable
 internal fun Modifier.oldgePressScale(
     interactionSource: InteractionSource,
     pressed: Float,
+    pressedOffsetY: Dp = 0.dp,
 ): Modifier {
     val motion = OldgeTheme.motion
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -32,5 +35,8 @@ internal fun Modifier.oldgePressScale(
     return graphicsLayer {
         scaleX = scale
         scaleY = scale
+        // `transform: scale(.94) translateY(1px)`: the pixel moves with the squash, inside the scale.
+        val into = if (pressed < 1f) (1f - scale) / (1f - pressed) else 0f
+        translationY = pressedOffsetY.toPx() * into * scale
     }
 }

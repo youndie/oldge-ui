@@ -56,17 +56,22 @@ import kotlin.math.sqrt
  * focus taken in touch mode (measured in B-10), so a control focused by a tap and then reached by the
  * keyboard shows its ring from the next keyboard focus on.
  *
- * A component passes its own [shape]; the theme's default is a rectangle.
+ * A component passes its own [shape]; the theme's default is a rectangle. A component whose flash
+ * lives in a part of it — an orb's core — draws the two separately: [flash] on the part, [ring] on
+ * the whole.
  */
 public class OldgeIndication(
     private val shape: Shape = RectangleShape,
+    private val flash: Boolean = true,
+    private val ring: Boolean = true,
 ) : IndicationNodeFactory {
     override fun create(interactionSource: InteractionSource): DelegatableNode =
-        OldgeIndicationNode(interactionSource, shape)
+        OldgeIndicationNode(interactionSource, shape, flash, ring)
 
-    override fun equals(other: Any?): Boolean = other is OldgeIndication && other.shape == shape
+    override fun equals(other: Any?): Boolean =
+        other is OldgeIndication && other.shape == shape && other.flash == flash && other.ring == ring
 
-    override fun hashCode(): Int = shape.hashCode()
+    override fun hashCode(): Int = (shape.hashCode() * 31 + flash.hashCode()) * 31 + ring.hashCode()
 }
 
 private class Flash(
@@ -77,6 +82,8 @@ private class Flash(
 private class OldgeIndicationNode(
     private val interactionSource: InteractionSource,
     private val shape: Shape,
+    private val flash: Boolean,
+    private val ring: Boolean,
 ) : androidx.compose.ui.Modifier.Node(),
     DelegatableNode,
     DrawModifierNode,
@@ -99,7 +106,7 @@ private class OldgeIndicationNode(
 
     private fun press(at: Offset) {
         val motion = currentValueOf(LocalOldgeMotion)
-        if (motion.reduced || !currentValueOf(LocalOldgeSwitches).pressFlash) return
+        if (!flash || motion.reduced || !currentValueOf(LocalOldgeSwitches).pressFlash) return
         val flash = Flash(at, Animatable(0f))
         flashes += flash
         coroutineScope.launch {
@@ -120,7 +127,7 @@ private class OldgeIndicationNode(
         }
         drawContent()
         val keyboard = currentValueOf(LocalInputModeManager).inputMode == InputMode.Keyboard
-        if (focused && keyboard) drawOldgeFocusRing(shape, skin.colors.focus)
+        if (ring && focused && keyboard) drawOldgeFocusRing(shape, skin.colors.focus)
     }
 }
 
