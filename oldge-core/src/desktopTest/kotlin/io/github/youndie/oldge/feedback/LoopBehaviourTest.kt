@@ -1,6 +1,8 @@
 package io.github.youndie.oldge.feedback
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toPixelMap
@@ -87,10 +89,14 @@ class LoopBehaviourTest {
             for (deg in listOf(130.0, 190.0)) assertTrue(!lit(at(deg)), "$deg° should be dark: ${at(deg)}")
         }
 
-    /** Two frames of a spinner and a skeleton [ms] apart, as pixels. */
+    /** Two frames of [content] (a spinner and a skeleton) [ms] apart, as pixels. */
     private fun twoFrames(
         reduced: Boolean,
         ms: Long,
+        content: @Composable () -> Unit = {
+            OldgeSpinner()
+            OldgeSkeleton(variant = OldgeSkeletonVariant.Row)
+        },
     ): Pair<List<Any>, List<Any>> {
         var first: List<Any> = emptyList()
         var second: List<Any> = emptyList()
@@ -98,10 +104,7 @@ class LoopBehaviourTest {
             mainClock.autoAdvance = false
             setContent {
                 OldgeTheme(reducedMotion = reduced) {
-                    Column(Modifier.testTag("loops")) {
-                        OldgeSpinner()
-                        OldgeSkeleton(variant = OldgeSkeletonVariant.Row)
-                    }
+                    Column(Modifier.testTag("loops")) { content() }
                 }
             }
             mainClock.advanceTimeBy(100)
@@ -127,5 +130,15 @@ class LoopBehaviourTest {
     fun without_reduced_motion_they_move() {
         val (a, b) = twoFrames(reduced = false, ms = 400)
         assertNotEquals(a, b, "nothing moved in 400 ms")
+    }
+
+    /** `og-slide`: the block of an indeterminate bar sweeps, and stands still under reduced motion (B-44). */
+    @Test
+    fun an_indeterminate_bar_slides_and_stands_still_under_reduced_motion() {
+        val bar: @Composable () -> Unit = { OldgeProgressBar(null, Modifier.width(300.dp), label = "Подключение…") }
+        val (a, b) = twoFrames(reduced = false, ms = 400, content = bar)
+        assertNotEquals(a, b, "the indeterminate bar did not move in 400 ms")
+        val (c, d) = twoFrames(reduced = true, ms = 400, content = bar)
+        assertEquals(c, d, "the indeterminate bar moved under reduced motion")
     }
 }

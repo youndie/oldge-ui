@@ -82,6 +82,11 @@ reference, or a reference with no component, is countable (B-09).
    spinner is photographed at whatever frame the virtual-time budget ended on. The Compose fixtures
    therefore render with the theme's reduced-motion switch on (D7), and that is why reduced motion
    is a theme property rather than something read from the platform inside each component.
+   *Consequence found in B-44:* parity therefore cannot see motion at all, so motion is held by a
+   suite of its own — `MotionTest`, a clock driven by hand, a halfway golden per entrance — and a
+   table in `docs/services/oldge-core.md` §5 maps every `@keyframes` to the test that holds it. Its
+   first run found a Meter whose stagger was eased as a whole, so every segment had landed by the
+   halfway mark; reduced-motion parity could never have shown that.
 3. The fonts in the reference must be the fonts the Compose side bundles, or every glyph is a diff
    (D3, D6). The wrapper overrides `--font-ui`, `--font-title`, `--font-lcd`, `--font-pixel` with
    `@font-face` rules pointing at the repository's own font files, and does not use the Google

@@ -1,6 +1,7 @@
 package io.github.youndie.oldge.feedback
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -52,7 +53,9 @@ public fun OldgeMeter(
     val lit = (v * segments).roundToInt()
     val motion = OldgeTheme.motion
     val appear = remember { Animatable(if (motion.reduced) 1f else 0f) }
-    LaunchedEffect(Unit) { appear.animateTo(1f, tween(motion.fast + STAGGER_MS * segments, easing = motion.out)) }
+    // Linear over the whole stagger: the easing is each segment's own (`og-seg-in var(--og-t1) var(--og-out)`),
+    // applied below. Eased as a whole, the late segments landed in the first half (B-44).
+    LaunchedEffect(Unit) { appear.animateTo(1f, tween(motion.fast + STAGGER_MS * segments, easing = LinearEasing)) }
     Column(
         modifier
             .fillMaxWidth()
@@ -102,7 +105,10 @@ public fun OldgeMeter(
                             }
                         // `og-seg-in`, `28ms` apart: from 0.2 high and clear, grown from the bottom.
                         val start = STAGGER_MS * i / total
-                        val k = ((appear.value - start) * total / motion.fast.coerceAtLeast(1)).coerceIn(0f, 1f)
+                        val k =
+                            motion.out.transform(
+                                ((appear.value - start) * total / motion.fast.coerceAtLeast(1)).coerceIn(0f, 1f),
+                            )
                         val h = size.height * (SEG_FROM + (1 - SEG_FROM) * k)
                         drawRoundRect(colour, Offset(left, size.height - h), Size(right - left, h), r, alpha = k)
                     }

@@ -81,6 +81,55 @@ to publish (B-01).
 | Build | sborka `0.4.0.91` (`io.github.youndie.sborka.settings`, `.kmp`, `.lint`) | repositories, the `wip` catalog, toolchain 25, explicit API, warnings as errors, ktlint |
 | Test | viddik `0.6.0` | goldens, design parity |
 
+## 5. Motion
+
+Parity renders with reduced motion (research §1.2), so it sees none of this. The motion is held by
+[`MotionTest`](../../oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/behaviour/MotionTest.kt)
+and by behaviour tests elsewhere. `MotionTest` runs each entrance on a clock driven by hand, and
+requires three things of it. Halfway, it is neither where it started nor where it ends. Once over,
+it is within 0.1 % of what reduced motion draws at once. Its halfway frame matches a golden of its
+own in `oldge-core/src/desktopTest/snapshots/motion/`, so a changed easing shows. A missing golden
+is written and reported as a failure, never passed silently.
+
+`bundle.css` has **31** `@keyframes`, not the 34 that B-44's text counted.
+
+| `@keyframes` | Component (CSS selector) | Held by |
+|---|---|---|
+| `og-balloon-in` | Balloon, Tooltip (`.og-tip__in`), ChatBubble | `MotionTest` `balloon-in`, `balloon-in-bubble` |
+| `og-banner-in` | Banner | `MotionTest` `banner-in` |
+| `og-blink` | Switch lamp coming on; CodeInput caret | `MotionTest` `blink` (the Switch). The caret's loop has no test. |
+| `og-bump` | Badge count | `BadgeAvatarBehaviourTest.a_count_bumps_when_it_changes_and_not_when_it_appears` |
+| `og-dial` | Skeleton circle | `LoopBehaviourTest.without_reduced_motion_they_move`, `…under_reduced_motion_the_disc_the_scanner_and_the_arc_stand_still` |
+| `og-draw` | CategoryTabs label | `MotionTest` `draw` |
+| `og-drawer-in` | NavDrawer | `MotionTest` `drawer-in` |
+| `og-fab-in` | Fab | `MotionTest` `fab-in` |
+| `og-fade` | Tabs panel; the Dialog, BottomSheet and NavDrawer scrims | `MotionTest` `fade-tabs-panel`. The scrims are inside the `window-in-dialog`, `sheet-in` and `drawer-in` frames. |
+| `og-flicker` | Readout digits, CodeInput digit | `MotionTest` `flicker` (the Readout) |
+| `og-glint` | the press flash (`OldgeIndication`) | `OldgeIndicationTest.the_flash_is_centred_on_the_press` |
+| `og-hop` | EmptyState orb, BottomNav icon, CategoryTabs glyph (`oldgeHopIn`) | `MotionTest` `hop` (the EmptyState) |
+| `og-item-in` | Menu items, staggered | `MotionTest` `window-in-menu`: its halfway frame holds the items mid-stagger |
+| `og-led` | Avatar's online lamp | `BadgeAvatarBehaviourTest.an_online_lamp_pulses_and_stands_still_under_reduced_motion` |
+| `og-pop` | Checkbox and Chip check, Stepper done (`oldgePopIn`) | `MotionTest` `pop` (the Checkbox) |
+| `og-pop-soft` | Segmented option, BottomNav capsule, ProgressBar detail icon, SearchBar and Composer orbs, DatePicker day (`oldgePopSoftIn`) | `MotionTest` `pop-soft` (the ProgressBar); `BarBehaviourTest.the_capsule_pops_when_a_section_becomes_current_and_not_under_reduced_motion` |
+| `og-pulse-ring` | Stepper current step | `DrawerStepperBehaviourTest.the_current_ring_pulses_and_stands_still_under_reduced_motion` |
+| `og-scan` | Skeleton | `LoopBehaviourTest.without_reduced_motion_they_move` and its reduced-motion twin |
+| `og-seg-in` | Meter segments, 28 ms apart | `MotionTest` `seg-in` |
+| `og-sheet-in` | BottomSheet | `MotionTest` `sheet-in` |
+| `og-shimmer` | — | **Not applicable:** defined, and no rule in `bundle.css` uses it |
+| `og-shine` | primary Button while pressed | `MotionTest` `shine` |
+| `og-slide` | indeterminate ProgressBar | `LoopBehaviourTest.an_indeterminate_bar_slides_and_stands_still_under_reduced_motion` |
+| `og-slide-l` | DatePicker, next month | `MotionTest` `slide-l` |
+| `og-slide-r` | NavDrawer items; DatePicker, previous month | `DrawerStepperBehaviourTest.the_items_come_in_one_after_another` |
+| `og-snack-in` | Snackbar | `MotionTest` `snack-in` |
+| `og-spin` | Spinner, PullRefresh disc | `LoopBehaviourTest.without_reduced_motion_they_move` and its reduced-motion twin |
+| `og-typing` | TypingIndicator dots | `ChatBehaviourTest.the_typing_indicator_says_who_types_and_its_dots_hop_but_not_under_reduced_motion` |
+| `og-unfold` | Accordion body | `MotionTest` `unfold` |
+| `og-wiggle` | SearchBar magnifier on focus | `SearchBarBehaviourTest.the_magnifier_wiggles_on_focus_and_not_under_reduced_motion` |
+| `og-window-in` | Dialog, Menu | `MotionTest` `window-in-dialog`, `window-in-menu` |
+
+A keyframe used by several components is held through one of them. The others share its code
+(`press/Pop.kt` for the pops and the hop), not a copy of it.
+
 ## 6. Quirks
 
 * **The viddik #44 workaround.** viddik 0.6.0 adds
@@ -223,3 +272,11 @@ to publish (B-01).
   `LocalDate`, so a consumer compiles against it; the version is `wip`'s.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration
   fails with "SDK location not found".
+* **A stagger eased as a whole lands early.** One `Animatable` over the whole `fast + 28 ms × n`
+  run, with `out` easing on it, brought every Meter segment in by the halfway mark. CSS eases each
+  segment on its own. The whole run is linear, and each segment's slice of it is eased. Found by
+  `MotionTest` `seg-in` (B-44).
+* **The test clock moves in whole frames.** `mainClock.advanceTimeBy(10)` advances 16 ms, so a
+  probe that counts its own steps reads time 1.6 times too slow. For a `steps(1)` animation, the
+  halfway mark is a step's edge, and a frame taken there falls on either side of it. `MotionTest`
+  takes the Switch lamp's frame 5/8 of the way through, in the middle of the second dim run (B-44).

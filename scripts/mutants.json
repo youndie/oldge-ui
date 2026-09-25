@@ -1944,6 +1944,96 @@
    "replace": "this@drawWithContent.drawContent()",
    "tests": "*DrawerStepperBehaviourTest*",
    "expect": "on_a_photo_the_current_dot_is_grey_and_on_the_body_it_is_the_accent"
+  },
+  {
+   "id": "motion-fab-still",
+   "item": "B-44",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeFab.kt",
+   "find": "val entrance = remember { Animatable(if (motion.reduced) 1f else 0f) }",
+   "replace": "val entrance = remember { Animatable(1f) }",
+   "tests": "*MotionTest*",
+   "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
+  },
+  {
+   "id": "motion-fab-easing",
+   "item": "B-44",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeFab.kt",
+   "find": "entrance.animateTo(1f, tween(motion.slow, easing = motion.spring))",
+   "replace": "entrance.animateTo(1f, tween(motion.slow, easing = motion.out))",
+   "tests": "*MotionTest*",
+   "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
+  },
+  {
+   "id": "motion-fab-lands-short",
+   "item": "B-44",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeFab.kt",
+   "find": "entrance.animateTo(1f, tween(motion.slow, easing = motion.spring))",
+   "replace": "entrance.animateTo(0.9f, tween(motion.slow, easing = motion.spring))",
+   "tests": "*MotionTest*",
+   "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
+  },
+  {
+   "id": "motion-drawer-instant",
+   "item": "B-44",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "slide.animateTo(1f, tween(motion.slow, easing = motion.spring))",
+   "replace": "slide.animateTo(1f, tween(0, easing = motion.spring))",
+   "tests": "*MotionTest*",
+   "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
+  },
+  {
+   "id": "motion-meter-eased-whole",
+   "item": "B-44",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeMeter.kt",
+   "find": "tween(motion.fast + STAGGER_MS * segments, easing = LinearEasing)",
+   "replace": "tween(motion.fast + STAGGER_MS * segments, easing = motion.out)",
+   "tests": "*MotionTest*",
+   "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
+  },
+  {
+   "id": "motion-month-instant",
+   "item": "B-44",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeDatePicker.kt",
+   "find": "slide.animateTo(1f, tween(motion.base, easing = motion.out))",
+   "replace": "slide.animateTo(1f, tween(0, easing = motion.out))",
+   "tests": "*MotionTest*",
+   "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
+  },
+  {
+   "id": "motion-hop-flat",
+   "item": "B-44",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/press/Pop.kt",
+   "find": "private val HOP_Y = floatArrayOf(0f, -9f, 1f, 0f)",
+   "replace": "private val HOP_Y = floatArrayOf(0f, 0f, 0f, 0f)",
+   "tests": "*MotionTest*",
+   "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
+  },
+  {
+   "id": "motion-lamp-steady",
+   "item": "B-44",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSwitch.kt",
+   "find": "            blink.snapTo(0f)\n",
+   "replace": "            blink.snapTo(1f)\n",
+   "tests": "*MotionTest*",
+   "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
+  },
+  {
+   "id": "motion-no-shine",
+   "item": "B-44",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
+   "find": "        if (!active || motion.reduced) return@LaunchedEffect\n",
+   "replace": "        return@LaunchedEffect\n",
+   "tests": "*MotionTest*",
+   "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
+  },
+  {
+   "id": "motion-bar-still",
+   "item": "B-44",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeProgressBar.kt",
+   "find": "if (pct == null && !motion.reduced) {",
+   "replace": "if (false) {",
+   "tests": "*LoopBehaviourTest*",
+   "expect": "an_indeterminate_bar_slides_and_stands_still_under_reduced_motion"
   }
  ]
 }
