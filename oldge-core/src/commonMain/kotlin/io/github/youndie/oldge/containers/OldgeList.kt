@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,6 +46,7 @@ import io.github.youndie.oldge.material.CssBackground
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.material.premultipliedLerp
 import io.github.youndie.oldge.press.OldgeIndication
+import io.github.youndie.oldge.theme.LocalOldgeContentColor
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.type.OldgeText
@@ -117,8 +119,11 @@ internal data class OldgeListRow(
 internal val LocalOldgeListRow = compositionLocalOf<OldgeListRow?> { null }
 
 /**
- * A list row — the design system's `ListItem`: an [icon], the [title] with an optional [subtitle],
- * a [value] or a [trailing] control on the right (a Switch, a Badge), and a [chevron].
+ * A list row — the design system's `ListItem`: an [icon] or a [lead] element (an Avatar, a
+ * thumbnail), the [title] with an optional [subtitle], a [value] or a [trailing] control on the right
+ * (a Switch, a Badge), and a [chevron]. [icon] is the common case, an icon at the design system's
+ * 22 dp in the row's colour; [lead] takes any element into the same place, as the design system's
+ * `icon` takes one that is not an icon name. A row has one lead, so not both.
  *
  * Its README's rules:
  * - with [onClick] (or a [chevron]) the whole row is one button, at least 52 dp high, 44 dp when
@@ -136,6 +141,7 @@ public fun OldgeListItem(
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     icon: ImageVector? = null,
+    lead: (@Composable () -> Unit)? = null,
     value: String? = null,
     trailing: (@Composable () -> Unit)? = null,
     chevron: Boolean = false,
@@ -144,6 +150,7 @@ public fun OldgeListItem(
     onClick: (() -> Unit)? = null,
     interactionSource: MutableInteractionSource? = null,
 ) {
+    require(icon == null || lead == null) { "a row has one lead: an icon or a lead element, not both" }
     val c = OldgeTheme.colors
     val s = OldgeTheme.spacing
     val motion = OldgeTheme.motion
@@ -186,7 +193,17 @@ public fun OldgeListItem(
             .padding(top = if (divided) BORDER else 0.dp)
             .padding(horizontal = s.space3, vertical = if (dense) s.space1 else s.space2)
     val type = OldgeTheme.type
-    val lead = @Composable { if (icon != null) OldgeIcon(icon, contentDescription = null, size = LEAD, tint = ink) }
+    // `.og-item__lead { flex: none; color: ink; place-items: center }`: an element takes the row's ink.
+    val leading =
+        @Composable {
+            if (icon != null) {
+                OldgeIcon(icon, contentDescription = null, size = LEAD, tint = ink)
+            } else if (lead != null) {
+                Box(contentAlignment = Alignment.Center) {
+                    CompositionLocalProvider(LocalOldgeContentColor provides ink) { lead() }
+                }
+            }
+        }
     val text =
         @Composable { m: Modifier ->
             Column(m) {
@@ -226,7 +243,7 @@ public fun OldgeListItem(
                 horizontalArrangement = Arrangement.spacedBy(s.space3),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                lead()
+                leading()
                 text(Modifier.weight(1f))
                 tail()
             }
@@ -240,7 +257,7 @@ public fun OldgeListItem(
                 horizontalArrangement = Arrangement.spacedBy(s.space3),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                lead()
+                leading()
                 text(Modifier.weight(1f))
                 if (value != null) {
                     OldgeText(

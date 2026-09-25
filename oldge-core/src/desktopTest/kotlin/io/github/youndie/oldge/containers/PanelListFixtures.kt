@@ -14,6 +14,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.actions.pressed
+import io.github.youndie.oldge.feedback.OldgeAvatar
+import io.github.youndie.oldge.feedback.OldgeAvatarSize
 import io.github.youndie.oldge.feedback.OldgeBadge
 import io.github.youndie.oldge.feedback.OldgeBadgeTone
 import io.github.youndie.oldge.feedback.OldgeMeter
@@ -320,3 +322,44 @@ fun ListSectionStatesMedia() = ListSectionDemo(OldgeSkin.Media, scrolled = 40)
 @ViddikScreenshot(group = "ListSectionStates", name = "Scrolled 40 Crystal", width = 390, height = 300)
 @Composable
 fun ListSectionStatesCrystal() = ListSectionDemo(OldgeSkin.Crystal, scrolled = 40)
+
+/**
+ * A row that leads with an element rather than an icon (B-54): InboxScreen's rows, an Avatar where the
+ * icon goes, with a subtitle and a value.
+ */
+@Composable
+private fun ListItemLead(skin: OldgeSkin) =
+    OldgeDemo(skin) {
+        OldgeList {
+            row {
+                OldgeListItem(
+                    "Анна Ким",
+                    subtitle = "Фото с поездки: 148 штук, выбрала лучшие",
+                    lead = { OldgeAvatar(name = "Анна Ким", size = OldgeAvatarSize.Small) },
+                    value = "09:14",
+                    onClick = {},
+                )
+            }
+            row {
+                OldgeListItem(
+                    "Банк",
+                    subtitle = "Выписка за сентябрь готова",
+                    lead = { OldgeAvatar(name = "Банк", size = OldgeAvatarSize.Small) },
+                    value = "08:02",
+                    onClick = {},
+                )
+            }
+        }
+    }
+
+@ViddikScreenshot(group = "ListItemStates", name = "Avatar lead Toxic", width = 390, height = 150)
+@Composable
+fun ListItemLeadToxic() = ListItemLead(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "ListItemStates", name = "Avatar lead Media", width = 390, height = 150)
+@Composable
+fun ListItemLeadMedia() = ListItemLead(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "ListItemStates", name = "Avatar lead Crystal", width = 390, height = 150)
+@Composable
+fun ListItemLeadCrystal() = ListItemLead(OldgeSkin.Crystal)

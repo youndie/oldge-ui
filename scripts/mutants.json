@@ -1719,6 +1719,33 @@
    "replace": "Modifier.defaultMinSize(minHeight = line)",
    "tests": "*TextFieldBehaviourTest*",
    "expect": "the_box_is_44_empty_or_not_46_round_the_reveal_orb_and_84_with_three_lines"
+  },
+  {
+   "id": "lead-dropped",
+   "item": "B-54",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "CompositionLocalProvider(LocalOldgeContentColor provides ink) { lead() }",
+   "replace": "CompositionLocalProvider(LocalOldgeContentColor provides ink) { }",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_lead_element_sits_where_the_icon_goes_in_the_rows_colour"
+  },
+  {
+   "id": "lead-outer-colour",
+   "item": "B-54",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "CompositionLocalProvider(LocalOldgeContentColor provides ink) { lead() }",
+   "replace": "CompositionLocalProvider(LocalOldgeContentColor provides LocalOldgeContentColor.current) { lead() }",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_lead_element_sits_where_the_icon_goes_in_the_rows_colour"
+  },
+  {
+   "id": "lead-and-icon-allowed",
+   "item": "B-54",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "require(icon == null || lead == null) {",
+   "replace": "require(icon == null || lead == null || title.isNotEmpty()) {",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_row_takes_an_icon_or_a_lead_element_not_both"
   }
  ]
 }

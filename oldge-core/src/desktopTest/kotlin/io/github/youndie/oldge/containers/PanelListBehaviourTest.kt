@@ -1,6 +1,9 @@
 package io.github.youndie.oldge.containers
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -10,6 +13,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
@@ -33,9 +37,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.forms.OldgeSwitch
 import io.github.youndie.oldge.icons.OldgeIcons
+import io.github.youndie.oldge.theme.LocalOldgeContentColor
 import io.github.youndie.oldge.theme.OldgeTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 /** The rules in the Panel, List, ListItem and ListSection READMEs that are behaviour rather than look. */
@@ -273,6 +279,61 @@ class PanelListBehaviourTest {
             val first = onNodeWithText("Письмо 0", useUnmergedTree = true).getUnclippedBoundsInRoot()
             assertTrue(first.top < top + HEAD_HEIGHT, "the rows did not scroll under the header")
         }
+
+    @Test
+    fun a_lead_element_sits_where_the_icon_goes_in_the_rows_colour() =
+        runComposeUiTest {
+            var ink = Color.Unspecified
+            var onSelect = Color.Unspecified
+            var seen = Color.Unspecified
+            var seenSelected = Color.Unspecified
+            setContent {
+                OldgeTheme {
+                    ink = OldgeTheme.colors.ink
+                    onSelect = OldgeTheme.colors.onSelect
+                    Column(Modifier.width(390.dp)) {
+                        OldgeListItem(
+                            "Анна Ким",
+                            Modifier.testTag("row"),
+                            lead = {
+                                seen = LocalOldgeContentColor.current
+                                Box(Modifier.size(32.dp).testTag("lead"))
+                            },
+                        )
+                        OldgeListItem(
+                            "Выбран",
+                            selected = true,
+                            lead = { seenSelected = LocalOldgeContentColor.current },
+                        )
+                    }
+                }
+            }
+            val row = onNodeWithTag("row").getUnclippedBoundsInRoot()
+            val lead = onNodeWithTag("lead", useUnmergedTree = true).getUnclippedBoundsInRoot()
+            val title = onNodeWithText("Анна Ким", useUnmergedTree = true).getUnclippedBoundsInRoot()
+            // `.og-item`: padded `space-3`, and `space-3` between the lead and the text.
+            assertEquals(row.left + 12.dp, lead.left, "the lead is not at the row's start")
+            assertEquals(lead.right + 12.dp, title.left, "the title does not follow the lead")
+            assertEquals(ink, seen, "a lead reads the row's ink")
+            assertEquals(onSelect, seenSelected, "a selected row's lead reads on-select")
+        }
+
+    @Test
+    fun a_row_takes_an_icon_or_a_lead_element_not_both() {
+        assertFailsWith<IllegalArgumentException> {
+            runComposeUiTest {
+                setContent {
+                    OldgeTheme {
+                        OldgeListItem(
+                            "Строка",
+                            icon = OldgeIcons.Mail,
+                            lead = { Box(Modifier.size(32.dp)) },
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
 
 private val HEAD_HEIGHT = 30.dp
