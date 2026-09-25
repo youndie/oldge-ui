@@ -2,6 +2,7 @@ package io.github.youndie.oldge.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -43,10 +44,19 @@ public class OldgeTypography internal constructor(
 
 /** The bundled faces, resolved; `@Composable` because compose-resources loads a font in a composition. */
 @Composable
-internal fun oldgeTypography(): OldgeTypography {
+internal fun oldgeTypography(platformTextStyle: PlatformTextStyle? = null): OldgeTypography {
     val families = oldgeFontFamilies()
 
-    fun style(s: OldgeTypeStyle) = s.toTextStyle(families.of(s.family))
+    fun style(s: OldgeTypeStyle) =
+        s.toTextStyle(families.of(s.family)).let {
+            if (platformTextStyle ==
+                null
+            ) {
+                it
+            } else {
+                it.copy(platformStyle = platformTextStyle)
+            }
+        }
     return OldgeTypography(
         display = style(OldgeTypeStyles.display),
         heading = style(OldgeTypeStyles.heading),

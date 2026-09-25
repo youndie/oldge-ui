@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
-import io.github.youndie.oldge.harness.PortableText
+import io.github.youndie.oldge.harness.PortableTextStyle
 import io.github.youndie.oldge.material.skinBody
 import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
@@ -27,28 +27,26 @@ import io.github.youndie.viddik.annotations.ViddikScreenshot
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun IconDemo(skin: OldgeSkin) =
-    OldgeTheme(skin = skin, reducedMotion = true) {
-        PortableText {
-            Box(Modifier.fillMaxSize().skinBody()) {
-                FlowRow(
-                    Modifier.padding(OldgeTheme.spacing.space4),
-                    horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space3),
-                    verticalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space3),
-                ) {
-                    val label = OldgeTheme.type.pixelTag.copy(letterSpacing = 0.em, color = OldgeTheme.colors.inkMuted)
-                    for ((name, _) in OldgeIconPaths) {
-                        Column(
-                            Modifier.width(56.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space1),
-                        ) {
-                            OldgeIcon(
-                                oldgeIcon(name, OldgeIconPaths.getValue(name)),
-                                contentDescription = null,
-                                size = 28.dp,
-                            )
-                            OldgeText(name, style = label, softWrap = false)
-                        }
+    OldgeTheme(skin = skin, reducedMotion = true, platformTextStyle = PortableTextStyle) {
+        Box(Modifier.fillMaxSize().skinBody()) {
+            FlowRow(
+                Modifier.padding(OldgeTheme.spacing.space4),
+                horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space3),
+                verticalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space3),
+            ) {
+                val label = OldgeTheme.type.pixelTag.copy(letterSpacing = 0.em, color = OldgeTheme.colors.inkMuted)
+                for ((name, _) in OldgeIconPaths) {
+                    Column(
+                        Modifier.width(56.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space1),
+                    ) {
+                        OldgeIcon(
+                            oldgeIcon(name, OldgeIconPaths.getValue(name)),
+                            contentDescription = null,
+                            size = 28.dp,
+                        )
+                        OldgeText(name, style = label, softWrap = false)
                     }
                 }
             }

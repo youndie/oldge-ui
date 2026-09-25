@@ -19,7 +19,6 @@ import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.oldge.theme.OldgeTypography
 import io.github.youndie.oldge.type.OldgeText
-import io.github.youndie.viddik.core.ViddikPlatformTextStyle
 
 /**
  * The design system's preview frame, `.og-demo` on [OldgeScreenBody]: a column at most 390 dp wide,
@@ -33,18 +32,16 @@ fun OldgeDemo(
     skin: OldgeSkin,
     padded: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
-) = OldgeTheme(skin = skin, reducedMotion = true) {
-    PortableText {
-        OldgeScreenBody(Modifier.fillMaxSize()) {
-            Column(
-                Modifier
-                    .widthIn(
-                        max = 390.dp,
-                    ).then(if (padded) Modifier.padding(OldgeTheme.spacing.space4) else Modifier),
-                verticalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space3),
-                content = content,
-            )
-        }
+) = OldgeTheme(skin = skin, reducedMotion = true, platformTextStyle = PortableTextStyle) {
+    OldgeScreenBody(Modifier.fillMaxSize()) {
+        Column(
+            Modifier
+                .widthIn(
+                    max = 390.dp,
+                ).then(if (padded) Modifier.padding(OldgeTheme.spacing.space4) else Modifier),
+            verticalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space3),
+            content = content,
+        )
     }
 }
 
@@ -59,37 +56,15 @@ fun DemoText(text: String) {
 }
 
 /**
- * Every type style with hinting and smoothing pinned through viddik's `ViddikPlatformTextStyle`, so a
- * golden means the same on another operating system (kvadrant-ui's `portableTypography`, research
- * §1.9). Test-only: the library does not override the platform's text rendering for its consumers.
+ * The platform text style every golden and parity fixture pins, through `OldgeTheme`'s public
+ * `platformTextStyle` (B-52): hinting off, antialiasing, subpixel positioning, so a golden means the
+ * same on another operating system (kvadrant-ui's `portableTypography`, research §1.9). It is viddik's
+ * `ViddikPlatformTextStyle` with subpixel positioning turned on: off, every advance is rounded and a
+ * line drifts from Chrome's (research §1.10, 1.16 % → 0.74 % on Divider). Test-only: the library does
+ * not override the platform's text rendering for its consumers.
  */
-@Composable
-fun PortableText(content: @Composable () -> Unit) {
-    val t = OldgeTheme.type
-    val portable =
-        OldgeTypography(
-            display = t.display.pinned(),
-            heading = t.heading.pinned(),
-            title = t.title.pinned(),
-            body = t.body.pinned(),
-            bodyStrong = t.bodyStrong.pinned(),
-            button = t.button.pinned(),
-            label = t.label.pinned(),
-            caption = t.caption.pinned(),
-            readout = t.readout.pinned(),
-            readoutSm = t.readoutSm.pinned(),
-            pixelTag = t.pixelTag.pinned(),
-            families = t.families,
-        )
-    CompositionLocalProvider(
-        LocalOldgeTypography provides portable,
-        LocalOldgeTextStyle provides portable.body,
-        content = content,
-    )
-}
-
 @OptIn(androidx.compose.ui.text.ExperimentalTextApi::class)
-private val SubpixelPlatformTextStyle =
+val PortableTextStyle: androidx.compose.ui.text.PlatformTextStyle =
     androidx.compose.ui.text.PlatformTextStyle(
         spanStyle = null,
         paragraphStyle =
@@ -103,5 +78,3 @@ private val SubpixelPlatformTextStyle =
                     ),
             ),
     )
-
-private fun TextStyle.pinned(): TextStyle = copy(platformStyle = SubpixelPlatformTextStyle)

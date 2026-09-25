@@ -6,6 +6,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import io.github.youndie.oldge.press.OldgeIndication
 import io.github.youndie.oldge.tokens.OldgeColors
@@ -24,6 +25,10 @@ import io.github.youndie.oldge.tokens.OldgeSpacing
  * @param texture the grain on screen bodies and the material of the frame; the design system's
  *   `data-og-texture="off"`, for weak devices and power saving.
  * @param pressFlash the gloss flash from the touch point; the design system's `data-og-press="none"`.
+ * @param platformTextStyle applied to every style of [OldgeTheme.type]: the platform's text
+ *   rendering (hinting, smoothing, subpixel positioning) pinned, for screenshots that mean the same
+ *   on another machine — viddik's `ViddikPlatformTextStyle`, say. `null`, the default, leaves the
+ *   platform's own, which is what an app wants. The faces stay the design system's either way.
  */
 @Composable
 public fun OldgeTheme(
@@ -31,9 +36,10 @@ public fun OldgeTheme(
     reducedMotion: Boolean = platformReducedMotion(),
     texture: Boolean = true,
     pressFlash: Boolean = true,
+    platformTextStyle: PlatformTextStyle? = null,
     content: @Composable () -> Unit,
 ) {
-    val typography = oldgeTypography()
+    val typography = oldgeTypography(platformTextStyle)
     CompositionLocalProvider(
         LocalOldgeSkin provides skin,
         LocalOldgeTypography provides typography,

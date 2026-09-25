@@ -1656,6 +1656,24 @@
    "replace": "modifier,",
    "tests": "*ConsumerTextTest*",
    "expect": "a_consumers_text_lands_on_chromes_ink_where_basic_text_does_not"
+  },
+  {
+   "id": "theme-ignores-platform-style",
+   "item": "B-52",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeTheme.kt",
+   "find": "val typography = oldgeTypography(platformTextStyle)",
+   "replace": "val typography = oldgeTypography()",
+   "tests": "*PlatformTextStyleTest*",
+   "expect": "the_theme_pins_every_type_style_and_leaves_them_alone_by_default"
+  },
+  {
+   "id": "pixel-tag-not-pinned",
+   "item": "B-52",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeTypography.kt",
+   "find": "pixelTag = style(OldgeTypeStyles.pixelTag),",
+   "replace": "pixelTag = OldgeTypeStyles.pixelTag.toTextStyle(families.of(OldgeTypeStyles.pixelTag.family)),",
+   "tests": "*PlatformTextStyleTest*",
+   "expect": "the_theme_pins_every_type_style_and_leaves_them_alone_by_default"
   }
  ]
 }

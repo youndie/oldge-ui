@@ -15,7 +15,7 @@ import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.youndie.oldge.harness.PortableText
+import io.github.youndie.oldge.harness.PortableTextStyle
 import io.github.youndie.oldge.theme.OldgeTheme
 import kotlin.math.abs
 import kotlin.test.Test
@@ -35,53 +35,51 @@ class InkMatchesChromeTest {
         for (case in CASES) {
             runComposeUiTest {
                 setContent {
-                    OldgeTheme {
-                        PortableText {
-                            val t = OldgeTheme.type
-                            val base =
-                                when (case.family) {
-                                    "lcd" -> t.readoutSm
-                                    "pixel" -> t.pixelTag
-                                    "title" -> t.body.copy(fontFamily = t.families.title)
-                                    else -> t.body.copy(fontFamily = t.families.ui)
+                    OldgeTheme(platformTextStyle = PortableTextStyle) {
+                        val t = OldgeTheme.type
+                        val base =
+                            when (case.family) {
+                                "lcd" -> t.readoutSm
+                                "pixel" -> t.pixelTag
+                                "title" -> t.body.copy(fontFamily = t.families.title)
+                                else -> t.body.copy(fontFamily = t.families.ui)
+                            }
+                        val style =
+                            base.copy(
+                                fontWeight = FontWeight(case.weight),
+                                fontSize = case.size.sp,
+                                lineHeight = case.line.sp,
+                                letterSpacing = 0.sp,
+                                color = Color.Black,
+                            )
+                        Box(
+                            Modifier
+                                .testTag("c")
+                                .width(120.dp)
+                                .height(case.line.dp)
+                                .background(Color.White),
+                        ) {
+                            when (case.family) {
+                                "lcd" -> {
+                                    OldgeScriptText(
+                                        case.text,
+                                        style,
+                                        t.families.lcdCompanion,
+                                        FontCoverage.shareTechMono,
+                                    )
                                 }
-                            val style =
-                                base.copy(
-                                    fontWeight = FontWeight(case.weight),
-                                    fontSize = case.size.sp,
-                                    lineHeight = case.line.sp,
-                                    letterSpacing = 0.sp,
-                                    color = Color.Black,
-                                )
-                            Box(
-                                Modifier
-                                    .testTag("c")
-                                    .width(120.dp)
-                                    .height(case.line.dp)
-                                    .background(Color.White),
-                            ) {
-                                when (case.family) {
-                                    "lcd" -> {
-                                        OldgeScriptText(
-                                            case.text,
-                                            style,
-                                            t.families.lcdCompanion,
-                                            FontCoverage.shareTechMono,
-                                        )
-                                    }
 
-                                    "pixel" -> {
-                                        OldgeScriptText(
-                                            case.text,
-                                            style,
-                                            t.families.pixelCompanion,
-                                            FontCoverage.silkscreen,
-                                        )
-                                    }
+                                "pixel" -> {
+                                    OldgeScriptText(
+                                        case.text,
+                                        style,
+                                        t.families.pixelCompanion,
+                                        FontCoverage.silkscreen,
+                                    )
+                                }
 
-                                    else -> {
-                                        OldgeText(case.text, style = style, softWrap = false)
-                                    }
+                                else -> {
+                                    OldgeText(case.text, style = style, softWrap = false)
                                 }
                             }
                         }
