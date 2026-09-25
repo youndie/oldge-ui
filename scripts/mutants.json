@@ -1314,6 +1314,78 @@
    "replace": "private const val BODY_SHARE = 0.8f",
    "tests": "*WindowBehaviourTest*",
    "expect": "over_a_screen_the_sheets_body_is_at_most_70_percent_of_it"
+  },
+  {
+   "id": "banner-live",
+   "item": "B-32",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeBanner.kt",
+   "find": ".semantics { liveRegion = LiveRegionMode.Polite }",
+   "replace": ".semantics { }",
+   "tests": "*NoticeBehaviourTest*",
+   "expect": "a_banner_is_a_polite_status_with_its_actions_as_buttons"
+  },
+  {
+   "id": "banner-open",
+   "item": "B-32",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeBanner.kt",
+   "find": "    if (!open) return\n",
+   "replace": "",
+   "tests": "*NoticeBehaviourTest*",
+   "expect": "closed_notices_draw_nothing"
+  },
+  {
+   "id": "snack-duration",
+   "item": "B-32",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeSnackbar.kt",
+   "find": "            delay(durationMillis)\n",
+   "replace": "            delay(durationMillis / 2)\n",
+   "tests": "*NoticeBehaviourTest*",
+   "expect": "a_snackbar_goes_by_itself_after_its_duration"
+  },
+  {
+   "id": "snack-action",
+   "item": "B-32",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeSnackbar.kt",
+   "find": "if (actionLabel != null) OldgeButton(actionLabel, onAction, size = OldgeButtonSize.Small)",
+   "replace": "if (actionLabel != null) OldgeButton(actionLabel, {}, size = OldgeButtonSize.Small)",
+   "tests": "*NoticeBehaviourTest*",
+   "expect": "a_snackbar_offers_its_action_and_its_close_orb"
+  },
+  {
+   "id": "snack-inset",
+   "item": "B-32",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeSnackbar.kt",
+   "find": ".padding(start = s.space4, end = s.space4, bottom = s.space4),",
+   "replace": ".padding(start = s.space4, end = s.space4),",
+   "tests": "*NoticeBehaviourTest*",
+   "expect": "over_a_screen_a_snackbar_leaves_the_screen_in_reach"
+  },
+  {
+   "id": "empty-error-free",
+   "item": "B-32",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeEmptyState.kt",
+   "find": "require(tone != OldgeEmptyTone.Error || action != null)",
+   "replace": "require(tone != OldgeEmptyTone.Offline || action != null)",
+   "tests": "*NoticeBehaviourTest*",
+   "expect": "an_error_needs_an_action"
+  },
+  {
+   "id": "empty-announce-all",
+   "item": "B-32",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeEmptyState.kt",
+   "find": "if (tone != OldgeEmptyTone.Empty) liveRegion = LiveRegionMode.Assertive",
+   "replace": "liveRegion = LiveRegionMode.Assertive",
+   "tests": "*NoticeBehaviourTest*",
+   "expect": "errors_and_offline_are_announced_and_an_empty_state_is_not"
+  },
+  {
+   "id": "empty-ch",
+   "item": "B-32",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeEmptyState.kt",
+   "find": "private const val TEXT_CH = 30f",
+   "replace": "private const val TEXT_CH = 36f",
+   "tests": "*NoticeBehaviourTest*",
+   "expect": "an_empty_states_sentence_is_at_most_30ch_wide"
   }
  ]
 }

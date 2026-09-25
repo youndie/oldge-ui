@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.material.skinBody
@@ -48,9 +49,15 @@ fun OldgeDemo(
     }
 }
 
-/** A bare `<span>` of a preview: body text in `ink`. */
+/**
+ * A bare `<span>` of a preview: body text in the colour its container gives, as CSS text inherits
+ * it (`on-balloon` in a Banner), else in `ink`.
+ */
 @Composable
-fun DemoText(text: String) = OldgeText(text, style = LocalOldgeTextStyle.current.copy(color = OldgeTheme.colors.ink))
+fun DemoText(text: String) {
+    val style = LocalOldgeTextStyle.current
+    OldgeText(text, style = if (style.color.isSpecified) style else style.copy(color = OldgeTheme.colors.ink))
+}
 
 /**
  * Every type style with hinting and smoothing pinned through viddik's `ViddikPlatformTextStyle`, so a

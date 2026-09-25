@@ -190,7 +190,8 @@ private const val GLOW_FADE = 0.6f
 /**
  * A round orb (`.og-orb`): the chrome rim — `linear-gradient(160deg, chrome-hi, chrome-lo 60%,
  * chrome-hi)` with `shadow-orb` — around a glossy core in [core]'s colours, with a 1 px dark inner
- * ring and the `gloss` highlight on its upper 42 %.
+ * ring and the `gloss` highlight on its upper 42 %: `.og-orb__core::before`, 14 % in from either
+ * side and [highlightTop] down (3 %; the EmptyState's is 4 %), radius `999px 999px 50% 50%`.
  */
 @Composable
 internal fun OrbMaterial(
@@ -200,6 +201,7 @@ internal fun OrbMaterial(
     modifier: Modifier = Modifier,
     coreShadows: List<OldgeShadow> = listOf(CORE_RING),
     highlight: Float = 1f,
+    highlightTop: Float = ORB_HIGHLIGHT_TOP,
     coreModifier: Modifier = Modifier,
     content: @Composable () -> Unit = {},
 ) {
@@ -217,8 +219,14 @@ internal fun OrbMaterial(
                 shadows = OldgeTheme.shadows.orb,
             ).padding(rim)
             .cssBox(pill, core, shadows = coreShadows)
-            .drawBehind { drawOrbHighlight(c.gloss.copy(alpha = c.gloss.alpha * highlight)) }
-            .then(coreModifier),
+            .drawBehind {
+                drawGlossCap(
+                    c.gloss.copy(alpha = c.gloss.alpha * highlight),
+                    ORB_HIGHLIGHT_SIDE,
+                    highlightTop,
+                    ORB_HIGHLIGHT_HEIGHT,
+                )
+            }.then(coreModifier),
         // `.og-orb__core { display: grid; place-items: center }`.
         contentAlignment = Alignment.Center,
     ) { content() }
@@ -237,14 +245,6 @@ private val CORE_RING =
         spread = 1.dp,
         color = Color(0f, 0f, 0f, 0.35f),
     )
-
-/**
- * `.og-orb__core::before`: left and right 14 %, top 3 %, 42 % high, radius `999px 999px 50% 50%` —
- * which CSS's radius rule shrinks until the two top radii fit the width, leaving a round cap over
- * nearly square bottom corners.
- */
-private fun DrawScope.drawOrbHighlight(gloss: Color) =
-    drawGlossCap(gloss, ORB_HIGHLIGHT_SIDE, ORB_HIGHLIGHT_TOP, ORB_HIGHLIGHT_HEIGHT)
 
 /**
  * A round element's `::before` highlight: [side] in from the left and right and [top] down, as
