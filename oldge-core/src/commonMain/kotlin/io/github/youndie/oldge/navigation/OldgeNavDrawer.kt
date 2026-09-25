@@ -39,6 +39,8 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -88,7 +90,9 @@ public sealed interface OldgeDrawerEntry {
  *
  * [inline] is the drawer alone, sized by its parent. Otherwise it fills its parent — put it over the
  * screen in a `Box` — with a scrim that calls [onClose] when tapped, and it is not drawn while
- * [open] is false.
+ * [open] is false. A screen reader hears the scrim as a «Закрыть» button that calls [onClose]. The
+ * design system closes its drawer only by pointer, and this is the one control the library adds
+ * to it (B-61).
  *
  * Its README's rules: the drawer slides in from the left on the spring and its items follow in a
  * stagger; for three to five main sections the BottomNav is the better choice, and a drawer is for
@@ -123,11 +127,27 @@ public fun OldgeNavDrawer(
                 .fillMaxSize()
                 .graphicsLayer { alpha = fade.value }
                 .drawBehind { drawRect(SCRIM) }
-                .oldgeScrimTaps(onClose),
+                .oldgeScrimTaps(onClose)
+                // The design system's drawer closes only by pointer: its scrim is a plain `div`, and
+                // unlike the sheet and the dialog it has no «Закрыть» button. So a screen reader could
+                // leave it only by choosing an entry. The scrim is therefore announced as the close
+                // action, as Material's scrim is. It is invisible, and nothing drawn changes (B-61,
+                // the owner's choice).
+                .semantics {
+                    contentDescription = CLOSE
+                    role = Role.Button
+                    onClick(CLOSE) {
+                        onClose()
+                        true
+                    }
+                },
         )
         Drawer(entries, value, onChange, title, subtitle, avatar, label, Modifier.fillMaxHeight(), slideIn = true)
     }
 }
+
+// The word the library's other close controls say: the dialog's and the sheet's «Закрыть» orb.
+private const val CLOSE = "Закрыть"
 
 /**
  * `.og-drawer`: `min(304px, 86vw)` wide, `body-hi` to `ground` under a `glow` ellipse at its bottom

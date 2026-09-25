@@ -312,3 +312,8 @@ A keyframe used by several components is held through one of them. The others sh
   - Segmented's option.
 
   Its canary fails when Skia starts to hyphenate (research §1.10, B-59).
+* **The drawer's scrim is the one scrim a screen reader hears.** The design system's scrims are
+  plain `div`s, and B-43 took them out of the tree. The sheet and the dialog each have a «Закрыть»
+  orb, but the drawer has none, so it could be left only by choosing an entry. At the owner's
+  choice, its scrim is announced as a «Закрыть» button whose action calls `onClose`, as Material's
+  scrim is. Nothing drawn changed (B-61).

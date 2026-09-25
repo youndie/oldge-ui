@@ -2088,6 +2088,33 @@
    "replace": "\n",
    "tests": "*HyphenationTest*",
    "expect": "the_texts_the_css_hyphenates_ask_for_it_and_a_subtitle_does_not"
+  },
+  {
+   "id": "scrim-action-does-nothing",
+   "item": "B-61",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "                        onClose()\n                        true\n",
+   "replace": "                        true\n",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "a_screen_reader_closes_it_through_the_scrims_close_button"
+  },
+  {
+   "id": "scrim-no-role",
+   "item": "B-61",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "                    role = Role.Button\n",
+   "replace": "",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "a_screen_reader_closes_it_through_the_scrims_close_button"
+  },
+  {
+   "id": "scrim-unnamed",
+   "item": "B-61",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "                    contentDescription = CLOSE\n",
+   "replace": "",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "a_screen_reader_closes_it_through_the_scrims_close_button"
   }
  ]
 }

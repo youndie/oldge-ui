@@ -1,7 +1,7 @@
 ---
 id: B-61
 title: "The NavDrawer has no accessible way to close"
-status: question
+status: done
 priority: P2
 size: S
 stage: stage-2-components
@@ -32,3 +32,22 @@ This is a design decision, so it is the owner's:
 
 The loop recommends 2: it changes nothing drawn and matches the platform convention. It does not
 decide it.
+
+## Decision (2026-09-25)
+
+The owner chose **2**: the scrim becomes an accessible «Закрыть» action, invisible, and nothing drawn changes.
+
+## Findings (2026-09-25)
+
+- The drawer's scrim keeps `oldgeScrimTaps` for the pointer. It also gets its own semantics: the
+  content description «Закрыть», `Role.Button`, and an `onClick` labelled «Закрыть» that calls
+  `onClose`. The word is the one the dialog's and the sheet's close orbs say, so there is no new
+  parameter, and `checkKotlinAbi` is unchanged. Localising the library's own strings is a
+  separate concern: the orb hard-codes the word too.
+- Nothing drawn changed: NavDrawer's goldens and parity pass as they were, under `viddikVerify`.
+- **Test:** `DrawerStepperBehaviourTest.a_screen_reader_closes_it_through_the_scrims_close_button`
+  finds the node by name and role, runs its click action, and sees the drawer gone. Its control
+  is the inline drawer, which has no scrim and must have no such node.
+- **Mutants:** 3 of 3 killed: the action closing nothing, the role removed, the name removed.
+- **Not verified with a real screen reader** (TalkBack, VoiceOver). That needs the app running on
+  a device, which is B-41's open question.

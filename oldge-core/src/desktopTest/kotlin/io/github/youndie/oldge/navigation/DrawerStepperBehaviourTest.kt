@@ -18,6 +18,7 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertWidthIsEqualTo
@@ -29,6 +30,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.compose.ui.unit.dp
@@ -120,6 +122,42 @@ class DrawerStepperBehaviourTest {
             onNodeWithTag("screen").performTouchInputAt(360f, 200f)
             assertEquals(false, open)
             onNode(hasContentDescription("Меню")).assertDoesNotExist()
+        }
+
+    /**
+     * The design system closes its drawer only by pointer, so the scrim is announced as a «Закрыть»
+     * button, and its action closes the drawer (B-61). The inline drawer has no scrim and no such
+     * button, which is also what shows the node is the scrim's.
+     */
+    @Test
+    fun a_screen_reader_closes_it_through_the_scrims_close_button() =
+        runComposeUiTest {
+            var open by mutableStateOf(true)
+            var inline by mutableStateOf(false)
+            setContent {
+                OldgeTheme {
+                    Box(Modifier.width(390.dp).height(400.dp)) {
+                        OldgeNavDrawer(
+                            drawerEntries,
+                            "home",
+                            {},
+                            title = "Павел",
+                            inline = inline,
+                            open = open,
+                            onClose = { open = false },
+                        )
+                    }
+                }
+            }
+            val close =
+                hasContentDescription("Закрыть") and SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Button)
+            onNode(close).assertHasClickAction().performSemanticsAction(SemanticsActions.OnClick)
+            assertEquals(false, open)
+            onNode(hasContentDescription("Меню")).assertDoesNotExist()
+            open = true
+            inline = true
+            onNode(hasContentDescription("Меню")).assertExists()
+            onNode(close).assertDoesNotExist()
         }
 
     @Test

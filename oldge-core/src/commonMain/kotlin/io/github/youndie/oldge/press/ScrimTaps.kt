@@ -12,6 +12,8 @@ import androidx.compose.ui.input.pointer.pointerInput
  * with a click handler (`og-scrim`, `og-sheet-scrim`, `og-drawer-scrim`), not controls, and an
  * accessible close is the overlay's own button. A `clickable` here was announced as an unnamed
  * button covering the screen. The taps are still taken, so nothing behind the scrim receives them.
+ * The NavDrawer, which has no close button of its own, adds a named «Закрыть» action to its scrim
+ * (B-61).
  */
 @Composable
 internal fun Modifier.oldgeScrimTaps(onTap: () -> Unit): Modifier {
