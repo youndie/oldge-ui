@@ -1,7 +1,7 @@
 ---
 id: B-10
 title: "Press feedback: the gloss flash, the squash, and the focus ring"
-status: open
+status: done
 priority: P0
 size: M
 stage: stage-1-core
@@ -32,3 +32,22 @@ back (research §1.5), and every focusable one draws a 2 px `focus` ring 2 px ou
   in pointer mode (without that line the test passes for a control that was never focusable).
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/press/`, `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeTheme.kt`,
   `reference/design-system/components/bundle.js` (lines 1–40: the flash).
+
+## Findings (2026-09-25)
+
+- `OldgeIndication(shape)` (`press/OldgeIndication.kt`) is `LocalIndication` under `OldgeTheme`; a
+  component passes its own shape. The flash and the ring are drawn by `drawOldgeFlash` /
+  `drawOldgeFocusRing`, which the `Press` goldens call too, frozen at a quarter of the flash's run —
+  a golden of the live indication would photograph the end of an animation.
+- CSS details carried over: the spot's size clamp (28…56 dp), the gradient sized to the farthest
+  corner, `screen` blending, scale on one keyframe interval and opacity on two, each eased — CSS
+  applies the timing function per interval.
+- Compose emits no `FocusInteraction` for focus taken in touch mode; the ring test therefore takes
+  focus in keyboard mode, switches to touch (asserting focus, no ring), and back (ring).
+- Mutations, each failing its test, restored: the `pressFlash` switch ignored; the flash drawn 4 px
+  off the press; the ring drawn without the keyboard gate.
+- `oldgePressScale` has no test of its own here: the amount is per component, and B-12 (Button,
+  OrbButton) is its first user and where its behaviour is asserted.
+- The CSS outline's radius grows with its offset; the ring here keeps the shape's radius. On a 4 dp
+  corner the difference is under a pixel; a component with a large radius that shows it is a
+  finding for that component.

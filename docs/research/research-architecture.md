@@ -151,6 +151,16 @@ shader language (D8).
 | The press feedback is a gloss flash from the touch point, bounded by the element's shape, fading over `dur-press` (600 ms); a squash to 0.86–0.95 in `dur-instant` and a spring back in `dur-base`; `data-og-press="none"` on an ancestor turns the flash off. | `bundle.js` lines 11–17; README "Движение" |
 | The primary button additionally runs a diagonal glint across itself on press. | README "Движение"; `bundle.css` `og-shine` |
 
+*Answered in B-10:* `IndicationNodeFactory` in CMP 1.12 foundation is
+`create(interactionSource: InteractionSource): DelegatableNode` plus `equals`/`hashCode`
+(`foundation-desktop-1.12.0.jar!/androidx/compose/foundation/IndicationNodeFactory.class`, read with
+`javap`). `OldgeIndication(shape)` is the theme's `LocalIndication`: the flash is drawn over the
+element's background and under its content, clipped to the shape, and the focus ring outside it.
+Two measured behaviours of Compose shape it: a focus taken in **touch** mode emits no
+`FocusInteraction` at all, so the ring follows keyboard focus only; and the input mode read during
+drawing is observed, so switching modes redraws the ring without any subscription (a subscription
+added on a first, wrong hypothesis was removed once a mutation showed it did nothing).
+
 *Answered in B-05:* Compose's `CubicBezierEasing` accepts control points whose y leaves 0…1 and the
 curve really overshoots — `ease-spring` peaks above 1.05, `ease-bounce` dips below −0.05
 (`oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/tokens/OldgeTokensTest.kt`), so the

@@ -36,7 +36,7 @@ commit's body. Red is never merged; a check is never loosened to get green.
 ```bash
 export JAVA_HOME=$(/usr/libexec/java_home -v 25)
 make check          # the documentation gate (docs-bootstrap checkers)
-./gradlew check     # the code gate, once B-05 has created the build: tests, ktlint, viddikVerify
+./gradlew check     # the code gate: tests, ktlint, viddikVerify, the token --check
 ```
 
 Both must be green before a merge. There is no CI; the log of the local run is the evidence and it
@@ -53,13 +53,17 @@ that recorded them (research §1.9), and the mac is where the references are ren
 - **No literal colour, size or duration in a component.** Every value comes from the generated
   token layer (research D4). If the CSS uses a value no token holds, that is a finding for the
   item, not a literal.
+- **A CSS literal that equals a token by chance** (the focus ring's `2px` is `radius-xs` by value)
+  carries a trailing `// css literal: <where bundle.css or the README states it>`, or
+  `NoTokenLiteralsTest` fails. Prefer saying what the number is (`HAIRLINE * 2`) when there is a
+  true way to; the marker is for when there is not, and it must name its source.
 - **1 CSS px = 1 dp, 1 rem = 16 sp** (D5). Text is in sp so that it scales with the system font —
   the design system's EdgeScale stress screen is the test of it.
 - **Name goldens and references in ASCII**: `<Component>_<Skin>` (`Button_Toxic`). viddik
   sanitises anything else into underscores and the names collide.
 - **Never edit a reference PNG or the vendored design system to make parity pass.** A gap is a
   number in the commit body with its cause, not a fix to the ruler.
-- **Never raise a tolerance to get green.** The floor is measured once (B-04) and every later
+- **Never raise a tolerance to get green.** The floor is measured once (B-08, research §1.10) and every later
   number is read against it.
 - **Proprietary fonts never enter this repository** — Tahoma, Verdana, Trebuchet MS, Segoe UI,
   Lucida Console, in any form including test fixtures. Research D6.

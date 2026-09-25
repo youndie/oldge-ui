@@ -1,11 +1,13 @@
 package io.github.youndie.oldge.theme
 
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import io.github.youndie.oldge.press.OldgeIndication
 import io.github.youndie.oldge.tokens.OldgeColors
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.tokens.OldgeShadows
@@ -39,6 +41,8 @@ public fun OldgeTheme(
         LocalOldgeSwitches provides OldgeSwitches(texture = texture, pressFlash = pressFlash),
         LocalOldgeTextStyle provides typography.body,
         LocalOldgeContentColor provides skin.colors.ink,
+        // The press flash and the focus ring reach every clickable through this (B-10).
+        LocalIndication provides OldgeIndication(),
         content = content,
     )
 }
