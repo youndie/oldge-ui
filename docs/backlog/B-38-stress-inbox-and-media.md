@@ -5,7 +5,7 @@ status: open
 priority: P2
 size: L
 stage: stage-3-screens
-blocked_by: [B-20, B-23, B-24, B-26, B-30, B-31, B-32, B-33, B-50, B-51, B-52]
+blocked_by: [B-20, B-23, B-24, B-26, B-30, B-31, B-32, B-33, B-50, B-51, B-52, B-54, B-55]
 ---
 
 # B-38 — Stress screens: the long list and full-screen media
@@ -32,3 +32,25 @@ Inbox: sticky sections, swipe rows, pull to refresh, a long scrolling list — t
   - `reference/design-system/components/InboxScreen/README.md`, `reference/design-system/components/InboxScreen/preview.html`
   - `reference/design-system/components/MediaScreen/README.md`, `reference/design-system/components/MediaScreen/preview.html`
   - `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/`
+
+## Iteration 1 (2026-09-25)
+
+Both previews were surveyed against the library's public API before any screen code was written.
+
+- **Inbox finds two component gaps**, filed as blockers of this item:
+  - [B-54](B-54-list-item-lead-slot.md): ListItem's icon is an `ImageVector` only, and the rows
+    lead with an Avatar.
+  - [B-55](B-55-sticky-sections-in-pull-refresh.md): list sections stick only in a `LazyColumn`,
+    and PullRefresh scrolls a plain column. The page puts the sections inside the refresh.
+- **Media needs nothing new.**
+  - WindowBar `overlay`, PageDots `onDark` and the three OrbButtons exist.
+  - The photo stand-in, the bottom scrim and the caption are the page's own `<style>`
+    (`.media`, `.media__bottom`, `.media__cap`), not a design-system component. They are drawn in
+    `sample` as the page's content, from theme colours, with `css literal` markers.
+  - The like orb's `aria-pressed` is the page's attribute. It is a `semantics` modifier on the
+    orb, not an orb parameter.
+- **Inbox's PullRefresh is refreshing in the reference.** The preview starts with `busy` true and
+  a 1.6 s timeout, and the render is photographed about 100 ms in. The fixture must show the disc
+  spinning under reduced motion, which is still.
+- **None of the later pages (B-39, B-40) use** a ListItem with an element icon, a PullRefresh or
+  a ListSection. The two gaps block only this item.
