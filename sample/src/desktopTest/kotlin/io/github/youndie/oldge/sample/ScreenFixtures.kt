@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.unit.Density
 import io.github.youndie.oldge.containers.OldgeScreenBody
 import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
@@ -22,11 +25,18 @@ import io.github.youndie.viddik.annotations.ViddikScreenshot
 @Composable
 fun Phone(
     skin: OldgeSkin,
+    fontScale: Float = 1f,
     screen: @Composable (Modifier) -> Unit,
-) = OldgeTheme(skin = skin, reducedMotion = true, platformTextStyle = PortableTextStyle) {
-    OldgeScreenBody(Modifier.fillMaxSize()) {
-        Box(Modifier.fillMaxSize().clip(RoundedCornerShape(OldgeTheme.radii.xl))) {
-            screen(Modifier.fillMaxSize())
+) {
+    // A page's root font of 200 % is the system font at 200 % (research §1.7): `rem` grows, `px` does not.
+    val base = LocalDensity.current
+    CompositionLocalProvider(LocalDensity provides Density(base.density, fontScale)) {
+        OldgeTheme(skin = skin, reducedMotion = true, platformTextStyle = PortableTextStyle) {
+            OldgeScreenBody(Modifier.fillMaxSize()) {
+                Box(Modifier.fillMaxSize().clip(RoundedCornerShape(OldgeTheme.radii.xl))) {
+                    screen(Modifier.fillMaxSize())
+                }
+            }
         }
     }
 }
@@ -95,3 +105,27 @@ fun MediaScreenMedia() = Phone(OldgeSkin.Media) { MediaScreen(it) }
 @ViddikScreenshot(group = "MediaScreen", name = "Crystal", width = 390, height = 760)
 @Composable
 fun MediaScreenCrystal() = Phone(OldgeSkin.Crystal) { MediaScreen(it) }
+
+@ViddikScreenshot(group = "EdgeNarrow", name = "Toxic", width = 320, height = 680)
+@Composable
+fun EdgeNarrowToxic() = Phone(OldgeSkin.Toxic) { EdgeNarrowScreen(it) }
+
+@ViddikScreenshot(group = "EdgeNarrow", name = "Media", width = 320, height = 680)
+@Composable
+fun EdgeNarrowMedia() = Phone(OldgeSkin.Media) { EdgeNarrowScreen(it) }
+
+@ViddikScreenshot(group = "EdgeNarrow", name = "Crystal", width = 320, height = 680)
+@Composable
+fun EdgeNarrowCrystal() = Phone(OldgeSkin.Crystal) { EdgeNarrowScreen(it) }
+
+@ViddikScreenshot(group = "EdgeScale", name = "Toxic", width = 390, height = 860)
+@Composable
+fun EdgeScaleToxic() = Phone(OldgeSkin.Toxic, fontScale = 2f) { EdgeScaleScreen(it) }
+
+@ViddikScreenshot(group = "EdgeScale", name = "Media", width = 390, height = 860)
+@Composable
+fun EdgeScaleMedia() = Phone(OldgeSkin.Media, fontScale = 2f) { EdgeScaleScreen(it) }
+
+@ViddikScreenshot(group = "EdgeScale", name = "Crystal", width = 390, height = 860)
+@Composable
+fun EdgeScaleCrystal() = Phone(OldgeSkin.Crystal, fontScale = 2f) { EdgeScaleScreen(it) }

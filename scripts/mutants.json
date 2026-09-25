@@ -1836,6 +1836,24 @@
    "replace": "widths[i] = basis[i] + 0 * free / n + if (k < 0 * free % n) 1 else 0",
    "tests": "*ActionsBehaviourTest*",
    "expect": "buttons_that_fit_share_the_line_each_grown_from_its_own_width"
+  },
+  {
+   "id": "edge-list-title-one-line",
+   "item": "B-39",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "OldgeText(title, style = type.body.copy(color = ink), maxLines = 2, overflow = TextOverflow.Ellipsis)",
+   "replace": "OldgeText(title, style = type.body.copy(color = ink), maxLines = 1, overflow = TextOverflow.Ellipsis)",
+   "tests": "*EdgeClippingTest*",
+   "expect": "nothing_on_the_narrow_page_is_cut_but_the_navigations_own_ellipses"
+  },
+  {
+   "id": "edge-tab-page-cut",
+   "item": "B-39",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/EdgeScreens.kt",
+   "find": "{ OldgeText(\"Имя и значок\") }",
+   "replace": "{ OldgeText(\"Имя и значок \".repeat(8), maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis) }",
+   "tests": "*EdgeClippingTest*",
+   "expect": "nothing_on_the_200_percent_page_is_cut"
   }
  ]
 }

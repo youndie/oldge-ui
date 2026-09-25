@@ -34,6 +34,8 @@ missing piece becomes a library item, not a private composable (B-37's decision)
 | `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/InboxScreen.kt` | the long-list stress page: sticky sections in a lazy pull to refresh, swipe rows, the empty and error filters (B-38) |
 | `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/MediaScreen.kt` | the full-screen media stress page: the overlay bar, the page's own photo stand-in and scrim, PageDots on dark (B-38) |
 | `sample/src/desktopMain/kotlin/io/github/youndie/oldge/sample/Main.kt` | the desktop window; screens are shown there once B-41 builds the sample app |
+| `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/EdgeScreens.kt` | the Edge stress pages: 320 dp in German, and the system font at 200 % (B-39) |
+| `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/EdgeClippingTest.kt` | no text on the Edge pages is cut but the BottomNav's own ellipses (B-39) |
 | `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/ScreenFixtures.kt` | `Phone`: the preview's `.phone` harness, and the parity fixtures |
 | `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/ScreenBehaviourTest.kt` | what a page demonstrates as interaction: the sign-in mode switch, a sent message joining its run |
 | `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/ConsumerTextTest.kt` | `OldgeText` held to Chrome's ink from outside the library (B-51) |
@@ -67,6 +69,11 @@ missing piece becomes a library item, not a private composable (B-37's decision)
 | Build | viddik 0.6.0 | goldens and design parity for the screens |
 
 ## 5. Quirks
+
+- **`TextLayoutResult.hasVisualOverflow` does not mean cut.** Its width half compares the node with
+  the paragraph, which is laid out at the width available, so every text that does not fill its
+  line "overflows". A cut is a line cut off at the bottom, an ellipsized line, or a line wider than
+  its node (`EdgeClippingTest`, B-39).
 
 - **A page's own `<style>` is the page's content, drawn here.** MediaScreen's photograph, scrim
   and caption (`.media`, `.media__bottom`) are no design-system component. They are drawn in

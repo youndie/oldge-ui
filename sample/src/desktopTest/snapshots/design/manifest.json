@@ -36,6 +36,42 @@
       "page": true,
       "sha256": "7b977bbef5875ecf983c2c3dac5522f5ae3139795d16f1251db38df30cce1383"
     },
+    "EdgeNarrow_Crystal": {
+      "width": 320,
+      "height": 680,
+      "page": true,
+      "sha256": "99f91a39c15f698ca4adac7a2e3cb995f65f8d728096db0cfb5fd19995d5ade8"
+    },
+    "EdgeNarrow_Media": {
+      "width": 320,
+      "height": 680,
+      "page": true,
+      "sha256": "c903bdb84ba76f0e2957f0d11a7da9871281f3f714472d96f365db2181ffb01c"
+    },
+    "EdgeNarrow_Toxic": {
+      "width": 320,
+      "height": 680,
+      "page": true,
+      "sha256": "68868e71e01264e4403aea50ae4f771125ad79b989081a23ed9351ef94af6aef"
+    },
+    "EdgeScale_Crystal": {
+      "width": 390,
+      "height": 860,
+      "page": true,
+      "sha256": "11dfce9e13deb45d57669502c54bbdd18a15d0950e011e4141986d07f41a6ff4"
+    },
+    "EdgeScale_Media": {
+      "width": 390,
+      "height": 860,
+      "page": true,
+      "sha256": "0d52e7a256f5cc12424afcda98f79d5ad54046fba3a6aac39b5433933c973452"
+    },
+    "EdgeScale_Toxic": {
+      "width": 390,
+      "height": 860,
+      "page": true,
+      "sha256": "55ee5d66b2a86e09020bbb4561dba758fe108c6c2982906e3fd7730a3793a030"
+    },
     "InboxScreen_Crystal": {
       "width": 390,
       "height": 760,

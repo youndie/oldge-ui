@@ -1,7 +1,7 @@
 ---
 id: B-39
 title: "Stress screens: 320 dp with German strings, and the system font at 200 %"
-status: open
+status: done
 priority: P2
 size: L
 stage: stage-3-screens
@@ -51,3 +51,40 @@ Everything else exists:
 Fixture sizes from the manifest: EdgeNarrow 320 × 680 and EdgeScale 390 × 860. EdgeScale's root
 font of 200 % is `Density(1f, fontScale = 2f)` (research §1.7). Every page size in `rem` grows with
 it, and `px` sizes do not, as in Compose `sp` grows and `dp` does not.
+
+## Iteration 2 (2026-09-25): done
+
+- **The screens.** `EdgeNarrowScreen` and `EdgeScaleScreen` are in `sample`, from public components,
+  and each ends in the `OldgeActions` row (B-56). EdgeScale's fixture is the phone at
+  `fontScale = 2f` (research §1.7). `rem` becomes `sp` and grows, and `px` becomes `dp` and does
+  not, as in Chrome.
+- **References** were rendered into `sample` with `--out`. Each `sha256` equals oldge-core's.
+- **Parity, raw, against the floor of 0.72 %:**
+
+  | Page | Toxic | Media | Crystal |
+  |---|---|---|---|
+  | EdgeNarrow (320 dp, German) | 2.97 % | 3.09 % | 3.16 % |
+  | EdgeScale (200 %) | 1.42 % | 1.47 % | 1.52 % |
+
+  - **EdgeScale** matches the reference as rendered. Every control has grown in height; nothing is
+    cut; the two buttons stand in a column.
+  - **EdgeNarrow** matches it too: the values under their titles, the RadioGroup, the buttons in a
+    column, the BottomNav's ellipses. The one visible difference is the list title's
+    hyphenation, filed as [B-59](B-59-hyphenation.md).
+- **The clipping check** (`EdgeClippingTest`) reads every text's layout through semantics, on both
+  pages.
+  - **It departs from the item's wording.** `hasVisualOverflow` is true for every text here: its
+    width half compares the node's width with the paragraph's, and the paragraph is laid out at
+    the width available while the node takes the text's own. The check therefore counts a cut as
+    one of three things: a line cut off at the bottom, a line ended in an ellipsis, or a line wider
+    than its node.
+  - **Narrow:** the set of cut texts is exactly the BottomNav's «Benachrichtigungen» and
+    «Einstellungen», cut with an ellipsis as the references show them. The set is compared whole,
+    so a new cut fails the test and so does an exemption no longer needed. It also serves as the
+    positive control that ellipses are seen.
+  - **200 %:** the set is empty.
+  - A guard fails the test if fewer than eleven texts are found, so it cannot pass over nothing.
+- **Mutants:** 2 of 2 killed.
+  - A ListItem title clamped to one line: the German title ellipsized on the narrow page.
+  - A cut text on the tab page at 200 %.
+- **Component gaps found here:** B-59 (hyphenation).
