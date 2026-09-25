@@ -495,6 +495,51 @@
    "replace": "detail ?: \"\"",
    "tests": "*LcdBehaviourTest*",
    "expect": "done_and_error_say_so_in_a_word_not_only_a_colour"
+  },
+  {
+   "id": "spinner-name",
+   "item": "B-30",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeSpinner.kt",
+   "find": "contentDescription = label ?: \"Загрузка\"",
+   "replace": "contentDescription = label ?: \"\"",
+   "tests": "*LoopBehaviourTest*",
+   "expect": "a_spinner_is_an_indeterminate_progress_named_by_its_label_or_as_loading"
+  },
+  {
+   "id": "spinner-indeterminate",
+   "item": "B-30",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeSpinner.kt",
+   "find": "progressBarRangeInfo = ProgressBarRangeInfo.Indeterminate",
+   "replace": "progressBarRangeInfo = ProgressBarRangeInfo(0f, 0f..1f)",
+   "tests": "*LoopBehaviourTest*",
+   "expect": "a_spinner_is_an_indeterminate_progress_named_by_its_label_or_as_loading"
+  },
+  {
+   "id": "loops-ignore-reduced",
+   "item": "B-30",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/Loop.kt",
+   "find": "    if (OldgeTheme.motion.reduced) return null\n",
+   "replace": "",
+   "tests": "*LoopBehaviourTest*",
+   "expect": "under_reduced_motion_the_disc_the_scanner_and_the_arc_stand_still"
+  },
+  {
+   "id": "loops-never-run",
+   "item": "B-30",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/Loop.kt",
+   "find": "    if (OldgeTheme.motion.reduced) return null\n",
+   "replace": "    if (OldgeTheme.motion.reduced || !OldgeTheme.motion.reduced) return null\n",
+   "tests": "*LoopBehaviourTest*",
+   "expect": "without_reduced_motion_they_move"
+  },
+  {
+   "id": "lit-arc",
+   "item": "B-30",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeSkeleton.kt",
+   "find": "private const val LIT = 100f",
+   "replace": "private const val LIT = 70f",
+   "tests": "*LoopBehaviourTest*",
+   "expect": "a_dial_lights_its_first_100_degrees_from_twelve_o_clock"
   }
  ]
 }

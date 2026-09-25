@@ -1,7 +1,7 @@
 ---
 id: B-30
 title: "Spinner and Skeleton"
-status: open
+status: done
 priority: P1
 size: S
 stage: stage-2-components
@@ -41,3 +41,42 @@ The two loops: Spinner's rotating disc, Skeleton's sunken slots with the segment
   - `reference/design-system/components/Spinner/README.md`, `reference/design-system/components/Spinner/preview.html`
   - `reference/design-system/components/Skeleton/README.md`, `reference/design-system/components/Skeleton/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/`
+
+## Findings (2026-09-25)
+
+- Parity (±16, floor 0.72 %):
+  - Skeleton: 0.10 / 0.14 / 0.13 % (Toxic / Media / Crystal), on the first run.
+  - Spinner: 1.29 / 1.34 / 0.86 %, from 1.38 / 1.69 / 1.13 % after one cause. The orb shadow
+    showed through the disc's hole, because Compose's `dropShadow` fills its shape where CSS paints
+    an outer shadow only outside the box; it is drawn with the disc clipped out now. What is left
+    is the conic sweep's interpolation and the rim's edge.
+- What the references show under reduced motion follows the design's own rule, a 1 ms, single run
+  that ends at the base style. The scanners rest off the left edge and are clipped, the dials show
+  their first 100° lit from 12 o'clock, and the spinner rests unturned. The components under
+  reduced motion draw exactly that.
+- **The moving forms are held at a fixed frame** through `LocalOldgeLoopPhase` (internal, in
+  `Loop.kt`). A golden cannot wait for an endless loop to settle, and viddik's capture has no clock
+  to stop. `SkeletonStates` shows the disc turned, the scanners out of step, and the dials stepped.
+  The scanner's `drop-shadow` glow is not drawn, and no reference shows it.
+- Conic gradients are Compose's sweep turned −90°: CSS's start at 12 o'clock, Compose's at 3. The
+  hole and the dial ring take CSS's radial masks against the farthest-corner radius, the box's
+  half-diagonal.
+- The READMEs' rules, in the API or `LoopBehaviourTest`:
+  - the spinner is an indeterminate progress named by its label, or «Загрузка»;
+  - a skeleton says nothing to a screen reader;
+  - under reduced motion the disc, the scanner and the arc stand still, and without it they move;
+  - the dial lights its first 100°, sampled by pixel.
+- **A golden missed a mutant.** Cutting the lit arc from 100° to 70° stayed within viddik's
+  0.05 % pixel budget. It is now held by the pixel test, and the quirk is in
+  `docs/services/oldge-core.md`.
+- Mutations through `scripts/mutate.py`: 5 of 5 behaviour mutants killed by their aimed tests
+  (`lit-arc` among them, after the pixel test). The skeleton's silence has no mutant, since its
+  forms say nothing even without the clearing. Goldens by name: the scanline pitch, the spinner's
+  hole, and its shadow kept outside.
+- Values the tokens do not hold, marked `// css literal:`:
+  - Spinner: discs 24 / 48 / 72.
+  - Skeleton:
+    - line 14 with margins 5, the scanline 3 + 1;
+    - scanner 54 (72 on media) with 6 px blocks 3 apart, inset 2;
+    - media 120 high with its scanner 8 up and 10 high, glyph 40;
+    - circles 44 and 36, the dial inset 3.
