@@ -30,3 +30,4 @@ rootProject.name = "oldge-ui"
 
 include(":oldge-core")
 include(":sample")
+include(":sample-android")

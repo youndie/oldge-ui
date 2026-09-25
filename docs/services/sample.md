@@ -33,7 +33,10 @@ missing piece becomes a library item, not a private composable (B-37's decision)
 | `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ChatScreen.kt` | the chat stress page (B-37) |
 | `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/InboxScreen.kt` | the long-list stress page: sticky sections in a lazy pull to refresh, swipe rows, the empty and error filters (B-38) |
 | `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/MediaScreen.kt` | the full-screen media stress page: the overlay bar, the page's own photo stand-in and scrim, PageDots on dark (B-38) |
-| `sample/src/desktopMain/kotlin/io/github/youndie/oldge/sample/Main.kt` | the desktop window; screens are shown there once B-41 builds the sample app |
+| `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/OldgeSampleApp.kt` | the sample app: the nine pages behind a page choice, a skin switcher and a 200 % text switch (B-41) |
+| `sample/src/desktopMain/kotlin/io/github/youndie/oldge/sample/Main.kt` | the app on the desktop, `./gradlew :sample:run` |
+| `sample/src/iosMain/kotlin/io/github/youndie/oldge/sample/ios/IosEntryPoint.kt` | the app on iOS, and `scripts/ios-sample-app.sh`, which bundles it with the fonts and runs it on a simulator |
+| `sample-android/` | the app on Android: the activity that hosts `sample`, `./gradlew :sample-android:installDebug` |
 | `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/EdgeScreens.kt` | the Edge stress pages: 320 dp in German, and the system font at 200 % (B-39) |
 | `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/EdgeClippingTest.kt` | no text on the Edge pages is cut but the BottomNav's own ellipses (B-39) |
 | `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ShowcaseScreens.kt` | the showcase pages: Launcher, Feed, Settings (B-40) |
@@ -57,8 +60,9 @@ missing piece becomes a library item, not a private composable (B-37's decision)
     is not drawn.
   - Text is pinned through `OldgeTheme(platformTextStyle = …)` (B-52) with oldge-core's harness
     value, so parity reads against the same floor as the components.
-- **No viddik#44 workaround here.** With one target there is no `kspCommonMainKotlinMetadata`, and
-  the copied block failed the build on the missing task. B-35 deletes oldge-core's block only.
+- **The viddik#44 workaround is here too since B-41.** With one target there was no
+  `kspCommonMainKotlinMetadata`, and the copied block failed the build (B-37). With the Android and
+  iOS targets of B-41 the task exists, and the ordering is needed. B-35 deletes both blocks.
 - **Mutants of this module's tests** need the runner pointed at it: `python3 scripts/mutate.py
   scripts/mutants.json --only B-NN --command "./gradlew :sample:desktopTest --tests {tests}
   --rerun --console=plain -q" --results sample/build/test-results/desktopTest`.

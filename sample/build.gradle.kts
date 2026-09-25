@@ -6,13 +6,37 @@ plugins {
     alias(wip.plugins.composeCompiler)
     alias(wip.plugins.ksp)
     alias(libs.plugins.viddik)
+    alias(wip.plugins.androidKotlinMultiplatformLibrary)
     id("io.github.youndie.sborka.kmp")
     id("io.github.youndie.sborka.lint")
 }
 
 kotlin {
-    // Desktop only until B-41, which adds Android and iOS once there are screens to show on them.
     jvm("desktop")
+
+    // The sample app on iOS (B-41): `binaries.executable` makes a Mach-O with an entry point, and a
+    // `.app` for the simulator is a directory holding it and an `Info.plist`, which
+    // `scripts/ios-sample-app.sh` assembles, so no Xcode project exists. The simulator only.
+    iosSimulatorArm64 {
+        binaries.executable {
+            entryPoint = "io.github.youndie.oldge.sample.ios.main"
+        }
+    }
+
+    // A library on Android and an application on the desktop, which is forced: since AGP 9 the
+    // application plugin refuses a Kotlin Multiplatform module, so `:sample-android` is the thin
+    // activity that hosts this (kvadrant-ui's research §1.13).
+    android {
+        namespace = "io.github.youndie.oldge.sample"
+        compileSdk =
+            libs.versions.android.compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+    }
 
     sourceSets {
         commonMain.dependencies {
@@ -60,5 +84,18 @@ tasks.named<Test>("desktopTest") {
         .withPathSensitivity(PathSensitivity.RELATIVE)
 }
 
-// No workaround for youndie/viddik#44 here, unlike oldge-core: with one target there is no
-// kspCommonMainKotlinMetadata task, which is the task the bug fails to order (B-37).
+// WORKAROUND for youndie/viddik#44, delete with oldge-core's on the viddik bump that carries 10f128b
+// (B-35). With a second target the module has a `kspCommonMainKotlinMetadata`, which viddik 0.6.0
+// does not order the other tasks after; oldge-core's block of the same name says why each kind of
+// task is in the list. With one target there was no such task and the block failed the build (B-37).
+val commonKsp = "kspCommonMainKotlinMetadata"
+tasks
+    .matching { task ->
+        task.name != commonKsp &&
+            (
+                task.name.startsWith("ksp") ||
+                    task is org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*> ||
+                    task is SourceTask ||
+                    task.name.contains("Ktlint", ignoreCase = true)
+            )
+    }.configureEach { dependsOn(commonKsp) }

@@ -1,21 +1,20 @@
 package io.github.youndie.oldge.sample
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import io.github.youndie.oldge.containers.OldgeDivider
-import io.github.youndie.oldge.theme.OldgeTheme
+import androidx.compose.ui.window.rememberWindowState
 
-// The desktop sample until B-41 gives it screens: the one component there is so far.
+/** The sample app on the desktop, in a phone-sized window (B-41). */
 public fun main(): Unit =
     application {
-        Window(onCloseRequest = ::exitApplication, title = "oldge-ui") {
-            OldgeTheme {
-                Column(Modifier.padding(OldgeTheme.spacing.space4)) {
-                    OldgeDivider(label = "или")
-                }
-            }
-        }
+        Window(
+            onCloseRequest = ::exitApplication,
+            title = "oldge-ui",
+            state = rememberWindowState(size = DpSize(WIDTH.dp, HEIGHT.dp)),
+        ) { OldgeSampleApp() }
     }
+
+private const val WIDTH = 420
+private const val HEIGHT = 900

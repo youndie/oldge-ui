@@ -23,6 +23,6 @@ released** on 2026-09-25.
   `./gradlew build` (the shape that failed), not `viddikRecord`.
 
 - AC: no reference to `viddik#44` left in the build; `./gradlew build check` green.
-- `sample` has no copy of the workaround to delete: with one target it has no
-  `kspCommonMainKotlinMetadata`, and the copied block failed its build (B-37).
+- `sample` carries a copy of the workaround since B-41 added its Android and iOS targets. Delete
+  both.
 - Anchors: `oldge-core/build.gradle.kts`, `gradle/libs.versions.toml`.

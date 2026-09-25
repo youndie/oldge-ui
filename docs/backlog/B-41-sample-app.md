@@ -1,7 +1,7 @@
 ---
 id: B-41
 title: "The sample app on desktop, Android and iOS, with a skin switcher"
-status: open
+status: question
 priority: P2
 size: M
 stage: stage-4-product
@@ -27,3 +27,57 @@ library is seen running on them.
   a simulator (screenshot in the commit body).
 - Anchors: `sample/`, `sample-android/`, `scripts/ios-sample-app.sh`,
   `kvadrant-ui/scripts/ios-sample-app.sh`.
+
+## Findings (2026-09-25)
+
+- **The app.** `OldgeSampleApp` in `sample`'s `commonMain` hosts the nine pages of B-37 to B-40
+  behind three of the library's own controls:
+  - a Select of the page;
+  - a Segmented of the skin, shared with the Settings page's own, so choosing a skin there
+    changes the app's;
+  - a Switch that sets the system font to 200 % for the page under it. EdgeScale always runs at
+    200 %, as its fixture does.
+
+  The controls stay at the platform's own size, so a page at 200 % never pushes them away.
+- **Desktop.** `./gradlew :sample:run` opens it in a 420 × 900 window. Checked by running it for
+  60 s: the process stayed up and the log has no exception. A window screenshot needs
+  screen-recording rights this session does not have. The UI is asserted instead by
+  `SampleAppBehaviourTest`, which renders the same `OldgeSampleApp`: the page choice opens
+  Settings, and choosing Crystal there makes both switchers say Crystal.
+- **iOS.** `scripts/ios-sample-app.sh`, adapted from kvadrant-ui's, links the simulator executable,
+  assembles the `.app` with its `Info.plist` and oldge-core's assembled compose resources (the
+  fonts), and installs and launches it.
+  - It runs on the iPhone 17 Pro simulator (iOS 27.0) with the bundled fonts, showing the
+    Launcher: [screenshot](../images/b-41-ios-launcher.png).
+- **Android.** `sample` has an Android library target and `sample-android` is the application that
+  hosts it, since AGP 9 refuses an application plugin in a KMP module.
+  - `./gradlew :sample-android:assembleDebug` builds `sample-android-debug.apk`, and the APK
+    carries every bundled font under `assets/composeResources/`.
+  - `com.android.application` had to be declared, unapplied, in the root build. In its module
+    alone Gradle refused it, since AGP was already on the classpath "with an unknown version".
+- **viddik#44 again.** With a second target `sample` has a `kspCommonMainKotlinMetadata`, so the
+  ordering workaround B-37 removed from it is back. B-35 deletes both.
+- **Mutants:** 2 of 2 killed (Settings' skin not reaching the app, the page choice ignored).
+  `./gradlew build check` is green with the new targets.
+
+## Question (2026-09-25): how is the Android app to be seen running?
+
+One acceptance criterion is not met: "the Android app installs and shows the Launcher in all three
+skins on an emulator". There is no emulator on this Mac. Its Android SDK has platforms,
+build-tools and platform-tools, but no `emulator` package and no system image. The Linux box has
+no Android SDK recorded, and an emulator under WSL2 would need nested virtualisation.
+
+Everything short of running it is done: the APK builds and carries the fonts.
+
+The choices, for the owner:
+
+1. **Install the emulator and one system image on the Mac** (`sdkmanager "emulator"
+   "system-images;android-37;google_apis;arm64-v8a"`, a download of the order of 2–3 GB). Then the
+   loop installs the APK and takes the three screenshots.
+2. **A device**: `./gradlew :sample-android:installDebug` onto whatever is attached, and the
+   screenshots taken there.
+3. **Accept the APK build and its fonts as the Android evidence**, and drop the emulator from the
+   criterion. That is kvadrant-ui's position ("installed onto whatever is plugged in").
+
+The loop does not download or install anything on its own. Until this is answered the item stays
+`question`, and the rest of it is merged.

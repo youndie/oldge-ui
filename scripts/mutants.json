@@ -1872,6 +1872,24 @@
    "replace": "            { onSkinChange(skin) },\n",
    "tests": "*ScreenBehaviourTest*",
    "expect": "choosing_a_skin_asks_the_app_for_it"
+  },
+  {
+   "id": "app-settings-skin-lost",
+   "item": "B-41",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/OldgeSampleApp.kt",
+   "find": "Page(page, skin) { skin = it }",
+   "replace": "Page(page, skin) { }",
+   "tests": "*SampleAppBehaviourTest*",
+   "expect": "the_page_choice_shows_the_page_and_a_skin_chosen_in_settings_is_the_apps"
+  },
+  {
+   "id": "app-page-choice-ignored",
+   "item": "B-41",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/OldgeSampleApp.kt",
+   "find": "{ page = it },",
+   "replace": "{ },",
+   "tests": "*SampleAppBehaviourTest*",
+   "expect": "the_page_choice_shows_the_page_and_a_skin_chosen_in_settings_is_the_apps"
   }
  ]
 }

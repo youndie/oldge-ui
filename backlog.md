@@ -78,7 +78,7 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-41](docs/backlog/B-41-sample-app.md) `[ ]` | The sample app on desktop, Android and iOS, with a skin switcher | P2 | M | B-40 |
+| [B-41](docs/backlog/B-41-sample-app.md) `[?]` | The sample app on desktop, Android and iOS, with a skin switcher | P2 | M | B-40 |
 | [B-42](docs/backlog/B-42-component-catalogue.md) `[ ]` | The component catalogue: a previews registry and a generated docs/components.md | P2 | S | B-40 |
 | [B-43](docs/backlog/B-43-accessibility.md) `[ ]` | Accessibility: roles, 44 dp targets, colour never alone | P2 | M | B-42 |
 | [B-57](docs/backlog/B-57-overlay-bar-height.md) `[ ]` | The overlay WindowBar is 72 px in Chrome and 64 here | P2 | XS | B-24 |
