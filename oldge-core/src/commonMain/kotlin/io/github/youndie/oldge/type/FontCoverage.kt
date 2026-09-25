@@ -157,3 +157,35 @@ internal object FontCoverage {
             0x2122,
         )
 }
+
+/** Vertical metrics in font units, as a browser reads them (OS/2 typo with USE_TYPO_METRICS, else hhea). */
+internal class FontVerticalMetrics(
+    val ascent: Int,
+    val descent: Int,
+    val unitsPerEm: Int,
+)
+
+/** Every bundled face's vertical metrics. */
+internal object BundledFontMetrics {
+    /** `dejavu_sans_condensed.ttf`. */
+    val dejavuSansCondensed: FontVerticalMetrics = FontVerticalMetrics(ascent = 1901, descent = 483, unitsPerEm = 2048)
+
+    /** `dejavu_sans_condensed_bold.ttf`. */
+    val dejavuSansCondensedBold: FontVerticalMetrics =
+        FontVerticalMetrics(ascent = 1901, descent = 483, unitsPerEm = 2048)
+
+    /** `fira_sans_bold.ttf`. */
+    val firaSansBold: FontVerticalMetrics = FontVerticalMetrics(ascent = 935, descent = 265, unitsPerEm = 1000)
+
+    /** `share_tech_mono.ttf`. */
+    val shareTechMono: FontVerticalMetrics = FontVerticalMetrics(ascent = 885, descent = 242, unitsPerEm = 1000)
+
+    /** `pt_mono.ttf`. */
+    val ptMono: FontVerticalMetrics = FontVerticalMetrics(ascent = 885, descent = 235, unitsPerEm = 1000)
+
+    /** `silkscreen.ttf`. */
+    val silkscreen: FontVerticalMetrics = FontVerticalMetrics(ascent = 1030, descent = 250, unitsPerEm = 1000)
+
+    /** `tiny5.ttf`. */
+    val tiny5: FontVerticalMetrics = FontVerticalMetrics(ascent = 896, descent = 256, unitsPerEm = 1024)
+}

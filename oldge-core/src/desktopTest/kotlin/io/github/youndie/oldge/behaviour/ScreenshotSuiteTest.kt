@@ -53,7 +53,6 @@ class ScreenshotSuiteTest {
             "Dialog",
             "EmptyState",
             "Fab",
-            "Icon",
             "List",
             "ListItem",
             "ListSection",

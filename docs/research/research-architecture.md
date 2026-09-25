@@ -248,9 +248,11 @@ diff showed nothing but glyph edges ([parity-floor/](parity-floor/): `Divider_<S
 
 | Skin | mismatch (±16 per channel) |
 |---|---|
-| Toxic | **0.75 %** |
-| Media | **0.74 %** |
-| Crystal | **0.73 %** |
+| Toxic | **0.73 %** |
+| Media | **0.73 %** |
+| Crystal | **0.71 %** |
+
+*Re-measured in B-11, after the third cause below; B-08 measured 0.75 / 0.74 / 0.73 %.*
 
 Two causes had to go before the number meant only that, and both are now part of the library or
 the harness:
@@ -258,10 +260,14 @@ the harness:
 | Cause | Before → after | Where |
 |---|---|---|
 | A line with a companion-face run grew from 12 px to 13 px and moved everything below it by a pixel: Compose lets the companion's metrics set the line box, CSS builds it from the element's own font and aligns the run on its baseline. `OldgeScriptText` measures the line as the design's face alone and places the joined text on that baseline. | 3.1 % → 1.16 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/ScriptText.kt` |
+| **Blink rounds a face's ascent and descent to whole pixels and floors the half-leading; Compose centres with the unrounded values.** Silkscreen at 10 px in a 12 px line: CSS baseline 9, Compose 9.9 — every pixel label a pixel low. `OldgeText` places text on the CSS baseline, from the bundled faces' metrics (`BundledFontMetrics`, generated, held to the files by `CssBaselineTest`); `OldgeScriptText` uses the same rule. Found in B-11 on the Icon preview, whose labels carried 96 % of its diff. | Icon 3.16 % → 1.54 %; Divider 0.74 % → 0.72 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt` |
 | viddik's `ViddikPlatformTextStyle` turns subpixel positioning off, so every glyph's advance is rounded and a line drifts from Chrome's, which positions by subpixel on this mac. The harness keeps viddik's antialiasing and hinting pins and turns subpixel positioning on — a measured departure from kvadrant-ui's `portableTypography`. | 1.16 % → 0.74 % | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/harness/OldgeDemo.kt` |
 
-**How to read a later number.** The residual scales with the area of text, not with the component:
-Divider's 0.74 % is a floor for little text, and the LCD glow probe — large digits and nothing else
+**How to read a later number.** The residual scales with the area of text, and with how much of it
+is edges: a pixel face is all edges, and a centred label sits at a fractional x in Chrome and a whole
+pixel in Compose — the Icon preview's 47 pixel-face labels leave 1.53–1.54 % with the glyphs
+themselves at 312 differing pixels of 226,200.
+Divider's 0.72 % is a floor for little text, and the LCD glow probe — large digits and nothing else
 wrong — is 3.4 % (research D8, "As built"). A fixed percentage cannot separate a wrong component
 with little text from a right one with much, so the tolerance stays at 5 % and ±16, set explicitly in
 `oldge-core/build.gradle.kts`, and **`designStrict` is off**: parity is a report, and every

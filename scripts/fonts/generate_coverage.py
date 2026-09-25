@@ -1,4 +1,5 @@
-"""Write FontCoverage.kt: which code points each design-named face can draw, read out of its cmap.
+"""Write FontCoverage.kt: which code points each design-named face can draw, read out of its cmap,
+and every bundled face's vertical metrics, which place a line of text the way a browser does (B-11).
 
 The per-script join (research D6) moves a run to the companion face when the design's own face
 cannot draw it. "Cannot draw" is decided by the face's cmap, not by "is it Cyrillic" — kvadrant-ui
@@ -21,6 +22,25 @@ OUT = ROOT / "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/Font
 # Only the faces a companion stands beside. The others carry full Cyrillic and are checked against
 # the design system's strings by DesignStringCoverageTest instead.
 FACES = {"shareTechMono": "share_tech_mono.ttf", "silkscreen": "silkscreen.ttf"}
+
+# Every bundled face, for its vertical metrics: the ones a browser reads, the OS/2 typo values when
+# the face sets USE_TYPO_METRICS and the hhea values otherwise.
+ALL_FACES = {
+    "dejavuSansCondensed": "dejavu_sans_condensed.ttf",
+    "dejavuSansCondensedBold": "dejavu_sans_condensed_bold.ttf",
+    "firaSansBold": "fira_sans_bold.ttf",
+    "shareTechMono": "share_tech_mono.ttf",
+    "ptMono": "pt_mono.ttf",
+    "silkscreen": "silkscreen.ttf",
+    "tiny5": "tiny5.ttf",
+}
+
+
+def vertical(font):
+    os2 = font["OS/2"]
+    if os2.fsSelection & (1 << 7):
+        return os2.sTypoAscender, -os2.sTypoDescender
+    return font["hhea"].ascent, -font["hhea"].descent
 
 
 def ranges(cmap):
@@ -52,6 +72,24 @@ def main():
         # One value per line: ktlint's argument wrapping allows nothing else for a multi-line call.
         lines += [f"            0x{v:04X}," for a, b in rs for v in (a, b)]
         lines.append("        )")
+        lines.append("")
+    lines[-1:] = ["}", ""]
+    lines += [
+        "/** Vertical metrics in font units, as a browser reads them (OS/2 typo with USE_TYPO_METRICS, else hhea). */",
+        "internal class FontVerticalMetrics(",
+        "    val ascent: Int,",
+        "    val descent: Int,",
+        "    val unitsPerEm: Int,",
+        ")",
+        "",
+        "/** Every bundled face's vertical metrics. */",
+        "internal object BundledFontMetrics {",
+    ]
+    for prop, file in ALL_FACES.items():
+        font = TTFont(str(FONTS / file))
+        asc, desc = vertical(font)
+        lines.append(f"    /** `{file}`. */")
+        lines.append(f"    val {prop}: FontVerticalMetrics = FontVerticalMetrics(ascent = {asc}, descent = {desc}, unitsPerEm = {font['head'].unitsPerEm})")
         lines.append("")
     lines[-1:] = ["}", ""]
     OUT.write_text("\n".join(lines))

@@ -95,6 +95,20 @@ val checkOldgeTokens by tasks.registering(Exec::class) {
 
 tasks.named("check") { dependsOn(checkOldgeTokens) }
 
+// B-11. The icon set, generated from the vendored bundle.js the same way.
+val checkOldgeIcons by tasks.registering(Exec::class) {
+    description = "Fail if OldgeIcons.kt no longer matches reference/design-system/components/bundle.js."
+    val root = rootProject.layout.projectDirectory
+    inputs.file(root.file("scripts/generate_icons.py"))
+    inputs.file(root.file("reference/design-system/components/bundle.js"))
+    inputs.file(layout.projectDirectory.file("src/commonMain/kotlin/io/github/youndie/oldge/icons/OldgeIcons.kt"))
+    outputs.upToDateWhen { true }
+    workingDir = root.asFile
+    commandLine("python3", "scripts/generate_icons.py", "--check")
+}
+
+tasks.named("check") { dependsOn(checkOldgeIcons) }
+
 // A test that reads the golden directory must declare it, or Gradle leaves the test UP-TO-DATE over a
 // changed set and reports the last run's verdict (kvadrant-ui's lesson).
 tasks.named<Test>("desktopTest") {

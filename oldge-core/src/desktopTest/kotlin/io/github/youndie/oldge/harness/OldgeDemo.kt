@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -19,6 +18,7 @@ import io.github.youndie.oldge.theme.LocalOldgeTypography
 import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.oldge.theme.OldgeTypography
+import io.github.youndie.oldge.type.OldgeText
 import io.github.youndie.viddik.core.ViddikPlatformTextStyle
 
 /**
@@ -45,7 +45,7 @@ fun OldgeDemo(
 
 /** A bare `<span>` of a preview: body text in `ink`. */
 @Composable
-fun DemoText(text: String) = BasicText(text, style = LocalOldgeTextStyle.current.copy(color = OldgeTheme.colors.ink))
+fun DemoText(text: String) = OldgeText(text, style = LocalOldgeTextStyle.current.copy(color = OldgeTheme.colors.ink))
 
 /**
  * Every type style with hinting and smoothing pinned through viddik's `ViddikPlatformTextStyle`, so a

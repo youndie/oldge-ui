@@ -9,6 +9,7 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
+import io.github.youndie.oldge.theme.OldgeTheme
 import kotlin.math.roundToInt
 
 /**
@@ -19,7 +20,8 @@ import kotlin.math.roundToInt
  * still exactly its `line-height` tall. Compose lets the companion's metrics grow the line: measured
  * in B-08, the pixel tag's 12 sp line became 13 px with its top 1 px down, which moved the Divider's
  * label line and everything below it by a pixel. Here the line is measured as the design's face
- * alone would be, and the joined text is placed on that face's baseline.
+ * alone would be, and the joined text is placed on the baseline CSS computes for that face
+ * ([cssBaseline], B-11).
  *
  * Single line only: every place the design sets lcd or pixel text — tags, readouts, labels — is one.
  */
@@ -32,6 +34,7 @@ internal fun OldgeScriptText(
     modifier: Modifier = Modifier,
 ) {
     val measurer = rememberTextMeasurer()
+    val metrics = OldgeTheme.type.metricsOf(style)
     val strut = remember(style, measurer) { measurer.measure(STRUT_SAMPLE, style, softWrap = false, maxLines = 1) }
     val joined = remember(text, companion, primaryCoverage) { oldgeTextOf(text, companion, primaryCoverage) }
     BasicText(
@@ -39,7 +42,9 @@ internal fun OldgeScriptText(
         modifier.layout { measurable, constraints ->
             val placeable = measurable.measure(constraints.copy(minHeight = 0, maxHeight = Int.MAX_VALUE))
             val lineHeight = strut.size.height
-            val shift = (strut.firstBaseline - placeable[FirstBaseline]).roundToInt()
+            val baseline =
+                metrics?.let { cssBaseline(it, style.fontSize.toPx(), style.lineHeight.toPx()) } ?: strut.firstBaseline
+            val shift = (baseline - placeable[FirstBaseline]).roundToInt()
             layout(placeable.width, lineHeight) { placeable.place(0, shift) }
         },
         style = style,
