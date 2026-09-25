@@ -78,7 +78,7 @@ public fun OldgePullRefresh(
     }
 
 /**
- * [OldgePullRefresh] round a lazy list: [content] is a `LazyColumn`'s, in [state], so a long list
+ * The design system's `PullRefresh` round a lazy list: [content] is a `LazyColumn`'s, in [state], so a long list
  * stays lazy and [io.github.youndie.oldge.containers.oldgeListSections] goes in as it is. The design
  * system puts its ListSections straight into a PullRefresh, whose scroll is the one their headers stick
  * in (B-55); here that scroll is this `LazyColumn`. [height] and [label] are [OldgePullRefresh]'s.

@@ -90,7 +90,7 @@ public fun OldgeExtendedFab(
 ): Unit = FabBox(icon, text, contentDescription = null, onClick, modifier, tone, expanded, interactionSource)
 
 /**
- * `docked`: the Fab in the bottom-right corner of a screen, above its BottomNav (`.og-fab-dock`:
+ * The design system's `Fab` `docked`: in the bottom-right corner of a screen, above its BottomNav (`.og-fab-dock`:
  * right `space-4`, bottom 88 px). Place it last in the screen's `Box`, so it draws over the content.
  */
 @Composable

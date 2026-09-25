@@ -70,7 +70,7 @@ public fun OldgeAssistChip(
     }
 
 /**
- * A filter chip — kind `filter`: a toggle. Selected, it fills with the accent and a check pops in
+ * A filter chip — the design system's `Chip`, kind `filter`: a toggle. Selected, it fills with the accent and a check pops in
  * with a turn in place of its [icon]. See [OldgeAssistChip] for the size and the press.
  */
 @Composable
@@ -87,7 +87,7 @@ public fun OldgeFilterChip(
     }
 
 /**
- * An input chip — kind `input`: a value the user entered, with a round remove button. The chip
+ * An input chip — the design system's `Chip`, kind `input`: a value the user entered, with a round remove button. The chip
  * itself is not pressable; the remove button is, and being only an icon it needs [removeLabel],
  * its accessible name (the design system's is «Убрать <text>»). Its touch zone is 44 dp round a
  * 22 dp disc.

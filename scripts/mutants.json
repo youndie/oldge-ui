@@ -2034,6 +2034,24 @@
    "replace": "if (false) {",
    "tests": "*LoopBehaviourTest*",
    "expect": "an_indeterminate_bar_slides_and_stands_still_under_reduced_motion"
+  },
+  {
+   "id": "gloss-swaps",
+   "item": "B-45",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/OldgeGloss.kt",
+   "find": "val now = animateGloss(target.stops, durationMillis)",
+   "replace": "val now = animateGloss(target.stops, 0)",
+   "tests": "*ConsumerGlossTest*",
+   "expect": "a_press_transitions_the_gloss_along_a_straight_line_in_srgb_and_reduced_motion_swaps_it"
+  },
+  {
+   "id": "gloss-no-mid",
+   "item": "B-45",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/OldgeGloss.kt",
+   "find": "cssBox(radius, gloss.stops.background())",
+   "replace": "cssBox(radius, GlossStops(gloss.hi, null, gloss.lo).background())",
+   "tests": "*ConsumerGlossTest*",
+   "expect": "a_consumers_gloss_paints_its_familys_three_stops_top_middle_and_bottom"
   }
  ]
 }

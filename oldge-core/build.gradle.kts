@@ -14,6 +14,13 @@ plugins {
 kotlin {
     jvm("desktop")
 
+    // The public API is pinned (B-45): `oldge-core/api/` is the committed dump, and `check` fails on
+    // any change to it that was not recorded with `updateKotlinAbi`. A renamed parameter, a removed
+    // default or a composable turned internal is a diff somebody has to approve, not a surprise at a
+    // consumer's link time.
+    @OptIn(org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation::class)
+    abiValidation {}
+
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
         browser()

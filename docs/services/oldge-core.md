@@ -50,6 +50,8 @@ to publish (B-01).
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt` | text on the CSS baseline — use it, not `BasicText`, for any text a reference shows. Public since B-51, for a consumer's text between the components; `sample`'s `ConsumerTextTest` holds it from outside the library |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/tokens/OldgeTokens.kt` | the generated token layer (`scripts/generate_tokens.py`; `checkOldgeTokens` in `check`) |
 | `scripts/design-references.mjs` | renders the parity references into `snapshots/design/` (`make references`); `scripts/tokens-css.mjs` compiles the tokens for it |
+| `oldge-core/api/` | the pinned public API: `desktop/` and `android/` JVM dumps and the klib dump for iOS and wasm (B-45) |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/OldgeGloss.kt` | the one public part of `material/`: `OldgeGloss`, `Modifier.oldgeGloss`, `animateOldgeGloss`, for a consumer's own glossy element (B-45); `sample`'s `ConsumerGlossTest` holds it from outside the library |
 | `gradle/libs.versions.toml` | sborka, viddik, the Android SDK levels — and nothing the `wip` catalog carries |
 | `settings.gradle.kts` | the sborka settings plugin and its version |
 
@@ -68,6 +70,28 @@ to publish (B-01).
 * **The suite is desktop.** viddik renders on the JVM; fixtures live in `desktopTest`;
   `verifyOnCheck` is on, so `./gradlew check` runs `viddikVerify`. A green `check` says nothing
   about Android or iOS (research D10).
+* **The public API is pinned** (B-45). `abiValidation {}` puts `checkKotlinAbi` into `check`,
+  against the dumps in `oldge-core/api/`. A public change is recorded with
+  `./gradlew :oldge-core:updateKotlinAbi` in the same commit, so it arrives as a diff in `api/`
+  that somebody reads. Without that, `check` fails. Four mutations were each caught, with "ABI
+  check failed", and not by the exit code alone:
+  - a removed default;
+  - a `val` made internal;
+  - a composable made internal;
+  - a public function added.
+
+  **What is public.** The components, the tokens, the theme, the icons and `OldgeText` are public.
+  From `material/`, only the gloss is. The README invites a consumer to build glossy elements of
+  their own "the same way", from three stops of one family, and that cannot be done well from
+  outside: the stops are transitioned in premultiplied sRGB, and `animateColorAsState` works in
+  Oklab. The CSS-box painter, the bezels and the texture stay internal. They are how the library
+  matches Chrome, they still change item by item, and pinning them would make each such fix a
+  breaking change. *Rejected:* making `material/` public as it is, which is a surface of 40
+  internals nobody designed as an API.
+* **Every public composable's KDoc names its design-system component in backticks**, such as "the
+  design system's `Meter`". That name leads a reader to `components/<Name>/README.md`.
+  `component_catalog.py --check` enforces it in `make check`. A public function beyond the
+  exports needs a KDoc at all (B-45).
 * **The set is guarded, not just each image.** `ScreenshotSuiteTest` fails on a fixture without a
   golden or a golden without a fixture, a parity fixture without a reference or a reference nobody
   compares, and a design-system component with neither fixtures nor a place on its explicit

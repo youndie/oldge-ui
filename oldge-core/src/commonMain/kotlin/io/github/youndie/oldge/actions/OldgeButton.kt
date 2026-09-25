@@ -107,9 +107,9 @@ public fun OldgeButton(
     )
 
 /**
- * A button that is only an icon. The design system requires an accessible name for it — "icon only:
- * `aria-label` is mandatory" — so [contentDescription] is not optional. For a round action there is
- * [OldgeOrbButton].
+ * A button that is only an icon: the design system's `Button` with an icon and no text. The design
+ * system requires an accessible name for it — "icon only: `aria-label` is mandatory" — so
+ * [contentDescription] is not optional. For a round action there is [OldgeOrbButton].
  */
 @Composable
 public fun OldgeIconButton(

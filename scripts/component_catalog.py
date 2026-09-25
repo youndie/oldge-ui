@@ -22,6 +22,8 @@ WHAT FAILS THE CHECK, IN BOTH DIRECTIONS.
   * A name in `ALSO` or `INSTEAD` that is not a public composable: the map below outlived a rename.
   * A public composable in neither table: it would be invisible to the reader this file is for.
   * A page with no screen in `sample`.
+  * A public composable whose KDoc does not name, in backticks, the design-system component it
+    implements (the README it follows); a public function beyond the exports with no KDoc (B-45).
   * The generated part differing from what is on disk: somebody edited it by hand, or the sources
     moved on without it.
 
@@ -60,8 +62,8 @@ DECLARATION = re.compile(r"^public fun (?:<[^>]*>\s*)?(?:[A-Za-z_][\w.]*\.)?(?P<
 SKINS = ["Toxic", "Media", "Crystal"]
 
 
-def kdoc_first_sentence(text, start):
-    """The first sentence of the KDoc above the declaration at `start`, or an empty string."""
+def kdoc(text, start):
+    """The KDoc above the declaration at `start`, as one line of text, or an empty string."""
     head = text[:start].rstrip()
     while head.split("\n")[-1].lstrip().startswith("@"):
         head = "\n".join(head.split("\n")[:-1]).rstrip()
@@ -70,10 +72,15 @@ def kdoc_first_sentence(text, start):
     open_at = head.rfind("/**")
     if open_at < 0:
         return ""
-    body = " ".join(
+    return " ".join(
         re.sub(r"^\s*\*\s?", "", line).strip()
         for line in head[open_at + 3 : -2].split("\n")
     ).strip()
+
+
+def kdoc_first_sentence(text, start):
+    """The first sentence of the KDoc above the declaration at `start`, or an empty string."""
+    body = kdoc(text, start)
     # Up to the first full stop that ends a sentence, or the first colon or dash that opens a list.
     match = re.match(r"(.+?[.:])(\s|$)", body)
     sentence = (match.group(1) if match else body).rstrip(":")
@@ -81,12 +88,15 @@ def kdoc_first_sentence(text, start):
 
 
 def public_composables(tree):
-    """Every `public fun` in a source tree: name → (path relative to the root, first KDoc sentence)."""
+    """Every `public fun` in a source tree: name → (path relative to the root, first KDoc sentence, KDoc)."""
     found = {}
     for path in sorted(tree.rglob("*.kt")):
         text = path.read_text(encoding="utf-8")
         for m in DECLARATION.finditer(text):
-            found.setdefault(m.group("name"), (path.relative_to(ROOT).as_posix(), kdoc_first_sentence(text, m.start())))
+            found.setdefault(
+                m.group("name"),
+                (path.relative_to(ROOT).as_posix(), kdoc_first_sentence(text, m.start()), kdoc(text, m.start())),
+            )
     return found
 
 
@@ -136,8 +146,13 @@ def generate():
             errors.append(f"{name}: no public composable {', '.join(missing)}")
             continue
         claimed.update(names)
+        # B-45: the KDoc names the design-system component it implements, so that a reader of the
+        # API goes from it to `components/<Name>/README.md`, the rules it follows.
+        for n in names:
+            if f"`{name}`" not in core[n][2]:
+                errors.append(f"{n}: its KDoc does not name the design system's `{name}` it implements")
         group, _ = card(name)
-        path, summary = core[names[0]]
+        path, summary, _ = core[names[0]]
         readme = DS / name / "README.md"
         rows.append(
             "| {name} | {composables} | [{file}](../{path}) | {group} | {refs} | {goldens} | {readme} | {summary} |".format(
@@ -153,6 +168,9 @@ def generate():
             )
         )
     beyond = [n for n in sorted(core) if n not in claimed]
+    for n in beyond:
+        if not core[n][2]:
+            errors.append(f"{n}: a public function without a KDoc")
     pages = sorted(
         d.name for d in DS.iterdir() if d.is_dir() and (d / "preview.html").is_file() and card(d.name)[1]
     )
@@ -162,7 +180,7 @@ def generate():
         if screen not in screens:
             errors.append(f"page {page}: no public {screen} in sample")
             continue
-        path, summary = screens[screen]
+        path, summary, _ = screens[screen]
         page_rows.append(
             f"| {page} | `{screen}` | [{Path(path).name}](../{path}) | {reference_stems(page)} | {summary} |"
         )

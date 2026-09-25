@@ -93,7 +93,7 @@ private data class SectionBody(
 )
 
 /**
- * `.og-lsec__head`: a pill of `pill-hi` to `pill-lo` in `on-pill`, a 1 px `edge` frame,
+ * The header of the design system's `ListSection` (`.og-lsec__head`): a pill of `pill-hi` to `pill-lo` in `on-pill`, a 1 px `edge` frame,
  * `shadow-raised` and a 4 px drop under it, padded 6 12; the title bold at 0.8125rem, the meta in
  * `pixel-tag` upper case, the two on one baseline at either end.
  */

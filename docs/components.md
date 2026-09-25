@@ -95,7 +95,7 @@ stale. The prose around them is hand-written.
 | TypingIndicator | `OldgeTypingIndicator` | [OldgeChat.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeChat.kt) | Чат | `TypingIndicator_{Toxic,Media,Crystal}` | `TypingIndicator`, `TypingIndicatorStates` | [README](../reference/design-system/components/TypingIndicator/README.md) | «Печатает…» — the design system's `TypingIndicator` |
 | WindowBar | `OldgeWindowBar` | [OldgeWindowBar.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeWindowBar.kt) | Навигация | `WindowBar_{Toxic,Media,Crystal}` | `WindowBar`, `WindowBarStates` | [README](../reference/design-system/components/WindowBar/README.md) | The top of a screen — the design system's `WindowBar` |
 
-### Beyond the design system's exports: 4
+### Beyond the design system's exports: 6
 
 | Composable | File | What it is |
 |---|---|---|
@@ -103,6 +103,8 @@ stale. The prose around them is hand-written.
 | `OldgeScreenBody` | [OldgeScreenBody.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeScreenBody.kt) | A screen's body — the design system's `.og-body`, the surface its README gives a screen container (`og-textured`). |
 | `OldgeText` | [OldgeText.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt) | Plain text in the skin's type — what a screen sets between the components |
 | `OldgeTheme` | [OldgeTheme.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeTheme.kt) | The oldge-ui theme |
+| `animateOldgeGloss` | [OldgeGloss.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/OldgeGloss.kt) | [target], transitioned the way the design system transitions `--og-g1…3` |
+| `oldgeGloss` | [OldgeGloss.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/OldgeGloss.kt) | [gloss] as the element's background, in a box with [radius] corners |
 
 ### The design system's 9 pages, in `sample`
 

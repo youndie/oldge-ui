@@ -73,6 +73,10 @@ make check          # the documentation gate (docs-bootstrap checkers)
 ./gradlew check     # the code gate: tests, ktlint, viddikVerify, the token --check
 ```
 
+`check` includes `checkKotlinAbi` (B-45). A change to the public API is recorded with
+`./gradlew :oldge-core:updateKotlinAbi` in the same commit, and the diff in `oldge-core/api/` is
+read as part of the review. It is never re-recorded just to make `check` green.
+
 Both must be green before a merge. There is no CI; the log of the local run is the evidence and it
 goes into the squash commit's body.
 
