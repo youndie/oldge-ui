@@ -1,7 +1,7 @@
 ---
 id: B-14
 title: "Chip and ChipGroup"
-status: open
+status: done
 priority: P1
 size: S
 stage: stage-2-components
@@ -40,3 +40,36 @@ Three kinds — `assist`, `filter` (selected fills with accent, the check pops w
 - Anchors:
   - `reference/design-system/components/Chip/README.md`, `reference/design-system/components/Chip/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/`
+
+## Findings (2026-09-25)
+
+- Parity (±16, floor 0.72 %): Chip 6.24 / 6.34 / 6.47 % (Toxic / Media / Crystal), over the 5 %
+  tolerance, which is a report here (`designStrict` off). The `_DIFF` is red on label glyphs and
+  on the box edges of drifted chips. Two causes, neither in the chips:
+  - Every 13 px label is a pixel low against Chrome, though the chip and its line box are where CSS
+    puts them. Probed, not fixed; it is **B-46**, with the numbers, the probe
+    (`scripts/research/baseline-probe.mjs`) and a refuted first fix.
+  - A label's width is rounded up to a pixel, so each chip after it drifts by one (research §1.10,
+    B-12).
+- **The input chip is 36 px, not 34**: `span.og-chip` is content-box, and only buttons are
+  border-box in Chrome's UA sheet. The reference measures it, and `ChipBehaviourTest` holds it.
+- The 46 px touch zone is `oldgeHitArea`: a layout that reports the drawn size while the clickable
+  after it is measured larger. Compose hit-tests outside a parent's bounds, and a touch 4 px above
+  the drawn chip presses it (`ChipBehaviourTest`). The remove button's 44 px zone round its 22 px
+  disc is the same modifier.
+- The chip's flash is drawn over the label (`OldgeIndication(flashOverContent = true)`): its
+  `.og-chip__fx` is positioned and paints over in-flow content. No golden shows a flash (reduced
+  motion), so this is unverified by pixels.
+- **A B-13 painter defect, fixed here because the item's pressed goldens showed it**: the clip
+  layer's erase ended on the layer's edge and, under a press's scale, left a faint frame. B-13's
+  three pressed-button goldens carried it and were re-recorded (research §1.4).
+- The README's rules, in the API or `ChipBehaviourTest`:
+  - 34 dp drawn and 46 dp touched;
+  - the input chip's remove button takes a required `removeLabel` (icon-only);
+  - the filter chip toggles.
+- Mutations, each failing, restored:
+  - in `ChipBehaviourTest`: no vertical reach, the input chip border-box, the remove label, the
+    toggle, the remove button's reach;
+  - in the goldens: the erase edge (6), the 6 px gap (6).
+- Values the tokens do not hold, marked `// css literal:`: height 34, gap 6, icon 16, reach 6 / 2,
+  remove disc 22 with pull 6, reach 11, icon 12, ring offset 1, scroll padding 4.

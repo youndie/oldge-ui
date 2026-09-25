@@ -159,7 +159,11 @@ measured, and was worse on Crystal.
 
 The layer is erased outside the border box with `DstOut` through the complement; a `DstIn` through
 the box itself leaves every pixel the path does not reach, the layer's square corners included
-(4 % on Segmented, the first attempt).
+(4 % on Segmented, the first attempt). *B-14:* the erased area reaches a pixel past the layer. When it
+ended exactly on the layer's edge, a press's scale put that edge on a fractional pixel, the erase
+covered it only in part, and the square under the corners showed as a faint frame. It showed on the
+pressed chips, and was already in B-13's pressed-button goldens as near-square corners, 556 pixels
+each, which were re-recorded.
 
 ### 1.5 Gloss is three gradient stops that animate, not a gradient that swaps
 
@@ -296,6 +300,11 @@ text-bearing component, and was not done in a component item.
 | Cause | Before → after | Where |
 |---|---|---|
 | A button's content box started inside the padding but not inside the 1 px border; CSS's `box-sizing: border-box` puts the border inside the width, so every button was 2 px narrow and a row drifted 2 px per button. | Button 6.71–6.80 % → 4.36–4.43 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt` |
+
+*B-14.* The chips add a second cause, open as **B-46**: 13 px `ui` text draws a pixel below Chrome's
+(shifted up a pixel, our label matches Chrome's to a mean of 4 per pixel, against 24 unshifted),
+although Chrome's layout baseline, probed with `scripts/research/baseline-probe.mjs`, is the one
+`cssBaseline` computes. The 15 px styles are unaffected. Chip is 6.2–6.5 %, mostly this.
 
 **How to read a later number.** The residual scales with the area of text, and with how much of it
 is edges: a pixel face is all edges, and a centred label sits at a fractional x in Chrome and a whole

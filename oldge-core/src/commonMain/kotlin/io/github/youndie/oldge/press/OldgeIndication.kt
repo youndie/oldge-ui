@@ -60,25 +60,31 @@ import kotlin.math.sqrt
  * A component passes its own [shape]; the theme's default is a rectangle. A component whose flash
  * lives in a part of it — an orb's core — draws the two separately: [flash] on the part, [ring] on
  * the whole. [ringOffset] is the `outline-offset`, 2 dp everywhere but the Fab's 3.
+ * [flashOverContent] draws the flash above the content, as a chip's does: its glint lives in an
+ * absolutely positioned `.og-chip__fx`, which paints over the label, where `.og-press` lifts the
+ * content above its glint.
  */
 public class OldgeIndication(
     private val shape: Shape = RectangleShape,
     private val flash: Boolean = true,
     private val ring: Boolean = true,
     private val ringOffset: Dp = FOCUS_OFFSET,
+    private val flashOverContent: Boolean = false,
 ) : IndicationNodeFactory {
     override fun create(interactionSource: InteractionSource): DelegatableNode =
-        OldgeIndicationNode(interactionSource, shape, flash, ring, ringOffset)
+        OldgeIndicationNode(interactionSource, shape, flash, ring, ringOffset, flashOverContent)
 
     override fun equals(other: Any?): Boolean =
         other is OldgeIndication &&
             other.shape == shape &&
             other.flash == flash &&
             other.ring == ring &&
-            other.ringOffset == ringOffset
+            other.ringOffset == ringOffset &&
+            other.flashOverContent == flashOverContent
 
     override fun hashCode(): Int =
-        ((shape.hashCode() * 31 + flash.hashCode()) * 31 + ring.hashCode()) * 31 + ringOffset.hashCode()
+        (((shape.hashCode() * 31 + flash.hashCode()) * 31 + ring.hashCode()) * 31 + ringOffset.hashCode()) * 31 +
+            flashOverContent.hashCode()
 }
 
 private class Flash(
@@ -92,6 +98,7 @@ private class OldgeIndicationNode(
     private val flash: Boolean,
     private val ring: Boolean,
     private val ringOffset: Dp,
+    private val flashOverContent: Boolean,
 ) : androidx.compose.ui.Modifier.Node(),
     DelegatableNode,
     DrawModifierNode,
@@ -127,15 +134,21 @@ private class OldgeIndicationNode(
     override fun ContentDrawScope.draw() {
         val skin = currentValueOf(LocalOldgeSkin)
         val outline = shape.createOutline(size, layoutDirection, this)
-        if (flashes.isNotEmpty()) {
-            val clip = Path().apply { addOutline(outline) }
-            clipPath(
-                clip,
-            ) { for (flash in flashes) drawOldgeFlash(flash.centre, flash.progress.value, skin.colors.gloss) }
-        }
+        if (!flashOverContent) drawFlashes(outline, skin.colors.gloss)
         drawContent()
+        if (flashOverContent) drawFlashes(outline, skin.colors.gloss)
         val keyboard = currentValueOf(LocalInputModeManager).inputMode == InputMode.Keyboard
         if (ring && focused && keyboard) drawOldgeFocusRing(shape, skin.colors.focus, ringOffset)
+    }
+
+    private fun ContentDrawScope.drawFlashes(
+        outline: Outline,
+        gloss: Color,
+    ) {
+        if (flashes.isEmpty()) return
+        clipPath(Path().apply { addOutline(outline) }) {
+            for (flash in flashes) drawOldgeFlash(flash.centre, flash.progress.value, gloss)
+        }
     }
 }
 

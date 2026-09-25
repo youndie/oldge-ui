@@ -45,7 +45,6 @@ class ScreenshotSuiteTest {
             "CategoryTabs",
             "ChatBubble",
             "Checkbox",
-            "Chip",
             "CodeInput",
             "Composer",
             "DatePicker",

@@ -96,11 +96,14 @@ internal fun Modifier.cssBox(
             val layered = b > 0f && borderBackground == null && borderColor.alpha > 0f && r > 0f
             val square = RoundRect(outer.left, outer.top, outer.right, outer.bottom)
             // Everything outside the border box, erased with DstOut: a DstIn through the box itself
-            // would leave the pixels the path does not reach — the layer's square corners.
+            // would leave the pixels the path does not reach — the layer's square corners. The erased
+            // area reaches a pixel past the layer: ending on its edge, it covered that edge only in
+            // part under a press's scale, and the square under the corners showed as a faint frame
+            // (found in B-14 on the pressed chips).
             val outside =
                 Path().apply {
                     op(
-                        Path().apply { addRect(Rect(Offset.Zero, size)) },
+                        Path().apply { addRect(Rect(Offset.Zero, size).inflate(1f)) },
                         Path().apply { addRoundRect(outer) },
                         PathOperation.Difference,
                     )
