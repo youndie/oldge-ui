@@ -5,7 +5,7 @@ status: open
 priority: P2
 size: L
 stage: stage-3-screens
-blocked_by: [B-12, B-13, B-15, B-17, B-18, B-24, B-29, B-31, B-34, B-50]
+blocked_by: [B-12, B-13, B-15, B-17, B-18, B-24, B-29, B-31, B-34, B-50, B-51]
 ---
 
 # B-37 — Stress screens: sign-in and chat
@@ -56,3 +56,12 @@ The screens found a missing library surface before any screen code was written, 
     calling it a gap.
   - Everything else both screens use exists: WindowBar, Segmented, TextField (reveal, error),
     Checkbox, Button, CodeInput, Readout, Divider, ChatBubble, TypingIndicator, Composer, Avatar.
+
+## Iteration 2 (2026-09-25)
+
+Stopped on a second library gap: `OldgeText`, the only way the library sets plain text, is
+internal. It is filed as [B-51](B-51-public-text.md), which now blocks this item and B-38 to B-40.
+
+The groundwork waits on the branch `feat/b-37-stress-auth-and-chat`, whose findings say what it
+holds: `sample` wired for parity, the references rendered into it with identical hashes, and a
+draft of the sign-in screen.
