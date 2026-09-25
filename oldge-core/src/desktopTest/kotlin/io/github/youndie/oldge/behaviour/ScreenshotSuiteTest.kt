@@ -33,7 +33,6 @@ class ScreenshotSuiteTest {
     private val notYetBuilt =
         setOf(
             // Components (B-11…B-34).
-            "Accordion",
             "Banner",
             "BottomSheet",
             "ChatBubble",

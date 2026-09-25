@@ -945,6 +945,69 @@
    "replace": ".focusProperties { canFocus = true }",
    "tests": "*TabsBehaviourTest*",
    "expect": "only_the_current_tab_can_take_focus"
+  },
+  {
+   "id": "acc-default-open",
+   "item": "B-22",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeAccordion.kt",
+   "find": "    defaultOpen: Boolean = true,",
+   "replace": "    defaultOpen: Boolean = false,",
+   "tests": "*AccordionBehaviourTest*",
+   "expect": "an_accordion_is_open_by_default_and_its_header_folds_it"
+  },
+  {
+   "id": "acc-head-height",
+   "item": "B-22",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeAccordion.kt",
+   "find": "private val HEAD_HEIGHT = 44.dp",
+   "replace": "private val HEAD_HEIGHT = 36.dp",
+   "tests": "*AccordionBehaviourTest*",
+   "expect": "an_accordion_is_open_by_default_and_its_header_folds_it"
+  },
+  {
+   "id": "acc-body-always",
+   "item": "B-22",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeAccordion.kt",
+   "find": "        if (open) Body(content)",
+   "replace": "        Body(content)",
+   "tests": "*AccordionBehaviourTest*",
+   "expect": "a_closed_one_hides_its_body"
+  },
+  {
+   "id": "acc-toggle-own",
+   "item": "B-22",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeAccordion.kt",
+   "find": "                    onToggle(!open)\n",
+   "replace": "                    onToggle(true)\n",
+   "tests": "*AccordionBehaviourTest*",
+   "expect": "an_accordion_is_open_by_default_and_its_header_folds_it"
+  },
+  {
+   "id": "acc-expand-action",
+   "item": "B-22",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeAccordion.kt",
+   "find": "                    if (open) {\n                        collapse {",
+   "replace": "                    if (open || title.isNotEmpty()) {\n                        collapse {",
+   "tests": "*AccordionBehaviourTest*",
+   "expect": "the_header_offers_expand_when_closed_and_collapse_when_open"
+  },
+  {
+   "id": "acc-chevron-fixed",
+   "item": "B-22",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeAccordion.kt",
+   "find": "tween(motion.base, easing = motion.bounce),",
+   "replace": "tween(io.github.youndie.oldge.tokens.OldgeDurations.base, easing = motion.bounce),",
+   "tests": "*AccordionBehaviourTest*",
+   "expect": "the_chevron_turns_with_a_bounce_and_does_not_animate_under_reduced_motion"
+  },
+  {
+   "id": "acc-chevron-still",
+   "item": "B-22",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeAccordion.kt",
+   "find": "if (open) HALF_TURN else 0f,",
+   "replace": "if (open) 0f else 0f,",
+   "tests": "*AccordionBehaviourTest*",
+   "expect": "the_chevron_turns_with_a_bounce_and_does_not_animate_under_reduced_motion"
   }
  ]
 }
