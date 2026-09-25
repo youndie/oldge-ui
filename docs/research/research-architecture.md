@@ -301,6 +301,13 @@ text-bearing component, and was not done in a component item.
 |---|---|---|
 | A button's content box started inside the padding but not inside the 1 px border; CSS's `box-sizing: border-box` puts the border inside the width, so every button was 2 px narrow and a row drifted 2 px per button. | Button 6.71–6.80 % → 4.36–4.43 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt` |
 
+*B-18.* `OldgeScriptText` sized its line by the Compose strut, which for a face taller than its line
+(Share Tech Mono at 32 px on a 32 px line: 28 + 8 px of rounded ascent and descent) is taller than
+CSS's line box. Chrome's line is `line-height`, and its baseline 26, as `cssBaseline` computes
+(probed with `FAMILY=lcd scripts/research/baseline-probe.mjs`). A centring cell put the digits 2 px
+high. The line box is now `line-height` when the style sets one: CodeInput 3.30 / 3.25 / 3.04 % →
+1.97 / 1.93 / 1.88 %. Divider, Slider, Switch, Icon and the LCD glow probe are unchanged.
+
 *B-14.* The chips add a second cause, open as **B-46**: 13 px `ui` text draws a pixel below Chrome's
 (shifted up a pixel, our label matches Chrome's to a mean of 4 per pixel, against 24 unshifted),
 although Chrome's layout baseline, probed with `scripts/research/baseline-probe.mjs`, is the one

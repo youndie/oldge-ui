@@ -42,3 +42,8 @@ Menu: the XP menu — icon strip, blue selection. Tooltip: the small yellow plat
   - `reference/design-system/components/Tooltip/README.md`, `reference/design-system/components/Tooltip/preview.html`
   - `reference/design-system/components/Balloon/README.md`, `reference/design-system/components/Balloon/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/`
+
+- *Added by B-18:* `OldgeSelect` opens a minimal stand-in list (`OptionList` in
+  `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSelect.kt`), 4 px under the
+  frame as `.og-menu` opens. When Menu exists, Select opens Menu's popup instead, and the stand-in
+  goes.

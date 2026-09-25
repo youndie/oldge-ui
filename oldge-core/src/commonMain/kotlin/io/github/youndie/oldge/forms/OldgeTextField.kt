@@ -28,7 +28,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -90,9 +89,9 @@ public fun OldgeTextField(
     val textStyle = type.body.copy(color = c.ink)
     Column(
         modifier.graphicsLayer { alpha = if (enabled) 1f else DISABLED_ALPHA },
-        verticalArrangement = Arrangement.spacedBy(GAP),
+        verticalArrangement = Arrangement.spacedBy(FIELD_GAP),
     ) {
-        OldgeText(label, style = type.label.copy(color = c.ink))
+        FieldLabel(label)
         Row(
             Modifier
                 .fillMaxWidth()
@@ -176,38 +175,12 @@ public fun OldgeTextField(
                 )
             }
         }
-        val line = error ?: help
-        if (line != null) {
-            val tone = if (error != null) c.danger else c.inkMuted
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space1),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                if (error != null) OldgeIcon(OldgeIcons.Error, contentDescription = null, size = HELP_ICON, tint = tone)
-                OldgeText(
-                    line,
-                    style =
-                        type.caption.copy(
-                            color = tone,
-                            fontWeight =
-                                if (error !=
-                                    null
-                                ) {
-                                    FontWeight.Bold
-                                } else {
-                                    FontWeight.Normal
-                                },
-                        ),
-                )
-            }
-        }
+        FieldHelp(help, error)
     }
 }
 
 private const val DISABLED_ALPHA = 0.75f
 private val BORDER = 1.dp
-private val GAP = 6.dp // css literal: bundle.css `.og-field { gap: 6px }`
 private val ICON = 20.dp // css literal: bundle.js `TextField`, `Icon size: 20`
-private val HELP_ICON = 14.dp // css literal: bundle.js `TextField`, error `Icon size: 14`
 private val INPUT_PADDING = 11.dp // css literal: bundle.css `.og-field__input { padding: 11px 0 }`
 private val REVEAL_END = 2.dp // css literal: bundle.css `.og-field__reveal { margin-right: -10px }` off `space-3`

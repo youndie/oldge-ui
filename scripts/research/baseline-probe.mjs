@@ -12,10 +12,16 @@ import { compileTokensCss } from '../tokens-css.mjs';
 
 const ROOT = resolve(import.meta.dirname, '../..');
 const tokens = JSON.parse(readFileSync(join(ROOT, 'reference/design-system/tokens.json'), 'utf8'));
+// `FAMILY=lcd node …` probes another family; the default is the ui face at the sizes its styles use.
+const family = process.env.FAMILY ?? 'ui';
 const cases = [];
-for (const weight of [400, 700]) for (const size of [12, 13, 14, 15, 17]) for (const lh of [16, 20, 15.4, 22]) cases.push({ weight, size, lh });
+if (family === 'ui') {
+  for (const weight of [400, 700]) for (const size of [12, 13, 14, 15, 17]) for (const lh of [16, 20, 15.4, 22]) cases.push({ weight, size, lh });
+} else {
+  for (const size of [13, 20, 32, 34]) for (const lh of [1, 16, 20, 32, 34]) cases.push({ weight: 400, size, lh: lh === 1 ? size : lh });
+}
 const cells = cases.map((c, i) =>
-  `<div id="c${i}" style="font: ${c.weight} ${c.size}px/${c.lh}px var(--font-ui); white-space: nowrap">Док<span style="display:inline-block;width:0;height:0"></span></div>`).join('');
+  `<div id="c${i}" style="font: ${c.weight} ${c.size}px/${c.lh}px var(--font-${family}); white-space: nowrap">48<span style="display:inline-block;width:0;height:0"></span></div>`).join('');
 const file = join(tmpdir(), 'oldge-baseline-probe.html');
 writeFileSync(file, wrap(`<body><div style="padding:0">${cells}</div></body>`, 'toxic', { tokensCss: compileTokensCss(tokens), texture: 'off' }));
 const { cdp, version, close } = await launch(process.env.CHROME);
