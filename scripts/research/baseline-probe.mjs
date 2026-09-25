@@ -17,6 +17,8 @@ const family = process.env.FAMILY ?? 'ui';
 const cases = [];
 if (family === 'ui') {
   for (const weight of [400, 700]) for (const size of [12, 13, 14, 15, 17]) for (const lh of [16, 20, 15.4, 22]) cases.push({ weight, size, lh });
+} else if (family === 'title') {
+  for (const size of [15, 16, 17, 20, 28]) for (const lh of [20, 22, 24, 32]) cases.push({ weight: 700, size, lh });
 } else {
   for (const size of [13, 20, 32, 34]) for (const lh of [1, 16, 20, 32, 34]) cases.push({ weight: 400, size, lh: lh === 1 ? size : lh });
 }

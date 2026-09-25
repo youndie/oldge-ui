@@ -1,7 +1,7 @@
 ---
 id: B-21
 title: "Card and ActionTile"
-status: open
+status: done
 priority: P1
 size: M
 stage: stage-2-components
@@ -41,3 +41,41 @@ Card: raised or sunken inset surface, optional bar header in the skin's frame, m
   - `reference/design-system/components/Card/README.md`, `reference/design-system/components/Card/preview.html`
   - `reference/design-system/components/ActionTile/README.md`, `reference/design-system/components/ActionTile/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/`
+
+## Findings (2026-09-25)
+
+- Parity (±16, floor 0.72 %):
+  - ActionTile: 0.94 / 0.98 / 0.99 % (Toxic / Media / Crystal), on the first run.
+  - Card: 2.48 / 2.55 / 2.60 %, from 4.94 / 5.14 / 7.15 % after one cause. The media zone's glow,
+    an ellipse centred on the zone's bottom edge, was not clipped to the zone and spilled into the
+    card body; a CSS background is painted inside its box. What is left:
+    - the titles, the `title` face, a pixel low (B-46, which now records that it is more than the
+      13 px `ui` style);
+    - the action buttons' label widths rounded up (research §1.10, B-12);
+    - glyph edges.
+- **A contradiction in the design system:** Card's preview makes its first card pressable *and*
+  gives it two action buttons, which its README forbids ("two pressable layers confuse"). It is
+  also invalid HTML, buttons nested in a button. `OldgeCard` enforces the README (`require`), and
+  the fixture ports the card without the press, which draws the same at rest.
+- The orb's highlight is now a shared `drawGlossCap(side, top, height)`; the ActionTile badge's cap
+  is 12 % / 3 % / 44 %. OrbButton and the orb probe are unchanged by the move.
+- The media icon's `drop-shadow(0 3px 3px rgba(0,0,0,.4))` is the glyph again, dark, 3 px down,
+  under a `BlurEffect` of radius √3, since Compose's radius is `(σ − 0.5) / 0.577` and CSS's 3 px blur
+  is σ 1.5. `Card`'s media golden holds it.
+- The READMEs' rules, in the API or `CardTileBehaviourTest`:
+  - a card pressed as a whole is one button and takes no actions;
+  - a card without a press is not clickable;
+  - an image is named by its description;
+  - an ActionTile is a named button at least 64 dp high;
+  - «a two-column title is up to 12 characters a line» is a KDoc line.
+
+  The 64 dp minimum is never the binding size (badge and padding make 70), so no mutant is claimed
+  for it.
+- Mutations, through `scripts/mutate.py` (B-48):
+  - `card-no-actions`, `card-role`, `image-name`, `tile-role`: 4 of 4 killed by their aimed tests;
+  - goldens, by name: the glow clip and the glow stop (Card, CardStates), the pressed tile's panel
+    (CardStates), the badge cap (ActionTile, CardStates).
+- Values the tokens do not hold, marked `// css literal:`:
+  - Card: bar 40 high, bar icon 18, bar text 0.9375rem / 1.25rem, media 132 high, media icon 56,
+    the icon shadow 3 / 1.73, body gap 2;
+  - ActionTile: min height 64, badge 52, icon 28, text gap 2.

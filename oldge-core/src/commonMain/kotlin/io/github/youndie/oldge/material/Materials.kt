@@ -198,18 +198,27 @@ private val CORE_RING =
  * which CSS's radius rule shrinks until the two top radii fit the width, leaving a round cap over
  * nearly square bottom corners.
  */
-private fun DrawScope.drawOrbHighlight(gloss: Color) {
-    val w = size.width * (1 - 2 * ORB_HIGHLIGHT_SIDE)
-    val h = size.height * ORB_HIGHLIGHT_HEIGHT
-    val top = CornerRadius(PILL_PX, PILL_PX)
+private fun DrawScope.drawOrbHighlight(gloss: Color) =
+    drawGlossCap(gloss, ORB_HIGHLIGHT_SIDE, ORB_HIGHLIGHT_TOP, ORB_HIGHLIGHT_HEIGHT)
+
+/**
+ * A round element's `::before` highlight: [side] in from the left and right and [top] down, as
+ * fractions of the box, [height] of it high, radius `999px 999px 50% 50%` — a round cap over nearly
+ * square bottom corners once CSS shrinks the radii to fit. The orb's is 14 % / 3 % / 42 %, the
+ * ActionTile badge's 12 % / 3 % / 44 %.
+ */
+internal fun DrawScope.drawGlossCap(
+    gloss: Color,
+    side: Float,
+    top: Float,
+    height: Float,
+) {
+    val w = size.width * (1 - 2 * side)
+    val h = size.height * height
+    val cap = CornerRadius(PILL_PX, PILL_PX)
     val bottom = CornerRadius(w / 2, h / 2)
     val rect =
-        cssRoundRect(
-            Offset(size.width * ORB_HIGHLIGHT_SIDE, size.height * ORB_HIGHLIGHT_TOP),
-            Size(w, h),
-            0f,
-            CssRadii(top, top, bottom, bottom),
-        )
+        cssRoundRect(Offset(size.width * side, size.height * top), Size(w, h), 0f, CssRadii(cap, cap, bottom, bottom))
     drawPath(Path().apply { addRoundRect(rect) }, gloss)
 }
 

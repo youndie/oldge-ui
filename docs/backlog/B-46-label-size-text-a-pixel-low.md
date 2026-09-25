@@ -16,6 +16,11 @@ of 4 per pixel, and unshifted to 24. The small button's 13 px label, in a 20 px 
 too. The 15 px styles are not (the medium and large button labels, Segmented, the Fab label and
 Divider's body text all match at no offset). Most of Chip's 6.2 % comes from this, and so does
 about half of RadioGroup's 1.8 %: its legend is the label style and is a pixel low as well (B-15).
+*B-21:* it is not only the 13 px `ui` style. Card's titles, the `title` face (Fira Sans Bold 17 px in a
+22 px line), are a pixel low as well (best at +1 px). Chrome's layout baseline, probed with
+`FAMILY=title scripts/research/baseline-probe.mjs`, is again the one `cssBaseline` computes: 16 for
+17/22, 15 for 15/20 and 16/20, 19 for 20/24. The captions and body text in the same cards are not
+low. The AC's size list should take in the `title` face.
 
 **What is verified:**
 

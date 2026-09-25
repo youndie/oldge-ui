@@ -315,6 +315,42 @@
    "replace": "                false,\n                source,",
    "tests": "*DatePickerBehaviourTest*",
    "expect": "each_day_is_named_in_full_and_choosing_one_reports_it"
+  },
+  {
+   "id": "card-no-actions",
+   "item": "B-21",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeCard.kt",
+   "find": "require(onClick == null || actions == null)",
+   "replace": "require(onClick != {})",
+   "tests": "*CardTileBehaviourTest*",
+   "expect": "a_card_pressed_as_a_whole_takes_no_actions"
+  },
+  {
+   "id": "card-role",
+   "item": "B-21",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeCard.kt",
+   "find": "role = Role.Button, onClick = onClick",
+   "replace": "role = Role.Image, onClick = onClick",
+   "tests": "*CardTileBehaviourTest*",
+   "expect": "a_card_pressed_as_a_whole_is_one_button"
+  },
+  {
+   "id": "image-name",
+   "item": "B-21",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeCard.kt",
+   "find": "Image(image, imageDescription,",
+   "replace": "Image(image, null,",
+   "tests": "*CardTileBehaviourTest*",
+   "expect": "a_card_image_is_named_by_its_description"
+  },
+  {
+   "id": "tile-role",
+   "item": "B-21",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeActionTile.kt",
+   "find": "role = Role.Button, onClick = onClick",
+   "replace": "role = Role.Image, onClick = onClick",
+   "tests": "*CardTileBehaviourTest*",
+   "expect": "an_action_tile_is_a_named_64_px_button"
   }
  ]
 }
