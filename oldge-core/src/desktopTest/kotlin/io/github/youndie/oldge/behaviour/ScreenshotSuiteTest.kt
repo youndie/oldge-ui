@@ -45,7 +45,6 @@ class ScreenshotSuiteTest {
             "SearchBar",
             "Snackbar",
             "Stepper",
-            "SwipeRow",
             "TypingIndicator",
             // Pages (B-37…B-40).
             "AuthScreen",

@@ -43,7 +43,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/` | `OldgeTheme`, `OldgeSkin`, `OldgeTypography`, `OldgeMotion`, the platform reduced-motion `expect` |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/icons/` | `OldgeIcon` and the generated `OldgeIcons` (`scripts/generate_icons.py`; `checkOldgeIcons` in `check`) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/` | `OldgeButton`, `OldgeIconButton`, `OldgeOrbButton` (B-12), `OldgeFab`, `OldgeExtendedFab`, `OldgeFabDock`, `OldgeSegmented` (B-13), the three chips and `OldgeChipGroup` (B-14); `ButtonBehaviourTest`, `FabSegmentedBehaviourTest` and `ChipBehaviourTest` hold the READMEs' behaviour rules |
-| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/` | `OldgeDivider` (B-11), `OldgeCard`, `OldgeActionTile` (B-21), `OldgePanel`, `OldgeList` with `OldgeListItem`, and `oldgeListSections` with `OldgeListSectionHeader` for a `LazyColumn` (B-20), `OldgeAccordion` (B-22); `CardTileBehaviourTest`, `PanelListBehaviourTest` and `AccordionBehaviourTest` hold their READMEs' behaviour rules |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/` | `OldgeDivider` (B-11), `OldgeCard`, `OldgeActionTile` (B-21), `OldgePanel`, `OldgeList` with `OldgeListItem`, and `oldgeListSections` with `OldgeListSectionHeader` for a `LazyColumn` (B-20), `OldgeAccordion` (B-22), `OldgeSwipeRow` (B-23); `CardTileBehaviourTest`, `PanelListBehaviourTest`, `AccordionBehaviourTest` and `SwipeRowBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/` | `OldgeMenu`, `OldgeTooltip`, `OldgeBalloon` (B-28), `OldgeWindowBar`, `OldgeBottomNav` (B-24), `OldgeCategoryTabs`, `OldgeTabs` (B-25); `MenuTooltipBalloonBehaviourTest`, `BarBehaviourTest` and `TabsBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/` | `OldgeReadout`, `OldgeMeter`, `OldgeProgressBar` (B-29), `OldgeSpinner`, `OldgeSkeleton` (B-30), `OldgeBadge`, `OldgeAvatar` (B-31), with the LCD tag and text in `Lcd.kt` and the frozen loop phase in `Loop.kt`; `LcdBehaviourTest`, `LoopBehaviourTest` and `BadgeAvatarBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/` | `OldgeCheckbox`, `OldgeRadioGroup` (B-15), `OldgeSwitch`, `OldgeSlider` (B-16), `OldgeTextField` (B-17), `OldgeSelect`, `OldgeCodeInput` (B-18), `OldgeDatePicker` (B-19), sharing `Field.kt`'s label and help line; `CheckBehaviourTest`, `SwitchSliderBehaviourTest`, `TextFieldBehaviourTest`, `SelectCodeBehaviourTest` and `DatePickerBehaviourTest` hold their READMEs' behaviour rules |
@@ -157,6 +157,14 @@ to publish (B-01).
   makes the list 44 px inside its border, while the current tab's `margin-bottom: -1px` lets it
   reach over that border. Both are `layout` modifiers on the tab. Without the first, the block was
   a pixel high and parity read 6.3 % (B-25).
+* **A drag injected one `performTouchInput { moveBy(…) }` call at a time reaches `draggable` only
+  every other call.** A row that moved at half the finger's speed was the harness, not the
+  component: the deltas arrived on alternate steps (B-23, traced in the component). A drag whose
+  held position matters is injected as one gesture, `down` and all its `moveBy`s in one block.
+* **`draggable` counts from the end of the touch slop; bundle.js counts from the first pixel.**
+  The SwipeRow trails the finger by the platform's slop, where the design's row, once past its
+  8 px, is at the finger's full offset. Tests that hold a drag add
+  `LocalViewConfiguration.current.touchSlop` to the distance.
 * **kotlinx-datetime is an `api` dependency** (B-19): `OldgeDatePicker` takes and gives
   `LocalDate`, so a consumer compiles against it; the version is `wip`'s.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration

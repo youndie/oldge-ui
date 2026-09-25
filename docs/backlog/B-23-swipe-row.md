@@ -1,7 +1,7 @@
 ---
 id: B-23
 title: "SwipeRow"
-status: open
+status: done
 priority: P1
 size: M
 stage: stage-2-components
@@ -40,3 +40,41 @@ A row that reveals actions on a left swipe. The swipe is verified by a Compose U
 - Anchors:
   - `reference/design-system/components/SwipeRow/README.md`, `reference/design-system/components/SwipeRow/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/`
+
+## Findings
+
+- Parity, `summary.txt` in the squash commit: SwipeRow is 0.79 / 0.90 / 0.96 %, at the floor, with no
+  round needed. **The item's premise was out of date:** it says the reference shows the resting
+  state only, but the preview's first row is `defaultOpen`, so the open state is in the reference
+  and is measured by parity. The swipe itself is the UI test, as the item asks.
+- **Inside a SwipeRow the list's divider and stripe do not reach the row.** CSS draws them on
+  `.og-list > li + li > .og-item`, and inside `.og-swipe__front` the item is no longer the `li`'s
+  own child: the reference has no rule between its two rows. The SwipeRow hands its row a list place
+  of index 0, not striped; the narrow layout still reaches it.
+- The gesture is a horizontal `draggable`. It leaves vertical drags to the scroll, and it keeps
+  bundle.js's rubber band (a quarter of the finger past either end) and its release rule (open
+  past half the actions' width).
+- **A deviation:** the row trails the finger by the platform's touch slop. `draggable` counts from
+  the end of the slop, and bundle.js from the first pixel. The quirk is in the service document.
+- Open, a tap on the row shuts it and does not reach the row's own action; this is an overlay over
+  the open row, as bundle.js's `onClickCapture` is. An action shuts the row and runs.
+- The README's «repeat them in the row's menu for a screen reader» is done by the component: the
+  actions are also the row's `customActions`.
+- The README's rules, in the API or `SwipeRowBehaviourTest`:
+  - a left swipe opens it by the actions' width, and a right one shuts it;
+  - let go short of half it shuts, past half it opens;
+  - past its ends it resists and comes back;
+  - a vertical drag does not move it;
+  - a tap on an open row shuts it without pressing it;
+  - an action runs and shuts it, and focusing an action opens it;
+  - the actions are the row's accessibility actions;
+  - one to three actions, with danger last (both `require`).
+- Mutations through `scripts/mutate.py`: 9 of 9 killed by their aimed tests.
+  - `swipe-half` and `swipe-vertical` first survived. The first test's drags lay on either side of
+    both thresholds; the vertical test looked only after the release, when a short move settles
+    shut anyway. Both now hold the drag and read the row while the finger is down.
+  - That found the harness quirk (every other `moveBy` call dropped) and the slop.
+  - Goldens by name: the danger action's sunken well, the actions' `edge` rule, and the divider
+    kept out of the rows (`SwipeRow`, `SwipeRowStates`).
+- `SwipeRowStates`: three actions open (accent, chrome, danger), and a single action open.
+- Values the tokens do not hold, marked `// css literal:`: action 72 wide, icon 20, gap 2.

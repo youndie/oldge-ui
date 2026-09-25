@@ -1008,6 +1008,87 @@
    "replace": "if (open) 0f else 0f,",
    "tests": "*AccordionBehaviourTest*",
    "expect": "the_chevron_turns_with_a_bounce_and_does_not_animate_under_reduced_motion"
+  },
+  {
+   "id": "swipe-width",
+   "item": "B-23",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeSwipeRow.kt",
+   "find": "private val ACTION_WIDTH = 72.dp",
+   "replace": "private val ACTION_WIDTH = 64.dp",
+   "tests": "*SwipeRowBehaviourTest*",
+   "expect": "a_left_swipe_opens_the_row_by_its_actions_width"
+  },
+  {
+   "id": "swipe-half",
+   "item": "B-23",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeSwipeRow.kt",
+   "find": "onDragStopped = { settle(open = x.value < -w / 2) },",
+   "replace": "onDragStopped = { settle(open = x.value < -w / 4) },",
+   "tests": "*SwipeRowBehaviourTest*",
+   "expect": "let_go_short_of_half_the_row_shuts_and_past_half_it_opens"
+  },
+  {
+   "id": "swipe-no-rubber",
+   "item": "B-23",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeSwipeRow.kt",
+   "find": "r > 0f -> r / RUBBER",
+   "replace": "r > 0f -> r",
+   "tests": "*SwipeRowBehaviourTest*",
+   "expect": "past_its_ends_the_row_resists_and_comes_back"
+  },
+  {
+   "id": "swipe-vertical",
+   "item": "B-23",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeSwipeRow.kt",
+   "find": "Orientation.Horizontal,",
+   "replace": "Orientation.Vertical,",
+   "tests": "*SwipeRowBehaviourTest*",
+   "expect": "a_vertical_drag_does_not_move_the_row"
+  },
+  {
+   "id": "swipe-tap-through",
+   "item": "B-23",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeSwipeRow.kt",
+   "find": "if (x.value != 0f) {",
+   "replace": "if (x.value > 1f) {",
+   "tests": "*SwipeRowBehaviourTest*",
+   "expect": "a_tap_on_an_open_row_shuts_it_without_pressing_it"
+  },
+  {
+   "id": "swipe-action-stays-open",
+   "item": "B-23",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeSwipeRow.kt",
+   "find": "                        settle(open = false)\n                        a.onClick()",
+   "replace": "                        a.onClick()",
+   "tests": "*SwipeRowBehaviourTest*",
+   "expect": "an_action_runs_and_shuts_the_row"
+  },
+  {
+   "id": "swipe-focus",
+   "item": "B-23",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeSwipeRow.kt",
+   "find": "if (it.isFocused) settle(open = true)",
+   "replace": "if (it.isFocused) settle(open = false)",
+   "tests": "*SwipeRowBehaviourTest*",
+   "expect": "focusing_an_action_opens_the_row"
+  },
+  {
+   "id": "swipe-custom-actions",
+   "item": "B-23",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeSwipeRow.kt",
+   "find": "                    actions.map { a ->",
+   "replace": "                    actions.drop(1).map { a ->",
+   "tests": "*SwipeRowBehaviourTest*",
+   "expect": "the_actions_are_also_the_rows_accessibility_actions"
+  },
+  {
+   "id": "swipe-danger-anywhere",
+   "item": "B-23",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeSwipeRow.kt",
+   "find": "require(actions.dropLast(1).none { it.tone == OldgeSwipeTone.Danger })",
+   "replace": "require(actions.isNotEmpty())",
+   "tests": "*SwipeRowBehaviourTest*",
+   "expect": "a_row_takes_one_to_three_actions_with_danger_last"
   }
  ]
 }
