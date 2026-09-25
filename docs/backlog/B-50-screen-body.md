@@ -1,7 +1,7 @@
 ---
 id: B-50
 title: "A public screen body: the skin's .og-body for an app's root"
-status: open
+status: done
 priority: P2
 size: S
 stage: stage-2-components
@@ -45,3 +45,27 @@ neither can the stress screens, which B-37 says must use no drawing the library 
 - AC: turning texture off drops the grain, as `data-og-texture="off"` does.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Materials.kt`,
   `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/harness/OldgeDemo.kt`.
+
+## Findings (2026-09-25)
+
+- **`OldgeScreenBody` exists and is the drawing the goldens were already made of.**
+  - It lives in `containers/OldgeScreenBody.kt`: a `Box` on `skinBody()`, which provides
+    `type.body` in `ink` and `ink` as the content colour, as `.og-body` sets them.
+  - `OldgeDemo` now stands on it in place of its private `Box(…skinBody())`.
+  - `viddikVerify` reports no mismatch over every golden. So the public surface draws exactly what
+    every fixture drew.
+- **The name.** The design system calls the class `og-body`. `OldgeBody` would read as a text
+  style next to `type.body`, so the composable is `OldgeScreenBody`. B-45's KDoc pass may still
+  rename it.
+- **Behaviour** (`ScreenBodyBehaviourTest`):
+  - Under a container that hands down red 40 sp text, the content still reads `ink` at the body
+    size and line.
+  - The top row of a textured body varies, and with texture off it is one colour.
+- **Mutants:** 4 of 4 killed.
+  - The outer text style kept.
+  - The outer content colour kept.
+  - The grain drawn always.
+  - The grain never drawn.
+- **Left as they were:** three probes in `desktopTest` (`PressFixtures`, `IconFixtures`,
+  `MaterialProbes`) still paint `skinBody()` directly. They are fixed-size backdrops for material
+  and icon probes, not screens, and the internal modifier is what they measure.

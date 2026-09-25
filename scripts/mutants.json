@@ -1611,6 +1611,42 @@
    "replace": "(cssBaseline(metrics, size, line) - cssBaseline(metrics, size, line)).roundToInt()",
    "tests": "*InkMatchesChromeTest*",
    "expect": "text_ink_lands_where_chromes_does_at_every_size_the_tokens_use"
+  },
+  {
+   "id": "screen-body-keeps-outer-style",
+   "item": "B-50",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeScreenBody.kt",
+   "find": "LocalOldgeTextStyle provides OldgeTheme.type.body.copy(color = c.ink),",
+   "replace": "LocalOldgeTextStyle provides LocalOldgeTextStyle.current,",
+   "tests": "*ScreenBodyBehaviourTest*",
+   "expect": "its_content_reads_ink_body_text_whatever_the_container_provides"
+  },
+  {
+   "id": "screen-body-keeps-outer-content-colour",
+   "item": "B-50",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeScreenBody.kt",
+   "find": "LocalOldgeContentColor provides c.ink,",
+   "replace": "LocalOldgeContentColor provides LocalOldgeContentColor.current,",
+   "tests": "*ScreenBodyBehaviourTest*",
+   "expect": "its_content_reads_ink_body_text_whatever_the_container_provides"
+  },
+  {
+   "id": "screen-body-grain-always",
+   "item": "B-50",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Materials.kt",
+   "find": "val grain = if (OldgeTheme.texture) remember(c.grain) { noiseTile(GRAIN, c.grain) } else null",
+   "replace": "val grain = remember(c.grain) { noiseTile(GRAIN, c.grain) }",
+   "tests": "*ScreenBodyBehaviourTest*",
+   "expect": "the_grain_is_there_unless_the_theme_turns_texture_off"
+  },
+  {
+   "id": "screen-body-no-grain",
+   "item": "B-50",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Materials.kt",
+   "find": "val grain = if (OldgeTheme.texture) remember(c.grain) { noiseTile(GRAIN, c.grain) } else null",
+   "replace": "val grain: ImageBitmap? = null",
+   "tests": "*ScreenBodyBehaviourTest*",
+   "expect": "the_grain_is_there_unless_the_theme_turns_texture_off"
   }
  ]
 }

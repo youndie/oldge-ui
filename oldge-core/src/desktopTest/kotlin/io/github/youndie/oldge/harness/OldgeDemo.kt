@@ -1,7 +1,6 @@
 package io.github.youndie.oldge.harness
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.youndie.oldge.material.skinBody
+import io.github.youndie.oldge.containers.OldgeScreenBody
 import io.github.youndie.oldge.theme.LocalOldgeTextStyle
 import io.github.youndie.oldge.theme.LocalOldgeTypography
 import io.github.youndie.oldge.theme.OldgeSkin
@@ -23,7 +22,7 @@ import io.github.youndie.oldge.type.OldgeText
 import io.github.youndie.viddik.core.ViddikPlatformTextStyle
 
 /**
- * The design system's preview frame, `.og-demo` on the skin's body: a column at most 390 dp wide,
+ * The design system's preview frame, `.og-demo` on [OldgeScreenBody]: a column at most 390 dp wide,
  * padding `space-4`, gap `space-3`, filling the fixture (whose size is the reference's, held by
  * `FixtureSizeTest`). Reduced motion, as the references are rendered (research §1.2); texture on,
  * as B-04 decided. Not [padded], the frame is the fixture's to draw: a preview that makes the demo
@@ -36,7 +35,7 @@ fun OldgeDemo(
     content: @Composable ColumnScope.() -> Unit,
 ) = OldgeTheme(skin = skin, reducedMotion = true) {
     PortableText {
-        Box(Modifier.fillMaxSize().skinBody()) {
+        OldgeScreenBody(Modifier.fillMaxSize()) {
             Column(
                 Modifier
                     .widthIn(
