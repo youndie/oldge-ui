@@ -297,6 +297,11 @@ the vertical box edges of the drifted row. Matching it needs fractional layout, 
 not have; reporting a rounded rather than a ceiled width would halve the drift and change every
 text-bearing component, and was not done in a component item.
 
+
+*B-31, measured.* Badge is 5.77–5.92 % and nothing but this rule. Chrome's six badge widths on the
+preview are all fractional (78.39, 56.03, 28.05, 77.75, 109.20 and 86.38 px), and each of Compose's
+is exactly its ceiling. A row of short labels is the worst case, since each label adds up to a pixel.
+
 | Cause | Before → after | Where |
 |---|---|---|
 | A button's content box started inside the padding but not inside the 1 px border; CSS's `box-sizing: border-box` puts the border inside the width, so every button was 2 px narrow and a row drifted 2 px per button. | Button 6.71–6.80 % → 4.36–4.43 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt` |

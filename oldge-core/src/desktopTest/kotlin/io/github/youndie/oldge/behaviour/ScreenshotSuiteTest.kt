@@ -34,8 +34,6 @@ class ScreenshotSuiteTest {
         setOf(
             // Components (B-11…B-34).
             "Accordion",
-            "Avatar",
-            "Badge",
             "Banner",
             "BottomNav",
             "BottomSheet",

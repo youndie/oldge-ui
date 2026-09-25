@@ -45,7 +45,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/` | `OldgeButton`, `OldgeIconButton`, `OldgeOrbButton` (B-12), `OldgeFab`, `OldgeExtendedFab`, `OldgeFabDock`, `OldgeSegmented` (B-13), the three chips and `OldgeChipGroup` (B-14); `ButtonBehaviourTest`, `FabSegmentedBehaviourTest` and `ChipBehaviourTest` hold the READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/` | `OldgeDivider` (B-11), `OldgeCard`, `OldgeActionTile` (B-21); `CardTileBehaviourTest` holds their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/` | `OldgeMenu`, `OldgeTooltip`, `OldgeBalloon` (B-28); `MenuTooltipBalloonBehaviourTest` holds their READMEs' behaviour rules |
-| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/` | `OldgeReadout`, `OldgeMeter`, `OldgeProgressBar` (B-29), `OldgeSpinner`, `OldgeSkeleton` (B-30), with the LCD tag and text in `Lcd.kt` and the frozen loop phase in `Loop.kt`; `LcdBehaviourTest` and `LoopBehaviourTest` hold their READMEs' behaviour rules |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/` | `OldgeReadout`, `OldgeMeter`, `OldgeProgressBar` (B-29), `OldgeSpinner`, `OldgeSkeleton` (B-30), `OldgeBadge`, `OldgeAvatar` (B-31), with the LCD tag and text in `Lcd.kt` and the frozen loop phase in `Loop.kt`; `LcdBehaviourTest`, `LoopBehaviourTest` and `BadgeAvatarBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/` | `OldgeCheckbox`, `OldgeRadioGroup` (B-15), `OldgeSwitch`, `OldgeSlider` (B-16), `OldgeTextField` (B-17), `OldgeSelect`, `OldgeCodeInput` (B-18), `OldgeDatePicker` (B-19), sharing `Field.kt`'s label and help line; `CheckBehaviourTest`, `SwitchSliderBehaviourTest`, `TextFieldBehaviourTest`, `SelectCodeBehaviourTest` and `DatePickerBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt` | text on the CSS baseline — use it, not `BasicText`, for any text a reference shows |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/tokens/OldgeTokens.kt` | the generated token layer (`scripts/generate_tokens.py`; `checkOldgeTokens` in `check`) |
@@ -133,6 +133,9 @@ to publish (B-01).
 * **Compose's `dropShadow` fills its shape; CSS's outer shadow does not.** Under an opaque box the
   two look the same. Through a hole (the spinner's) the Compose one shows, so the spinner draws its
   shadow with the disc clipped out (B-30).
+* **A CSS `min-width` can be inert at the default size and bind only at a smaller font.** The
+  count badge's 22 px is already filled by one lcd digit, so a test at the default size cannot see it.
+  `BadgeAvatarBehaviourTest` holds it at a font scale of 0.75 (B-31).
 * **kotlinx-datetime is an `api` dependency** (B-19): `OldgeDatePicker` takes and gives
   `LocalDate`, so a consumer compiles against it; the version is `wip`'s.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration

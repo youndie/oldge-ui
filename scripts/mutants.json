@@ -540,6 +540,87 @@
    "replace": "private const val LIT = 70f",
    "tests": "*LoopBehaviourTest*",
    "expect": "a_dial_lights_its_first_100_degrees_from_twelve_o_clock"
+  },
+  {
+   "id": "badge-state-icon",
+   "item": "B-31",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeBadge.kt",
+   "find": "tone == OldgeBadgeTone.Warning -> OldgeIcons.Warn",
+   "replace": "tone == OldgeBadgeTone.Warning -> null",
+   "tests": "*BadgeAvatarBehaviourTest*",
+   "expect": "the_three_states_carry_an_icon_and_a_count_or_a_plain_badge_does_not"
+  },
+  {
+   "id": "badge-count-no-icon",
+   "item": "B-31",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeBadge.kt",
+   "find": "            count -> null\n",
+   "replace": "            count && tone == OldgeBadgeTone.Accent -> null\n",
+   "tests": "*BadgeAvatarBehaviourTest*",
+   "expect": "the_three_states_carry_an_icon_and_a_count_or_a_plain_badge_does_not"
+  },
+  {
+   "id": "badge-count-min-width",
+   "item": "B-31",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeBadge.kt",
+   "find": "minWidth = if (count) HEIGHT else 0.dp",
+   "replace": "minWidth = 0.dp",
+   "tests": "*BadgeAvatarBehaviourTest*",
+   "expect": "a_one_digit_count_stays_a_22_px_circle_when_the_system_font_shrinks"
+  },
+  {
+   "id": "badge-bump-on-appear",
+   "item": "B-31",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeBadge.kt",
+   "find": "if (key != shown.value) {",
+   "replace": "if (true) {",
+   "tests": "*BadgeAvatarBehaviourTest*",
+   "expect": "a_count_bumps_when_it_changes_and_not_when_it_appears"
+  },
+  {
+   "id": "badge-bump-flat",
+   "item": "B-31",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeBadge.kt",
+   "find": "private const val BUMP_OVER = 1.35f",
+   "replace": "private const val BUMP_OVER = 1f",
+   "tests": "*BadgeAvatarBehaviourTest*",
+   "expect": "a_count_bumps_when_it_changes_and_not_when_it_appears"
+  },
+  {
+   "id": "avatar-status-word",
+   "item": "B-31",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeAvatar.kt",
+   "find": "listOfNotNull(name, status?.word)",
+   "replace": "listOfNotNull(name)",
+   "tests": "*BadgeAvatarBehaviourTest*",
+   "expect": "an_avatar_is_one_image_whose_name_says_its_status_in_words"
+  },
+  {
+   "id": "avatar-initials-three",
+   "item": "B-31",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeAvatar.kt",
+   "find": ".take(2)",
+   "replace": ".take(3)",
+   "tests": "*BadgeAvatarBehaviourTest*",
+   "expect": "initials_are_the_first_letters_of_the_first_two_words"
+  },
+  {
+   "id": "avatar-initials-follow-font-scale",
+   "item": "B-31",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeAvatar.kt",
+   "find": "with(LocalDensity.current) { (size.outer * INITIALS).toSp() }",
+   "replace": "androidx.compose.ui.unit.TextUnit((size.outer * INITIALS).value, androidx.compose.ui.unit.TextUnitType.Sp)",
+   "tests": "*BadgeAvatarBehaviourTest*",
+   "expect": "the_initials_keep_their_size_when_the_system_font_grows"
+  },
+  {
+   "id": "avatar-lamp-still",
+   "item": "B-31",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeAvatar.kt",
+   "find": "loopPhase(PULSE_MS)",
+   "replace": "null",
+   "tests": "*BadgeAvatarBehaviourTest*",
+   "expect": "an_online_lamp_pulses_and_stands_still_under_reduced_motion"
   }
  ]
 }
