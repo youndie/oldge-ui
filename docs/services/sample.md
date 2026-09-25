@@ -88,3 +88,6 @@ missing piece becomes a library item, not a private composable (B-37's decision)
   `Box` aligned to the bottom holding the scrolling column. A short lane then sits at the bottom
   and a long one scrolls from its top, as the browser's does. `Arrangement.Bottom` inside
   `verticalScroll` does nothing, because the scrolling column is as tall as its content.
+- **The app's feed is longer than the design's page.** `FeedScreen(more = true)` adds posts after
+  the design's two, so the app has something to scroll. The parity fixture calls `FeedScreen()`,
+  the design's page, because its reference shows empty ground below the two cards (B-64).

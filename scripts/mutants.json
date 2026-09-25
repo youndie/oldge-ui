@@ -2160,6 +2160,24 @@
    "replace": "",
    "tests": "*SelectCodeBehaviourTest*",
    "expect": "an_icon_less_selects_list_has_no_empty_strip_and_one_with_icons_keeps_it"
+  },
+  {
+   "id": "feed-app-short",
+   "item": "B-64",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/OldgeSampleApp.kt",
+   "find": "FeedScreen(fill, more = true)",
+   "replace": "FeedScreen(fill)",
+   "tests": "*SampleAppBehaviourTest*",
+   "expect": "the_apps_feed_scrolls_to_posts_beyond_the_designs_two"
+  },
+  {
+   "id": "feed-design-long",
+   "item": "B-64",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ShowcaseScreens.kt",
+   "find": "            if (more) {\n",
+   "replace": "            if (true) {\n",
+   "tests": "*SampleAppBehaviourTest*",
+   "expect": "the_apps_feed_scrolls_to_posts_beyond_the_designs_two"
   }
  ]
 }

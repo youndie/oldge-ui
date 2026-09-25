@@ -102,7 +102,7 @@ private fun Page(
     val fill = Modifier.fillMaxSize()
     when (page) {
         SamplePage.Launcher -> LauncherScreen(fill)
-        SamplePage.Feed -> FeedScreen(fill)
+        SamplePage.Feed -> FeedScreen(fill, more = true)
         SamplePage.Settings -> SettingsScreen(skin, onSkinChange, fill)
         SamplePage.Auth -> AuthScreen(fill)
         SamplePage.Chat -> ChatScreen(fill)

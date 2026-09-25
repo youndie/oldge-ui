@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.actions.OldgeButton
@@ -177,9 +179,16 @@ public fun LauncherScreen(modifier: Modifier = Modifier) {
  * The design system's FeedScreen page: a SearchBar with the user's Avatar, a ChipGroup filter, a
  * media Card and a Card under a bar, the Fab that rises above the Snackbar, and the BottomNav. Closing
  * the Snackbar lets the Fab down again. Its strings are the page's.
+ *
+ * With [more], a run of posts follows the design's two, so the feed scrolls, and room is left at the
+ * end so the last post clears the Snackbar and the Fab. The app shows it that way (B-64). The
+ * design's fixture does not, since the reference shows empty ground below the two cards.
  */
 @Composable
-public fun FeedScreen(modifier: Modifier = Modifier) {
+public fun FeedScreen(
+    modifier: Modifier = Modifier,
+    more: Boolean = false,
+) {
     var filter by remember { mutableStateOf("new") }
     var nav by remember { mutableStateOf("home") }
     var snack by remember { mutableStateOf(true) }
@@ -229,6 +238,16 @@ public fun FeedScreen(modifier: Modifier = Modifier) {
                 bar = "Напоминание",
                 barIcon = OldgeIcons.Bell,
             )
+            if (more) {
+                for (post in MORE_POSTS) {
+                    if (post.bar != null) {
+                        OldgeCard(title = post.title, text = post.text, bar = post.bar, barIcon = post.icon)
+                    } else {
+                        OldgeCard(title = post.title, subtitle = post.text, media = post.icon, onClick = {})
+                    }
+                }
+                Spacer(Modifier.height(CLEAR_OF_OVERLAYS))
+            }
         }
         // The page's own placement: the Fab 16 dp from the right, 148 dp up while the Snackbar is
         // there and 88 without it; the Snackbar 12 dp in from each side, 84 dp up.
@@ -395,6 +414,31 @@ private fun Page(
 private const val VOLUME = 0.6f
 private const val PERCENT = 100
 private val GRID_ROW_GAP = 2.dp // css literal: Launcher preview, `.grid { gap: 2px var(--space-2) }`
+
+/** A post of the longer feed: a media card, or, with a [bar], a card under a bar. */
+private class Post(
+    val title: String,
+    val text: String,
+    val icon: ImageVector,
+    val bar: String? = null,
+)
+
+private val MORE_POSTS =
+    listOf(
+        Post("Дача, июль", "Павел Вотяков · 36 фото", OldgeIcons.Image),
+        Post("Новый альбом «Сигнал»", "Три трека уже в плеере.", OldgeIcons.Note, bar = "Музыка"),
+        Post("Концерт в клубе", "Анна Ким · 12 видео", OldgeIcons.Film),
+        Post("Отчёт за квартал", "Документ обновлён, 4 правки.", OldgeIcons.Doc, bar = "Документы"),
+        Post("Первый снег", "Илья Орлов · 21 фото", OldgeIcons.Image),
+        Post("Облако почти заполнено", "Осталось 1,2 ГБ из 64.", OldgeIcons.Cloud, bar = "Хранилище"),
+        Post("Выпускной 2006", "Мария Лис · 204 фото", OldgeIcons.Image),
+        Post("Сборник на диск", "18 треков, 74 минуты.", OldgeIcons.Disc, bar = "Прожиг"),
+    )
+
+// Below the last post: the Snackbar's top is about 136 dp up and the nav 64, so 80 dp of room lets
+// the last post scroll clear of it.
+private val CLEAR_OF_OVERLAYS = 80.dp
+
 private val FAB_END = 16.dp // css literal: FeedScreen preview, the Fab's `right: 16`
 private val FAB_OVER_SNACK = 148.dp // css literal: FeedScreen preview, the Fab's `bottom: snack ? 148 : 88`
 private val FAB_BOTTOM = 88.dp // css literal: FeedScreen preview, the Fab's `bottom: snack ? 148 : 88`
