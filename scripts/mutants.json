@@ -1809,6 +1809,33 @@
    "replace": "{ liked = liked },",
    "tests": "*ScreenBehaviourTest*",
    "expect": "the_photo_turns_on_a_swipe_hides_the_interface_on_a_tap_and_the_heart_toggles"
+  },
+  {
+   "id": "actions-equal-shares",
+   "item": "B-56",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeActions.kt",
+   "find": "widths[i] = basis[i] + free / n + if (k < free % n) 1 else 0",
+   "replace": "widths[i] = (most - gapPx * (n - 1)) / n + 0 * basis[i] + 0 * free + 0 * k",
+   "tests": "*ActionsBehaviourTest*",
+   "expect": "buttons_that_fit_share_the_line_each_grown_from_its_own_width"
+  },
+  {
+   "id": "actions-never-wrap",
+   "item": "B-56",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeActions.kt",
+   "find": "if (i > start && next > most) {",
+   "replace": "if (i > start && next > most * 100) {",
+   "tests": "*ActionsBehaviourTest*",
+   "expect": "buttons_that_do_not_fit_wrap_one_per_line_each_the_lines_width"
+  },
+  {
+   "id": "actions-no-growth",
+   "item": "B-56",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeActions.kt",
+   "find": "widths[i] = basis[i] + free / n + if (k < free % n) 1 else 0",
+   "replace": "widths[i] = basis[i] + 0 * free / n + if (k < 0 * free % n) 1 else 0",
+   "tests": "*ActionsBehaviourTest*",
+   "expect": "buttons_that_fit_share_the_line_each_grown_from_its_own_width"
   }
  ]
 }

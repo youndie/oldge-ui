@@ -1,0 +1,18 @@
+<!-- @dsCard group="Probes" height=260 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>ActionsProbe — probe</title></head>
+<body>
+<div id="root"></div>
+<script>
+  // B-56: the design system's og-actions row, which no component preview shows. Two buttons that
+  // share a row; the Edge page's German pair in its 288 px column, where they wrap; and three
+  // unequal buttons, which grow from their own widths rather than to equal ones.
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h('div', { className: 'og-actions' }, h(B.Button, null, 'Сбросить'), h(B.Button, { variant: 'primary' }, 'Сохранить')),
+    h('div', { className: 'og-actions', style: { width: 288 } }, h(B.Button, null, 'Änderungen verwerfen'), h(B.Button, { variant: 'primary' }, 'Speichern und fortfahren')),
+    h('div', { className: 'og-actions' }, h(B.Button, { size: 'sm' }, 'Отмена'), h(B.Button, { size: 'sm' }, 'Удалить навсегда'), h(B.Button, { size: 'sm', variant: 'primary' }, 'Ок'))));
+</script>
+</body>
+</html>

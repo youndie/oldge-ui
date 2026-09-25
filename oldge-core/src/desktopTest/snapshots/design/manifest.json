@@ -18,6 +18,27 @@
       "page": false,
       "sha256": "fe433aa3269c7e35dfc867c42a9b8a9e456077054c4d56dfee7b50679fe04ee7"
     },
+    "ActionsProbe_Crystal": {
+      "source": "scripts/probes/ActionsProbe/preview.html",
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "dec7537e6a0cd07ab0c9b04c12f6b657c3925006c52ce6b3d8b4c6434ce38c22"
+    },
+    "ActionsProbe_Media": {
+      "source": "scripts/probes/ActionsProbe/preview.html",
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "1e708bbb6d04e0fb7914b6d0db09cf6b065fa2e8e98d717c073f2c2af69ad7dc"
+    },
+    "ActionsProbe_Toxic": {
+      "source": "scripts/probes/ActionsProbe/preview.html",
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "fe46f41714f5643430f6002c3e5ccb711514cada646ee6893c85818592fd8291"
+    },
     "ActionTile_Crystal": {
       "width": 390,
       "height": 310,

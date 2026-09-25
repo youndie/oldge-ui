@@ -1,7 +1,7 @@
 ---
 id: B-56
 title: "OldgeActions: the design system's og-actions button row, which wraps to a column"
-status: open
+status: done
 priority: P2
 size: S
 stage: stage-2-components
@@ -41,3 +41,34 @@ internally with `FlowRow`, and a screen that sets two buttons at its end has not
   mutants.
 - AC: the Edge pages (B-39) use it.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/`.
+
+## Findings (2026-09-25)
+
+- **`OldgeActions { … }` is a custom layout, not a `FlowRow`.**
+  - Each child's width starts from its own `maxIntrinsicWidth`: `flex-basis: auto`, capped at the
+    line's width (`flex-shrink: 1`).
+  - Lines are filled greedily with the `space-2` gap between buttons.
+  - Each line's free space is shared equally (`flex-grow: 1`); the pixels left over by the
+    division go to the first buttons, one each.
+  - The children are measured once, at their width.
+  - The caller writes plain buttons with no modifier. That is what the item asked for, since
+    Compose's `weight` shares space from a zero basis and makes the buttons equal.
+- **Two deliberate differences from the CSS.**
+  - A line's buttons are centred in it where CSS stretches them (`align-items: stretch`). They
+    share a height, and stretching would measure each one twice.
+  - An unbounded width (a horizontal scroll) lays everything on one line, since there is nothing
+    to wrap to.
+- **Held to Chrome.** No preview shows `og-actions`, so `scripts/probes/ActionsProbe` renders the
+  design system's own class three ways, and the `ActionsProbe` fixture compares:
+  - two buttons sharing 358 px;
+  - the Edge page's German pair in 288 px, where they wrap;
+  - three unequal small buttons.
+
+  Every button edge on all three rows is within a pixel of Chrome's, as the AC asks. Parity is
+  3.49 / 3.53 / 3.63 %, the buttons' text residual (Button alone is 4.0–4.4 %).
+- **Behaviour** (`ActionsBehaviourTest`):
+  - Two buttons in 358 dp share the line, fill it, and grow by equal shares from their own widths.
+  - The German pair in 288 dp wraps, each 288 dp wide.
+- **Mutants:** 3 of 3 killed (equal shares from nothing, never wrapping, no growth).
+- **Not moved:** Card's, Dialog's and Banner's own action rows still use their `FlowRow`s, and
+  their goldens are unchanged.
