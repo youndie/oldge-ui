@@ -375,6 +375,15 @@ move, and nothing worsened (the table is in B-49).
 icons and labels centred in the second and third slots sit a pixel left of Chrome's (measured:
 search and bell at 135 and 214, against 136 and 215).
 
+*B-37, the first pages.* The page previews read against the same floor, and a page's raw number
+is mostly its largest vertical shift. One component a few pixels off moves everything below it,
+so a page is read band by band, not as one percentage.
+
+- AuthScreen's 7.1–7.2 % is a 2 px shift under the password field (B-53).
+- ChatScreen's 17–21 % is the Composer's D11 height moving the whole lane 14 px.
+- With those bands aligned, what remains is 2.4–2.6 % and 3.8–4.3 %, the text-heavy components'
+  own. B-37 has the table.
+
 | Cause | Before → after | Where |
 |---|---|---|
 | A button's content box started inside the padding but not inside the 1 px border; CSS's `box-sizing: border-box` puts the border inside the width, so every button was 2 px narrow and a row drifted 2 px per button. | Button 6.71–6.80 % → 4.36–4.43 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt` |

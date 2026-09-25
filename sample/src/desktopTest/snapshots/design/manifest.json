@@ -1,0 +1,55 @@
+{
+  "references": {
+    "AuthScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "db1a57b77e996985ae028459fe361d9b9ff7a46f3758725cefddd588920b6a8d"
+    },
+    "AuthScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "083e7f5cceee13f236c370b52650abfd9edf2bdfc0b3fa66168cf1454567bbae"
+    },
+    "AuthScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "d789c2750b83b8c986a1fa6bc49ee772ea84a8d50d33d4ce5471e26e5ff57f5a"
+    },
+    "ChatScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "a77272f5a0aa186c80a8d24b8da13d2d4ef2ac0e652a3089291c5565e4b2feeb"
+    },
+    "ChatScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "293f63f6c795c56aa4a5f9a404ee2a094f39323a8209d2ecac9b6d3a1f4cb67d"
+    },
+    "ChatScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "7b977bbef5875ecf983c2c3dac5522f5ae3139795d16f1251db38df30cce1383"
+    }
+  },
+  "designSystem": {
+    "artifact": "CL8BafGgX4GgYdJXNEZttC",
+    "lastChange": "2026-09-24T21:57:36Z"
+  },
+  "chrome": "Chrome/153.0.8010.49",
+  "texture": "on",
+  "wrapper": [
+    "tokens.css compiled from tokens.json by scripts/tokens-css.mjs (the artifact publishes none)",
+    "fonts: the bundled faces of B-02 in place of Tahoma / Trebuchet MS and the Google Fonts @import (research D6)",
+    "prefers-reduced-motion, with the design system's own reduced-motion rule applied to every element, not only [class*=\"og-\"]",
+    "frame: 390 px wide, the @dsCard height growing to fit; a page is clipped to its .phone element",
+    "html { min-height: 100% }: the body background (and its glow) spans the frame, not the content",
+    "Date pinned to 2026-09-24T12:00:00"
+  ],
+  "now": "2026-09-24T12:00:00"
+}

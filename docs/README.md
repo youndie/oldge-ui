@@ -54,6 +54,8 @@ person — the machine only guards the membership.
 
 - [x] [research-architecture](research/research-architecture.md) — what the design system is, what can and cannot be shipped as specified (fonts), how references are rendered, the toolchain, decisions D1–D10, risks
 
-### Services (1/1)
+### Services (2/2)
 
 - [x] [oldge-core](services/oldge-core.md) — the library module: targets, the two catalogs, the suite, the viddik #44 workaround
+- [x] [sample](services/sample.md) — the library's first consumer: the page previews rebuilt from the public API, their parity fixtures, and the gaps they find
+

@@ -1674,6 +1674,33 @@
    "replace": "pixelTag = OldgeTypeStyles.pixelTag.toTextStyle(families.of(OldgeTypeStyles.pixelTag.family)),",
    "tests": "*PlatformTextStyleTest*",
    "expect": "the_theme_pins_every_type_style_and_leaves_them_alone_by_default"
+  },
+  {
+   "id": "auth-mode-never-switches",
+   "item": "B-37",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/AuthScreen.kt",
+   "find": "{ mode = it },",
+   "replace": "{ },",
+   "tests": "*ScreenBehaviourTest*",
+   "expect": "sign_in_switches_from_the_password_to_an_sms_code_and_back"
+  },
+  {
+   "id": "chat-every-message-last",
+   "item": "B-37",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ChatScreen.kt",
+   "find": "val last = messages.getOrNull(i + 1)?.from != m.from",
+   "replace": "val last = i >= 0",
+   "tests": "*ScreenBehaviourTest*",
+   "expect": "a_sent_message_joins_my_run_and_takes_the_runs_status"
+  },
+  {
+   "id": "chat-send-drops-the-message",
+   "item": "B-37",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ChatScreen.kt",
+   "find": "OldgeComposer({ messages += ChatMessage(OldgeChatSide.Me, it, \"09:20\", OldgeMessageStatus.Sent) })",
+   "replace": "OldgeComposer({ })",
+   "tests": "*ScreenBehaviourTest*",
+   "expect": "a_sent_message_joins_my_run_and_takes_the_runs_status"
   }
  ]
 }

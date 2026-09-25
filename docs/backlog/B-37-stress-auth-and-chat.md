@@ -1,7 +1,7 @@
 ---
 id: B-37
 title: "Stress screens: sign-in and chat"
-status: open
+status: done
 priority: P2
 size: L
 stage: stage-3-screens
@@ -59,9 +59,62 @@ The screens found a missing library surface before any screen code was written, 
 
 ## Iteration 2 (2026-09-25)
 
-Stopped on a second library gap: `OldgeText`, the only way the library sets plain text, is
-internal. It is filed as [B-51](B-51-public-text.md), which now blocks this item and B-38 to B-40.
+B-50 landed, and the branch `feat/b-37-stress-auth-and-chat` now holds verified groundwork:
 
-The groundwork waits on the branch `feat/b-37-stress-auth-and-chat`, whose findings say what it
-holds: `sample` wired for parity, the references rendered into it with identical hashes, and a
-draft of the sign-in screen.
+- `sample` has viddik, KSP and a `desktopTest`, and `./gradlew :sample:build :sample:viddikVerify`
+  is green. The #44 workaround is not needed there: with one target there is no
+  `kspCommonMainKotlinMetadata`, and copying the block failed the build on the missing task.
+- The six references were rendered with `--only '<Name>_*' --out
+  sample/src/desktopTest/snapshots/design`. Each `sha256` equals the one in oldge-core's manifest,
+  so they are the same render, not a second one. The glob matches the stem, so `--only AuthScreen`
+  renders nothing.
+- A draft of `AuthScreen`.
+
+**Stopped on a second gap: `OldgeText` is internal.** The screens set a heading and paragraphs of
+plain text, and an app cannot set text in the skin's type with the drawn-baseline placement of
+B-46 and B-49. Filed as [B-51](B-51-public-text.md), which now blocks this item. The draft does not
+compile until it lands.
+
+**A deviation to record when this closes** (refuted in iteration 3, below). The preview's
+`<h2 class="display">` has no rule in any vendored stylesheet. Chrome draws it with the browser's h2 default: 1.5em of the 15 px body in
+DejaVu bold, on the inherited 20 px line. The design system's rule is the `display` style for a
+screen title (Fira Sans 28/32), and the draft follows the rule. Its parity cost goes into research
+as a deviation, as D11 did for the Composer.
+
+## Iteration 3 (2026-09-25): done
+
+- **The screens.** `AuthScreen` and `ChatScreen` are in `sample`, built from public components
+  only, on `OldgeScreenBody` (B-50) with `OldgeText` (B-51). The fixtures pin text through the
+  theme (B-52).
+- **Parity, raw, against the floor of 0.72 %:**
+
+  | Page | Toxic | Media | Crystal |
+  |---|---|---|---|
+  | AuthScreen | 7.10 % | 7.24 % | 7.14 % |
+  | ChatScreen | 16.76 % | 18.11 % | 20.96 % |
+
+  Both are dominated by one vertical shift each. A band-by-band alignment found where each one
+  starts.
+  - **AuthScreen: −2 px from the password field down.** The reveal field is 46 px in Chrome and 44
+    here, which is filed as [B-53](B-53-reveal-field-height.md).
+  - **ChatScreen: +14 px over the whole lane.** The docked Composer is taller in the preview than
+    in the CSS. That is D11, the deviation already recorded: the preview's script double-counts
+    the textarea's padding, and the library follows the CSS.
+  - **With the shifted band moved back** (a diagnostic, not the reported number), the residual is
+    2.44 / 2.57 / 2.50 % and 3.78 / 3.84 / 4.28 %. That is text-heavy components' own residual
+    (Button 4.0, Chip 4.5 %) plus the Composer bar's own height.
+- **Refuted: the `display` deviation of iteration 2.** The reference's title is Fira Sans at
+  28/32, the same as ours. `scripts/tokens-css.mjs` compiles every type style into a class of its
+  name (`.display { font: … }`), and the reference wrapper loads that `tokens.css`. The class has
+  a rule; it is not in `bundle.css`, which is where iteration 2 looked. There is no deviation.
+- **Interaction, as Compose UI tests** (`ScreenBehaviourTest`):
+  - Sign-in switches from the password to the SMS code (with the disabled resend) and back.
+  - A sent message joins my run and takes the run's status: «отправлено» on it, and the previous
+    last one's «прочитано» gone.
+- **Mutants:** 3 of 3 killed.
+  - The mode never switching.
+  - Every message the last of its run.
+  - Send dropping the message.
+- **Golden mutation:** the avatar stand-in 32 → 40 dp. `viddikVerify` named ChatScreen ×3
+  (0.80–0.83 %).
+- **Component gaps found here:** B-53 only. The Composer's height is D11, not a gap.
