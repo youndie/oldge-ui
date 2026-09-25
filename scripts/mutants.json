@@ -1926,6 +1926,15 @@
    "replace": "inkMuted = Color(0xFF3A4436),",
    "tests": "*ContrastTest*",
    "expect": "the_design_systems_contrast_claims_hold_but_for_the_known_shortfalls"
+  },
+  {
+   "id": "overlay-bar-border-box",
+   "item": "B-57",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeWindowBar.kt",
+   "find": ".padding(bottom = if (overlay) s.space2 else 0.dp)",
+   "replace": ".padding(bottom = if (overlay) 0.dp else 0.dp)",
+   "tests": "*BarBehaviourTest*",
+   "expect": "the_overlay_bar_is_72_dp_and_the_plain_one_56"
   }
  ]
 }

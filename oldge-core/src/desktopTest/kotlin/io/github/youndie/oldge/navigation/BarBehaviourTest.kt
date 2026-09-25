@@ -16,6 +16,7 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertHeightIsAtLeast
+import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
@@ -128,6 +129,25 @@ class BarBehaviourTest {
         edge(reduced = false).let { (mid, rest) -> assertNotEquals(rest, mid, "the new capsule did not pop") }
         edge(reduced = true).let { (mid, rest) -> assertEquals(rest, mid, "the capsule popped under reduced motion") }
     }
+
+    /**
+     * B-57: `.og-winbar` is `content-box`, so the overlay's 8 px under its 64 px minimum adds to it. The
+     * overlay bar is 72 dp in all, as Chrome lays out MediaScreen's; the plain bar is its 56.
+     */
+    @Test
+    fun the_overlay_bar_is_72_dp_and_the_plain_one_56() =
+        runComposeUiTest {
+            setContent {
+                OldgeTheme {
+                    androidx.compose.foundation.layout.Column {
+                        OldgeWindowBar("Отпуск 2006", Modifier.testTag("overlay"), onBack = {}, overlay = true)
+                        OldgeWindowBar("Настройки", Modifier.testTag("plain"), onBack = {})
+                    }
+                }
+            }
+            onNodeWithTag("overlay").assertHeightIsEqualTo(72.dp)
+            onNodeWithTag("plain").assertHeightIsEqualTo(56.dp)
+        }
 }
 
 private val NAV = 390.dp

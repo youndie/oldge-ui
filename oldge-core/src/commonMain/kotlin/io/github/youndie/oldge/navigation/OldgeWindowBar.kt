@@ -91,8 +91,11 @@ public fun OldgeWindowBar(
         modifier
             .fillMaxWidth()
             .then(frame)
+            // `.og-winbar` is `content-box`: the overlay's 8 px under its 64 px minimum adds to it, 72 in
+            // all with the content centred in the top 64, as Chrome lays it out (B-57).
+            .padding(bottom = if (overlay) s.space2 else 0.dp)
             .defaultMinSize(minHeight = if (overlay) OVERLAY_HEIGHT else HEIGHT)
-            .padding(start = s.space3, end = s.space1, bottom = if (overlay) s.space2 else 0.dp),
+            .padding(start = s.space3, end = s.space1),
         horizontalArrangement = Arrangement.spacedBy(s.space1),
         verticalAlignment = Alignment.CenterVertically,
     ) {

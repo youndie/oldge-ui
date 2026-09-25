@@ -198,6 +198,9 @@ to publish (B-01).
   content.** Give the content the border as padding on all four sides, as CSS lays it out, or a
   child as tall as the box sits over the border and the box does not grow. TextField padded only
   the sides, so its 44 dp reveal orb left the field 44 where Chrome makes it 46 (B-53).
+* **A box without `box-sizing` is `content-box`.** Its `min-height` is the content's, and its
+  padding adds to it. `.og-winbar--overlay { min-height: 64px; padding-bottom: 8px }` is 72 px in
+  Chrome. In Compose that is the padding before `defaultMinSize`, not after it (B-57).
 * **An empty single-line `BasicTextField` measures 21 px for a 20 px line**, and 19 with a
   value. Give a single line exactly its line's height (`Modifier.height(line)`), not a minimum
   (B-17, B-53).
