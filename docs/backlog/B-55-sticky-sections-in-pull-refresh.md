@@ -1,7 +1,7 @@
 ---
 id: B-55
 title: "List sections stick inside a pull-to-refresh, as the design system's do"
-status: open
+status: done
 priority: P2
 size: M
 stage: stage-2-components
@@ -41,3 +41,28 @@ stress page for the combination, cannot be built.
 - AC: PullRefresh's and ListSection's goldens are unchanged.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgePullRefresh.kt`,
   `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeListSection.kt`.
+
+## Findings (2026-09-25)
+
+- **Option (a).** `OldgeLazyPullRefresh(refreshing, onRefresh, …, state, content: LazyListScope.() -> Unit)`
+  scrolls a `LazyColumn`, so `oldgeListSections` goes in unchanged and its headers stick in the
+  refresh's own scroll, as `.og-lsec__head` sticks in `og-pull__scroll`.
+  - It is a separate name, not an overload of `OldgePullRefresh`. Two overloads that differ only
+    in their trailing lambda's receiver would make a call with a trailing lambda ambiguous.
+- **One frame for both forms.** The indicator, the disc and the nested-scroll gesture moved into a
+  private `PullRefreshFrame`, which hands its scroll the modifier that reads the gesture. The
+  plain form is that frame round the `verticalScroll` column it had, and the lazy form is that
+  frame round a `LazyColumn`.
+  - PullRefresh's goldens and ListSection's are unchanged (`viddikVerify`, no mismatch).
+  - PullRefresh's four behaviour tests pass.
+  - B-33's five mutants still apply to the refactored file and all die.
+- **Behaviour** (`PullRefreshBehaviourTest`):
+  - The lazy form refreshes when let go past 64 dp of pull, and not at 50.
+  - Inside it, scrolled 60 dp, the first section's header is held at the top and its first row has
+    gone under the header.
+- **Mutants:** 2 of 2 killed.
+  - The gesture unhooked from the lazy scroll.
+  - The caller's `LazyListState` ignored, so the list starts unscrolled and the row is not under
+    the header.
+- **For B-38.** InboxScreen's body is `OldgeLazyPullRefresh { oldgeListSections { … } }`. Its
+  «Загружаю ещё…» spinner is one more `item` after the sections.

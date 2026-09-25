@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -63,6 +67,53 @@ public fun OldgePullRefresh(
     height: Dp = Dp.Unspecified,
     label: String = "Обновляю",
     content: @Composable () -> Unit,
+): Unit =
+    PullRefreshFrame(refreshing, onRefresh, modifier, label) { pulled ->
+        Column(
+            pulled
+                .fillMaxWidth()
+                .then(if (height.isSpecified) Modifier.height(height) else Modifier)
+                .verticalScroll(rememberScrollState()),
+        ) { content() }
+    }
+
+/**
+ * [OldgePullRefresh] round a lazy list: [content] is a `LazyColumn`'s, in [state], so a long list
+ * stays lazy and [io.github.youndie.oldge.containers.oldgeListSections] goes in as it is. The design
+ * system puts its ListSections straight into a PullRefresh, whose scroll is the one their headers stick
+ * in (B-55); here that scroll is this `LazyColumn`. [height] and [label] are [OldgePullRefresh]'s.
+ */
+@Composable
+public fun OldgeLazyPullRefresh(
+    refreshing: Boolean,
+    onRefresh: () -> Unit,
+    modifier: Modifier = Modifier,
+    height: Dp = Dp.Unspecified,
+    label: String = "Обновляю",
+    state: LazyListState = rememberLazyListState(),
+    content: LazyListScope.() -> Unit,
+): Unit =
+    PullRefreshFrame(refreshing, onRefresh, modifier, label) { pulled ->
+        LazyColumn(
+            pulled
+                .fillMaxWidth()
+                .then(if (height.isSpecified) Modifier.height(height) else Modifier),
+            state = state,
+            content = content,
+        )
+    }
+
+/**
+ * The indicator and the gesture both forms share: [scroll] is laid out under the disc, given the
+ * modifier that reads its nested scroll.
+ */
+@Composable
+private fun PullRefreshFrame(
+    refreshing: Boolean,
+    onRefresh: () -> Unit,
+    modifier: Modifier,
+    label: String,
+    scroll: @Composable (Modifier) -> Unit,
 ) {
     val c = OldgeTheme.colors
     val motion = OldgeTheme.motion
@@ -161,13 +212,7 @@ public fun OldgePullRefresh(
                     ).drawBehind { drawConicRing(c, spin) },
             )
         }
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .then(if (height.isSpecified) Modifier.height(height) else Modifier)
-                .nestedScroll(connection)
-                .verticalScroll(rememberScrollState()),
-        ) { content() }
+        scroll(Modifier.nestedScroll(connection))
     }
 }
 

@@ -3,6 +3,7 @@ package io.github.youndie.oldge.feedback
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
@@ -16,14 +17,20 @@ import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.youndie.oldge.containers.OldgeList
 import io.github.youndie.oldge.containers.OldgeListItem
+import io.github.youndie.oldge.containers.oldgeListSections
 import io.github.youndie.oldge.theme.OldgeTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -111,6 +118,60 @@ class PullRefreshBehaviourTest {
         }
 
     @Test
+    fun the_lazy_form_refreshes_past_64_px_and_not_short_of_it() =
+        runComposeUiTest {
+            setContent {
+                slop = LocalViewConfiguration.current.touchSlop
+                OldgeTheme {
+                    Box(Modifier.width(360.dp).testTag("pull")) {
+                        OldgeLazyPullRefresh(false, { refreshes++ }, height = 164.dp) {
+                            items(3) { OldgeListItem("Строка $it") }
+                        }
+                    }
+                }
+            }
+            drag(50.dp)
+            assertEquals(0, refreshes)
+            drag(80.dp)
+            assertEquals(1, refreshes)
+        }
+
+    /**
+     * B-55: InboxScreen's ListSections inside a PullRefresh. Scrolled 60 dp, the first section's header
+     * is held at the top of the refresh's own scroll, and its first row has gone under it.
+     */
+    @Test
+    fun list_sections_stick_inside_the_lazy_form() =
+        runComposeUiTest {
+            setContent {
+                OldgeTheme {
+                    OldgeLazyPullRefresh(
+                        false,
+                        {},
+                        Modifier.testTag("pull"),
+                        height = 200.dp,
+                        state = rememberLazyListState(0, 60),
+                    ) {
+                        oldgeListSections {
+                            section("Сегодня") { OldgeList { repeat(4) { i -> row { OldgeListItem("Письмо $i") } } } }
+                            section("Вчера") { OldgeList { row { OldgeListItem("Старое") } } }
+                        }
+                    }
+                }
+            }
+            val top = onNodeWithTag("pull").getUnclippedBoundsInRoot().top
+            // An unplaced header has unspecified bounds that pass any comparison: on screen first.
+            val title =
+                onNode(
+                    hasText("Сегодня"),
+                    useUnmergedTree = true,
+                ).assertIsDisplayed().getUnclippedBoundsInRoot()
+            assertTrue(title.top >= top && title.bottom <= top + HEAD_HEIGHT, "the header left the top: $title")
+            val first = onNodeWithText("Письмо 0", useUnmergedTree = true).getUnclippedBoundsInRoot()
+            assertTrue(first.top < top + HEAD_HEIGHT, "the rows did not scroll under the header")
+        }
+
+    @Test
     fun while_it_refreshes_a_screen_reader_hears_it() =
         runComposeUiTest {
             setContent { OldgeTheme { OldgePullRefresh(true, {}, height = 164.dp) { OldgeListItem("Строка") } } }
@@ -122,3 +183,4 @@ class PullRefreshBehaviourTest {
 }
 
 private const val STEPS = 20
+private val HEAD_HEIGHT = 30.dp // the ListSection header, as PanelListBehaviourTest has it

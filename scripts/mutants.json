@@ -1746,6 +1746,24 @@
    "replace": "require(icon == null || lead == null || title.isNotEmpty()) {",
    "tests": "*PanelListBehaviourTest*",
    "expect": "a_row_takes_an_icon_or_a_lead_element_not_both"
+  },
+  {
+   "id": "lazy-pull-unhooked",
+   "item": "B-55",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgePullRefresh.kt",
+   "find": "scroll(Modifier.nestedScroll(connection))",
+   "replace": "scroll(Modifier)",
+   "tests": "*PullRefreshBehaviourTest*",
+   "expect": "the_lazy_form_refreshes_past_64_px_and_not_short_of_it"
+  },
+  {
+   "id": "lazy-pull-own-state",
+   "item": "B-55",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgePullRefresh.kt",
+   "find": "            state = state,",
+   "replace": "            state = rememberLazyListState(0, 0 * state.firstVisibleItemIndex),",
+   "tests": "*PullRefreshBehaviourTest*",
+   "expect": "list_sections_stick_inside_the_lazy_form"
   }
  ]
 }
