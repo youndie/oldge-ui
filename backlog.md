@@ -78,20 +78,20 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-37](docs/backlog/B-37-stress-auth-and-chat.md) `[ ]` | Stress screens: sign-in and chat | P2 | L | B-12, B-13, B-15, B-17, B-18, B-24, B-29, B-31, B-34, B-50, B-51 |
-| [B-38](docs/backlog/B-38-stress-inbox-and-media.md) `[ ]` | Stress screens: the long list and full-screen media | P2 | L | B-20, B-23, B-24, B-26, B-30, B-31, B-32, B-33, B-50, B-51 |
-| [B-39](docs/backlog/B-39-stress-edges.md) `[ ]` | Stress screens: 320 dp with German strings, and the system font at 200 % | P2 | L | B-13, B-15, B-17, B-20, B-21, B-24, B-25, B-31, B-32, B-50, B-51 |
-| [B-40](docs/backlog/B-40-showcase-screens.md) `[ ]` | Showcase screens: launcher, feed, settings | P2 | L | B-11, B-12, B-13, B-14, B-15, B-16, B-17, B-18, B-19, B-20, B-21, B-22, B-23, B-24, B-25, B-26, B-27, B-28, B-29, B-30, B-31, B-32, B-33, B-34, B-47, B-50, B-51 |
+| [B-37](docs/backlog/B-37-stress-auth-and-chat.md) `[ ]` | Stress screens: sign-in and chat | P2 | L | B-12, B-13, B-15, B-17, B-18, B-24, B-29, B-31, B-34, B-50, B-51, B-52 |
+| [B-38](docs/backlog/B-38-stress-inbox-and-media.md) `[ ]` | Stress screens: the long list and full-screen media | P2 | L | B-20, B-23, B-24, B-26, B-30, B-31, B-32, B-33, B-50, B-51, B-52 |
+| [B-39](docs/backlog/B-39-stress-edges.md) `[ ]` | Stress screens: 320 dp with German strings, and the system font at 200 % | P2 | L | B-13, B-15, B-17, B-20, B-21, B-24, B-25, B-31, B-32, B-50, B-51, B-52 |
+| [B-40](docs/backlog/B-40-showcase-screens.md) `[ ]` | Showcase screens: launcher, feed, settings | P2 | L | B-11, B-12, B-13, B-14, B-15, B-16, B-17, B-18, B-19, B-20, B-21, B-22, B-23, B-24, B-25, B-26, B-27, B-28, B-29, B-30, B-31, B-32, B-33, B-34, B-47, B-50, B-51, B-52 |
 | [B-41](docs/backlog/B-41-sample-app.md) `[ ]` | The sample app on desktop, Android and iOS, with a skin switcher | P2 | M | B-40 |
 | [B-42](docs/backlog/B-42-component-catalogue.md) `[ ]` | The component catalogue: a previews registry and a generated docs/components.md | P2 | S | B-40 |
 | [B-43](docs/backlog/B-43-accessibility.md) `[ ]` | Accessibility: roles, 44 dp targets, colour never alone | P2 | M | B-42 |
-| [B-51](docs/backlog/B-51-public-text.md) `[ ]` | A public OldgeText: plain text in the skin's type, on the drawn baseline | P2 | S | - |
+| [B-52](docs/backlog/B-52-pin-text-rendering.md) `[ ]` | A public way to pin text rendering, for a consumer's screenshots | P2 | S | - |
 | [B-36](docs/backlog/B-36-re-vendor-the-design-system.md) `[ ]` | A procedure for re-vendoring the design system | P3 | S | B-03 |
 | [B-44](docs/backlog/B-44-motion.md) `[ ]` | Motion: entrances, loops and the stagger, as the README lists them | P3 | M | B-40 |
 | [B-45](docs/backlog/B-45-public-api-and-kdoc.md) `[ ]` | Pin the public API, and make the KDoc name its README rule | P3 | S | B-40 |
 | [B-35](docs/backlog/B-35-viddik-0-6-1.md) `[?]` | Take viddik 0.6.1 and delete the #44 workaround | infra | XS | B-01 |
 
-## Closed (39)
+## Closed (40)
 
 **Answers that decide the architecture**
 
@@ -140,5 +140,6 @@ list an item can be checked against in one glance.
 - [B-48](docs/backlog/B-48-mutation-runner.md) `[x]` - A mutation runner that names the failing test, and a re-check of B-12…B-18
 - [B-49](docs/backlog/B-49-script-text-drawn-baseline.md) `[x]` - OldgeScriptText places text by the reported baseline, not the drawn one
 - [B-50](docs/backlog/B-50-screen-body.md) `[x]` - A public screen body: the skin's .og-body for an app's root
+- [B-51](docs/backlog/B-51-public-text.md) `[x]` - A public OldgeText: plain text in the skin's type, on the drawn baseline
 
 <!-- END INDEX -->

@@ -5,7 +5,7 @@ status: open
 priority: P2
 size: L
 stage: stage-3-screens
-blocked_by: [B-13, B-15, B-17, B-20, B-21, B-24, B-25, B-31, B-32, B-50, B-51]
+blocked_by: [B-13, B-15, B-17, B-20, B-21, B-24, B-25, B-31, B-32, B-50, B-51, B-52]
 ---
 
 # B-39 — Stress screens: 320 dp with German strings, and the system font at 200 %

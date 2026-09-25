@@ -1647,6 +1647,15 @@
    "replace": "val grain: ImageBitmap? = null",
    "tests": "*ScreenBodyBehaviourTest*",
    "expect": "the_grain_is_there_unless_the_theme_turns_texture_off"
+  },
+  {
+   "id": "consumer-text-reported-baseline",
+   "item": "B-51",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt",
+   "find": "if (metrics == null) modifier else modifier.onCssBaseline(metrics, laid),",
+   "replace": "modifier,",
+   "tests": "*ConsumerTextTest*",
+   "expect": "a_consumers_text_lands_on_chromes_ink_where_basic_text_does_not"
   }
  ]
 }

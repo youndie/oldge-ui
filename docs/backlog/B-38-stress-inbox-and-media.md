@@ -5,7 +5,7 @@ status: open
 priority: P2
 size: L
 stage: stage-3-screens
-blocked_by: [B-20, B-23, B-24, B-26, B-30, B-31, B-32, B-33, B-50, B-51]
+blocked_by: [B-20, B-23, B-24, B-26, B-30, B-31, B-32, B-33, B-50, B-51, B-52]
 ---
 
 # B-38 — Stress screens: the long list and full-screen media

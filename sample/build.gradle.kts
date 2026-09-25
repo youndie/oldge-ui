@@ -20,6 +20,12 @@ kotlin {
         getByName("desktopMain").dependencies {
             implementation(compose.desktop.currentOs)
         }
+        // The library as a consumer sees it: these tests compile against oldge-core's public API only
+        // (B-51).
+        getByName("desktopTest").dependencies {
+            implementation(kotlin("test"))
+            implementation(wip.compose.ui.test)
+        }
     }
 }
 

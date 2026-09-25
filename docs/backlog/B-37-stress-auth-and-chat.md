@@ -5,7 +5,7 @@ status: open
 priority: P2
 size: L
 stage: stage-3-screens
-blocked_by: [B-12, B-13, B-15, B-17, B-18, B-24, B-29, B-31, B-34, B-50, B-51]
+blocked_by: [B-12, B-13, B-15, B-17, B-18, B-24, B-29, B-31, B-34, B-50, B-51, B-52]
 ---
 
 # B-37 — Stress screens: sign-in and chat
