@@ -1,7 +1,7 @@
 ---
 id: B-13
 title: "Fab and Segmented"
-status: open
+status: done
 priority: P1
 size: S
 stage: stage-2-components
@@ -41,3 +41,35 @@ Fab: the floating action in accent, icon bounce on press. Segmented: a 2–4 opt
   - `reference/design-system/components/Fab/README.md`, `reference/design-system/components/Fab/preview.html`
   - `reference/design-system/components/Segmented/README.md`, `reference/design-system/components/Segmented/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/`
+
+## Findings (2026-09-25)
+
+- Parity (±16, floor 0.72 %): Fab 0.33 / 0.33 / 0.29 % (Toxic / Media / Crystal), below the floor,
+  on the first run. Segmented 1.28 / 1.44 / 1.69 %, from 1.77 / 1.88 / 1.82 %, after one cause in
+  the shared painter. `cssBox` painted a bordered rounded box's background and border one over the
+  other, so their outer edge was covered twice. It now paints them in one layer clipped once, as
+  Blink does. The measurements are in research §1.4, "As built, B-13", and include four older probes
+  that moved with it. What is left in Segmented is half label edges (centred labels at a fractional
+  x in Chrome, §1.10) and half the selected option's arcs.
+- The painter change re-recorded 21 goldens outside this item, each by 0.06–0.24 %, all on bordered
+  boxes: Button, ButtonStates, MaterialGloss, MaterialLcdGlow, MaterialPanel, Press (Flash, Focus).
+  They were recorded again because the rule changed under them, not because they were stale.
+- The Fab's frame is CSS's `background: <fill> padding-box, <rim> border-box` under a transparent
+  3 px border. `cssBox` takes it as `borderBackground`. The focus ring is 3 px out on a Fab
+  (`outline-offset: 3px`), so `OldgeIndication` takes a `ringOffset`. No golden shows a focused
+  Fab, so that offset is unverified by pixels.
+- Chrome's UA stylesheet makes every `button` `box-sizing: border-box`, so a segment's
+  `min-height: 40px` includes its padding and border. The group is 46 px, as the reference measures.
+- The READMEs' rules, in the API or `FabSegmentedBehaviourTest`: an icon Fab takes a non-null
+  `contentDescription`, and an extended Fab is named by its label. `expanded` offers expand or
+  collapse, the opposite of its state. Segmented takes 2 to 4 options (`require`), and each option is
+  a radio button. The 12-character rule is a KDoc line, as the item decided.
+- Mutations, each failing, restored:
+  - in `FabSegmentedBehaviourTest`: icon Fab width, expand and collapse swapped, the option-count
+    `require`, the segment's role;
+  - in the goldens: the Fab highlight (a first attempt failed only on a compile warning and was
+    redone), the 135° turn, the selected segment's border, the clip layer (27 goldens).
+- Values the tokens do not hold, marked `// css literal:`:
+  - Fab: 56, the 3 px frame, padding 16 / 20, icon 26, highlight 6 / 2 / 10, ring offset 3, dock
+    bottom 88;
+  - Segmented: 2 px inner padding and gap, min height 40, block padding 4, icon 18, 0.875rem text.

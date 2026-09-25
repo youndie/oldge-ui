@@ -142,6 +142,25 @@ runtime shader would be an `expect`/`actual` on every target, so the grain is a 
 `ImageBitmap` tile through an `ImageShader` — common code, one implementation, no per-platform
 shader language (D8).
 
+*As built, B-13.* **A rounded box with a visible border is painted the way Blink paints it, in one
+layer clipped once** (`kBackgroundBleedClipLayer`; a 1 px border never takes Blink's other path,
+which needs a border at least two device pixels wide). Painted one over the other, the background
+and the border are each antialiased along the same outer edge, and that edge's pixels end up covered
+twice, up to a quarter too opaque. It showed on Segmented's pill ends as a bright outer fringe
+(52 in Chrome, 110 here at one pixel). Clipping the background to the padding box instead was also
+measured, and was worse on Crystal.
+
+| Probe | one over the other → one layer |
+|---|---|
+| Segmented | 1.77 / 1.88 / 1.82 % → **1.28 / 1.44 / 1.69 %** |
+| MaterialGloss | 0.20 / 0.20 / 0.19 % → 0.17 / 0.15 / 0.18 % |
+| Button | 4.36 / 4.41 / 4.43 % → 4.33 / 4.38 / 4.41 % |
+| MaterialPanel | 0.04 / 0.05 / 0.07 % → 0.05 / 0.06 / 0.08 % (about four pixels) |
+
+The layer is erased outside the border box with `DstOut` through the complement; a `DstIn` through
+the box itself leaves every pixel the path does not reach, the layer's square corners included
+(4 % on Segmented, the first attempt).
+
 ### 1.5 Gloss is three gradient stops that animate, not a gradient that swaps
 
 | Fact | Where verified |

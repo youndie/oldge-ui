@@ -6,10 +6,13 @@ import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.draw.innerShadow
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -39,6 +42,10 @@ import kotlin.math.sin
  *   offset and shrunk by the spread; an outer spread ring is the border box grown by the spread,
  *   minus the border box.
  *
+ * A [borderBackground] is CSS's two-layer `background: <fill> padding-box, <rim> border-box`: the
+ * fill clipped to and laid out on the padding box, the rim on the border box and seen only through a
+ * transparent border (the Fab's chrome frame).
+ *
  * Inset shadows are drawn as that path difference, not with `Modifier.innerShadow`: on the Panel
  * probe the difference is 0.04–0.07 % away from Chrome and `innerShadow` 3.3–4.1 %, off along the
  * whole outline (research §1.4, measured in B-07). Blurred outer shadows do use `dropShadow`.
@@ -51,6 +58,7 @@ internal fun Modifier.cssBox(
     shadows: List<OldgeShadow> = emptyList(),
     extraOuter: List<OldgeShadow> = emptyList(),
     gloss: Color? = null,
+    borderBackground: CssBackground? = null,
 ): Modifier {
     val all = shadows + extraOuter
     val blurred = all.filter { !it.inset && it.blur > 0.dp }
@@ -80,12 +88,39 @@ internal fun Modifier.cssBox(
                 cssRoundRect(Offset(b, b), Size(size.width - 2 * b, size.height - 2 * b), (r - b).coerceAtLeast(0f))
             val rings = all.filter { !it.inset && it.blur == 0.dp }
             val insets = all.filter { it.inset && it.blur == 0.dp }
+            // Blink's `kBackgroundBleedClipLayer`: a rounded box with a visible border is painted
+            // into one layer that is clipped to the border box once. Painted one over the other, the
+            // background and the border would each be antialiased along the same outer edge and
+            // that edge's pixels covered twice — too opaque by up to a quarter (measured in B-13 on
+            // Segmented's pill ends).
+            val layered = b > 0f && borderBackground == null && borderColor.alpha > 0f && r > 0f
+            val square = RoundRect(outer.left, outer.top, outer.right, outer.bottom)
+            // Everything outside the border box, erased with DstOut: a DstIn through the box itself
+            // would leave the pixels the path does not reach — the layer's square corners.
+            val outside =
+                Path().apply {
+                    op(
+                        Path().apply { addRect(Rect(Offset.Zero, size)) },
+                        Path().apply { addRoundRect(outer) },
+                        PathOperation.Difference,
+                    )
+                }
             onDrawBehind {
                 for (ring in rings) drawSpreadRing(outer, r, ring)
-                drawBackground(background, outer, padding)
+                if (layered) drawContext.canvas.saveLayer(Rect(Offset.Zero, size), Paint())
+                if (borderBackground == null) {
+                    drawBackground(background, if (layered) square else outer, padding)
+                } else {
+                    drawBackground(borderBackground, outer)
+                    drawBackground(background, padding)
+                }
                 if (gloss != null) drawGloss(gloss, padding, r)
                 for (inset in insets) drawInset(padding, inset)
-                if (b > 0f) drawBorder(outer, padding, borderColor)
+                if (b > 0f && borderBackground == null) drawBorder(if (layered) square else outer, padding, borderColor)
+                if (layered) {
+                    drawPath(outside, Color.Black, blendMode = BlendMode.DstOut)
+                    drawContext.canvas.restore()
+                }
             }
         }
     // A blurred inset (an orb's pressed core) cannot be drawn as a path difference; innerShadow

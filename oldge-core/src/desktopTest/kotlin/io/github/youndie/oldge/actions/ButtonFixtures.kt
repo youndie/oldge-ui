@@ -68,7 +68,7 @@ private fun OrbDemo(skin: OldgeSkin) =
  * state (found in B-12 by removing the press and watching every golden still pass).
  */
 @Composable
-private fun pressed(): MutableInteractionSource {
+internal fun pressed(): MutableInteractionSource {
     val source = remember { MutableInteractionSource() }
     LaunchedEffect(source) {
         withFrameNanos { }

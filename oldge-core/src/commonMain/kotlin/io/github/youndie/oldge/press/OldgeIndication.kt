@@ -28,6 +28,7 @@ import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.node.currentValueOf
 import androidx.compose.ui.node.invalidateDraw
 import androidx.compose.ui.platform.LocalInputModeManager
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.theme.LocalOldgeMotion
 import io.github.youndie.oldge.theme.LocalOldgeSkin
@@ -58,20 +59,26 @@ import kotlin.math.sqrt
  *
  * A component passes its own [shape]; the theme's default is a rectangle. A component whose flash
  * lives in a part of it — an orb's core — draws the two separately: [flash] on the part, [ring] on
- * the whole.
+ * the whole. [ringOffset] is the `outline-offset`, 2 dp everywhere but the Fab's 3.
  */
 public class OldgeIndication(
     private val shape: Shape = RectangleShape,
     private val flash: Boolean = true,
     private val ring: Boolean = true,
+    private val ringOffset: Dp = FOCUS_OFFSET,
 ) : IndicationNodeFactory {
     override fun create(interactionSource: InteractionSource): DelegatableNode =
-        OldgeIndicationNode(interactionSource, shape, flash, ring)
+        OldgeIndicationNode(interactionSource, shape, flash, ring, ringOffset)
 
     override fun equals(other: Any?): Boolean =
-        other is OldgeIndication && other.shape == shape && other.flash == flash && other.ring == ring
+        other is OldgeIndication &&
+            other.shape == shape &&
+            other.flash == flash &&
+            other.ring == ring &&
+            other.ringOffset == ringOffset
 
-    override fun hashCode(): Int = (shape.hashCode() * 31 + flash.hashCode()) * 31 + ring.hashCode()
+    override fun hashCode(): Int =
+        ((shape.hashCode() * 31 + flash.hashCode()) * 31 + ring.hashCode()) * 31 + ringOffset.hashCode()
 }
 
 private class Flash(
@@ -84,6 +91,7 @@ private class OldgeIndicationNode(
     private val shape: Shape,
     private val flash: Boolean,
     private val ring: Boolean,
+    private val ringOffset: Dp,
 ) : androidx.compose.ui.Modifier.Node(),
     DelegatableNode,
     DrawModifierNode,
@@ -127,7 +135,7 @@ private class OldgeIndicationNode(
         }
         drawContent()
         val keyboard = currentValueOf(LocalInputModeManager).inputMode == InputMode.Keyboard
-        if (ring && focused && keyboard) drawOldgeFocusRing(shape, skin.colors.focus)
+        if (ring && focused && keyboard) drawOldgeFocusRing(shape, skin.colors.focus, ringOffset)
     }
 }
 
@@ -167,13 +175,14 @@ internal fun DrawScope.drawOldgeFlash(
     }
 }
 
-/** The focus ring round [shape]: 2 dp of [focus], 2 dp outside it. */
+/** The focus ring round [shape]: 2 dp of [focus], [offset] outside it (2 dp; a Fab's is 3). */
 internal fun DrawScope.drawOldgeFocusRing(
     shape: Shape,
     focus: Color,
+    offset: Dp = FOCUS_OFFSET,
 ) {
     val width = FOCUS_WIDTH.toPx()
-    val gap = FOCUS_OFFSET.toPx()
+    val gap = offset.toPx()
     val grow = gap + width / 2
     val outline =
         shape.createOutline(
