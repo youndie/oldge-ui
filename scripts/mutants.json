@@ -1431,6 +1431,96 @@
    "replace": "",
    "tests": "*PullRefreshBehaviourTest*",
    "expect": "while_it_refreshes_a_screen_reader_hears_it"
+  },
+  {
+   "id": "bubble-share",
+   "item": "B-34",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeChat.kt",
+   "find": "private const val LANE_SHARE = 0.86f",
+   "replace": "private const val LANE_SHARE = 0.95f",
+   "tests": "*ChatBehaviourTest*",
+   "expect": "a_bubble_is_at_most_86_percent_of_the_lane_mine_at_its_end_theirs_at_its_start"
+  },
+  {
+   "id": "bubble-me-start",
+   "item": "B-34",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeChat.kt",
+   "find": "contentAlignment = if (me) Alignment.BottomEnd else Alignment.BottomStart,",
+   "replace": "contentAlignment = Alignment.BottomStart,",
+   "tests": "*ChatBehaviourTest*",
+   "expect": "a_bubble_is_at_most_86_percent_of_the_lane_mine_at_its_end_theirs_at_its_start"
+  },
+  {
+   "id": "bubble-their-status",
+   "item": "B-34",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeChat.kt",
+   "find": "Meta(time, status.takeIf { me }, me, Modifier.align(Alignment.End))",
+   "replace": "Meta(time, status, me, Modifier.align(Alignment.End))",
+   "tests": "*ChatBehaviourTest*",
+   "expect": "my_status_is_said_and_theirs_has_none"
+  },
+  {
+   "id": "typing-name",
+   "item": "B-34",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeChat.kt",
+   "find": "contentDescription = listOfNotNull(name, \"печатает\").joinToString(\" \")",
+   "replace": "contentDescription = \"печатает\"",
+   "tests": "*ChatBehaviourTest*",
+   "expect": "the_typing_indicator_says_who_types_and_its_dots_hop_but_not_under_reduced_motion"
+  },
+  {
+   "id": "typing-still",
+   "item": "B-34",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeChat.kt",
+   "find": "    val phase = loopPhase(TYPING_MS)\n",
+   "replace": "    val phase: Float? = null\n",
+   "tests": "*ChatBehaviourTest*",
+   "expect": "the_typing_indicator_says_who_types_and_its_dots_hop_but_not_under_reduced_motion"
+  },
+  {
+   "id": "composer-blank",
+   "item": "B-34",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeComposer.kt",
+   "find": "        if (text.isBlank()) return\n",
+   "replace": "        if (text.isEmpty()) return\n",
+   "tests": "*ChatBehaviourTest*",
+   "expect": "send_is_off_on_an_empty_field_and_sends_and_clears_the_text"
+  },
+  {
+   "id": "composer-keep",
+   "item": "B-34",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeComposer.kt",
+   "find": "        onSend(text)\n        set(\"\")\n",
+   "replace": "        onSend(text)\n",
+   "tests": "*ChatBehaviourTest*",
+   "expect": "send_is_off_on_an_empty_field_and_sends_and_clears_the_text"
+  },
+  {
+   "id": "composer-enter",
+   "item": "B-34",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeComposer.kt",
+   "find": "if (e.key == Key.Enter && !e.isShiftPressed) {",
+   "replace": "if (e.key == Key.Enter) {",
+   "tests": "*ChatBehaviourTest*",
+   "expect": "enter_sends_and_shift_enter_breaks_the_line"
+  },
+  {
+   "id": "composer-attach",
+   "item": "B-34",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeComposer.kt",
+   "find": "        if (onAttach != null) {\n            OldgeOrbButton(\n                OldgeIcons.Attach,\n                \"Прикрепить\",\n                onAttach,",
+   "replace": "        run {\n            OldgeOrbButton(\n                OldgeIcons.Attach,\n                \"Прикрепить\",\n                onAttach ?: {},",
+   "tests": "*ChatBehaviourTest*",
+   "expect": "the_attach_orb_is_there_unless_it_is_turned_off"
+  },
+  {
+   "id": "composer-most",
+   "item": "B-34",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeComposer.kt",
+   "find": "private val MOST = 120.dp",
+   "replace": "private val MOST = 160.dp",
+   "tests": "*ChatBehaviourTest*",
+   "expect": "the_field_grows_to_120_px_and_no_further"
   }
  ]
 }

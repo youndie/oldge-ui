@@ -46,6 +46,8 @@ import kotlin.math.sin
  * fill clipped to and laid out on the padding box, the rim on the border box and seen only through a
  * transparent border (the Fab's chrome frame).
  *
+ * [cornerRadii] gives each corner its own radius, as `border-bottom-left-radius: 4px` over
+ * `radius-lg` does (a chat bubble's tail corner); when set, it replaces [radius] and [corners].
  * [corners] rounds only some corners, as `border-radius: xl xl 0 0` does (the WindowBar's top, the
  * BottomNav's bottom); the others are square in every box the painting derives.
  *
@@ -63,20 +65,16 @@ internal fun Modifier.cssBox(
     gloss: Color? = null,
     borderBackground: CssBackground? = null,
     corners: CssCorners = CssCorners.All,
+    cornerRadii: CssCornerRadii? = null,
 ): Modifier {
+    val sizes = cornerRadii ?: CssCornerRadii.of(radius, corners)
     val all = shadows + extraOuter
     val blurred = all.filter { !it.inset && it.blur > 0.dp }
     val blurredInsets = all.filter { it.inset && it.blur > 0.dp }
 
-    fun r(round: Boolean) = if (round) radius else 0.dp
     val shape =
         androidx.compose.foundation.shape
-            .RoundedCornerShape(
-                r(corners.tl),
-                r(corners.tr),
-                r(corners.br),
-                r(corners.bl),
-            )
+            .RoundedCornerShape(sizes.tl, sizes.tr, sizes.br, sizes.bl)
     var modifier = this
     for (drop in blurred) {
         modifier =
@@ -94,10 +92,10 @@ internal fun Modifier.cssBox(
         modifier.drawWithCache {
             val r = radius.toPx()
             val b = border.toPx()
-            val outer = cssRoundRect(Offset.Zero, size, r, corners.radii(r))
+            val outer = cssRoundRect(Offset.Zero, size, r, sizes.px(this, 0f))
             val inner = (r - b).coerceAtLeast(0f)
             val padding =
-                cssRoundRect(Offset(b, b), Size(size.width - 2 * b, size.height - 2 * b), inner, corners.radii(inner))
+                cssRoundRect(Offset(b, b), Size(size.width - 2 * b, size.height - 2 * b), inner, sizes.px(this, -b))
             val rings = all.filter { !it.inset && it.blur == 0.dp }
             val insets = all.filter { it.inset && it.blur == 0.dp }
             // Blink's `kBackgroundBleedClipLayer`: a rounded box with a visible border is painted
@@ -121,7 +119,7 @@ internal fun Modifier.cssBox(
                     )
                 }
             onDrawBehind {
-                for (ring in rings) drawSpreadRing(outer, r, ring, corners)
+                for (ring in rings) drawSpreadRing(outer, ring, sizes)
                 if (layered) drawContext.canvas.saveLayer(Rect(Offset.Zero, size), Paint())
                 if (borderBackground == null) {
                     drawBackground(background, if (layered) square else outer, padding)
@@ -129,7 +127,7 @@ internal fun Modifier.cssBox(
                     drawBackground(borderBackground, outer)
                     drawBackground(background, padding)
                 }
-                if (gloss != null) drawGloss(gloss, padding, if (corners.tl) r else 0f)
+                if (gloss != null) drawGloss(gloss, padding, sizes.tl.toPx())
                 for (inset in insets) drawInset(padding, inset)
                 if (b > 0f && borderBackground == null) drawBorder(if (layered) square else outer, padding, borderColor)
                 if (layered) {
@@ -270,6 +268,43 @@ internal fun cssRoundRect(
     )
 }
 
+/** Each corner's radius, as a CSS box's four `border-*-radius` give them. */
+internal data class CssCornerRadii(
+    val tl: Dp,
+    val tr: Dp,
+    val br: Dp,
+    val bl: Dp,
+) {
+    /** In px, each grown by [by] (a spread ring) or shrunk (a padding box), never below none. */
+    fun px(
+        density: androidx.compose.ui.unit.Density,
+        by: Float,
+    ): CssRadii {
+        fun c(d: Dp) =
+            with(density) { (d.toPx() + by).coerceAtLeast(0f) }.let {
+                if (d >
+                    0.dp
+                ) {
+                    CornerRadius(it, it)
+                } else {
+                    CornerRadius.Zero
+                }
+            }
+        return CssRadii(c(tl), c(tr), c(br), c(bl))
+    }
+
+    companion object {
+        /** [radius] on the [corners] that are rounded. */
+        fun of(
+            radius: Dp,
+            corners: CssCorners,
+        ): CssCornerRadii {
+            fun r(round: Boolean) = if (round) radius else 0.dp
+            return CssCornerRadii(r(corners.tl), r(corners.tr), r(corners.br), r(corners.bl))
+        }
+    }
+}
+
 /**
  * Which corners of a box are rounded: all, or only the top, the bottom or the right-hand pair (the
  * NavDrawer's `0 xl xl 0`). Physical corners, as CSS's `border-radius` shorthand names them.
@@ -387,9 +422,8 @@ private fun DrawScope.drawInset(
  */
 private fun DrawScope.drawSpreadRing(
     outer: RoundRect,
-    radius: Float,
     shadow: OldgeShadow,
-    corners: CssCorners,
+    sizes: CssCornerRadii,
 ) {
     val s = shadow.spread.toPx()
     val dx = shadow.offsetX.toPx()
@@ -398,8 +432,8 @@ private fun DrawScope.drawSpreadRing(
         cssRoundRect(
             Offset(outer.left - s + dx, outer.top - s + dy),
             Size(outer.width + 2 * s, outer.height + 2 * s),
-            radius + s,
-            corners.radii(radius + s),
+            0f,
+            sizes.px(this, s),
         )
     val ring =
         Path().apply {

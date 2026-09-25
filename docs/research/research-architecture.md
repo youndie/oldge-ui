@@ -504,6 +504,22 @@ later. viddik renders on the JVM only, so **a green `check` says nothing about A
 as in kvadrant-ui. The fixtures live in `desktopTest`; `showroomTargets` stays off because viddik
 has no wasm artefact.
 
+### D11. The Composer's field is the one the CSS describes, not the one the preview draws — *a deviation from the brief*
+
+The design's `Composer` sizes its `textarea` in script: `t.style.height = min(t.scrollHeight, 120)`.
+`scrollHeight` counts the padding, and the textarea is `content-box`, so the padding is counted twice.
+Measured in Chrome on the reference (B-34), an empty one-line field has a style height of 38 px and
+draws 56, and its box 58, against the 40 that `min-height: 40px` and `padding: 9px 0` round a 20 px
+line describe. The reference PNG shows the doubled field, with the placeholder at the top and 18 px
+of well under it.
+
+`OldgeComposer` draws the field the CSS describes and grows it to 120 px of content, as the README
+says. Its parity against the reference is therefore high by that one cause: 18–30 %, the whole bar
+being taller in the reference. Against the same page with the script's height set to the line
+(one probe, not a reference file), ours differs on 3.7 % of pixels. The reference and the vendored
+design system are left as they are. The script's fix is the design system's to make, and this is
+where to point it.
+
 ## 3. Risks and open questions
 
 | Risk | What it would cost | Mitigation machinery | Item |

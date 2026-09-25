@@ -1,7 +1,7 @@
 ---
 id: B-34
 title: "ChatBubble, TypingIndicator and Composer"
-status: open
+status: done
 priority: P1
 size: M
 stage: stage-2-components
@@ -42,3 +42,50 @@ Own messages a glossy pill in the skin's colour on the right, theirs an inset pa
   - `reference/design-system/components/TypingIndicator/README.md`, `reference/design-system/components/TypingIndicator/preview.html`
   - `reference/design-system/components/Composer/README.md`, `reference/design-system/components/Composer/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/chat/`
+
+## Findings
+
+- Parity, `summary.txt` in the squash commit:
+  - ChatBubble is 1.63 / 1.73 / 1.92 %.
+  - TypingIndicator is 0.54 / 0.60 / 0.63 %.
+  - **Composer is 18.08 / 29.65 / 29.37 %, a deviation (research D11).** The design's script sizes
+    the textarea with its padding counted twice: an empty field is 56 px, not 38 (measured in
+    Chrome). The component draws the field the CSS and the README describe. Against the page with
+    that height corrected, it differs on 3.7 % of pixels. The reference is left as it is; the
+    script's fix is the design system's.
+- **`cssBox` takes a radius per corner** (`CssCornerRadii`): the bubble is `radius-lg` but 4 px at
+  its tail's corner. `CssCorners` is now a way of building those radii, and every earlier golden
+  stayed green through the change. A spread ring round a square corner now keeps it square, as CSS
+  does; no golden had depended on the other way.
+- `og-balloon-in` is now `oldgeInflateIn` in `press/Pop.kt`, which the bubble uses from its tail's
+  corner. The Balloon and the Tooltip keep their own copies, since they were not the item's to
+  touch; `oldgeInflateIn` is where they should come to.
+- Grouping is the caller's, as the README puts it («`tail` false on all but the last»): the time,
+  status, avatar and tail are passed on the last of a run. A tail-less message of theirs without an
+  avatar sits at the lane's start, as bundle.js has it.
+- The typing dots run `og-typing` on the loop phase, each 0.16 s behind the one before, and stand
+  still, fully opaque, under reduced motion, the base style the design's 1 ms run ends on.
+- The Composer's Enter sends and Shift+Enter breaks the line, both on the field's key events. The
+  send orb is a chrome, disabled one on a blank field and a lime one that pops in (`og-pop-soft`)
+  once there is text. A blank field sends nothing, however it is asked.
+- The READMEs' rules, in the API or `ChatBehaviourTest`:
+  - a bubble is at most 86 % of the lane, mine at its end and theirs at its start;
+  - my status is said, and theirs has none;
+  - the typing indicator says who types, and its dots hop, but not under reduced motion;
+  - send is off on a blank field, sends, and clears it;
+  - Enter sends and Shift+Enter breaks the line;
+  - the attach orb is there unless it is turned off;
+  - the field grows to 120 px and no further.
+- Mutations through `scripts/mutate.py`: 10 of 10 killed by their aimed tests.
+  - `composer-blank` first survived: the disabled orb kept the test from reaching `send` at all. The
+    test now presses Enter on a blank field.
+  - `composer-attach` first did not compile (a smart cast), and was rewritten.
+  - Goldens by name: the tail corner, the dots' colour and the field's radius.
+- The States goldens:
+  - a group chat's author, a link too long to fit, their tail-less run;
+  - the dots frozen mid-hop;
+  - a composer with text (the send orb lit), and three lines without the attach orb.
+- Values the tokens do not hold, marked `// css literal:`:
+  - tail 4, gaps 2, ticks 14 overlapping by 9;
+  - dots 8 with radius 2, 5 apart, padded 6 2, over 1.1 s;
+  - composer edges 4 and 6, field radius 20, height 40, margin 2, padding 9, text 1rem, at most 120.

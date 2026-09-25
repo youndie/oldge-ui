@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import io.github.youndie.oldge.theme.OldgeTheme
 
@@ -92,3 +93,43 @@ private val HOP_AT = floatArrayOf(0f, 0.35f, 0.65f, 1f)
 private val HOP_Y = floatArrayOf(0f, -9f, 1f, 0f)
 private val HOP_SX = floatArrayOf(1f, 1.12f, 0.95f, 1f)
 private val HOP_SY = floatArrayOf(1f, 0.92f, 1.06f, 1f)
+
+/**
+ * `@keyframes og-balloon-in` over `dur-slow` on the spring, once, when the element enters the
+ * composition: from 0.4 turned −6° and clear, over to 1.05 at +1.5° at 60 %, to rest — each
+ * keyframe interval eased on its own — about [origin]. A chat bubble inflates from its tail corner
+ * this way. Under reduced motion the element is simply there.
+ */
+@Composable
+internal fun Modifier.oldgeInflateIn(origin: TransformOrigin): Modifier {
+    val motion = OldgeTheme.motion
+    val inflate = remember { Animatable(if (motion.reduced) 1f else 0f) }
+    LaunchedEffect(Unit) { inflate.animateTo(1f, tween(motion.slow, easing = LinearEasing)) }
+    val ease = motion.spring
+    return graphicsLayer {
+        val p = inflate.value
+        val (s, turn, a) =
+            if (p < INFLATE_PEAK) {
+                val k = ease.transform(p / INFLATE_PEAK)
+                Triple(
+                    INFLATE_FROM + (INFLATE_OVER - INFLATE_FROM) * k,
+                    INFLATE_TURN + (INFLATE_OVER_TURN - INFLATE_TURN) * k,
+                    k,
+                )
+            } else {
+                val k = ease.transform((p - INFLATE_PEAK) / (1 - INFLATE_PEAK))
+                Triple(INFLATE_OVER + (1 - INFLATE_OVER) * k, INFLATE_OVER_TURN * (1 - k), 1f)
+            }
+        scaleX = s
+        scaleY = s
+        rotationZ = turn
+        alpha = a.coerceIn(0f, 1f)
+        transformOrigin = origin
+    }
+}
+
+private const val INFLATE_PEAK = 0.6f
+private const val INFLATE_FROM = 0.4f
+private const val INFLATE_OVER = 1.05f
+private const val INFLATE_TURN = -6f
+private const val INFLATE_OVER_TURN = 1.5f
