@@ -91,3 +91,6 @@ missing piece becomes a library item, not a private composable (B-37's decision)
 - **The app's feed is longer than the design's page.** `FeedScreen(more = true)` adds posts after
   the design's two, so the app has something to scroll. The parity fixture calls `FeedScreen()`,
   the design's page, because its reference shows empty ground below the two cards (B-64).
+- **The app's feed refreshes.** With `more = true` the feed's column is in `OldgePullRefresh`, and
+  the bar has «Обновить», the button the PullRefresh README asks for. The design's pages keep a
+  plain scrolling column (B-65).

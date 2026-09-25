@@ -2196,6 +2196,33 @@
    "replace": "val focusVisible = false",
    "tests": "*SelectCodeBehaviourTest*",
    "expect": "after_a_choice_the_arrow_comes_back_up_and_keyboard_focus_still_dips_it"
+  },
+  {
+   "id": "feed-no-pull",
+   "item": "B-65",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ShowcaseScreens.kt",
+   "find": "refresh = if (more) Refresh(refreshing, refresh) else null,",
+   "replace": "refresh = null,",
+   "tests": "*SampleAppBehaviourTest*",
+   "expect": "the_apps_feed_refreshes_by_a_pull_and_by_the_bars_button"
+  },
+  {
+   "id": "feed-pull-does-nothing",
+   "item": "B-65",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ShowcaseScreens.kt",
+   "find": "refresh = if (more) Refresh(refreshing, refresh) else null,",
+   "replace": "refresh = if (more) Refresh(refreshing, {}) else null,",
+   "tests": "*SampleAppBehaviourTest*",
+   "expect": "the_apps_feed_refreshes_by_a_pull_and_by_the_bars_button"
+  },
+  {
+   "id": "feed-no-refresh-button",
+   "item": "B-65",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ShowcaseScreens.kt",
+   "find": "OldgeWindowAction(OldgeIcons.Refresh, \"Обновить\", refresh),",
+   "replace": "OldgeWindowAction(OldgeIcons.Refresh, \"Обновить\", {}),",
+   "tests": "*SampleAppBehaviourTest*",
+   "expect": "the_apps_feed_refreshes_by_a_pull_and_by_the_bars_button"
   }
  ]
 }

@@ -78,7 +78,7 @@ list an item can be checked against in one glance.
 
 No open tasks.
 
-## Closed (65)
+## Closed (66)
 
 **Answers that decide the architecture**
 
@@ -150,6 +150,7 @@ No open tasks.
 - [B-39](docs/backlog/B-39-stress-edges.md) `[x]` - Stress screens: 320 dp with German strings, and the system font at 200 %
 - [B-40](docs/backlog/B-40-showcase-screens.md) `[x]` - Showcase screens: launcher, feed, settings
 - [B-64](docs/backlog/B-64-longer-feed.md) `[x]` - The sample app's feed: more posts, so that it scrolls
+- [B-65](docs/backlog/B-65-feed-pull-refresh.md) `[x]` - The sample app's feed refreshes by pull, and by a button
 
 **The library as a product**
 

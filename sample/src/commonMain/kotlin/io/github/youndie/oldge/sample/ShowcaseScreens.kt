@@ -15,8 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -45,6 +47,7 @@ import io.github.youndie.oldge.feedback.OldgeAvatarStatus
 import io.github.youndie.oldge.feedback.OldgeBadge
 import io.github.youndie.oldge.feedback.OldgeBadgeTone
 import io.github.youndie.oldge.feedback.OldgeMeter
+import io.github.youndie.oldge.feedback.OldgePullRefresh
 import io.github.youndie.oldge.feedback.OldgeSnackbar
 import io.github.youndie.oldge.forms.OldgeSearchBar
 import io.github.youndie.oldge.forms.OldgeSelect
@@ -61,6 +64,7 @@ import io.github.youndie.oldge.navigation.OldgeWindowAction
 import io.github.youndie.oldge.navigation.OldgeWindowBar
 import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
+import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
 /**
@@ -193,6 +197,17 @@ public fun FeedScreen(
     var nav by remember { mutableStateOf("home") }
     var snack by remember { mutableStateOf(true) }
     var fab by remember { mutableStateOf(false) }
+    // The longer feed refreshes (B-65): for a moment, then with a new post at the top.
+    var refreshing by remember { mutableStateOf(false) }
+    var fresh by remember { mutableIntStateOf(0) }
+    LaunchedEffect(refreshing) {
+        if (refreshing) {
+            delay(REFRESH_MS)
+            fresh++
+            refreshing = false
+        }
+    }
+    val refresh = { refreshing = true }
     Box(modifier) {
         Page(
             Modifier.fillMaxSize(),
@@ -200,7 +215,16 @@ public fun FeedScreen(
                 OldgeWindowBar(
                     "Лента",
                     icon = OldgeIcons.Grid,
-                    actions = listOf(OldgeWindowAction(OldgeIcons.Bell, "События", {})),
+                    actions =
+                        if (more) {
+                            // The PullRefresh README: offer the refresh as a button too, for a keyboard.
+                            listOf(
+                                OldgeWindowAction(OldgeIcons.Refresh, "Обновить", refresh),
+                                OldgeWindowAction(OldgeIcons.Bell, "События", {}),
+                            )
+                        } else {
+                            listOf(OldgeWindowAction(OldgeIcons.Bell, "События", {}))
+                        },
                 )
             },
             nav = {
@@ -215,6 +239,7 @@ public fun FeedScreen(
                     { nav = it },
                 )
             },
+            refresh = if (more) Refresh(refreshing, refresh) else null,
         ) {
             OldgeSearchBar(
                 placeholder = "Поиск по ленте",
@@ -230,6 +255,14 @@ public fun FeedScreen(
                 OldgeFilterChip("Новое", filter == "new", { filter = "new" })
                 OldgeFilterChip("Популярное", filter == "pop", { filter = "pop" })
                 OldgeFilterChip("Моё", filter == "my", { filter = "my" })
+            }
+            for (n in fresh downTo 1) {
+                OldgeCard(
+                    title = "Свежий пост № $n",
+                    text = "Появился после обновления ленты.",
+                    bar = "Только что",
+                    barIcon = OldgeIcons.Refresh,
+                )
             }
             OldgeCard(title = "Отпуск 2006", subtitle = "Анна Ким · 148 фото", media = OldgeIcons.Image, onClick = {})
             OldgeCard(
@@ -391,25 +424,45 @@ private fun Page(
     bar: @Composable () -> Unit,
     nav: @Composable () -> Unit,
     top: Dp = OldgeTheme.spacing.space3,
+    refresh: Refresh? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val s = OldgeTheme.spacing
     OldgeScreenBody(modifier) {
         Column(Modifier.fillMaxSize()) {
             bar()
-            Column(
-                Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-                    .padding(start = s.space4, end = s.space4, top = top, bottom = s.space4),
-                verticalArrangement = Arrangement.spacedBy(s.space3),
-                content = content,
-            )
+            if (refresh == null) {
+                Column(
+                    Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .padding(start = s.space4, end = s.space4, top = top, bottom = s.space4),
+                    verticalArrangement = Arrangement.spacedBy(s.space3),
+                    content = content,
+                )
+            } else {
+                // The PullRefresh scrolls its content itself, so the column goes in without a scroll.
+                OldgePullRefresh(refresh.refreshing, refresh.onRefresh, Modifier.weight(1f).fillMaxWidth()) {
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(start = s.space4, end = s.space4, top = top, bottom = s.space4),
+                        verticalArrangement = Arrangement.spacedBy(s.space3),
+                        content = content,
+                    )
+                }
+            }
             nav()
         }
     }
 }
+
+/** A page's pull to refresh: whether it is running, and what starts it. */
+private class Refresh(
+    val refreshing: Boolean,
+    val onRefresh: () -> Unit,
+)
 
 private const val VOLUME = 0.6f
 private const val PERCENT = 100
@@ -438,6 +491,9 @@ private val MORE_POSTS =
 // Below the last post: the Snackbar's top is about 136 dp up and the nav 64, so 80 dp of room lets
 // the last post scroll clear of it.
 private val CLEAR_OF_OVERLAYS = 80.dp
+
+// How long the sample's refresh runs: long enough to see the disc spin.
+private const val REFRESH_MS = 1_200L
 
 private val FAB_END = 16.dp // css literal: FeedScreen preview, the Fab's `right: 16`
 private val FAB_OVER_SNACK = 148.dp // css literal: FeedScreen preview, the Fab's `bottom: snack ? 148 : 88`
