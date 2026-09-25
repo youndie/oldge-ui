@@ -33,6 +33,38 @@ the gates are green on the branch's head commit — `git merge --squash`, one co
 therefore the branch plus the gate log (and the parity summary for a component) in the squash
 commit's body. Red is never merged; a check is never loosened to get green.
 
+## Re-vendoring the design system
+
+`reference/design-system/` is a snapshot of the live claude.ai artifact
+(`https://claude.ai/artifact/CL8BafGgX4GgYdJXNEZttC`), and the tokens, the icons and every parity
+reference are generated from it. So a new version of the design system is taken in a branch of its
+own, never by overwriting the directory (B-36):
+
+1. **Fetch** the artifact's published files with the Artifact tool, which a script cannot do (it
+   needs the signed-in session).
+   - `list` the artifact with `scope: "files"`.
+   - `read` with `paths` for every path under `project/`: `design-system.json`, `tokens.json`,
+     `README.md` and `components/**`, 125 files on 2026-09-25.
+   - The tool saves them under a scratch directory whose `project/` is the new
+     `reference/design-system/`. The artifact's other files (`artifact-type/`, `SKILL.md`,
+     `index.html`) are the Design System type's own, not the design system.
+2. **Diff:** `python3 scripts/vendor_design_system.py diff <scratch>` lists the tokens added, removed
+   and changed, the components added and removed, and the previews and READMEs changed. It goes into
+   the commit body as it is.
+3. **Apply** on a `chore/vendor-design-system-<date>` branch:
+   `python3 scripts/vendor_design_system.py apply <scratch>`.
+4. **Regenerate**, in the same branch:
+   - `python3 scripts/generate_tokens.py` and `python3 scripts/generate_icons.py`;
+   - the references with `make references`;
+   - the pages into `sample` with `node scripts/design-references.mjs --only '<Page>_*' --out
+     sample/src/desktopTest/snapshots/design`.
+
+   Look at every reference that changed, and run parity. A component the design system added is a
+   backlog item, and `ScreenshotSuiteTest`'s not-yet-built list names it until it is built.
+
+`make check` runs `vendor_design_system.py check`: each reference manifest's `designSystem.lastChange`
+must equal `design-system.json`'s `lastChange.at`, so a snapshot replaced without re-rendering fails.
+
 ## Gates
 
 ```bash

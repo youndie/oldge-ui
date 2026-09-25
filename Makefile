@@ -22,6 +22,7 @@ gate:
 	$(PY) scripts/coverage_map.py --check
 	$(PY) scripts/preview_deps.py --check
 	$(PY) scripts/component_catalog.py --check
+	$(PY) scripts/vendor_design_system.py check
 	node --test 'scripts/*.test.mjs'
 	$(PY) -m unittest discover -s scripts -p 'test_*.py'
 
