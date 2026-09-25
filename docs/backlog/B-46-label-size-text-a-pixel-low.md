@@ -14,7 +14,8 @@ Found in B-14 on the Chip preview. The label style is 700 13 px in a 16 px line,
 it draws one pixel below the reference: shifted up a pixel, our label matches Chrome's to a mean
 of 4 per pixel, and unshifted to 24. The small button's 13 px label, in a 20 px line, is a pixel low
 too. The 15 px styles are not (the medium and large button labels, Segmented, the Fab label and
-Divider's body text all match at no offset). Most of Chip's 6.2 % comes from this.
+Divider's body text all match at no offset). Most of Chip's 6.2 % comes from this, and so does
+about half of RadioGroup's 1.8 %: its legend is the label style and is a pixel low as well (B-15).
 
 **What is verified:**
 

@@ -1,7 +1,5 @@
 package io.github.youndie.oldge.actions
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -23,14 +21,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -46,6 +42,7 @@ import io.github.youndie.oldge.material.lerpGloss
 import io.github.youndie.oldge.material.premultipliedLerp
 import io.github.youndie.oldge.press.OldgeIndication
 import io.github.youndie.oldge.press.oldgeHitArea
+import io.github.youndie.oldge.press.oldgePopIn
 import io.github.youndie.oldge.press.oldgePressScale
 import io.github.youndie.oldge.theme.LocalOldgeContentColor
 import io.github.youndie.oldge.theme.OldgeTheme
@@ -200,7 +197,9 @@ private fun PressableChip(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (selected == true) {
-                key("check") { PoppingCheck() }
+                key(
+                    "check",
+                ) { OldgeIcon(OldgeIcons.Check, contentDescription = null, Modifier.oldgePopIn(), size = ICON) }
             } else if (icon != null) {
                 key("icon") { OldgeIcon(icon, contentDescription = null, size = ICON) }
             }
@@ -228,36 +227,6 @@ private fun ChipLabel(
     color: Color,
 ) = OldgeText(text, style = OldgeTheme.type.label.copy(color = color), softWrap = false)
 
-/** `.og-chip__check { animation: og-pop }`: from nothing turned −25°, over to 1.25 at +6°, to rest. */
-@Composable
-private fun PoppingCheck() {
-    val motion = OldgeTheme.motion
-    val pop = remember { Animatable(if (motion.reduced) 1f else 0f) }
-    LaunchedEffect(Unit) { pop.animateTo(1f, tween(motion.base, easing = LinearEasing)) }
-    val ease = motion.spring
-    OldgeIcon(
-        OldgeIcons.Check,
-        contentDescription = null,
-        modifier =
-            Modifier.graphicsLayer {
-                // Keyframes 0 %, 70 %, 100 %, each interval eased on its own as CSS does.
-                val p = pop.value
-                val (scale, turn) =
-                    if (p < POP_PEAK) {
-                        val k = ease.transform(p / POP_PEAK)
-                        POP_OVER * k to POP_FROM_TURN + (POP_OVER_TURN - POP_FROM_TURN) * k
-                    } else {
-                        val k = ease.transform((p - POP_PEAK) / (1 - POP_PEAK))
-                        POP_OVER + (1 - POP_OVER) * k to POP_OVER_TURN * (1 - k)
-                    }
-                scaleX = scale
-                scaleY = scale
-                rotationZ = turn
-            },
-        size = ICON,
-    )
-}
-
 private val BORDER = 1.dp
 private val HEIGHT: Dp = 34.dp // css literal: bundle.css `.og-chip { min-height: 34px }`
 private val GAP = 6.dp // css literal: bundle.css `.og-chip { gap: 6px }`
@@ -272,7 +241,3 @@ private val X_RING_OFFSET = 1.dp // css literal: bundle.css `.og-chip__x:focus-v
 private val X_FILL = Color(0f, 0f, 0f, 0.12f) // bundle.css `.og-chip__x { background: rgba(0,0,0,0.12) }`
 private val SCROLL_PADDING = 4.dp // css literal: bundle.css `.og-chips--scroll { padding: 4px 0 }`
 private const val PRESSED_SCALE = 0.92f
-private const val POP_PEAK = 0.7f
-private const val POP_OVER = 1.25f
-private const val POP_FROM_TURN = -25f
-private const val POP_OVER_TURN = 6f

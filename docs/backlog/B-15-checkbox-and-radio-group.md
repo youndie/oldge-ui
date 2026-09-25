@@ -1,7 +1,7 @@
 ---
 id: B-15
 title: "Checkbox and RadioGroup"
-status: open
+status: done
 priority: P1
 size: S
 stage: stage-2-components
@@ -41,3 +41,30 @@ A sunken square with a green check, the whole row a 44 px target; the radio grou
   - `reference/design-system/components/Checkbox/README.md`, `reference/design-system/components/Checkbox/preview.html`
   - `reference/design-system/components/RadioGroup/README.md`, `reference/design-system/components/RadioGroup/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/`
+
+## Findings (2026-09-25)
+
+- Parity (±16, floor 0.72 %):
+  - Checkbox: 1.22 / 1.21 / 1.12 % (Toxic / Media / Crystal), on the first run.
+  - RadioGroup: 1.83 / 1.83 / 1.76 %.
+
+  The `_DIFF` is red only on glyph and circle edges, except for the RadioGroup legend: it is the
+  13 px label style and draws a pixel low (about half of RadioGroup's diff). That is B-46's
+  cause, recorded there, not a new one. The rows are aligned (a best-offset search puts every row
+  label at 0, 0).
+- `og-pop` now lives in one place, `oldgePopIn` in `press/`, shared by the chip's check and the
+  checkbox's check and radio dot. The chip goldens are unchanged by the move.
+- `:disabled` changes the box's fill, border and colour and keeps its sunken bevel; the radio dot
+  keeps its gradient. Both as bundle.css has them. A disabled golden (`CheckboxStates`) shows an
+  empty disabled checkbox and a disabled radio group with a choice.
+- The READMEs' rules, in the API or `CheckBehaviourTest`:
+  - the whole row is the 44 dp target, and tapping its label toggles it;
+  - a disabled checkbox or radio ignores taps;
+  - the roles are Checkbox and RadioButton;
+  - a group takes 2 to 6 options (`require`);
+  - «the label is a statement that becomes true» is a KDoc line.
+- Mutations, each failing, restored:
+  - in `CheckBehaviourTest`: disabled made enabled, the row's minimum height, the option-count
+    `require`, the radio role;
+  - in the goldens: the disabled fill, the dot's gradient centre, the legend gap.
+- Values the tokens do not hold, marked `// css literal:`: box 20, check 16, dot 10, legend gap 2.
