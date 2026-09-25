@@ -5,7 +5,7 @@ status: open
 priority: P2
 size: L
 stage: stage-3-screens
-blocked_by: [B-13, B-15, B-17, B-20, B-21, B-24, B-25, B-31, B-32, B-50, B-51, B-52]
+blocked_by: [B-13, B-15, B-17, B-20, B-21, B-24, B-25, B-31, B-32, B-50, B-51, B-52, B-56]
 ---
 
 # B-39 — Stress screens: 320 dp with German strings, and the system font at 200 %
@@ -32,3 +32,22 @@ EdgeNarrow at 320 dp with long German strings: list values move under titles, bu
   - `reference/design-system/components/EdgeNarrow/README.md`, `reference/design-system/components/EdgeNarrow/preview.html`
   - `reference/design-system/components/EdgeScale/README.md`, `reference/design-system/components/EdgeScale/preview.html`
   - `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/`
+
+## Iteration 1 (2026-09-25)
+
+Both previews were surveyed against the public API before any screen code was written. One gap,
+filed as [B-56](B-56-actions-row.md) and blocking this item: `og-actions`, the design system's
+button row that wraps to a column. The README names it as the answer to squeezed button labels,
+and both pages end in one.
+
+Everything else exists:
+
+- WindowBar, RadioGroup, List and ListItem (with the narrow list's value under the title, B-20),
+  Switch, ChipGroup with FilterChip, Banner (`boxed`, actions), Tabs with a page, TextField and
+  BottomNav.
+- The Switch in a list row, whose label is visually hidden (the page's `og-sr` span), is
+  `showLabel = false`.
+
+Fixture sizes from the manifest: EdgeNarrow 320 × 680 and EdgeScale 390 × 860. EdgeScale's root
+font of 200 % is `Density(1f, fontScale = 2f)` (research §1.7). Every page size in `rem` grows with
+it, and `px` sizes do not, as in Compose `sp` grows and `dp` does not.
