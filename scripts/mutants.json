@@ -351,6 +351,96 @@
    "replace": "role = Role.Image, onClick = onClick",
    "tests": "*CardTileBehaviourTest*",
    "expect": "an_action_tile_is_a_named_64_px_button"
+  },
+  {
+   "id": "balloon-skinned",
+   "item": "B-28",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBalloon.kt",
+   "find": "CssBackground.Solid(c.balloon)",
+   "replace": "CssBackground.Solid(c.surface)",
+   "tests": "*MenuTooltipBalloonBehaviourTest*",
+   "expect": "a_balloon_is_the_same_in_every_skin"
+  },
+  {
+   "id": "close-label",
+   "item": "B-28",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBalloon.kt",
+   "find": "contentDescription = \"Закрыть\"",
+   "replace": "contentDescription = \"\"",
+   "tests": "*MenuTooltipBalloonBehaviourTest*",
+   "expect": "a_balloon_is_announced_and_its_close_button_is_a_named_44_px_target"
+  },
+  {
+   "id": "live-region",
+   "item": "B-28",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBalloon.kt",
+   "find": "liveRegion = LiveRegionMode.Polite",
+   "replace": "liveRegion = LiveRegionMode.Assertive",
+   "tests": "*MenuTooltipBalloonBehaviourTest*",
+   "expect": "a_balloon_is_announced_and_its_close_button_is_a_named_44_px_target"
+  },
+  {
+   "id": "long-press",
+   "item": "B-28",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTooltip.kt",
+   "find": "private const val LONG_PRESS_MS = 450L",
+   "replace": "private const val LONG_PRESS_MS = 100L",
+   "tests": "*MenuTooltipBalloonBehaviourTest*",
+   "expect": "a_tooltip_shows_after_a_450_ms_press_and_goes_1_5_s_after_the_touch"
+  },
+  {
+   "id": "linger",
+   "item": "B-28",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTooltip.kt",
+   "find": "private const val TOUCH_LINGER_MS = 1500L",
+   "replace": "private const val TOUCH_LINGER_MS = 500L",
+   "tests": "*MenuTooltipBalloonBehaviourTest*",
+   "expect": "a_tooltip_shows_after_a_450_ms_press_and_goes_1_5_s_after_the_touch"
+  },
+  {
+   "id": "hover",
+   "item": "B-28",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTooltip.kt",
+   "find": "PointerEventType.Enter -> hovered = true",
+   "replace": "PointerEventType.Enter -> hovered = false",
+   "tests": "*MenuTooltipBalloonBehaviourTest*",
+   "expect": "a_tooltip_shows_on_hover_and_goes_when_the_pointer_leaves"
+  },
+  {
+   "id": "focus-by-press",
+   "item": "B-28",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTooltip.kt",
+   "find": "(focused && !focusByPress)",
+   "replace": "(focused)",
+   "tests": "*MenuTooltipBalloonBehaviourTest*",
+   "expect": "a_tooltip_shows_after_a_450_ms_press_and_goes_1_5_s_after_the_touch"
+  },
+  {
+   "id": "keyboard-focus",
+   "item": "B-28",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTooltip.kt",
+   "find": "(focused && !focusByPress)",
+   "replace": "(focused && false)",
+   "tests": "*MenuTooltipBalloonBehaviourTest*",
+   "expect": "a_tooltip_shows_on_keyboard_focus"
+  },
+  {
+   "id": "choose-closes",
+   "item": "B-28",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeMenu.kt",
+   "find": "                    onSelect(id)\n                    onExpandedChange(false)",
+   "replace": "                    onSelect(id)",
+   "tests": "*MenuTooltipBalloonBehaviourTest*",
+   "expect": "a_menu_opens_from_its_trigger_and_choosing_an_item_closes_it"
+  },
+  {
+   "id": "escape",
+   "item": "B-28",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeMenu.kt",
+   "find": "e.key == Key.Escape",
+   "replace": "e.key == Key.F12",
+   "tests": "*MenuTooltipBalloonBehaviourTest*",
+   "expect": "escape_closes_a_menu"
   }
  ]
 }

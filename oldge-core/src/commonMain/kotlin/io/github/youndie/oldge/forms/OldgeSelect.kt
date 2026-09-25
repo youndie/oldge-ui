@@ -56,6 +56,8 @@ import io.github.youndie.oldge.material.CssBackground
 import io.github.youndie.oldge.material.CssRadii
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.material.cssRoundRect
+import io.github.youndie.oldge.navigation.OldgeMenu
+import io.github.youndie.oldge.navigation.OldgeMenuEntry
 import io.github.youndie.oldge.press.drawOldgeFocusRing
 import io.github.youndie.oldge.theme.LocalOldgeContentColor
 import io.github.youndie.oldge.theme.OldgeTheme
@@ -75,9 +77,8 @@ public class OldgeSelectOption<T>(
  * square accent arrow button on the right, under its [label].
  *
  * Its README's rules: under the frame is the platform's own `select`, so a phone opens the system's
- * list — Compose has no such control, and here a tap opens a list of the options under the frame
- * (a minimal one until Menu, B-28, exists); for two to four options in view, Segmented or
- * RadioGroup is the better control. The arrow dips while the frame is pressed or focused.
+ * list — Compose has no such control, and here a tap opens the options as an [OldgeMenu] under
+ * the frame; for two to four options in view, Segmented or RadioGroup is the better control. The arrow dips while the frame is pressed or focused.
  */
 @Composable
 public fun <T> OldgeSelect(
@@ -95,8 +96,6 @@ public fun <T> OldgeSelect(
     val pressed by source.collectIsPressedAsState()
     val focused by source.collectIsFocusedAsState()
     var open by remember { mutableStateOf(false) }
-    var frameHeight by remember { mutableStateOf(0) }
-    var frameWidth by remember { mutableStateOf(0) }
     val current = options.firstOrNull { it.value == selected } ?: options.first()
     val dip by animateFloatAsState(
         if (pressed || focused || open) 1f else 0f,
@@ -106,16 +105,21 @@ public fun <T> OldgeSelect(
     val shape = RoundedCornerShape(OldgeRadii.sm)
     Column(modifier, verticalArrangement = Arrangement.spacedBy(FIELD_GAP)) {
         FieldLabel(label)
-        Box {
+        // The list a tap opens is Menu's (B-28), as a phone's is the system's.
+        OldgeMenu(
+            open,
+            { open = it },
+            options.mapIndexed { i, o -> OldgeMenuEntry.Item(i.toString(), o.label, o.icon) },
+            { id -> onSelect(options[id.toInt()].value) },
+            Modifier.fillMaxWidth(),
+            label = label,
+        ) { toggle ->
             Row(
                 Modifier
                     .fillMaxWidth()
                     .height(IntrinsicSize.Min)
                     .defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)
-                    .onGloballyPositioned {
-                        frameHeight = it.size.height
-                        frameWidth = it.size.width
-                    }.cssBox(
+                    .cssBox(
                         OldgeRadii.sm,
                         CssBackground.Linear(listOf(0f to c.chromeHi, 1f to c.chromeLo)),
                         BORDER,
@@ -128,7 +132,7 @@ public fun <T> OldgeSelect(
                     }.semantics {
                         contentDescription = label
                         stateDescription = current.label
-                    }.clickable(source, indication = null, role = Role.DropdownList) { open = true }
+                    }.clickable(source, indication = null, role = Role.DropdownList, onClick = toggle)
                     .padding(BORDER),
             ) {
                 // `.og-select__value`: bold, one line, cut with an ellipsis.
@@ -151,19 +155,6 @@ public fun <T> OldgeSelect(
                     )
                 }
                 Arrow(dip)
-            }
-            if (open) {
-                val density = LocalDensity.current
-                Popup(
-                    offset = IntOffset(0, frameHeight + with(density) { LIST_GAP.roundToPx() }),
-                    onDismissRequest = { open = false },
-                    properties = PopupProperties(focusable = true),
-                ) {
-                    OptionList(options, current.value, with(density) { frameWidth.toDp() }) {
-                        open = false
-                        onSelect(it)
-                    }
-                }
             }
         }
     }
@@ -200,53 +191,6 @@ private fun Arrow(dip: Float) {
 }
 
 /**
- * The list a tap opens: the options on a raised surface as wide as the frame, the chosen one in
- * `accent-ink`. A stand-in for the system list the design gets from `select`, kept to what a choice
- * needs until Menu (B-28) gives the design system's own popup.
- */
-@Composable
-private fun <T> OptionList(
-    options: List<OldgeSelectOption<T>>,
-    selected: T,
-    width: Dp,
-    onPick: (T) -> Unit,
-) {
-    val c = OldgeTheme.colors
-    Column(
-        Modifier
-            .width(width)
-            .cssBox(
-                OldgeRadii.sm,
-                CssBackground.Solid(c.surface),
-                BORDER,
-                c.edge,
-                OldgeTheme.shadows.raised + OldgeTheme.shadows.window,
-            ).padding(BORDER)
-            .selectableGroup(),
-    ) {
-        for (option in options) {
-            val on = option.value == selected
-            val tone = if (on) c.accentInk else c.ink
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)
-                    .selectable(on, role = Role.RadioButton) { onPick(option.value) }
-                    .padding(horizontal = OldgeTheme.spacing.space3),
-                horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space2),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                if (option.icon != null) OldgeIcon(option.icon, contentDescription = null, size = ICON, tint = tone)
-                OldgeText(
-                    option.label,
-                    style = (if (on) OldgeTheme.type.bodyStrong else OldgeTheme.type.body).copy(color = tone),
-                )
-            }
-        }
-    }
-}
-
-/**
  * `.og-select::before`: 1 px in from the padding box on three sides, 36 % of the box high, radius
  * `3px 3px 0 0`, the `gloss` highlight under the content.
  */
@@ -271,6 +215,5 @@ private val ARROW_MARGIN = 4.dp // css literal: bundle.css `.og-select__arrow { 
 private val ARROW_RADIUS = 3.dp // css literal: bundle.css `.og-select__arrow { border-radius: 3px }`
 private val ARROW_DIP = 2.dp // css literal: bundle.css `.og-select:active .og-select__arrow` translateY(2px)
 private val HIGHLIGHT_INSET = 1.dp // css literal: bundle.css `.og-select::before { left: 1px; right: 1px; top: 1px }`
-private val LIST_GAP = 4.dp // css literal: bundle.css `.og-menu { top: calc(100% + 4px) }`, where Menu opens
 private const val HIGHLIGHT_HEIGHT = 0.36f
 private const val ARROW_PRESSED_SCALE = 0.92f

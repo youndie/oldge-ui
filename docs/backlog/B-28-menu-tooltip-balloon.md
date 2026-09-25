@@ -1,7 +1,7 @@
 ---
 id: B-28
 title: "Menu, Tooltip and Balloon"
-status: open
+status: done
 priority: P1
 size: M
 stage: stage-2-components
@@ -47,3 +47,44 @@ Menu: the XP menu — icon strip, blue selection. Tooltip: the small yellow plat
   `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSelect.kt`), 4 px under the
   frame as `.og-menu` opens. When Menu exists, Select opens Menu's popup instead, and the stand-in
   goes.
+
+## Findings (2026-09-25)
+
+- Parity (±16, floor 0.72 %):
+  - Menu: 0.95 / 1.03 / 1.11 % (Toxic / Media / Crystal), from 2.54–2.70 % after one cause. The
+    item's `grid-template-columns: 40px …` column is the item's own first 40 px, which start 3 px in
+    from the menu's edge, so the icons sit 3 px right of the strip. I had taken the column as the
+    strip.
+  - Tooltip: 1.67 / 1.92 / 1.93 %. The plate lines up with Chrome's; what is left is its label's
+    sub-pixel edges.
+  - Balloon: 3.72 / 3.73 / 3.76 %. Box, border and tail line up; the body text, 13 px in 18, is a
+    pixel low. That is B-46's cause, added there.
+- **`cssBox` paints a hard offset shadow**: the balloon's `2px 3px 0`. An outer shadow with no blur
+  had been drawn as a spread ring that ignored its offset. Every earlier ring has a zero offset, and
+  a mutation of the offset moves only the Balloon and Tooltip goldens.
+- Balloon is the same in every skin, as its README says: `balloon`, `on-balloon` and `balloon-mark`
+  are one colour in all three skins. `a_balloon_is_the_same_in_every_skin` renders it on the same
+  ground in each skin and compares the pixels.
+- **Tooltip reads "focus" as `:focus-visible`.** The design system's JSX shows the plate on any
+  `onFocus`, and a tap focuses a button, which would show it at once on every tap, against the
+  README's own rule for touch (450 ms, then 1.5 s). Focus brought by a press does not count until
+  the focus is lost. The plate is a `Popup` centred 6 px above or below.
+- Menu is a `Popup` 4 px under its trigger, from the start or end corner. It takes the focus when it
+  opens, so Escape reaches it; a tap outside and a choice close it too. **Select now opens its
+  options as an `OldgeMenu`**, as B-18's note asked, and its stand-in list is gone. Select's
+  parity (2.40–2.51 %) and B-18's five behaviour mutants are unchanged.
+- The READMEs' rules, in the API or `MenuTooltipBalloonBehaviourTest` (7 tests):
+  - Balloon: the same in every skin; announced (a polite live region); a named 44 dp close button.
+  - Tooltip: shows on hover, on keyboard focus, and after a 450 ms press; goes 1.5 s after the
+    touch.
+  - Menu: opens from its trigger; a choice closes it; Escape closes it.
+  - KDoc lines: «a destructive item last, after a divider» and «a balloon is not for decisions».
+- Mutations through `scripts/mutate.py`: 10 of 10 behaviour mutants killed by their aimed tests.
+  Goldens by name: the tail, the shadow offset, the strip and the icon column.
+- Values the tokens do not hold, marked `// css literal:`:
+  - Balloon: tail 14, the triangles 18 × 14 and 15 × 12 at 36 / 37 from the right, mark 20 with
+    1 on top, body gap 2 and line 1.125rem, close icon 16 pulled 12 / 6, the 44 px transform
+    origin.
+  - Tooltip: gap 6, padding 3 × 8.
+  - Menu: gap 4, min width 220, strip 40, padding 3, row inset and radius 3, icon 18, divider inset
+    44, the 6 and 14 px drops.

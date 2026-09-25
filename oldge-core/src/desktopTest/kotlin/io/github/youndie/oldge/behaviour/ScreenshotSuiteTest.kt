@@ -36,7 +36,6 @@ class ScreenshotSuiteTest {
             "Accordion",
             "Avatar",
             "Badge",
-            "Balloon",
             "Banner",
             "BottomNav",
             "BottomSheet",
@@ -48,7 +47,6 @@ class ScreenshotSuiteTest {
             "List",
             "ListItem",
             "ListSection",
-            "Menu",
             "Meter",
             "NavDrawer",
             "PageDots",
@@ -63,7 +61,6 @@ class ScreenshotSuiteTest {
             "Stepper",
             "SwipeRow",
             "Tabs",
-            "Tooltip",
             "TypingIndicator",
             "WindowBar",
             // Pages (B-37…B-40).

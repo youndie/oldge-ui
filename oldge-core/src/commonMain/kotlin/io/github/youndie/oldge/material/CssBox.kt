@@ -337,16 +337,22 @@ private fun DrawScope.drawInset(
     clipPath(box) { drawPath(band, shadow.color) }
 }
 
-/** An outer shadow with no blur and no offset: a ring of the spread's width outside the border box. */
+/**
+ * An outer shadow with no blur: the border box grown by the spread and moved by the offset, minus the
+ * border box — a ring for a spread with no offset (`0 0 0 2px`), a hard shadow for an offset with no
+ * spread (the balloon's `2px 3px 0`).
+ */
 private fun DrawScope.drawSpreadRing(
     outer: RoundRect,
     radius: Float,
     shadow: OldgeShadow,
 ) {
     val s = shadow.spread.toPx()
+    val dx = shadow.offsetX.toPx()
+    val dy = shadow.offsetY.toPx()
     val grown =
         cssRoundRect(
-            Offset(outer.left - s, outer.top - s),
+            Offset(outer.left - s + dx, outer.top - s + dy),
             Size(outer.width + 2 * s, outer.height + 2 * s),
             radius + s,
         )

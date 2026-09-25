@@ -21,6 +21,8 @@ about half of RadioGroup's 1.8 %: its legend is the label style and is a pixel l
 `FAMILY=title scripts/research/baseline-probe.mjs`, is again the one `cssBaseline` computes: 16 for
 17/22, 15 for 15/20 and 16/20, 19 for 20/24. The captions and body text in the same cards are not
 low. The AC's size list should take in the `title` face.
+*B-28:* Balloon's body, 13 px in an 18 px line, is a pixel low too (best at +1), while its 15 px
+titles are exact. It is about 3 of Balloon's 3.7 %.
 
 **What is verified:**
 
