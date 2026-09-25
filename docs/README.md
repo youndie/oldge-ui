@@ -56,6 +56,6 @@ person — the machine only guards the membership.
 
 ### Services (2/2)
 
-- [x] [oldge-core](services/oldge-core.md) — the library module: targets, the two catalogs, the suite, the viddik #44 workaround
+- [x] [oldge-core](services/oldge-core.md) — the library module: targets, the two catalogs, the suite, the pinned API
 - [x] [sample](services/sample.md) — the library's first consumer: the page previews rebuilt from the public API, their parity fixtures, and the gaps they find
 

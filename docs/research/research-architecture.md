@@ -608,6 +608,15 @@ It is wider than the plugin's own ordering because the plugin only needs to cove
 run when the directory is real; here it is real for nobody and read by everything. *Rejected:* 0.5.0 — it would have to be
 re-recorded against on the bump anyway, and it lacks #30, so every record rewrites every golden.
 
+
+*Amended in B-35 (2026-09-25):* the workaround is deleted. 0.6.1 is still not on Central, whose
+latest is 0.6.0. The fix `10f128b` is the wip line's build 40. That is reposilite's
+`0.6.0.40`, published by `publish-viddik-snapshot.yaml` run #40 from that commit. This build
+already resolves from that repository, for sborka's catalog. So the version is `0.6.0.40`, a fixed
+build number and not a moving `-SNAPSHOT`, taken as the owner approved. It becomes 0.6.1 when that
+is released: the bump is one line. `./gradlew build`, the shape that failed, is green on it. Its
+control is 0.6.0 with the block deleted, and it fails with the same "without declaring" error.
+
 ### D10. Targets: desktop, Android, iOS, wasm — and the suite is desktop
 
 The design system is a mobile one, so Android and iOS are first-class; wasm is for a catalogue page
@@ -640,7 +649,7 @@ where to point it.
 | A Cyrillic glyph falls back to a system font in one family | A golden that is stable here and differs elsewhere, silently | viddik `glyphCheck` against each bundled family; a coverage test over every string in every fixture | B-02, B-09 |
 | `innerShadow` does not draw a crisp 1 px bevel | Every raised and sunken surface is off by a pixel ring | Draw the bevel edges directly; measured against the reference on Panel and Button | B-07 |
 | The design system changes after it was vendored | References and code describe an old version | The manifest records the version; re-vendoring is an explicit item, never a silent overwrite | B-36 |
-| viddik's #44 workaround outlives the fix | A build line nobody can explain | The comment names the issue; B-35 removes it on the 0.6.1 bump | B-35 |
+| viddik's #44 workaround outlives the fix | A build line nobody can explain | Removed in B-35, on the wip build 0.6.0.40 that carries the fix | B-35, done |
 
 ## 4. What happens next
 

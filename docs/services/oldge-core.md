@@ -3,7 +3,7 @@ id: oldge-core
 title: oldge-core — the component library module
 type: service
 module: oldge-core
-tech_stack: [Kotlin 2.4.20, Compose Multiplatform 1.12.0, viddik 0.6.0]
+tech_stack: [Kotlin 2.4.20, Compose Multiplatform 1.12.0, viddik 0.6.0.40]
 owner: unassigned
 depends_on:
   - sborka
@@ -28,7 +28,7 @@ to publish (B-01).
 
 | File | What is there |
 |---|---|
-| `oldge-core/build.gradle.kts` | targets, dependencies, viddik, the #44 workaround |
+| `oldge-core/build.gradle.kts` | targets, dependencies, viddik |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/` | the library, package `io.github.youndie.oldge` |
 | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/` | fixtures and desktop tests |
 | `oldge-core/src/desktopTest/snapshots/` | goldens; `design/` under it holds the parity references (B-03) |
@@ -103,7 +103,7 @@ to publish (B-01).
 | Kind | Name | What for |
 |---|---|---|
 | Build | sborka `0.4.0.91` (`io.github.youndie.sborka.settings`, `.kmp`, `.lint`) | repositories, the `wip` catalog, toolchain 25, explicit API, warnings as errors, ktlint |
-| Test | viddik `0.6.0` | goldens, design parity |
+| Test | viddik `0.6.0.40`, the wip build of `10f128b` from reposilite, until 0.6.1 is on Central | goldens, design parity |
 
 ## 5. Motion
 
@@ -156,15 +156,14 @@ A keyframe used by several components is held through one of them. The others sh
 
 ## 6. Quirks
 
-* **The viddik #44 workaround.** viddik 0.6.0 adds
-  `build/generated/ksp/metadata/commonMain/kotlin` to commonMain unconditionally, and in this
-  module's shape `./gradlew build` then fails every task that reads commonMain with "uses this
-  output of task ':oldge-core:kspCommonMainKotlinMetadata' without declaring an explicit or
-  implicit dependency" — reproduced in B-01 before the workaround existed. The block at the end of
-  `oldge-core/build.gradle.kts` orders those tasks after `kspCommonMainKotlinMetadata`. Ordering the
-  compile tasks alone was the first attempt and was not enough: ktlint's commonMain check failed the
-  same way, and ktlint's tasks are not `SourceTask`s, so they are matched by name. A new kind of
-  task that walks commonMain (Dokka, a sources jar) will need the same. Deleted by B-35.
+* **The viddik #44 bug, and its workaround, are gone** (B-35). viddik 0.6.0 put
+  `build/generated/ksp/metadata/commonMain/kotlin` on commonMain unconditionally. In this module's
+  shape, `./gradlew build` then failed every task that reads commonMain with "uses this output of
+  task ':oldge-core:kspCommonMainKotlinMetadata' without declaring an explicit or implicit
+  dependency". B-01 ordered those tasks by hand. viddik `10f128b` fixes it. On its wip build
+  0.6.0.40 the block is deleted, and `./gradlew build` is green. The control is 0.6.0 without the
+  block, which fails with that message again. If the error comes back after a viddik bump, the fix
+  was lost, and ordering the tasks again only hides it.
 * **`viddikRecord` alone never showed the bug.** Only `build` schedules the metadata KSP task; the
   acceptance for anything touching this block is `./gradlew build`.
 * **A one-unit colour change is invisible to the goldens**: the per-channel tolerance is ±2, so the

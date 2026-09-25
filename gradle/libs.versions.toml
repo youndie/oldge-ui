@@ -2,9 +2,10 @@
 # The shared build conventions. The compiler, KSP, AGP and Compose Multiplatform are NOT here: they
 # come from `wip`, the catalog a sborka release publishes (research §1.8).
 sborka = "0.4.0.91"
-# 0.6.0 records only the goldens a verification would reject and has the glyph check; its KSP
-# srcDir bug (youndie/viddik#44) is worked around in oldge-core/build.gradle.kts until 0.6.1 (B-35).
-viddik = "0.6.0"
+# 0.6.0 records only the goldens a verification would reject and has the glyph check. Build 40 of its
+# wip line is youndie/viddik@10f128b, the fix for the KSP srcDir bug (#44). 0.6.1 on Central, which
+# will carry it, is not released yet, so this is the wip build from reposilite (B-35).
+viddik = "0.6.0.40"
 # 37 is forced by the AndroidX Compose 1.12 AAR metadata (kvadrant-ui measured 36 failing).
 android-compileSdk = "37"
 android-minSdk = "24"

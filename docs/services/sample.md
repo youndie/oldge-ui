@@ -3,7 +3,7 @@ id: sample
 title: sample — the library's first consumer, and the stress screens
 type: service
 module: sample
-tech_stack: [Kotlin 2.4.20, Compose Multiplatform 1.12.0, viddik 0.6.0]
+tech_stack: [Kotlin 2.4.20, Compose Multiplatform 1.12.0, viddik 0.6.0.40]
 owner: unassigned
 depends_on:
   - oldge-core
@@ -60,9 +60,8 @@ missing piece becomes a library item, not a private composable (B-37's decision)
     is not drawn.
   - Text is pinned through `OldgeTheme(platformTextStyle = …)` (B-52) with oldge-core's harness
     value, so parity reads against the same floor as the components.
-- **The viddik#44 workaround is here too since B-41.** With one target there was no
-  `kspCommonMainKotlinMetadata`, and the copied block failed the build (B-37). With the Android and
-  iOS targets of B-41 the task exists, and the ordering is needed. B-35 deletes both blocks.
+- **No viddik#44 workaround.** B-41 had copied oldge-core's block here. B-35 deleted both on
+  viddik 0.6.0.40, which carries the fix.
 - **Mutants of this module's tests** need the runner pointed at it: `python3 scripts/mutate.py
   scripts/mutants.json --only B-NN --command "./gradlew :sample:desktopTest --tests {tests}
   --rerun --console=plain -q" --results sample/build/test-results/desktopTest`.
@@ -72,7 +71,7 @@ missing piece becomes a library item, not a private composable (B-37's decision)
 | Kind | Name | What for |
 |---|---|---|
 | Module | [oldge-core](oldge-core.md) | the components, through their public API only |
-| Build | viddik 0.6.0 | goldens and design parity for the screens |
+| Build | viddik 0.6.0.40 | goldens and design parity for the screens |
 
 ## 5. Quirks
 

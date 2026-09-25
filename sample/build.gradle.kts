@@ -83,19 +83,3 @@ tasks.named<Test>("desktopTest") {
         .withPropertyName("viddikSnapshots")
         .withPathSensitivity(PathSensitivity.RELATIVE)
 }
-
-// WORKAROUND for youndie/viddik#44, delete with oldge-core's on the viddik bump that carries 10f128b
-// (B-35). With a second target the module has a `kspCommonMainKotlinMetadata`, which viddik 0.6.0
-// does not order the other tasks after; oldge-core's block of the same name says why each kind of
-// task is in the list. With one target there was no such task and the block failed the build (B-37).
-val commonKsp = "kspCommonMainKotlinMetadata"
-tasks
-    .matching { task ->
-        task.name != commonKsp &&
-            (
-                task.name.startsWith("ksp") ||
-                    task is org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*> ||
-                    task is SourceTask ||
-                    task.name.contains("Ktlint", ignoreCase = true)
-            )
-    }.configureEach { dependsOn(commonKsp) }
