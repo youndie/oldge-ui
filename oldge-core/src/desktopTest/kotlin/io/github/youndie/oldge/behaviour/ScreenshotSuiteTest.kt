@@ -68,7 +68,6 @@ class ScreenshotSuiteTest {
             "Stepper",
             "SwipeRow",
             "Tabs",
-            "TextField",
             "Tooltip",
             "TypingIndicator",
             "WindowBar",

@@ -74,7 +74,6 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-17](docs/backlog/B-17-text-field-and-search-bar.md) `[ ]` | TextField and SearchBar | P1 | M | B-08, B-09, B-10, B-11 |
 | [B-18](docs/backlog/B-18-select-and-code-input.md) `[ ]` | Select and CodeInput | P1 | M | B-17 |
 | [B-19](docs/backlog/B-19-date-picker.md) `[ ]` | DatePicker | P1 | M | B-12 |
 | [B-20](docs/backlog/B-20-panel-list-and-sections.md) `[ ]` | Panel, List, ListItem and ListSection | P1 | M | B-08, B-09, B-10, B-11 |
@@ -93,6 +92,7 @@ list an item can be checked against in one glance.
 | [B-33](docs/backlog/B-33-pull-refresh.md) `[ ]` | PullRefresh | P1 | S | B-30 |
 | [B-34](docs/backlog/B-34-chat.md) `[ ]` | ChatBubble, TypingIndicator and Composer | P1 | M | B-17, B-31 |
 | [B-46](docs/backlog/B-46-label-size-text-a-pixel-low.md) `[ ]` | Label-size text draws a pixel below Chrome's | P1 | S | - |
+| [B-47](docs/backlog/B-47-search-bar.md) `[ ]` | SearchBar | P1 | S | B-17, B-31 |
 | [B-37](docs/backlog/B-37-stress-auth-and-chat.md) `[ ]` | Stress screens: sign-in and chat | P2 | L | B-12, B-13, B-15, B-17, B-18, B-24, B-29, B-31, B-34 |
 | [B-38](docs/backlog/B-38-stress-inbox-and-media.md) `[ ]` | Stress screens: the long list and full-screen media | P2 | L | B-20, B-23, B-24, B-26, B-33 |
 | [B-39](docs/backlog/B-39-stress-edges.md) `[ ]` | Stress screens: 320 dp with German strings, and the system font at 200 % | P2 | L | B-13, B-15, B-17, B-20, B-21, B-24 |
@@ -105,7 +105,7 @@ list an item can be checked against in one glance.
 | [B-45](docs/backlog/B-45-public-api-and-kdoc.md) `[ ]` | Pin the public API, and make the KDoc name its README rule | P3 | S | B-40 |
 | [B-35](docs/backlog/B-35-viddik-0-6-1.md) `[?]` | Take viddik 0.6.1 and delete the #44 workaround | infra | XS | B-01 |
 
-## Closed (16)
+## Closed (17)
 
 **Answers that decide the architecture**
 
@@ -131,5 +131,6 @@ list an item can be checked against in one glance.
 - [B-14](docs/backlog/B-14-chips.md) `[x]` - Chip and ChipGroup
 - [B-15](docs/backlog/B-15-checkbox-and-radio-group.md) `[x]` - Checkbox and RadioGroup
 - [B-16](docs/backlog/B-16-switch-and-slider.md) `[x]` - Switch and Slider
+- [B-17](docs/backlog/B-17-text-field-and-search-bar.md) `[x]` - TextField
 
 <!-- END INDEX -->
