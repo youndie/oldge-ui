@@ -2178,6 +2178,24 @@
    "replace": "            if (true) {\n",
    "tests": "*SampleAppBehaviourTest*",
    "expect": "the_apps_feed_scrolls_to_posts_beyond_the_designs_two"
+  },
+  {
+   "id": "select-any-focus-dips",
+   "item": "B-66",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSelect.kt",
+   "find": "val focusVisible = focused && keyboard",
+   "replace": "val focusVisible = focused",
+   "tests": "*SelectCodeBehaviourTest*",
+   "expect": "after_a_choice_the_arrow_comes_back_up_and_keyboard_focus_still_dips_it"
+  },
+  {
+   "id": "select-focus-ignored",
+   "item": "B-66",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSelect.kt",
+   "find": "val focusVisible = focused && keyboard",
+   "replace": "val focusVisible = false",
+   "tests": "*SelectCodeBehaviourTest*",
+   "expect": "after_a_choice_the_arrow_comes_back_up_and_keyboard_focus_still_dips_it"
   }
  ]
 }

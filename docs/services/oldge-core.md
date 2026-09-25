@@ -320,3 +320,7 @@ A keyframe used by several components is held through one of them. The others sh
   XP-menu gutter, and each item's icon sits in it. A Select opens its options in the same Menu.
   The strip goes when no option has an icon, because empty it reads as a stray stripe. Menu keeps
   it always, as the design draws it (B-63).
+* **A click focuses, and Compose never blurs.** Clicking elsewhere does not take the focus away, as
+  it does in a browser. So a `:focus-within` look on a control that is not a text field has to be
+  keyboard focus (`InputMode.Keyboard`), or it stays on after the first click. The Select's arrow
+  and ring did (B-66).

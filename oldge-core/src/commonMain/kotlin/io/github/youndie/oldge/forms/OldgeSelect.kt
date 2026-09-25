@@ -38,8 +38,10 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -100,8 +102,13 @@ public fun <T> OldgeSelect(
     val focused by source.collectIsFocusedAsState()
     var open by remember { mutableStateOf(false) }
     val current = options.firstOrNull { it.value == selected } ?: options.first()
+    // `:focus-within` from the keyboard only. A click focuses the Select, and Compose, unlike a
+    // browser, keeps that focus when the user clicks elsewhere. Read as `focused`, the arrow stayed
+    // dipped and the ring stayed on after the first click (B-66).
+    val keyboard = LocalInputModeManager.current.inputMode == InputMode.Keyboard
+    val focusVisible = focused && keyboard
     val dip by animateFloatAsState(
-        if (pressed || focused || open) 1f else 0f,
+        if (pressed || focusVisible || open) 1f else 0f,
         tween(motion.base, easing = motion.bounce),
         label = "oldge select arrow",
     )
@@ -134,7 +141,7 @@ public fun <T> OldgeSelect(
                     ).drawBehind { drawHighlight(c.gloss) }
                     .drawWithContent {
                         drawContent()
-                        if (focused) drawOldgeFocusRing(shape, c.focus)
+                        if (focusVisible) drawOldgeFocusRing(shape, c.focus)
                     }.semantics {
                         contentDescription = label
                         stateDescription = current.label

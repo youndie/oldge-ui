@@ -1,12 +1,16 @@
 package io.github.youndie.oldge.forms
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.ExperimentalTestApi
@@ -14,18 +18,27 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.click
 import androidx.compose.ui.test.getBoundsInRoot
 import androidx.compose.ui.test.isRoot
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performKeyInput
+import androidx.compose.ui.test.performMouseInput
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.pressKey
+import androidx.compose.ui.test.requestFocus
 import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.compose.ui.unit.dp
+import io.github.youndie.oldge.actions.OldgeButton
 import io.github.youndie.oldge.icons.OldgeIcons
 import io.github.youndie.oldge.theme.OldgeTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 /** The rules in the Select and CodeInput READMEs that are behaviour rather than look. */
 @OptIn(ExperimentalTestApi::class)
@@ -82,6 +95,43 @@ class SelectCodeBehaviourTest {
         assertEquals(pillLo, iconPixel, "the list with icons lost its strip")
     }
 
+    /**
+     * After a click, a choice and the list closing, the Select is back at rest: arrow up, no ring.
+     * The click leaves it focused, and Compose never blurs it. Focused from the keyboard it shows
+     * both, which is also the control that the frame comparison can see them (B-66).
+     */
+    @Test
+    fun after_a_choice_the_arrow_comes_back_up_and_keyboard_focus_still_dips_it() =
+        runComposeUiTest {
+            mainClock.autoAdvance = false
+            setContent {
+                OldgeTheme(reducedMotion = true) {
+                    Column {
+                        OldgeButton("До", {})
+                        OldgeSelect("Экран", networks, "wifi", {}, Modifier.testTag("select"))
+                    }
+                }
+            }
+            mainClock.advanceTimeBy(SETTLED)
+            val rest = onNodeWithTag("select").captureToImage().toPixelMap()
+
+            fun off(): Int {
+                mainClock.advanceTimeBy(SETTLED)
+                val now = onNodeWithTag("select").captureToImage().toPixelMap()
+                var n = 0
+                for (y in 0 until rest.height) for (x in 0 until rest.width) if (rest[x, y] != now[x, y]) n++
+                return n
+            }
+            onNodeWithContentDescription("Экран").performMouseInput { click(center) }
+            mainClock.advanceTimeBy(SETTLED)
+            onNodeWithText("Вручную", useUnmergedTree = true).performMouseInput { click(center) }
+            assertEquals(0, off(), "pixels of the Select still off its rest after the choice")
+            // The control: from the keyboard, Tab from the button before it gives the Select a visible focus.
+            onNodeWithText("До").requestFocus()
+            onRoot().performKeyInput { pressKey(Key.Tab) }
+            assertTrue(off() > 0, "keyboard focus neither dipped the arrow nor drew the ring")
+        }
+
     @Test
     fun a_select_is_a_named_drop_down_list_that_reads_its_choice_and_opens_to_change_it() =
         runComposeUiTest {
@@ -135,3 +185,5 @@ class SelectCodeBehaviourTest {
 private const val PLAIN_LABEL = 16f
 private const val ICON_LABEL = 44f
 private val STRIP_PROBE = 10.dp
+
+private const val SETTLED = 1_000L
