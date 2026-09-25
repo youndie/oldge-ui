@@ -149,6 +149,30 @@ internal fun DrawScope.drawSkinBody(
     grain?.let { drawRect(tiled(it)) }
 }
 
+/**
+ * A window's body (`.og-dialog__body`, `.og-sheet__body`): `body-hi` to `ground`, under a `glow`
+ * ellipse 120 % of the box wide and [glowHeight] of it high round its bottom-right corner, fading
+ * out at 60 % — `radial-gradient(120% 80% at 100% 100%, glow, transparent 60%)` — with the grain
+ * over both.
+ */
+@Composable
+internal fun Modifier.windowBody(glowHeight: Float): Modifier {
+    val c = OldgeTheme.colors
+    return drawBehind {
+        drawRect(Brush.verticalGradient(listOf(c.bodyHi, c.ground)))
+        val rx = size.width * GLOW_RX
+        val ry = size.height * glowHeight
+        val corner = Offset(size.width, size.height)
+        withTransform({ scale(1f, ry / rx, pivot = corner) }) {
+            drawRect(
+                Brush.radialGradient(0f to c.glow, GLOW_FADE to c.glow.copy(alpha = 0f), center = corner, radius = rx),
+                topLeft = Offset(0f, size.height - size.height * rx / ry),
+                size = Size(size.width, size.height * rx / ry),
+            )
+        }
+    }.grain()
+}
+
 /** The grain alone, over what is drawn before it: `.og-drawer::before` and the like. */
 @Composable
 internal fun Modifier.grain(): Modifier {

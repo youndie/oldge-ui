@@ -1242,6 +1242,78 @@
    "replace": "Dot(i, count, i == index, onDark) { onChange(index) }",
    "tests": "*DrawerStepperBehaviourTest*",
    "expect": "every_dot_is_a_named_44_px_button_and_the_current_one_is_wider"
+  },
+  {
+   "id": "dialog-heading",
+   "item": "B-27",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeDialog.kt",
+   "find": "Modifier.weight(1f).semantics { heading() },",
+   "replace": "Modifier.weight(1f),",
+   "tests": "*WindowBehaviourTest*",
+   "expect": "a_dialog_title_is_a_heading_and_its_orb_closes_it"
+  },
+  {
+   "id": "dialog-close-always",
+   "item": "B-27",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeDialog.kt",
+   "find": "if (onClose != null) OldgeOrbButton(OldgeIcons.Close, \"Закрыть\", onClose, size = OldgeOrbSize.Small)",
+   "replace": "OldgeOrbButton(OldgeIcons.Close, \"Закрыть\", onClose ?: {}, size = OldgeOrbSize.Small)",
+   "tests": "*WindowBehaviourTest*",
+   "expect": "without_on_close_there_is_no_close_orb"
+  },
+  {
+   "id": "dialog-always-dialog",
+   "item": "B-27",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeDialog.kt",
+   "find": "                if (modal) {\n                    dialog()",
+   "replace": "                if (modal || title.isNotEmpty()) {\n                    dialog()",
+   "tests": "*WindowBehaviourTest*",
+   "expect": "only_a_modal_dialog_says_it_is_one_and_names_its_pane"
+  },
+  {
+   "id": "dialog-scrim-passes",
+   "item": "B-27",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeDialog.kt",
+   "find": "                .clickable(remember { MutableInteractionSource() }, indication = null) {},\n        )",
+   "replace": "        )",
+   "tests": "*WindowBehaviourTest*",
+   "expect": "a_modal_dialog_takes_the_taps_meant_for_the_screen_under_it"
+  },
+  {
+   "id": "dialog-open-ignored",
+   "item": "B-27",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeDialog.kt",
+   "find": "    if (!open) return\n",
+   "replace": "",
+   "tests": "*WindowBehaviourTest*",
+   "expect": "a_closed_dialog_and_a_closed_sheet_draw_nothing"
+  },
+  {
+   "id": "sheet-scrim-inert",
+   "item": "B-27",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeBottomSheet.kt",
+   "find": ".clickable(remember { MutableInteractionSource() }, indication = null) { onClose?.invoke() },",
+   "replace": ".clickable(remember { MutableInteractionSource() }, indication = null) {},",
+   "tests": "*WindowBehaviourTest*",
+   "expect": "over_a_screen_the_sheet_is_a_dialog_and_its_scrim_closes_it"
+  },
+  {
+   "id": "sheet-inline-dialog",
+   "item": "B-27",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeBottomSheet.kt",
+   "find": "                if (overlay) {\n                    dialog()",
+   "replace": "                if (overlay || title.isNotEmpty()) {\n                    dialog()",
+   "tests": "*WindowBehaviourTest*",
+   "expect": "an_inline_sheet_is_not_a_dialog"
+  },
+  {
+   "id": "sheet-body-share",
+   "item": "B-27",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeBottomSheet.kt",
+   "find": "private const val BODY_SHARE = 0.7f",
+   "replace": "private const val BODY_SHARE = 0.8f",
+   "tests": "*WindowBehaviourTest*",
+   "expect": "over_a_screen_the_sheets_body_is_at_most_70_percent_of_it"
   }
  ]
 }

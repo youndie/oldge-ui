@@ -34,10 +34,8 @@ class ScreenshotSuiteTest {
         setOf(
             // Components (B-11…B-34).
             "Banner",
-            "BottomSheet",
             "ChatBubble",
             "Composer",
-            "Dialog",
             "EmptyState",
             "PullRefresh",
             "SearchBar",

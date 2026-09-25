@@ -1,7 +1,7 @@
 ---
 id: B-27
 title: "Dialog and BottomSheet"
-status: open
+status: done
 priority: P1
 size: M
 stage: stage-2-components
@@ -41,3 +41,46 @@ Windows in the skin's frame: Dialog with `shadow-window`, a title bar with an or
   - `reference/design-system/components/Dialog/README.md`, `reference/design-system/components/Dialog/preview.html`
   - `reference/design-system/components/BottomSheet/README.md`, `reference/design-system/components/BottomSheet/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/`
+
+## Findings
+
+- Parity, `summary.txt` in the squash commit, on the previews' forms (the Dialog's plain window and
+  the sheet's `inline`):
+  - Dialog is 2.86 / 2.95 / 3.03 %: the 17 px title a pixel low (B-46), and glyph edges.
+  - BottomSheet is 1.10 / 1.18 / 1.18 %.
+- **BottomSheet's first run was 6 %, and none of it was the sheet's look.** The preview's button
+  after it stretches to the demo's width, because `.og-demo` is a flex column. The fixture now
+  says so. The quirk is in the service document.
+- **The overlay forms fill their parent.** A modal dialog centres its window on a scrim, 16 px from
+  the edges; an overlay sheet sits at the bottom on its scrim. There is no popup window, so the
+  caller puts either over the screen in a `Box`, as with the NavDrawer. Both say `dialog()` with
+  their title as `paneTitle`, which is `role="dialog"` and `aria-labelledby`.
+- **A dialog cannot sit inside the clickable scrim** (Compose throws), so the scrim is its sibling.
+  A modal's scrim takes the taps under it and does not close it, since bundle.js's modal has no
+  scrim handler. A sheet's scrim closes it, as the README says.
+- The sheet's `max-height: 70vh` is 70 % of the height the overlay is given, the screen it
+  covers. Inline it is unbounded: the preview never reaches it, and a composable inline has no
+  viewport of its own.
+- The window bodies are one helper, `windowBody` in `Materials.kt`: `body-hi` to `ground`, the
+  `glow` ellipse at the bottom right, and the grain (`.og-dialog__body::before`). The title bar is
+  shared between the two components as `WindowBar`.
+- The README's rules, in the API or `WindowBehaviourTest`:
+  - the title is a heading and the orb «Закрыть» closes;
+  - no `onClose`, no orb;
+  - only a modal dialog, or a sheet over a screen, is a dialog;
+  - a modal takes the taps meant for the screen under it;
+  - closed, nothing is drawn;
+  - the sheet's scrim closes it;
+  - the sheet's body is at most 70 %, the sheet measured to the dp.
+  The actions' order and «Удалить» rather than «OK» are the caller's words; the KDoc says so, as
+  the README does.
+- Mutations through `scripts/mutate.py`: 8 of 8 killed by their aimed tests. Goldens by name:
+  - the bodies' grain (`Dialog`, `BottomSheet` and both States);
+  - the sheet's tab (`BottomSheet`, `BottomSheetStates`), after a first try whose `sed` did not
+    match the reformatted line and so changed nothing;
+  - the window shadow (`Dialog`, `DialogStates`).
+- The States goldens are the overlay forms the previews never render: a modal dialog over a
+  screen, and a sheet over one.
+- Values the tokens do not hold, marked `// css literal:`:
+  - dialog at most 358 wide, framed 6, bar 48, icon 22, rising 14;
+  - sheet at most 480 wide, framed 6, tab 44 × 6 at 8 above and 2 below, bar 44.
