@@ -2,13 +2,15 @@
 """Hold each component item's `blocked_by` to the components its previews actually use (B-20).
 
 A component item's acceptance is its design-system preview, ported string for string. A preview
-often shows another component inside it (Panel's shows a Meter, ListItem's a Badge), and that one
-belongs to another item. If that item is not a blocker, the loop picks this one first and cannot
+often shows another component inside it (Panel's shows a Meter, ListItem's a Badge), or the
+component itself renders one (Tabs draws a tab's count as a Badge), and that one belongs to another
+item. If that item is not a blocker, the loop picks this one first and cannot
 finish it. B-17 had to split SearchBar off, and B-20 found two more.
 
-For every open item with a **References** line, this reads `window.OldgeUI` components off each
-preview (`B.<Name>`), maps them to the items whose references name them, and reports any that are
-not done and not in `blocked_by`.
+For every open item with a **References** line, this reads the `window.OldgeUI` components off each
+preview (`B.<Name>`), adds what those components render in their own bundle.js functions
+(`h(Name, …)`, followed through), maps them to the items whose references name them, and reports
+any that are not done and not in `blocked_by`.
 
     python3 scripts/preview_deps.py            # report
     python3 scripts/preview_deps.py --check    # exit 1 when anything is missing (make gate)
@@ -29,6 +31,26 @@ COMPONENTS = ROOT / "reference" / "design-system" / "components"
 REFERENCES = re.compile(r"\*\*References\*\*: (.*)")
 STEM = re.compile(r"`([A-Za-z]+)_\{")
 USE = re.compile(r"\bB\.([A-Z][A-Za-z]+)")
+BUNDLE = COMPONENTS / "bundle.js"
+# A component's own function in bundle.js, up to the next top-level function: `function Tabs(p) { … }`.
+FUNCTION = re.compile(r"^  function ([A-Z][A-Za-z]+)\(p\) \{(.*?)(?=^  function |^  /\*|\Z)", re.M | re.S)
+INNER = re.compile(r"\bh\(([A-Z][A-Za-z]+)[,)]")
+
+
+def internal_uses() -> dict[str, set[str]]:
+    """The components each component's bundle.js function renders itself (Tabs renders a Badge)."""
+    text = BUNDLE.read_text(encoding="utf-8") if BUNDLE.exists() else ""
+    return {name: set(INNER.findall(body)) - {name} for name, body in FUNCTION.findall(text)}
+
+
+def closure(names: set[str], inner: dict[str, set[str]]) -> set[str]:
+    out, todo = set(names), list(names)
+    while todo:
+        for used in inner.get(todo.pop(), ()):
+            if used not in out:
+                out.add(used)
+                todo.append(used)
+    return out
 
 
 def items() -> dict[str, tuple[dict, list[str]]]:
@@ -47,6 +69,7 @@ def missing() -> dict[str, list[tuple[str, str]]]:
     for iid, (_, comps) in backlog.items():
         for c in comps:
             owner.setdefault(c, iid)
+    inner = internal_uses()
     report = {}
     for iid, (front, comps) in backlog.items():
         if front["status"] in ("done", "dropped") or not comps:
@@ -57,7 +80,8 @@ def missing() -> dict[str, list[tuple[str, str]]]:
             preview = COMPONENTS / c / "preview.html"
             if not preview.exists():
                 continue
-            for used in USE.findall(preview.read_text(encoding="utf-8")):
+            shown = set(USE.findall(preview.read_text(encoding="utf-8"))) | {c}
+            for used in closure(shown, inner):
                 other = owner.get(used)
                 if other and other != iid and other not in blocked and backlog[other][0]["status"] != "done":
                     gaps.add((used, other))

@@ -65,7 +65,7 @@ list an item can be checked against in one glance.
 - **Loop merges its own branches, locally** — see [CLAUDE.md](CLAUDE.md).
 - **An item is blocked by every item whose component its previews show** (found on B-20):
   a fixture is the preview string for string, so a Badge inside a ListItem's preview is B-31's
-  work first. `scripts/preview_deps.py --check` holds `blocked_by` to the previews and rejects
+  work first, and so is the Badge that Tabs renders for a tab's count (found on B-25). `scripts/preview_deps.py --check` holds `blocked_by` to the previews and rejects
   cycles, in `make gate`.
 
 ## Marks
@@ -82,7 +82,7 @@ list an item can be checked against in one glance.
 | [B-22](docs/backlog/B-22-accordion.md) `[ ]` | Accordion | P1 | S | B-20 |
 | [B-23](docs/backlog/B-23-swipe-row.md) `[ ]` | SwipeRow | P1 | M | B-20 |
 | [B-24](docs/backlog/B-24-window-bar-and-bottom-nav.md) `[ ]` | WindowBar and BottomNav | P1 | M | B-12, B-31 |
-| [B-25](docs/backlog/B-25-category-tabs-and-tabs.md) `[ ]` | CategoryTabs and Tabs | P1 | M | B-12 |
+| [B-25](docs/backlog/B-25-category-tabs-and-tabs.md) `[ ]` | CategoryTabs and Tabs | P1 | M | B-12, B-31 |
 | [B-26](docs/backlog/B-26-drawer-stepper-page-dots.md) `[ ]` | NavDrawer, Stepper and PageDots | P1 | M | B-24, B-31 |
 | [B-27](docs/backlog/B-27-dialog-and-bottom-sheet.md) `[ ]` | Dialog and BottomSheet | P1 | M | B-12, B-20 |
 | [B-28](docs/backlog/B-28-menu-tooltip-balloon.md) `[ ]` | Menu, Tooltip and Balloon | P1 | M | B-12 |
@@ -96,7 +96,7 @@ list an item can be checked against in one glance.
 | [B-47](docs/backlog/B-47-search-bar.md) `[ ]` | SearchBar | P1 | S | B-17, B-31 |
 | [B-37](docs/backlog/B-37-stress-auth-and-chat.md) `[ ]` | Stress screens: sign-in and chat | P2 | L | B-12, B-13, B-15, B-17, B-18, B-24, B-29, B-31, B-34 |
 | [B-38](docs/backlog/B-38-stress-inbox-and-media.md) `[ ]` | Stress screens: the long list and full-screen media | P2 | L | B-20, B-23, B-24, B-26, B-30, B-31, B-32, B-33 |
-| [B-39](docs/backlog/B-39-stress-edges.md) `[ ]` | Stress screens: 320 dp with German strings, and the system font at 200 % | P2 | L | B-13, B-15, B-17, B-20, B-21, B-24, B-25, B-32 |
+| [B-39](docs/backlog/B-39-stress-edges.md) `[ ]` | Stress screens: 320 dp with German strings, and the system font at 200 % | P2 | L | B-13, B-15, B-17, B-20, B-21, B-24, B-25, B-31, B-32 |
 | [B-40](docs/backlog/B-40-showcase-screens.md) `[ ]` | Showcase screens: launcher, feed, settings | P2 | L | B-11, B-12, B-13, B-14, B-15, B-16, B-17, B-18, B-19, B-20, B-21, B-22, B-23, B-24, B-25, B-26, B-27, B-28, B-29, B-30, B-31, B-32, B-33, B-34, B-47 |
 | [B-41](docs/backlog/B-41-sample-app.md) `[ ]` | The sample app on desktop, Android and iOS, with a skin switcher | P2 | M | B-40 |
 | [B-42](docs/backlog/B-42-component-catalogue.md) `[ ]` | The component catalogue: a previews registry and a generated docs/components.md | P2 | S | B-40 |
