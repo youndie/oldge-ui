@@ -1,7 +1,7 @@
 ---
 id: B-41
 title: "The sample app on desktop, Android and iOS, with a skin switcher"
-status: question
+status: done
 priority: P2
 size: M
 stage: stage-4-product
@@ -81,3 +81,19 @@ The choices, for the owner:
 
 The loop does not download or install anything on its own. Until this is answered the item stays
 `question`, and the rest of it is merged.
+
+## Decision (2026-09-25)
+
+The owner chose to look at the app **on desktop JVM**. The criterion "the Android app installs and
+shows the Launcher in all three skins on an emulator" is dropped: no emulator is installed, and
+none is needed for this item. The Android evidence stays what it was: the APK builds, and it
+carries the fonts.
+
+- `./gradlew :sample:run` started the app again on 2026-09-25, after B-35 and B-61. It is the
+  `MainKt` process, a 420 × 900 window, left open for the owner to look at. The log has no
+  exception.
+- A screenshot of the window was not taken: access to the window was declined, which is the
+  owner's call. The UI that window shows is asserted headless by `SampleAppBehaviourTest`, which
+  renders the same `OldgeSampleApp`.
+- Android and iOS stay as recorded above: the APK builds with its fonts, and the iOS simulator
+  shows the Launcher.
