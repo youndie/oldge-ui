@@ -46,7 +46,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/` | `OldgeDivider` (B-11), `OldgeCard`, `OldgeActionTile` (B-21), `OldgePanel`, `OldgeList` with `OldgeListItem`, and `oldgeListSections` with `OldgeListSectionHeader` for a `LazyColumn` (B-20), `OldgeAccordion` (B-22), `OldgeSwipeRow` (B-23), `OldgeDialog`, `OldgeBottomSheet` (B-27); `CardTileBehaviourTest`, `PanelListBehaviourTest`, `AccordionBehaviourTest`, `SwipeRowBehaviourTest` and `WindowBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/` | `OldgeMenu`, `OldgeTooltip`, `OldgeBalloon` (B-28), `OldgeWindowBar`, `OldgeBottomNav` (B-24), `OldgeCategoryTabs`, `OldgeTabs` (B-25), `OldgeNavDrawer`, `OldgeStepper`, `OldgePageDots` (B-26); `MenuTooltipBalloonBehaviourTest`, `BarBehaviourTest`, `TabsBehaviourTest` and `DrawerStepperBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/` | `OldgeReadout`, `OldgeMeter`, `OldgeProgressBar` (B-29), `OldgeSpinner`, `OldgeSkeleton` (B-30), `OldgeBadge`, `OldgeAvatar` (B-31), `OldgeBanner`, `OldgeSnackbar`, `OldgeEmptyState` (B-32), `OldgePullRefresh` (B-33), `OldgeChatBubble`, `OldgeTypingIndicator`, `OldgeComposer` (B-34), with the LCD tag and text in `Lcd.kt` and the frozen loop phase in `Loop.kt`; `LcdBehaviourTest`, `LoopBehaviourTest`, `BadgeAvatarBehaviourTest`, `NoticeBehaviourTest`, `PullRefreshBehaviourTest` and `ChatBehaviourTest` hold their READMEs' behaviour rules |
-| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/` | `OldgeCheckbox`, `OldgeRadioGroup` (B-15), `OldgeSwitch`, `OldgeSlider` (B-16), `OldgeTextField` (B-17), `OldgeSelect`, `OldgeCodeInput` (B-18), `OldgeDatePicker` (B-19), sharing `Field.kt`'s label and help line; `CheckBehaviourTest`, `SwitchSliderBehaviourTest`, `TextFieldBehaviourTest`, `SelectCodeBehaviourTest` and `DatePickerBehaviourTest` hold their READMEs' behaviour rules |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/` | `OldgeCheckbox`, `OldgeRadioGroup` (B-15), `OldgeSwitch`, `OldgeSlider` (B-16), `OldgeTextField` (B-17), `OldgeSelect`, `OldgeCodeInput` (B-18), `OldgeDatePicker` (B-19), `OldgeSearchBar` (B-47), sharing `Field.kt`'s label and help line; `CheckBehaviourTest`, `SwitchSliderBehaviourTest`, `TextFieldBehaviourTest`, `SelectCodeBehaviourTest`, `DatePickerBehaviourTest` and `SearchBarBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt` | text on the CSS baseline — use it, not `BasicText`, for any text a reference shows |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/tokens/OldgeTokens.kt` | the generated token layer (`scripts/generate_tokens.py`; `checkOldgeTokens` in `check`) |
 | `scripts/design-references.mjs` | renders the parity references into `snapshots/design/` (`make references`); `scripts/tokens-css.mjs` compiles the tokens for it |
@@ -189,6 +189,11 @@ to publish (B-01).
   on the other side of .5 (12.43 reported, 13 drawn, for 13 px in a 16 px line). Place text by
   `composeBaseline`, not by `FirstBaseline`. A fractional translate cannot move text below half a
   pixel; it only resamples it (B-46, research §1.10).
+* **An `<input>` has padding the design never wrote.** Chrome's style sheet gives it `1px 2px`, so
+  a bare input's text starts 2 px in. `.og-search__input` sets `border` and `background` but not
+  `padding`, and the SearchBar's text sat 2 px early until the field took the same padding (B-47).
+  A component built on a raw `<input>` or `<textarea>` should be read with the user-agent style in
+  mind.
 * **kotlinx-datetime is an `api` dependency** (B-19): `OldgeDatePicker` takes and gives
   `LocalDate`, so a consumer compiles against it; the version is `wip`'s.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration

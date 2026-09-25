@@ -23,7 +23,7 @@ private fun TextFieldDemo(skin: OldgeSkin) =
 
 /** A source held focused, waiting a frame first for the reason `pressed()` does (B-12). */
 @Composable
-private fun focused(): MutableInteractionSource {
+internal fun focused(): MutableInteractionSource {
     val source = remember { MutableInteractionSource() }
     LaunchedEffect(source) {
         withFrameNanos { }

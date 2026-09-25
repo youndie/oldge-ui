@@ -1539,6 +1539,51 @@
    "replace": "return floor(ascent + (lineHeightPx - (ascent + descent)) / 2)",
    "tests": "*InkMatchesChromeTest*",
    "expect": "text_ink_lands_where_chromes_does_at_every_size_the_tokens_use"
+  },
+  {
+   "id": "search-name",
+   "item": "B-47",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSearchBar.kt",
+   "find": ".semantics { contentDescription = label ?: placeholder }",
+   "replace": ".semantics { contentDescription = label ?: \"Поиск\" }",
+   "tests": "*SearchBarBehaviourTest*",
+   "expect": "the_field_is_named_by_its_label_or_its_placeholder"
+  },
+  {
+   "id": "search-clear-always",
+   "item": "B-47",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSearchBar.kt",
+   "find": "            if (text.isNotEmpty()) {\n",
+   "replace": "            if (text.isNotEmpty() || placeholder.isNotEmpty()) {\n",
+   "tests": "*SearchBarBehaviourTest*",
+   "expect": "the_clear_button_comes_with_text_is_named_and_empties_the_field"
+  },
+  {
+   "id": "search-clear-nothing",
+   "item": "B-47",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSearchBar.kt",
+   "find": "                            { set(\"\") },\n",
+   "replace": "                            { set(text) },\n",
+   "tests": "*SearchBarBehaviourTest*",
+   "expect": "the_clear_button_comes_with_text_is_named_and_empties_the_field"
+  },
+  {
+   "id": "search-no-submit",
+   "item": "B-47",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSearchBar.kt",
+   "find": "                            onSubmit(text)\n",
+   "replace": "",
+   "tests": "*SearchBarBehaviourTest*",
+   "expect": "enter_submits_the_text"
+  },
+  {
+   "id": "search-no-wiggle",
+   "item": "B-47",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSearchBar.kt",
+   "find": "modifier = Modifier.graphicsLayer { rotationZ = wiggleTurn(wiggle.value, out) },",
+   "replace": "modifier = Modifier.graphicsLayer { rotationZ = 0f * wiggleTurn(wiggle.value, out) },",
+   "tests": "*SearchBarBehaviourTest*",
+   "expect": "the_magnifier_wiggles_on_focus_and_not_under_reduced_motion"
   }
  ]
 }
