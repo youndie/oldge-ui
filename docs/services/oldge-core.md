@@ -316,3 +316,7 @@ A keyframe used by several components is held through one of them. The others sh
   orb, but the drawer has none, so it could be left only by choosing an entry. At the owner's
   choice, its scrim is announced as a «Закрыть» button whose action calls `onClose`, as Material's
   scrim is. Nothing drawn changed (B-61).
+* **Menu's left strip is its icon column.** `.og-menu` paints `pill-lo` under its first 40 px, the
+  XP-menu gutter, and each item's icon sits in it. A Select opens its options in the same Menu.
+  The strip goes when no option has an icon, because empty it reads as a stray stripe. Menu keeps
+  it always, as the design draws it (B-63).

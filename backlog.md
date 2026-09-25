@@ -78,7 +78,7 @@ list an item can be checked against in one glance.
 
 No open tasks.
 
-## Closed (62)
+## Closed (63)
 
 **Answers that decide the architecture**
 
@@ -140,6 +140,7 @@ No open tasks.
 - [B-60](docs/backlog/B-60-hit-min-everywhere.md) `[-]` - Bring every control to hit-min without changing what is drawn
 - [B-61](docs/backlog/B-61-drawer-accessible-close.md) `[x]` - The NavDrawer has no accessible way to close
 - [B-62](docs/backlog/B-62-shine-queue.md) `[x]` - The primary button's glint queues up across quick presses
+- [B-63](docs/backlog/B-63-select-strip.md) `[x]` - Select's list shows the Menu's empty icon strip
 
 **Screens that stress the system**
 

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -100,6 +101,24 @@ public fun OldgeMenu(
     align: OldgeMenuAlign = OldgeMenuAlign.Start,
     label: String? = null,
     trigger: @Composable (toggle: () -> Unit) -> Unit,
+): Unit = OldgeMenuPopup(expanded, onExpandedChange, items, onSelect, modifier, align, label, strip = true, trigger)
+
+/**
+ * [OldgeMenu], with the [strip] under the icons optional. Select opens its options here without the
+ * strip when none of them has an icon (B-63). The design system's Select is a native `<select>`,
+ * so its list is the library's choice, while its Menu always has the strip.
+ */
+@Composable
+internal fun OldgeMenuPopup(
+    expanded: Boolean,
+    onExpandedChange: (Boolean) -> Unit,
+    items: List<OldgeMenuEntry>,
+    onSelect: (String) -> Unit,
+    modifier: Modifier,
+    align: OldgeMenuAlign,
+    label: String?,
+    strip: Boolean,
+    trigger: @Composable (toggle: () -> Unit) -> Unit,
 ) {
     Box(modifier) {
         trigger { onExpandedChange(!expanded) }
@@ -110,7 +129,7 @@ public fun OldgeMenu(
                 onDismissRequest = { onExpandedChange(false) },
                 properties = PopupProperties(focusable = true),
             ) {
-                Panel(items, align, label, dismiss = { onExpandedChange(false) }) { id ->
+                Panel(items, align, label, strip, dismiss = { onExpandedChange(false) }) { id ->
                     onSelect(id)
                     onExpandedChange(false)
                 }
@@ -145,6 +164,7 @@ private fun Panel(
     items: List<OldgeMenuEntry>,
     align: OldgeMenuAlign,
     label: String?,
+    strip: Boolean,
     dismiss: () -> Unit,
     pick: (String) -> Unit,
 ) {
@@ -182,6 +202,7 @@ private fun Panel(
             .widthIn(min = MIN_WIDTH)
             .cssBox(OldgeRadii.md, CssBackground.Solid(c.surface), BORDER, c.edge, OldgeTheme.shadows.window)
             .drawBehind {
+                if (!strip) return@drawBehind
                 // The strip, the background's first 40 px: laid out on the padding box and cut to its
                 // rounded corners, as the background is.
                 val b = BORDER.toPx()
@@ -200,7 +221,7 @@ private fun Panel(
         var index = 0
         for (entry in items) {
             when (entry) {
-                is OldgeMenuEntry.Item -> MenuRow(entry, index++, pick)
+                is OldgeMenuEntry.Item -> MenuRow(entry, index++, strip, pick)
                 OldgeMenuEntry.Divider -> Divider()
             }
         }
@@ -217,6 +238,7 @@ private fun Panel(
 private fun MenuRow(
     item: OldgeMenuEntry.Item,
     index: Int,
+    strip: Boolean,
     pick: (String) -> Unit,
 ) {
     val c = OldgeTheme.colors
@@ -259,10 +281,20 @@ private fun MenuRow(
     ) {
         // `grid-template-columns: 40px 1fr auto`: the item's own first 40 px, which start 3 px in from
         // the menu's edge — so the icon column is not the strip, but 3 px to the right of it.
-        Box(Modifier.width(STRIP), contentAlignment = Alignment.Center) {
-            if (item.icon != null) {
-                OldgeIcon(item.icon, contentDescription = null, size = ICON, tint = if (lit) c.onSelect else c.onPill)
+        if (strip) {
+            Box(Modifier.width(STRIP), contentAlignment = Alignment.Center) {
+                if (item.icon != null) {
+                    OldgeIcon(
+                        item.icon,
+                        contentDescription = null,
+                        size = ICON,
+                        tint = if (lit) c.onSelect else c.onPill,
+                    )
+                }
             }
+        } else {
+            // No strip and no icons: the label starts `space-3` in, as the closed Select's value does.
+            Spacer(Modifier.width(OldgeTheme.spacing.space3))
         }
         OldgeText(item.label, Modifier.weight(1f), style = type.body.copy(color = ink))
         if (item.hint !=

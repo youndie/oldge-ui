@@ -2133,6 +2133,33 @@
    "replace": "is PressInteraction.Release, is PressInteraction.Cancel -> {}",
    "tests": "*ButtonBehaviourTest*",
    "expect": "quick_presses_leave_no_glints_queued_after_the_last_release"
+  },
+  {
+   "id": "select-strip-always",
+   "item": "B-63",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSelect.kt",
+   "find": "strip = options.any { it.icon != null },",
+   "replace": "strip = true,",
+   "tests": "*SelectCodeBehaviourTest*",
+   "expect": "an_icon_less_selects_list_has_no_empty_strip_and_one_with_icons_keeps_it"
+  },
+  {
+   "id": "select-strip-never",
+   "item": "B-63",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSelect.kt",
+   "find": "strip = options.any { it.icon != null },",
+   "replace": "strip = false,",
+   "tests": "*SelectCodeBehaviourTest*",
+   "expect": "an_icon_less_selects_list_has_no_empty_strip_and_one_with_icons_keeps_it"
+  },
+  {
+   "id": "menu-strip-drawn-anyway",
+   "item": "B-63",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeMenu.kt",
+   "find": "                if (!strip) return@drawBehind\n",
+   "replace": "",
+   "tests": "*SelectCodeBehaviourTest*",
+   "expect": "an_icon_less_selects_list_has_no_empty_strip_and_one_with_icons_keeps_it"
   }
  ]
 }

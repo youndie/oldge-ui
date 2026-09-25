@@ -56,8 +56,9 @@ import io.github.youndie.oldge.material.CssBackground
 import io.github.youndie.oldge.material.CssRadii
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.material.cssRoundRect
-import io.github.youndie.oldge.navigation.OldgeMenu
+import io.github.youndie.oldge.navigation.OldgeMenuAlign
 import io.github.youndie.oldge.navigation.OldgeMenuEntry
+import io.github.youndie.oldge.navigation.OldgeMenuPopup
 import io.github.youndie.oldge.press.drawOldgeFocusRing
 import io.github.youndie.oldge.theme.LocalOldgeContentColor
 import io.github.youndie.oldge.theme.OldgeTheme
@@ -77,8 +78,10 @@ public class OldgeSelectOption<T>(
  * square accent arrow button on the right, under its [label].
  *
  * Its README's rules: under the frame is the platform's own `select`, so a phone opens the system's
- * list — Compose has no such control, and here a tap opens the options as an [OldgeMenu] under
- * the frame; for two to four options in view, Segmented or RadioGroup is the better control. The arrow dips while the frame is pressed or focused.
+ * list. Compose has no such control, and here a tap opens the options under the frame as an
+ * [io.github.youndie.oldge.navigation.OldgeMenu], without the Menu's icon strip when no option has
+ * an icon (B-63). For two to four options in view, Segmented or RadioGroup is the better control.
+ * The arrow dips while the frame is pressed or focused.
  */
 @Composable
 public fun <T> OldgeSelect(
@@ -105,14 +108,17 @@ public fun <T> OldgeSelect(
     val shape = RoundedCornerShape(OldgeRadii.sm)
     Column(modifier, verticalArrangement = Arrangement.spacedBy(FIELD_GAP)) {
         FieldLabel(label)
-        // The list a tap opens is Menu's (B-28), as a phone's is the system's.
-        OldgeMenu(
+        // The list a tap opens is Menu's (B-28), as a phone's is the system's. The strip under the
+        // icons goes when no option has one: empty, it read as a stray stripe (B-63).
+        OldgeMenuPopup(
             open,
             { open = it },
             options.mapIndexed { i, o -> OldgeMenuEntry.Item(i.toString(), o.label, o.icon) },
             { id -> onSelect(options[id.toInt()].value) },
             Modifier.fillMaxWidth(),
-            label = label,
+            OldgeMenuAlign.Start,
+            label,
+            strip = options.any { it.icon != null },
         ) { toggle ->
             Row(
                 Modifier
