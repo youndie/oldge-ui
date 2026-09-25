@@ -21,6 +21,7 @@ gate:
 	$(PY) scripts/docs_check.py
 	$(PY) scripts/coverage_map.py --check
 	node --test 'scripts/*.test.mjs'
+	$(PY) -m unittest discover -s scripts -p 'test_*.py'
 
 # Non-blocking, read by a person. Sibling repositories are searched because anchors point at
 # kvadrant-ui and viddik; addresses inside a published artefact are written with `!/`.

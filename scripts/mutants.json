@@ -1,0 +1,320 @@
+{
+ "_comment": "Behaviour-test mutants of the component items, run by scripts/mutate.py (B-48). A mutant is killed only when `expect` names a test that failed on it. Golden mutations are not listed: viddik names the mismatching golden, which is its own evidence.",
+ "mutants": [
+  {
+   "id": "orb-hit-area",
+   "item": "B-12",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeOrbButton.kt",
+   "find": "maxOf(size.orb, OldgeTheme.spacing.hitMin)",
+   "replace": "size.orb",
+   "tests": "*ButtonBehaviourTest*",
+   "expect": "a_small_orb_is_30_px_drawn_in_a_44_px_target"
+  },
+  {
+   "id": "disabled-clickable",
+   "item": "B-12",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
+   "find": "enabled = enabled, role = Role.Button",
+   "replace": "enabled = true, role = Role.Button",
+   "tests": "*ButtonBehaviourTest*",
+   "expect": "a_disabled_button_ignores_taps_and_an_enabled_one_does_not"
+  },
+  {
+   "id": "min-width",
+   "item": "B-12",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
+   "find": ".defaultMinSize(minWidth = spacing.hitMin, minHeight = size.minHeight())",
+   "replace": ".defaultMinSize(minHeight = size.minHeight())",
+   "tests": "*ButtonBehaviourTest*",
+   "expect": "a_short_label_still_makes_a_44_px_wide_target"
+  },
+  {
+   "id": "fab-width",
+   "item": "B-13",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeFab.kt",
+   "find": "if (text == null) Modifier.width(SIZE) else",
+   "replace": "if (text == null) Modifier else",
+   "tests": "*FabSegmentedBehaviourTest*",
+   "expect": "an_icon_fab_is_a_labelled_56_px_button"
+  },
+  {
+   "id": "expand-swap",
+   "item": "B-13",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeFab.kt",
+   "find": "                            collapse {",
+   "replace": "                            expand {",
+   "tests": "*FabSegmentedBehaviourTest*",
+   "expect": "an_expandable_fab_offers_the_opposite_of_its_state"
+  },
+  {
+   "id": "segment-count",
+   "item": "B-13",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeSegmented.kt",
+   "find": "require(options.size in MIN_OPTIONS..MAX_OPTIONS)",
+   "replace": "require(options.isNotEmpty())",
+   "tests": "*FabSegmentedBehaviourTest*",
+   "expect": "segmented_takes_two_to_four_options"
+  },
+  {
+   "id": "segment-role",
+   "item": "B-13",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeSegmented.kt",
+   "find": "role = Role.RadioButton",
+   "replace": "role = Role.Button",
+   "tests": "*FabSegmentedBehaviourTest*",
+   "expect": "a_segment_is_a_radio_button_and_selecting_one_reports_its_value"
+  },
+  {
+   "id": "no-vertical-reach",
+   "item": "B-14",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeChip.kt",
+   "find": "private val REACH_Y = 6.dp",
+   "replace": "private val REACH_Y = 0.dp",
+   "tests": "*ChipBehaviourTest*",
+   "expect": "a_touch_just_outside_the_drawn_chip_still_presses_it"
+  },
+  {
+   "id": "input-border-box",
+   "item": "B-14",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeChip.kt",
+   "find": ".defaultMinSize(minHeight = HEIGHT + BORDER * 2)",
+   "replace": ".defaultMinSize(minHeight = HEIGHT)",
+   "tests": "*ChipBehaviourTest*",
+   "expect": "an_input_chip_is_36_high_and_its_remove_button_is_a_labelled_44_px_target"
+  },
+  {
+   "id": "remove-label",
+   "item": "B-14",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeChip.kt",
+   "find": ".semantics { contentDescription = removeLabel }",
+   "replace": ".semantics { }",
+   "tests": "*ChipBehaviourTest*",
+   "expect": "an_input_chip_is_36_high_and_its_remove_button_is_a_labelled_44_px_target"
+  },
+  {
+   "id": "toggle",
+   "item": "B-14",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeChip.kt",
+   "find": "onValueChange = onSelectedChange",
+   "replace": "onValueChange = {}",
+   "tests": "*ChipBehaviourTest*",
+   "expect": "a_filter_chip_toggles"
+  },
+  {
+   "id": "remove-reach",
+   "item": "B-14",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeChip.kt",
+   "find": ".oldgeHitArea(X_REACH, X_REACH)\n",
+   "replace": "\n",
+   "tests": "*ChipBehaviourTest*",
+   "expect": "an_input_chip_is_36_high_and_its_remove_button_is_a_labelled_44_px_target"
+  },
+  {
+   "id": "checkbox-disabled",
+   "item": "B-15",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCheckbox.kt",
+   "find": "            enabled = enabled,\n            role = Role.Checkbox,",
+   "replace": "            enabled = true,\n            role = Role.Checkbox,",
+   "tests": "*CheckBehaviourTest*",
+   "expect": "a_disabled_checkbox_or_radio_ignores_taps"
+  },
+  {
+   "id": "row-height",
+   "item": "B-15",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCheckbox.kt",
+   "find": "interaction.defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)",
+   "replace": "interaction",
+   "tests": "*CheckBehaviourTest*",
+   "expect": "the_whole_checkbox_row_is_a_44_px_checkbox_and_its_label_toggles_it"
+  },
+  {
+   "id": "radio-count",
+   "item": "B-15",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCheckbox.kt",
+   "find": "require(options.size in MIN_OPTIONS..MAX_OPTIONS)",
+   "replace": "require(options.isNotEmpty())",
+   "tests": "*CheckBehaviourTest*",
+   "expect": "a_radio_group_takes_two_to_six_options"
+  },
+  {
+   "id": "radio-role",
+   "item": "B-15",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCheckbox.kt",
+   "find": "role = Role.RadioButton",
+   "replace": "role = Role.Checkbox",
+   "tests": "*CheckBehaviourTest*",
+   "expect": "a_radio_row_is_a_44_px_radio_button_and_choosing_it_reports_its_value"
+  },
+  {
+   "id": "switch-role",
+   "item": "B-16",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSwitch.kt",
+   "find": "role = Role.Switch",
+   "replace": "role = Role.Checkbox",
+   "tests": "*SwitchSliderBehaviourTest*",
+   "expect": "a_switch_row_is_a_44_px_switch_that_acts_at_once"
+  },
+  {
+   "id": "switch-disabled",
+   "item": "B-16",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSwitch.kt",
+   "find": "                enabled = enabled,\n                role = Role.Switch,",
+   "replace": "                enabled = true,\n                role = Role.Switch,",
+   "tests": "*SwitchSliderBehaviourTest*",
+   "expect": "a_disabled_switch_ignores_taps"
+  },
+  {
+   "id": "key-step",
+   "item": "B-16",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSlider.kt",
+   "find": "private const val STEP = 1f / STEPS",
+   "replace": "private const val STEP = 0.01f",
+   "tests": "*SwitchSliderBehaviourTest*",
+   "expect": "the_keys_of_a_native_range_input_move_the_slider"
+  },
+  {
+   "id": "finger",
+   "item": "B-16",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSlider.kt",
+   "find": "(x - inner - thumb / 2)",
+   "replace": "(x - inner)",
+   "tests": "*SwitchSliderBehaviourTest*",
+   "expect": "a_press_moves_the_ball_to_the_finger"
+  },
+  {
+   "id": "value-text",
+   "item": "B-16",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSlider.kt",
+   "find": "if (valueText != null) stateDescription = valueText",
+   "replace": "if (valueText == null) stateDescription = \"-\"",
+   "tests": "*SwitchSliderBehaviourTest*",
+   "expect": "a_slider_is_named_reads_its_value_text_and_can_be_set"
+  },
+  {
+   "id": "label",
+   "item": "B-17",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "                            contentDescription = label\n",
+   "replace": "",
+   "tests": "*TextFieldBehaviourTest*",
+   "expect": "the_label_names_the_field_and_typing_changes_its_value"
+  },
+  {
+   "id": "error-semantics",
+   "item": "B-17",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "if (error != null) error(error)",
+   "replace": "if (error == \"\") error(error)",
+   "tests": "*TextFieldBehaviourTest*",
+   "expect": "an_error_marks_the_field_invalid_with_its_message"
+  },
+  {
+   "id": "reveal-wording",
+   "item": "B-17",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "if (shown) \"Скрыть пароль\" else \"Показать пароль\"",
+   "replace": "if (shown) \"Показать пароль\" else \"Скрыть пароль\"",
+   "tests": "*TextFieldBehaviourTest*",
+   "expect": "the_reveal_button_says_what_it_will_do"
+  },
+  {
+   "id": "field-disabled",
+   "item": "B-17",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "                enabled = enabled,\n                textStyle",
+   "replace": "                enabled = true,\n                textStyle",
+   "tests": "*TextFieldBehaviourTest*",
+   "expect": "a_disabled_field_takes_no_input"
+  },
+  {
+   "id": "line-minimum",
+   "item": "B-17",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "minHeight = line * lines",
+   "replace": "minHeight = line * 0",
+   "tests": "*TextFieldBehaviourTest*",
+   "expect": "the_height_is_a_minimum_and_grows_with_the_system_font"
+  },
+  {
+   "id": "digit-filter",
+   "item": "B-18",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCodeInput.kt",
+   "find": "val next = raw.filter { it.isDigit() }.take(length)",
+   "replace": "val next = raw.take(length)",
+   "tests": "*SelectCodeBehaviourTest*",
+   "expect": "only_digits_up_to_the_length_are_taken_and_the_last_one_completes_the_code"
+  },
+  {
+   "id": "completion",
+   "item": "B-18",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCodeInput.kt",
+   "find": "if (next.length == length && next != code) onComplete(next)",
+   "replace": "if (next.isNotEmpty() && next != code) onComplete(next)",
+   "tests": "*SelectCodeBehaviourTest*",
+   "expect": "only_digits_up_to_the_length_are_taken_and_the_last_one_completes_the_code"
+  },
+  {
+   "id": "otp-type",
+   "item": "B-18",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCodeInput.kt",
+   "find": "contentType = ContentType.SmsOtpCode",
+   "replace": "contentType = ContentType.Username",
+   "tests": "*SelectCodeBehaviourTest*",
+   "expect": "the_code_field_is_one_real_field_for_a_one_time_code"
+  },
+  {
+   "id": "list-role",
+   "item": "B-18",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSelect.kt",
+   "find": "role = Role.DropdownList",
+   "replace": "role = Role.Button",
+   "tests": "*SelectCodeBehaviourTest*",
+   "expect": "a_select_is_a_named_drop_down_list_that_reads_its_choice_and_opens_to_change_it"
+  },
+  {
+   "id": "state-description",
+   "item": "B-18",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSelect.kt",
+   "find": "stateDescription = current.label",
+   "replace": "stateDescription = label",
+   "tests": "*SelectCodeBehaviourTest*",
+   "expect": "a_select_is_a_named_drop_down_list_that_reads_its_choice_and_opens_to_change_it"
+  },
+  {
+   "id": "sunday-first",
+   "item": "B-19",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeDatePicker.kt",
+   "find": "val blanks = first.dayOfWeek.ordinal - DayOfWeek.MONDAY.ordinal",
+   "replace": "val blanks = (first.dayOfWeek.ordinal + 1) % 7",
+   "tests": "*DatePickerBehaviourTest*",
+   "expect": "the_week_starts_on_monday"
+  },
+  {
+   "id": "label-case",
+   "item": "B-19",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeDatePicker.kt",
+   "find": "${MONTHS[date.month.number - 1].lowercase()}",
+   "replace": "${MONTHS[date.month.number - 1]}",
+   "tests": "*DatePickerBehaviourTest*",
+   "expect": "each_day_is_named_in_full_and_choosing_one_reports_it"
+  },
+  {
+   "id": "direction",
+   "item": "B-19",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeDatePicker.kt",
+   "find": "month = month.plus(d)",
+   "replace": "month = month.plus(-d)",
+   "tests": "*DatePickerBehaviourTest*",
+   "expect": "the_arrows_turn_the_month_and_are_named"
+  },
+  {
+   "id": "selected",
+   "item": "B-19",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeDatePicker.kt",
+   "find": "                chosen,\n                source,",
+   "replace": "                false,\n                source,",
+   "tests": "*DatePickerBehaviourTest*",
+   "expect": "each_day_is_named_in_full_and_choosing_one_reports_it"
+  }
+ ]
+}

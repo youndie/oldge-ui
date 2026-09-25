@@ -1,7 +1,7 @@
 ---
 id: B-48
 title: "A mutation runner that names the failing test, and a re-check of B-12…B-18"
-status: open
+status: done
 priority: P0
 size: S
 stage: stage-2-components
@@ -31,3 +31,32 @@ confirmed by name at the time, and the rest were not.
   findings.
 - AC: `CLAUDE.md`'s gates section says component items use the runner.
 - Anchors: `scripts/`, `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/`.
+
+## Findings (2026-09-25)
+
+- `scripts/mutate.py` and its manifest `scripts/mutants.json`:
+  - it applies a mutant, forces the test task to rerun (`--rerun`), reads the JUnit XML, restores
+    the file byte for byte, and refuses a file with uncommitted changes;
+  - it reports killed / survived / compile-error / not-applied, with the names of the tests that
+    failed;
+  - `scripts/test_mutate.py` runs it against a stub build for the four outcomes, and is in
+    `make gate`.
+
+  The runner's own test was mutation-checked. Counting any failure as a kill fails
+  `test_another_test_failing_is_not_a_kill`; not restoring the file fails four tests. Both were
+  restored.
+- **The re-check: 35 behaviour mutants from B-12…B-19, 33 killed and 2 survived.** Both survivors
+  were tests that passed for another reason:
+  - **B-12 `min-width`**: «OK» at the small size is 46 dp by itself, so the 44 dp minimum was
+    never exercised. The test now uses «1» (about 34 dp) and asserts exactly 44.
+  - **B-14 `no-vertical-reach`**: Compose stretches any pointer target under
+    `minimumTouchTargetSize` (48 dp) on its own, more than the chip's 46. A touch 4 px above the
+    chip landed with the chip's own reach removed. The test now sets that minimum to zero, so only
+    `oldgeHitArea` can catch the touch. The quirk is in `docs/services/oldge-core.md`.
+
+  Re-run after the fixes, both are killed by their aimed tests. The claims in B-12's and B-14's
+  squash commits were right about the other mutants and wrong about these two; this item's commit
+  corrects them.
+- Every other mutant is killed by the test it names, including the ones earlier items had verified
+  only by exit code (B-13, B-14, and most of B-16…B-18).
+- `CLAUDE.md` now sends component items through the runner.

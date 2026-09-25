@@ -42,6 +42,14 @@ make check          # the documentation gate (docs-bootstrap checkers)
 Both must be green before a merge. There is no CI; the log of the local run is the evidence and it
 goes into the squash commit's body.
 
+**Mutation checks go through `scripts/mutate.py`** (B-48). Add the item's behaviour-test mutants to
+`scripts/mutants.json` (the file, the literal, its replacement, the test filter, and the test the
+mutant is aimed at), and run `python3 scripts/mutate.py scripts/mutants.json --only B-NN`. A mutant is
+killed only when the runner names the aimed test among the failures. Gradle's exit code is not
+evidence: an ad-hoc loop that read it counted a mutant killed that its test could never catch
+(B-19), and the manifest's first full run found two more (B-48). Golden mutations stay manual,
+since viddik names the mismatching golden.
+
 **Builds run on this mac, not on the Linux box.** This project is not in `mutagen sync list`, and
 that is deliberate rather than an omission: the screenshot goldens are a claim about the rasteriser
 that recorded them (research §1.9), and the mac is where the references are rendered too.

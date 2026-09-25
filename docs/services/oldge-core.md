@@ -118,6 +118,11 @@ to publish (B-01).
 * **A Compose test finder asserts nothing by itself.** `onNodeWithText(…)` is lazy; a line that ends
   there passes whether the node exists or not. Every lookup ends in an `assert…`, a `perform…` or
   `assertExists()` (found in B-19; B-48 re-checks the earlier items' mutation claims).
+* **Compose stretches small touch targets on its own.** A pointer target smaller than
+  `ViewConfiguration.minimumTouchTargetSize` (48 dp, desktop included) is hit from that far out,
+  which covers more than a chip's 46 dp. A test of `oldgeHitArea` must set the minimum to zero,
+  or it passes with the modifier gone (`ChipBehaviourTest`, found by B-48). The modifier still
+  sets the target's semantics bounds, which Compose's stretch does not.
 * **kotlinx-datetime is an `api` dependency** (B-19): `OldgeDatePicker` takes and gives
   `LocalDate`, so a consumer compiles against it; the version is `wip`'s.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration

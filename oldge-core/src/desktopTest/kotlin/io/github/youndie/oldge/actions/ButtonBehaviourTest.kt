@@ -11,7 +11,6 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.assertWidthIsAtLeast
 import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -74,8 +73,10 @@ class ButtonBehaviourTest {
     @Test
     fun a_short_label_still_makes_a_44_px_wide_target() =
         runComposeUiTest {
-            setContent { OldgeTheme { OldgeButton("OK", {}, size = OldgeButtonSize.Small) } }
-            onNodeWithText("OK").assertWidthIsAtLeast(44.dp)
+            // One character: its padding and text come to about 34 dp, so only the minimum makes it 44.
+            // «OK» was 46 dp by itself and passed with the minimum removed (found by B-48's runner).
+            setContent { OldgeTheme { OldgeButton("1", {}, size = OldgeButtonSize.Small) } }
+            onNodeWithText("1").assertWidthIsEqualTo(44.dp)
         }
 
     @Test

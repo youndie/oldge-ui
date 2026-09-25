@@ -3,12 +3,15 @@ package io.github.youndie.oldge.actions
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.platform.LocalViewConfiguration
+import androidx.compose.ui.platform.ViewConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsProperties
@@ -25,6 +28,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.v2.runComposeUiTest
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.theme.OldgeTheme
 import kotlin.test.Test
@@ -50,9 +54,16 @@ class ChipBehaviourTest {
         runComposeUiTest {
             var taps by mutableIntStateOf(0)
             setContent {
-                OldgeTheme {
-                    Column(Modifier.padding(20.dp).testTag("row")) {
-                        OldgeAssistChip("Фото", { taps++ })
+                // Compose stretches the touch target of anything smaller than
+                // `ViewConfiguration.minimumTouchTargetSize` (48 dp) on its own, which covers more than
+                // the chip's 46 and hid whether `oldgeHitArea` works at all (found by B-48's runner).
+                // With that minimum at zero, only the chip's own reach catches the touch.
+                val base = LocalViewConfiguration.current
+                CompositionLocalProvider(LocalViewConfiguration provides NoMinimumTouchTarget(base)) {
+                    OldgeTheme {
+                        Column(Modifier.padding(20.dp).testTag("row")) {
+                            OldgeAssistChip("Фото", { taps++ })
+                        }
                     }
                 }
             }
@@ -95,4 +106,10 @@ class ChipBehaviourTest {
                 .performClick()
             assertEquals(1, removed)
         }
+
+    private class NoMinimumTouchTarget(
+        base: ViewConfiguration,
+    ) : ViewConfiguration by base {
+        override val minimumTouchTargetSize: DpSize = DpSize.Zero
+    }
 }
