@@ -316,6 +316,44 @@ text-bearing component, and was not done in a component item.
 preview are all fractional (78.39, 56.03, 28.05, 77.75, 109.20 and 86.38 px), and each of Compose's
 is exactly its ceiling. A row of short labels is the worst case, since each label adds up to a pixel.
 
+*B-46, measured and fixed.* **Compose draws the text's first baseline on a whole pixel, and the
+`firstBaseline` it reports is not that pixel.** With the typography's `LineHeightStyle(Center,
+Trim.None)`, Compose draws at the centred baseline from the unrounded ascent and descent, rounded
+half up. For 13 px in a 16 px line that is 12.5, drawn at 13, and the paragraph reports 12.43.
+`OldgeText` placed text by rounding the report, which agreed with the drawing wherever the two sat
+on the same side of .5. They did not at 13 px (12.5 against 12.43) or in the 17 px titles (16.7
+against 16.5). There the ink was a whole pixel below Chrome's, whose baseline is the CSS one.
+
+Measured with `scripts/research/ink-probe.mjs` (Chrome's ink per line box) and
+`InkMatchesChromeTest` (Compose's): every size the tokens use, ink centres within 0.1 px of
+Chrome's after the fix, where 13 px and the 17 px titles had been a pixel low. Two experiments in
+between failed:
+- A fractional translate of the drawing does nothing below half a pixel: the text is already on its
+  pixel, and the translate only resamples it.
+- The reported baseline's fraction does not predict the drawn pixel: across line heights, the report
+  went down while the drawn baseline went up.
+
+`OldgeText` now shifts by the CSS baseline less `composeBaseline`, the drawn one, in whole pixels
+only. Across all 165 references, 67 improved by 0.05 points or more and none worsened. Divider,
+Fab, Segmented and Icon did not move:
+
+| Component (Toxic / Media / Crystal) | Before | After |
+|---|---|---|
+| Chip | 6.24 / 6.34 / 6.47 % | 4.47 / 4.56 / 4.72 % |
+| Button | 4.33 / 4.38 / 4.41 % | 4.04 / 4.09 / 4.14 % |
+| Segmented | 1.28 / 1.43 / 1.68 % | unchanged |
+| Fab | 0.33 / 0.33 / 0.29 % | unchanged |
+| Divider | 0.73 / 0.73 / 0.71 % | unchanged |
+| Balloon | 3.72 / 3.73 / 3.76 % | 1.75 / 1.76 / 1.78 % |
+| Banner | 4.27 / 4.29 / 4.38 % | 2.51 / 2.53 / 2.63 % |
+| Select | 2.40 / 2.41 / 2.51 % | 0.99 / 1.00 / 1.11 % |
+| ProgressBar | 2.64 / 2.62 / 2.59 % | 1.37 / 1.34 / 1.29 % |
+| WindowBar | 1.98 / 2.31 / 2.19 % | 1.06 / 1.28 / 1.22 % |
+| RadioGroup | 1.83 / 1.83 / 1.76 % | 1.14 / 1.13 / 1.08 % |
+| Card | 2.48 / 2.55 / 2.60 % | 1.77 / 1.85 / 1.91 % |
+
+`OldgeScriptText` (the lcd and pixel faces) still reads the reported baseline: B-49.
+
 *B-24.* Equal flex slots have the same cause without any text. BottomNav's four items share 330 px,
 82.5 px each. Chrome keeps the half pixel, and Compose's `weight` hands out whole pixels. So the
 icons and labels centred in the second and third slots sit a pixel left of Chrome's (measured:

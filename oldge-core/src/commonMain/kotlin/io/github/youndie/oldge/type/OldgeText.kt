@@ -3,7 +3,6 @@ package io.github.youndie.oldge.type
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -25,6 +24,13 @@ import kotlin.math.roundToInt
  * baseline at 9 where Compose puts it at 9.9 — every pixel label a pixel low, measured on the Icon
  * preview. The text here is laid out by `BasicText` and moved onto the CSS baseline; its size is
  * unchanged.
+ *
+ * The move is measured against where Compose **draws** the glyphs, not against the `firstBaseline` it
+ * reports (B-46). With the typography's centred line height, Compose draws at the centred baseline
+ * from the unrounded metrics, rounded half up to a pixel. The paragraph's reported baseline is not
+ * that pixel: 12.43 for 13 px in a 16 px line, drawn at 13 (12.5 rounded up). A shift read from the
+ * report left every 13 px label and the 17 px titles a pixel low. Measured in Chrome and Compose
+ * with `scripts/research/ink-probe.mjs` and `InkProbeTest`.
  *
  * Styles from [OldgeTheme.type] are recognised by their face; a style in some other face is left
  * where Compose puts it.
@@ -56,8 +62,9 @@ internal fun Modifier.onCssBaseline(
 ): Modifier =
     layout { measurable, constraints ->
         val placeable = measurable.measure(constraints)
-        val target = cssBaseline(metrics, style.fontSize.toPx(), style.lineHeight.toPx())
-        val shift = (target - placeable[FirstBaseline]).roundToInt()
+        val size = style.fontSize.toPx()
+        val line = style.lineHeight.toPx()
+        val shift = (cssBaseline(metrics, size, line) - composeBaseline(metrics, size, line)).roundToInt()
         layout(placeable.width, placeable.height) { placeable.place(0, shift) }
     }
 
@@ -70,6 +77,21 @@ internal fun cssBaseline(
     val ascent = floor(metrics.ascent * fontSizePx / metrics.unitsPerEm + 0.5f)
     val descent = floor(metrics.descent * fontSizePx / metrics.unitsPerEm + 0.5f)
     return floor((lineHeightPx - (ascent + descent)) / 2) + ascent
+}
+
+/**
+ * The pixel Compose draws the first baseline on, from its line's top, for a face at a size in a line
+ * with the typography's `LineHeightStyle(Center, Trim.None)`: the centred baseline from the unrounded
+ * ascent and descent, rounded half up (B-46, measured over every size the tokens use).
+ */
+internal fun composeBaseline(
+    metrics: FontVerticalMetrics,
+    fontSizePx: Float,
+    lineHeightPx: Float,
+): Float {
+    val ascent = metrics.ascent * fontSizePx / metrics.unitsPerEm
+    val descent = metrics.descent * fontSizePx / metrics.unitsPerEm
+    return floor(ascent + (lineHeightPx - (ascent + descent)) / 2 + 0.5f)
 }
 
 /** The bundled face a style of this typography is set in, by its family and weight. */

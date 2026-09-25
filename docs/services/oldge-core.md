@@ -184,6 +184,11 @@ to publish (B-01).
 * **`ch` is measured, not assumed.** `1ch` is the width of «0» in the element's face: 0.572 em in
   the bundled DejaVu Sans Condensed, read from its `hmtx`. It is not the ½ em a first draft of
   EmptyState's `max-width: 30ch` guessed (B-32).
+* **A paragraph's `firstBaseline` is not where Compose draws the glyphs.** It draws on a whole
+  pixel, the centred baseline from unrounded metrics rounded half up, and the reported value can sit
+  on the other side of .5 (12.43 reported, 13 drawn, for 13 px in a 16 px line). Place text by
+  `composeBaseline`, not by `FirstBaseline`. A fractional translate cannot move text below half a
+  pixel; it only resamples it (B-46, research §1.10).
 * **kotlinx-datetime is an `api` dependency** (B-19): `OldgeDatePicker` takes and gives
   `LocalDate`, so a consumer compiles against it; the version is `wip`'s.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration

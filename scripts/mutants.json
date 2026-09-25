@@ -1521,6 +1521,24 @@
    "replace": "private val MOST = 160.dp",
    "tests": "*ChatBehaviourTest*",
    "expect": "the_field_grows_to_120_px_and_no_further"
+  },
+  {
+   "id": "baseline-no-compose",
+   "item": "B-46",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt",
+   "find": "(cssBaseline(metrics, size, line) - composeBaseline(metrics, size, line)).roundToInt()",
+   "replace": "(cssBaseline(metrics, size, line) - cssBaseline(metrics, size, line)).roundToInt()",
+   "tests": "*InkMatchesChromeTest*",
+   "expect": "text_ink_lands_where_chromes_does_at_every_size_the_tokens_use"
+  },
+  {
+   "id": "baseline-round-down",
+   "item": "B-46",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt",
+   "find": "return floor(ascent + (lineHeightPx - (ascent + descent)) / 2 + 0.5f)",
+   "replace": "return floor(ascent + (lineHeightPx - (ascent + descent)) / 2)",
+   "tests": "*InkMatchesChromeTest*",
+   "expect": "text_ink_lands_where_chromes_does_at_every_size_the_tokens_use"
   }
  ]
 }
