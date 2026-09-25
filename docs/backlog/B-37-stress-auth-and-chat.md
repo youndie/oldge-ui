@@ -5,7 +5,7 @@ status: open
 priority: P2
 size: L
 stage: stage-3-screens
-blocked_by: [B-12, B-13, B-15, B-17, B-18, B-24, B-29, B-31, B-34]
+blocked_by: [B-12, B-13, B-15, B-17, B-18, B-24, B-29, B-31, B-34, B-50]
 ---
 
 # B-37 — Stress screens: sign-in and chat
@@ -32,3 +32,27 @@ Sign-in: password with reveal and an error, the switch to an SMS code (CodeInput
   - `reference/design-system/components/AuthScreen/README.md`, `reference/design-system/components/AuthScreen/preview.html`
   - `reference/design-system/components/ChatScreen/README.md`, `reference/design-system/components/ChatScreen/preview.html`
   - `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/`
+
+## Iteration 1 (2026-09-25)
+
+The screens found a missing library surface before any screen code was written, and it became
+[B-50](B-50-screen-body.md), now a blocker of this item and of B-38 to B-40.
+
+- **The gap.** Every page preview stands on `.og-body` (the `.phone` rule is the same in all nine),
+  and the library's painter for it, `skinBody()`, is internal.
+- **Read for the next iteration:**
+  - The references can be rendered straight into the sample module:
+    `node scripts/design-references.mjs --only AuthScreen --out sample/src/desktopTest/snapshots/design`,
+    and the same for ChatScreen. Compare each `sha256` with the one in oldge-core's manifest to
+    show the copy is the same render.
+  - `sample` has no viddik, KSP or `desktopTest` yet. It needs the plugin, the KSP ordering
+    workaround from `oldge-core/build.gradle.kts` (youndie/viddik#44, until B-35), ui-test, and a
+    copy of `PortableText`. The harness is test-only in oldge-core and cannot be shared.
+  - The phone mock-up (the `radius-xl` clip, `shadow-window`, and the skin's body outside the
+    corners) is harness. The reference's corner pixels are the page body's colour: Toxic
+    (25, 41, 18) at (0, 0).
+  - The chat's `og-composer--dock` rounds the Composer's bottom corners to `radius-xl`. That is
+    the same curve the phone clips to, so the clip alone may be enough; measure it before
+    calling it a gap.
+  - Everything else both screens use exists: WindowBar, Segmented, TextField (reveal, error),
+    Checkbox, Button, CodeInput, Readout, Divider, ChatBubble, TypingIndicator, Composer, Avatar.
