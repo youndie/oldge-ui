@@ -1089,6 +1089,159 @@
    "replace": "require(actions.isNotEmpty())",
    "tests": "*SwipeRowBehaviourTest*",
    "expect": "a_row_takes_one_to_three_actions_with_danger_last"
+  },
+  {
+   "id": "drawer-selected",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": ".semantics { selected = current }",
+   "replace": ".semantics { selected = false }",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "the_current_destination_is_selected_and_a_tap_changes_it"
+  },
+  {
+   "id": "drawer-onchange",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "key(e.id) { Item(e, e.id == value, order) { onChange(e.id) } }",
+   "replace": "key(e.id) { Item(e, e.id == value, order) { onChange(value) } }",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "the_current_destination_is_selected_and_a_tap_changes_it"
+  },
+  {
+   "id": "drawer-item-height",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "private val ITEM_HEIGHT = 48.dp",
+   "replace": "private val ITEM_HEIGHT = 40.dp",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "the_current_destination_is_selected_and_a_tap_changes_it"
+  },
+  {
+   "id": "drawer-width",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "private val WIDTH = 304.dp",
+   "replace": "private val WIDTH = 320.dp",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "a_drawer_is_304_dp_wide_or_86_percent_of_its_parent_if_less"
+  },
+  {
+   "id": "drawer-share",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "private const val WIDTH_OF_SCREEN = 0.86f",
+   "replace": "private const val WIDTH_OF_SCREEN = 0.9f",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "a_drawer_is_304_dp_wide_or_86_percent_of_its_parent_if_less"
+  },
+  {
+   "id": "drawer-scrim",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": ".clickable(remember { MutableInteractionSource() }, indication = null, onClick = onClose),",
+   "replace": ".clickable(remember { MutableInteractionSource() }, indication = null, onClick = {}),",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "over_a_screen_the_scrim_closes_it_and_a_closed_one_is_not_there"
+  },
+  {
+   "id": "drawer-closed",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "    if (!open) return\n",
+   "replace": "",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "over_a_screen_the_scrim_closes_it_and_a_closed_one_is_not_there"
+  },
+  {
+   "id": "drawer-no-stagger",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "private const val STAGGER = 35",
+   "replace": "private const val STAGGER = 0",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "the_items_come_in_one_after_another"
+  },
+  {
+   "id": "step-selected",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeStepper.kt",
+   "find": "selected = state == StepState.Current",
+   "replace": "selected = state == StepState.Done",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "the_current_step_is_selected_and_done_steps_are_ticked"
+  },
+  {
+   "id": "step-done-tick",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeStepper.kt",
+   "find": "i < current -> StepState.Done",
+   "replace": "i < current - 1 -> StepState.Done",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "the_current_step_is_selected_and_done_steps_are_ticked"
+  },
+  {
+   "id": "step-fill-past",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeStepper.kt",
+   "find": "val filled = i <= current",
+   "replace": "val filled = i <= current + 1",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "the_trough_fills_up_to_the_current_step"
+  },
+  {
+   "id": "step-ring-still",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeStepper.kt",
+   "find": "val pulse = if (state == StepState.Current) loopPhase(PULSE_MS) else null",
+   "replace": "val pulse: Float? = null",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "the_current_ring_pulses_and_stands_still_under_reduced_motion"
+  },
+  {
+   "id": "step-range",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeStepper.kt",
+   "find": "private const val MAX_STEPS = 5",
+   "replace": "private const val MAX_STEPS = 6",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "steppers_take_three_to_five_steps_and_dots_seven_at_most"
+  },
+  {
+   "id": "dots-max",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgePageDots.kt",
+   "find": "private const val MAX_DOTS = 7",
+   "replace": "private const val MAX_DOTS = 8",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "steppers_take_three_to_five_steps_and_dots_seven_at_most"
+  },
+  {
+   "id": "dots-label",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgePageDots.kt",
+   "find": "contentDescription = \"Страница ${i + 1} из $count\"",
+   "replace": "contentDescription = \"Страница ${i + 1}\"",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "every_dot_is_a_named_44_px_button_and_the_current_one_is_wider"
+  },
+  {
+   "id": "dots-height",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgePageDots.kt",
+   "find": "private val TARGET_HEIGHT = 44.dp",
+   "replace": "private val TARGET_HEIGHT = 32.dp",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "every_dot_is_a_named_44_px_button_and_the_current_one_is_wider"
+  },
+  {
+   "id": "dots-onchange",
+   "item": "B-26",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgePageDots.kt",
+   "find": "Dot(i, count, i == index, onDark) { onChange(i) }",
+   "replace": "Dot(i, count, i == index, onDark) { onChange(index) }",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "every_dot_is_a_named_44_px_button_and_the_current_one_is_wider"
   }
  ]
 }

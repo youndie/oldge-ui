@@ -39,12 +39,9 @@ class ScreenshotSuiteTest {
             "Composer",
             "Dialog",
             "EmptyState",
-            "NavDrawer",
-            "PageDots",
             "PullRefresh",
             "SearchBar",
             "Snackbar",
-            "Stepper",
             "TypingIndicator",
             // Pages (B-37…B-40).
             "AuthScreen",

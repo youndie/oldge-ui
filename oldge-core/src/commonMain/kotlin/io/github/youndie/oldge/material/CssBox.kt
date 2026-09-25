@@ -67,11 +67,16 @@ internal fun Modifier.cssBox(
     val all = shadows + extraOuter
     val blurred = all.filter { !it.inset && it.blur > 0.dp }
     val blurredInsets = all.filter { it.inset && it.blur > 0.dp }
-    val top = if (corners == CssCorners.Bottom) 0.dp else radius
-    val bottom = if (corners == CssCorners.Top) 0.dp else radius
+
+    fun r(round: Boolean) = if (round) radius else 0.dp
     val shape =
         androidx.compose.foundation.shape
-            .RoundedCornerShape(top, top, bottom, bottom)
+            .RoundedCornerShape(
+                r(corners.tl),
+                r(corners.tr),
+                r(corners.br),
+                r(corners.bl),
+            )
     var modifier = this
     for (drop in blurred) {
         modifier =
@@ -124,7 +129,7 @@ internal fun Modifier.cssBox(
                     drawBackground(borderBackground, outer)
                     drawBackground(background, padding)
                 }
-                if (gloss != null) drawGloss(gloss, padding, if (corners == CssCorners.Bottom) 0f else r)
+                if (gloss != null) drawGloss(gloss, padding, if (corners.tl) r else 0f)
                 for (inset in insets) drawInset(padding, inset)
                 if (b > 0f && borderBackground == null) drawBorder(if (layered) square else outer, padding, borderColor)
                 if (layered) {
@@ -265,22 +270,26 @@ internal fun cssRoundRect(
     )
 }
 
-/** Which corners of a box are rounded: all, or only the top or the bottom pair. */
-internal enum class CssCorners {
-    All,
-    Top,
-    Bottom,
+/**
+ * Which corners of a box are rounded: all, or only the top, the bottom or the right-hand pair (the
+ * NavDrawer's `0 xl xl 0`). Physical corners, as CSS's `border-radius` shorthand names them.
+ */
+internal enum class CssCorners(
+    val tl: Boolean,
+    val tr: Boolean,
+    val br: Boolean,
+    val bl: Boolean,
+) {
+    All(true, true, true, true),
+    Top(true, true, false, false),
+    Bottom(false, false, true, true),
+    End(false, true, true, false),
     ;
 
     /** [r] on the rounded corners and none on the others. */
     fun radii(r: Float): CssRadii {
-        val round = CornerRadius(r, r)
-        val zero = CornerRadius.Zero
-        return when (this) {
-            All -> CssRadii(round, round, round, round)
-            Top -> CssRadii(round, round, zero, zero)
-            Bottom -> CssRadii(zero, zero, round, round)
-        }
+        fun c(round: Boolean) = if (round) CornerRadius(r, r) else CornerRadius.Zero
+        return CssRadii(c(tl), c(tr), c(br), c(bl))
     }
 }
 

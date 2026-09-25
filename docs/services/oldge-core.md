@@ -36,7 +36,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/composeResources/font/` | the seven bundled font files; their licences are in `composeResources/files/` |
 | `scripts/fonts/` | the DejaVu subset and the coverage generator (fontTools, run by hand; the tests hold their output) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/press/` | `OldgeIndication` (flash, focus ring; the theme's `LocalIndication`), `oldgePressScale`, `oldgePopIn` (`og-pop`, shared by the chip's and the checkbox's marks) and `oldgePopSoftIn` (`og-pop-soft`), and `oldgeHitArea` (a touch target larger than the drawn box that takes no more room) |
-| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/CssBox.kt` | the CSS-box painter every material is built on (backgrounds: colour, `linear-gradient`, `radial-gradient(circle at …)`; `CssCorners` for a box rounded only on top or bottom, B-24); `Materials.kt` the materials, `Gloss.kt` the gloss transition |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/CssBox.kt` | the CSS-box painter every material is built on (backgrounds: colour, `linear-gradient`, `radial-gradient(circle at …)`; `CssCorners` for a box rounded only on top, bottom (B-24) or right (B-26)); `Materials.kt` the materials, `Gloss.kt` the gloss transition |
 | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/harness/` | `OldgeDemo` (the `.og-demo` frame), the pinned text style, `FixtureSizeTest` |
 | `scripts/probes/` | material probes: HTML from the design system's classes, rendered as references for the materials' parity fixtures |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Turbulence.kt` | the grain and speckle alpha, a port of `feTurbulence` that matches Chrome (research §1.3) |
@@ -44,7 +44,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/icons/` | `OldgeIcon` and the generated `OldgeIcons` (`scripts/generate_icons.py`; `checkOldgeIcons` in `check`) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/` | `OldgeButton`, `OldgeIconButton`, `OldgeOrbButton` (B-12), `OldgeFab`, `OldgeExtendedFab`, `OldgeFabDock`, `OldgeSegmented` (B-13), the three chips and `OldgeChipGroup` (B-14); `ButtonBehaviourTest`, `FabSegmentedBehaviourTest` and `ChipBehaviourTest` hold the READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/` | `OldgeDivider` (B-11), `OldgeCard`, `OldgeActionTile` (B-21), `OldgePanel`, `OldgeList` with `OldgeListItem`, and `oldgeListSections` with `OldgeListSectionHeader` for a `LazyColumn` (B-20), `OldgeAccordion` (B-22), `OldgeSwipeRow` (B-23); `CardTileBehaviourTest`, `PanelListBehaviourTest`, `AccordionBehaviourTest` and `SwipeRowBehaviourTest` hold their READMEs' behaviour rules |
-| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/` | `OldgeMenu`, `OldgeTooltip`, `OldgeBalloon` (B-28), `OldgeWindowBar`, `OldgeBottomNav` (B-24), `OldgeCategoryTabs`, `OldgeTabs` (B-25); `MenuTooltipBalloonBehaviourTest`, `BarBehaviourTest` and `TabsBehaviourTest` hold their READMEs' behaviour rules |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/` | `OldgeMenu`, `OldgeTooltip`, `OldgeBalloon` (B-28), `OldgeWindowBar`, `OldgeBottomNav` (B-24), `OldgeCategoryTabs`, `OldgeTabs` (B-25), `OldgeNavDrawer`, `OldgeStepper`, `OldgePageDots` (B-26); `MenuTooltipBalloonBehaviourTest`, `BarBehaviourTest`, `TabsBehaviourTest` and `DrawerStepperBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/` | `OldgeReadout`, `OldgeMeter`, `OldgeProgressBar` (B-29), `OldgeSpinner`, `OldgeSkeleton` (B-30), `OldgeBadge`, `OldgeAvatar` (B-31), with the LCD tag and text in `Lcd.kt` and the frozen loop phase in `Loop.kt`; `LcdBehaviourTest`, `LoopBehaviourTest` and `BadgeAvatarBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/` | `OldgeCheckbox`, `OldgeRadioGroup` (B-15), `OldgeSwitch`, `OldgeSlider` (B-16), `OldgeTextField` (B-17), `OldgeSelect`, `OldgeCodeInput` (B-18), `OldgeDatePicker` (B-19), sharing `Field.kt`'s label and help line; `CheckBehaviourTest`, `SwitchSliderBehaviourTest`, `TextFieldBehaviourTest`, `SelectCodeBehaviourTest` and `DatePickerBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt` | text on the CSS baseline — use it, not `BasicText`, for any text a reference shows |
@@ -165,6 +165,11 @@ to publish (B-01).
   The SwipeRow trails the finger by the platform's slop, where the design's row, once past its
   8 px, is at the finger's full offset. Tests that hold a drag add
   `LocalViewConfiguration.current.touchSlop` to the distance.
+* **A size modifier cannot undercut the minimum an earlier one set.** `fillMaxWidth(0.86f)
+  .widthIn(max = 304.dp)` gives 86 %, not the smaller of the two, since `fillMaxWidth` fixes the
+  minimum and `widthIn` only coerces inside it. The other order takes 86 % of 304. CSS's
+  `min(304px, 86vw)` is one `layout` that measures with the smaller. The NavDrawer read 4–9 %
+  until it was (B-26).
 * **kotlinx-datetime is an `api` dependency** (B-19): `OldgeDatePicker` takes and gives
   `LocalDate`, so a consumer compiles against it; the version is `wip`'s.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration

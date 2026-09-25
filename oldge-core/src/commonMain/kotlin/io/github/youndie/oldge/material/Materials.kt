@@ -149,6 +149,15 @@ internal fun DrawScope.drawSkinBody(
     grain?.let { drawRect(tiled(it)) }
 }
 
+/** The grain alone, over what is drawn before it: `.og-drawer::before` and the like. */
+@Composable
+internal fun Modifier.grain(): Modifier {
+    if (!OldgeTheme.texture) return this
+    val c = OldgeTheme.colors
+    val grain = remember(c.grain) { noiseTile(GRAIN, c.grain) }
+    return drawBehind { drawRect(tiled(grain)) }
+}
+
 private const val BODY_GROUND_STOP = 0.7f
 private const val GLOW_RX = 1.2f
 private const val GLOW_RY = 0.7f
