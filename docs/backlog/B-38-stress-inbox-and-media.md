@@ -1,7 +1,7 @@
 ---
 id: B-38
 title: "Stress screens: the long list and full-screen media"
-status: open
+status: done
 priority: P2
 size: L
 stage: stage-3-screens
@@ -54,3 +54,41 @@ Both previews were surveyed against the library's public API before any screen c
   spinning under reduced motion, which is still.
 - **None of the later pages (B-39, B-40) use** a ListItem with an element icon, a PullRefresh or
   a ListSection. The two gaps block only this item.
+
+## Iteration 2 (2026-09-25): done
+
+- **The screens.** `InboxScreen` and `MediaScreen` are in `sample`, from public components only.
+  - The inbox's body is `OldgeLazyPullRefresh { oldgeListSections { … } }` (B-55). Its rows lead
+    with an Avatar (B-54).
+  - The media page's photograph, scrim and caption are the page's own `<style>`, drawn in
+    `sample` from theme colours with `css literal` markers, as iteration 1 decided.
+- **References** were rendered into `sample` with `--out`. Each `sha256` equals oldge-core's.
+- **Parity, raw, against the floor of 0.72 %:**
+
+  | Page | Toxic | Media | Crystal |
+  |---|---|---|---|
+  | InboxScreen | 1.86 % | 2.00 % | 2.26 % |
+  | MediaScreen | 1.19 % | 1.29 % | 1.21 % |
+
+  The inbox matches the reference as rendered: the refresh disc spinning above «Сегодня» (the
+  page opens refreshing for 1.6 s, and both sides are photographed inside it), and the second
+  row swiped open onto «Архив» and «Удалить». What is left is the text-heavy rows' own residual.
+- **Component gaps found here**, both first measured against Chrome on this page, since no preview
+  shows either:
+  - [B-57](B-57-overlay-bar-height.md): the overlay WindowBar is 72 px in Chrome and 64 here
+    (`content-box`), so its content sits 4 px high.
+  - [B-58](B-58-page-dots-on-dark.md): PageDots on dark. The CSS cascade gives the current dot
+    the dark grey with the accent glow, and here it is filled with the accent.
+- **Interaction, as Compose UI tests** (`ScreenBehaviourTest`):
+  - The inbox opens refreshing and stops after its 1.6 s.
+  - «Непрочитанные» shows the empty state, and «Архив» the error with «Повторить».
+  - The media page turns on a swipe of more than 40 dp and not on less, hides its interface on a
+    tap and shows it again, and the heart toggles its label.
+- **Mutants:** 5 of 5 killed.
+  - The refresh never ending.
+  - The unread filter dead.
+  - The tap doing nothing.
+  - The swipe threshold gone.
+  - The heart stuck.
+- **Golden mutation:** the light's centre moved from 30 % to 50 %. `viddikVerify` named
+  MediaScreen ×3.

@@ -31,6 +31,8 @@ missing piece becomes a library item, not a private composable (B-37's decision)
 |---|---|
 | `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/AuthScreen.kt` | the sign-in stress page (B-37) |
 | `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ChatScreen.kt` | the chat stress page (B-37) |
+| `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/InboxScreen.kt` | the long-list stress page: sticky sections in a lazy pull to refresh, swipe rows, the empty and error filters (B-38) |
+| `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/MediaScreen.kt` | the full-screen media stress page: the overlay bar, the page's own photo stand-in and scrim, PageDots on dark (B-38) |
 | `sample/src/desktopMain/kotlin/io/github/youndie/oldge/sample/Main.kt` | the desktop window; screens are shown there once B-41 builds the sample app |
 | `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/ScreenFixtures.kt` | `Phone`: the preview's `.phone` harness, and the parity fixtures |
 | `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/ScreenBehaviourTest.kt` | what a page demonstrates as interaction: the sign-in mode switch, a sent message joining its run |
@@ -66,6 +68,10 @@ missing piece becomes a library item, not a private composable (B-37's decision)
 
 ## 5. Quirks
 
+- **A page's own `<style>` is the page's content, drawn here.** MediaScreen's photograph, scrim
+  and caption (`.media`, `.media__bottom`) are no design-system component. They are drawn in
+  `sample` from theme colours, each literal marked with its source. What a design-system class
+  draws must come from the library (B-38).
 - **A page preview's `justify-content: flex-end` in a scrolling column** (ChatScreen's lane) is a
   `Box` aligned to the bottom holding the scrolling column. A short lane then sits at the bottom
   and a long one scrolls from its top, as the browser's does. `Arrangement.Bottom` inside

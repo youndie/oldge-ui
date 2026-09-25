@@ -71,3 +71,27 @@ fun ChatScreenMedia() = Phone(OldgeSkin.Media) { ChatScreen(it) }
 @ViddikScreenshot(group = "ChatScreen", name = "Crystal", width = 390, height = 760)
 @Composable
 fun ChatScreenCrystal() = Phone(OldgeSkin.Crystal) { ChatScreen(it) }
+
+@ViddikScreenshot(group = "InboxScreen", name = "Toxic", width = 390, height = 760)
+@Composable
+fun InboxScreenToxic() = Phone(OldgeSkin.Toxic) { InboxScreen(it) }
+
+@ViddikScreenshot(group = "InboxScreen", name = "Media", width = 390, height = 760)
+@Composable
+fun InboxScreenMedia() = Phone(OldgeSkin.Media) { InboxScreen(it) }
+
+@ViddikScreenshot(group = "InboxScreen", name = "Crystal", width = 390, height = 760)
+@Composable
+fun InboxScreenCrystal() = Phone(OldgeSkin.Crystal) { InboxScreen(it) }
+
+@ViddikScreenshot(group = "MediaScreen", name = "Toxic", width = 390, height = 760)
+@Composable
+fun MediaScreenToxic() = Phone(OldgeSkin.Toxic) { MediaScreen(it) }
+
+@ViddikScreenshot(group = "MediaScreen", name = "Media", width = 390, height = 760)
+@Composable
+fun MediaScreenMedia() = Phone(OldgeSkin.Media) { MediaScreen(it) }
+
+@ViddikScreenshot(group = "MediaScreen", name = "Crystal", width = 390, height = 760)
+@Composable
+fun MediaScreenCrystal() = Phone(OldgeSkin.Crystal) { MediaScreen(it) }

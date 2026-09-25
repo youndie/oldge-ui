@@ -1764,6 +1764,51 @@
    "replace": "            state = rememberLazyListState(0, 0 * state.firstVisibleItemIndex),",
    "tests": "*PullRefreshBehaviourTest*",
    "expect": "list_sections_stick_inside_the_lazy_form"
+  },
+  {
+   "id": "inbox-refresh-never-ends",
+   "item": "B-38",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/InboxScreen.kt",
+   "find": "            busy = false",
+   "replace": "            busy = true",
+   "tests": "*ScreenBehaviourTest*",
+   "expect": "the_inbox_filters_show_the_empty_state_and_the_error_and_the_refresh_ends"
+  },
+  {
+   "id": "inbox-unread-filter-dead",
+   "item": "B-38",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/InboxScreen.kt",
+   "find": "{ filter = InboxFilter.Unread }",
+   "replace": "{ filter = InboxFilter.All }",
+   "tests": "*ScreenBehaviourTest*",
+   "expect": "the_inbox_filters_show_the_empty_state_and_the_error_and_the_refresh_ends"
+  },
+  {
+   "id": "media-tap-does-nothing",
+   "item": "B-38",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/MediaScreen.kt",
+   "find": "{ ui = !ui }",
+   "replace": "{ ui = ui }",
+   "tests": "*ScreenBehaviourTest*",
+   "expect": "the_photo_turns_on_a_swipe_hides_the_interface_on_a_tap_and_the_heart_toggles"
+  },
+  {
+   "id": "media-swipe-threshold-gone",
+   "item": "B-38",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/MediaScreen.kt",
+   "find": "if (abs(dx) > SWIPE.toPx()) {",
+   "replace": "if (abs(dx) > 0f * SWIPE.toPx()) {",
+   "tests": "*ScreenBehaviourTest*",
+   "expect": "the_photo_turns_on_a_swipe_hides_the_interface_on_a_tap_and_the_heart_toggles"
+  },
+  {
+   "id": "media-heart-stuck",
+   "item": "B-38",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/MediaScreen.kt",
+   "find": "{ liked = !liked },",
+   "replace": "{ liked = liked },",
+   "tests": "*ScreenBehaviourTest*",
+   "expect": "the_photo_turns_on_a_swipe_hides_the_interface_on_a_tap_and_the_heart_toggles"
   }
  ]
 }

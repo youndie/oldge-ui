@@ -35,6 +35,42 @@
       "height": 760,
       "page": true,
       "sha256": "7b977bbef5875ecf983c2c3dac5522f5ae3139795d16f1251db38df30cce1383"
+    },
+    "InboxScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "529f2c9c571074945d0e395f6e1fba90675e3c4d7d22621165a74d229a3043b3"
+    },
+    "InboxScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "d85e42681aae1b56255dd8a04528080330db5138cbb847bcddc9f5c692ece63e"
+    },
+    "InboxScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "0493d8e658bd927374d3ade9ee21e2f0a88e333024bd74a70229efd1295dc840"
+    },
+    "MediaScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "f96ff4e4d43419edfc7214689d7e66b6656548fb8ca97b54411c7ba3d81e2b44"
+    },
+    "MediaScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "08e1e0147fbdf59b99b8fc94cbb661bfb936717c01dc1d5139197bd5212e9b44"
+    },
+    "MediaScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "950d795d0ed09149c497b39b8074f4bc8d717f4235bc9e45b5515a46682a9cc2"
     }
   },
   "designSystem": {
