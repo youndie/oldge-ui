@@ -25,17 +25,22 @@ import io.github.youndie.viddik.core.ViddikPlatformTextStyle
  * The design system's preview frame, `.og-demo` on the skin's body: a column at most 390 dp wide,
  * padding `space-4`, gap `space-3`, filling the fixture (whose size is the reference's, held by
  * `FixtureSizeTest`). Reduced motion, as the references are rendered (research §1.2); texture on,
- * as B-04 decided.
+ * as B-04 decided. Not [padded], the frame is the fixture's to draw: a preview that makes the demo
+ * itself the scroll container (ListSection) puts its padding inside the scroll.
  */
 @Composable
 fun OldgeDemo(
     skin: OldgeSkin,
+    padded: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) = OldgeTheme(skin = skin, reducedMotion = true) {
     PortableText {
         Box(Modifier.fillMaxSize().skinBody()) {
             Column(
-                Modifier.widthIn(max = 390.dp).padding(OldgeTheme.spacing.space4),
+                Modifier
+                    .widthIn(
+                        max = 390.dp,
+                    ).then(if (padded) Modifier.padding(OldgeTheme.spacing.space4) else Modifier),
                 verticalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space3),
                 content = content,
             )

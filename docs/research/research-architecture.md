@@ -236,6 +236,20 @@ a pixel face whatever its script (D6).
 **Consequence.** `1rem` is `16.sp` and a CSS px is a dp (D5); EdgeScale is a fixture with
 `Density(1f, fontScale = 2f)`, and it is the test that no component fixed a height a text lives in.
 
+*Amended in B-20.* The row above quotes the README's «24em», and the CSS says otherwise. The rule is
+`@container og-list (max-width: 20em)` (bundle.css, stress-screen additions). Its em is the list's
+own font, the body's 15 px, not the root's 16. Measured in Chrome on the reference CSS: a list whose
+content box is 300 px moves the value under the title, and one of 301 px does not. `OldgeList`
+therefore switches at 20 × the body style's size in dp, which is 300 dp at the default scale and 360
+at 1.2. The README's 24em is only right with a 16 px root and a 12.5 px list font.
+
+*A deviation, found in B-20.* A ListSection header sticks at a different place in each. CSS sticks
+it inside the scroll container's padding: on the preview, scrolled, the head holds 16 px down, and
+rows scroll through the band above it. Compose's `stickyHeader` sticks it at the list's edge, over
+any `contentPadding`. The header cannot tell it is stuck, so the difference is left as it is and
+shown in the `ListSectionStates` golden, not measured as parity. A consumer who wants CSS's place
+pads the `LazyColumn` itself, so that nothing scrolls in the band.
+
 ### 1.8 The toolchain
 
 | Fact | Where verified |

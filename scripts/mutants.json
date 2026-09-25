@@ -621,6 +621,141 @@
    "replace": "null",
    "tests": "*BadgeAvatarBehaviourTest*",
    "expect": "an_online_lamp_pulses_and_stands_still_under_reduced_motion"
+  },
+  {
+   "id": "row-min-height",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "private val HEIGHT = 52.dp",
+   "replace": "private val HEIGHT = 48.dp",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_pressable_row_is_one_52_px_button_and_a_dense_one_44"
+  },
+  {
+   "id": "row-dense-height",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "defaultMinSize(minHeight = if (dense) DENSE_HEIGHT else HEIGHT)",
+   "replace": "defaultMinSize(minHeight = HEIGHT)",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_pressable_row_is_one_52_px_button_and_a_dense_one_44"
+  },
+  {
+   "id": "row-chevron-interactive",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "val interactive = onClick != null || chevron",
+   "replace": "val interactive = onClick != null || (chevron && dense)",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_row_without_an_action_is_not_a_button_and_a_chevron_makes_it_one"
+  },
+  {
+   "id": "row-selected-semantics",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "if (selected) Modifier.semantics { this.selected = true } else Modifier",
+   "replace": "Modifier",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_selected_row_says_it_is_selected"
+  },
+  {
+   "id": "row-title-lines",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "maxLines = 2, overflow = TextOverflow.Ellipsis",
+   "replace": "maxLines = 1, overflow = TextOverflow.Ellipsis",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_long_title_wraps_to_two_lines_and_stops_there"
+  },
+  {
+   "id": "row-value-max",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "private const val VALUE_MAX = 0.42f",
+   "replace": "private const val VALUE_MAX = 0.6f",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_value_takes_at_most_42_percent_of_the_row"
+  },
+  {
+   "id": "list-narrow-inclusive",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "val narrow = maxWidth <= narrowAt",
+   "replace": "val narrow = maxWidth < narrowAt",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "in_a_list_of_300_dp_the_value_moves_under_the_title"
+  },
+  {
+   "id": "list-narrow-em",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "private const val NARROW_EM = 20f",
+   "replace": "private const val NARROW_EM = 24f",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "in_a_list_of_300_dp_the_value_moves_under_the_title"
+  },
+  {
+   "id": "list-narrow-fixed-dp",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "(OldgeTheme.type.body.fontSize * NARROW_EM).toDp()",
+   "replace": "(OldgeTheme.type.body.fontSize.value * NARROW_EM).dp",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "the_narrow_width_grows_with_the_system_font"
+  },
+  {
+   "id": "list-collection",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "collectionInfo = CollectionInfo(rows.size, 1)",
+   "replace": "collectionInfo = CollectionInfo(-1, 1)",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_list_is_a_collection_of_its_rows_under_its_label"
+  },
+  {
+   "id": "switch-hidden-name",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSwitch.kt",
+   "find": ".then(if (showLabel) Modifier else Modifier.semantics { contentDescription = label })",
+   "replace": ".then(Modifier)",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_switch_in_a_row_is_named_by_its_label_without_showing_it"
+  },
+  {
+   "id": "switch-hidden-gap",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSwitch.kt",
+   "find": "            Spacer(Modifier)\n",
+   "replace": "",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_switch_in_a_row_is_named_by_its_label_without_showing_it"
+  },
+  {
+   "id": "panel-title-heading",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgePanel.kt",
+   "find": ".semantics { heading() }",
+   "replace": ".semantics { }",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_panel_title_and_a_section_header_are_headings"
+  },
+  {
+   "id": "section-head-heading",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeListSection.kt",
+   "find": ".semantics(mergeDescendants = true) { heading() }",
+   "replace": ".semantics(mergeDescendants = true) { }",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_panel_title_and_a_section_header_are_headings"
+  },
+  {
+   "id": "section-head-not-sticky",
+   "item": "B-20",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeListSection.kt",
+   "find": "stickyHeader(key = SectionHead(s.key))",
+   "replace": "item(key = SectionHead(s.key))",
+   "tests": "*PanelListBehaviourTest*",
+   "expect": "a_section_header_holds_at_the_top_while_its_section_scrolls_under_it"
   }
  ]
 }

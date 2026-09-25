@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
@@ -27,6 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -49,7 +52,8 @@ import io.github.youndie.oldge.type.OldgeText
  *
  * Its README's rules: on, the capsule fills with the accent and the lamp says so in a word; a switch
  * acts at once — where a change waits for «Сохранить», use a checkbox. In a list row, pass the row's
- * title as [label] and leave it to the row to show it.
+ * title as [label] with [showLabel] false and leave it to the row to show it: the label is then only
+ * the switch's accessible name, as the design's `og-sr` span is.
  *
  * The knob stretches under the finger and flies over with a bounce; the lamp blinks as it comes on.
  * Disabled, the capsule is drawn at half opacity and taps do nothing.
@@ -62,6 +66,7 @@ public fun OldgeSwitch(
     modifier: Modifier = Modifier,
     hint: String? = null,
     enabled: Boolean = true,
+    showLabel: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
 ) {
     val c = OldgeTheme.colors
@@ -76,13 +81,19 @@ public fun OldgeSwitch(
                 enabled = enabled,
                 role = Role.Switch,
                 onValueChange = onCheckedChange,
-            ).defaultMinSize(minHeight = OldgeTheme.spacing.hitMin),
+            ).defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)
+            .then(if (showLabel) Modifier else Modifier.semantics { contentDescription = label }),
         horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space3),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(Modifier.weight(1f)) {
-            OldgeText(label, style = type.body.copy(color = c.ink))
-            if (hint != null) OldgeText(hint, style = type.caption.copy(color = c.inkMuted))
+        if (showLabel) {
+            Column(Modifier.weight(1f)) {
+                OldgeText(label, style = type.body.copy(color = c.ink))
+                if (hint != null) OldgeText(hint, style = type.caption.copy(color = c.inkMuted))
+            }
+        } else {
+            // The empty `.og-switch__text` is still a flex item: the 12 px gap stays before the track.
+            Spacer(Modifier)
         }
         Track(checked, enabled, source)
     }
