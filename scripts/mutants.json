@@ -441,6 +441,60 @@
    "replace": "e.key == Key.F12",
    "tests": "*MenuTooltipBalloonBehaviourTest*",
    "expect": "escape_closes_a_menu"
+  },
+  {
+   "id": "readout-name",
+   "item": "B-29",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeReadout.kt",
+   "find": "listOfNotNull(label, value, unit).joinToString(\" \")",
+   "replace": "listOfNotNull(label, value).joinToString(\" \")",
+   "tests": "*LcdBehaviourTest*",
+   "expect": "a_readout_is_heard_as_its_label_value_and_unit"
+  },
+  {
+   "id": "meter-words",
+   "item": "B-29",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeMeter.kt",
+   "find": "stateDescription = valueText",
+   "replace": "stateDescription = label",
+   "tests": "*LcdBehaviourTest*",
+   "expect": "a_meter_is_heard_as_its_level_and_its_words"
+  },
+  {
+   "id": "meter-level",
+   "item": "B-29",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeMeter.kt",
+   "find": "progressBarRangeInfo = ProgressBarRangeInfo(v, 0f..1f)",
+   "replace": "progressBarRangeInfo = ProgressBarRangeInfo(0f, 0f..1f)",
+   "tests": "*LcdBehaviourTest*",
+   "expect": "a_meter_is_heard_as_its_level_and_its_words"
+  },
+  {
+   "id": "progress-indeterminate",
+   "item": "B-29",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeProgressBar.kt",
+   "find": "ProgressBarRangeInfo.Indeterminate",
+   "replace": "ProgressBarRangeInfo(0f, 0f..1f)",
+   "tests": "*LcdBehaviourTest*",
+   "expect": "a_progress_bar_reports_its_value_or_that_it_has_none"
+  },
+  {
+   "id": "done-word",
+   "item": "B-29",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeProgressBar.kt",
+   "find": "detail ?: \"Готово\"",
+   "replace": "detail ?: \"\"",
+   "tests": "*LcdBehaviourTest*",
+   "expect": "done_and_error_say_so_in_a_word_not_only_a_colour"
+  },
+  {
+   "id": "error-word",
+   "item": "B-29",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeProgressBar.kt",
+   "find": "detail ?: \"Ошибка\"",
+   "replace": "detail ?: \"\"",
+   "tests": "*LcdBehaviourTest*",
+   "expect": "done_and_error_say_so_in_a_word_not_only_a_colour"
   }
  ]
 }

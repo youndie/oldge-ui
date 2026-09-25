@@ -1,7 +1,7 @@
 ---
 id: B-29
 title: "Readout, Meter and ProgressBar"
-status: open
+status: done
 priority: P1
 size: M
 stage: stage-2-components
@@ -42,3 +42,40 @@ The LCD family: Readout's glowing digits (`readout`, `readout-sm`, no glow in Cr
   - `reference/design-system/components/Meter/README.md`, `reference/design-system/components/Meter/preview.html`
   - `reference/design-system/components/ProgressBar/README.md`, `reference/design-system/components/ProgressBar/preview.html`
   - `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/`
+
+## Findings (2026-09-25)
+
+- Parity (±16, floor 0.72 %):
+  - Meter: 1.22 / 1.20 / 1.19 % (Toxic / Media / Crystal), on the first run.
+  - Readout: 2.20 / 2.28 / 2.24 %. The glass and the digits line up; the second and third readouts
+    are 1–2 px wider, because their text widths are rounded up to whole pixels (research §1.10,
+    B-12).
+  - ProgressBar: 2.64 / 2.62 / 2.59 %, from 3.45–3.50 % after one cause. Under reduced motion the
+    indeterminate bar's `opacity: .5` belongs to the whole element. Faded one draw at a time, the
+    well-coloured gaps between the blocks came out wrong. It is now one layer at half opacity and
+    matches Chrome's to the pixel. What is left is the heads (13 px, B-46, noted there) and the
+    detail lines.
+- The LCD tag (`pixel-tag` in `lcd-dim`, upper case) and LCD text (the lcd face joined with its
+  companion) are shared in `Lcd.kt`. A readout's «°C» and a meter's «ГБ» go through the join
+  (research D6). Readout's small size is the CSS's 1.375rem / 1.5rem with the readout's tracking,
+  not the `readout-sm` token (1rem / 1.25rem), which is for a different place.
+- The Meter's cells are fractional (`flex: 1`, 2 px apart), and each edge is rounded to a pixel as
+  Chrome snaps a painted box. A cell's colour comes from where it sits: over 60 % of the scale
+  `meter-mid`, over 85 % `meter-peak`.
+- `oldgePopSoftIn` (`og-pop-soft`) joins `oldgePopIn` in `press/`; the ProgressBar's done and error
+  lines pop in with it.
+- The READMEs' rules, in the API or `LcdBehaviourTest`:
+  - a readout is heard as its label, value and unit;
+  - a meter's `valueText` is required and heard with its level;
+  - a progress bar reports its value, or that it has none;
+  - done and error add a word (and an icon), not only a colour;
+  - «one to three readouts a screen» is a KDoc line.
+
+  The running indeterminate bar is motion, and no golden shows it; the harness renders reduced
+  motion, as the references do.
+- Mutations through `scripts/mutate.py`: 6 of 6 behaviour mutants killed by their aimed tests.
+  Goldens by name: the ghost 8s, the peak threshold, the fill's group opacity, the block width.
+- Values the tokens do not hold, marked `// css literal:`:
+  - Readout: gap 2, small digits 1.375rem / 1.5rem, unit 0.875rem / 1rem;
+  - Meter: gap 6, bar 12, cell gap 2, radius 1, value 0.9375rem / 1.125rem;
+  - ProgressBar: well 20 with padding 2, fill radius 1, blocks 8 with gaps of 2, status icon 16.

@@ -42,3 +42,24 @@ private const val PEAK = 0.7f
 private const val OVER = 1.25f
 private const val FROM_TURN = -25f
 private const val OVER_TURN = 6f
+
+/**
+ * `@keyframes og-pop-soft` over `dur-base` on the spring, once, when the element enters the
+ * composition: from 0.6 and 0.3 opacity to rest. Under reduced motion the element is simply there.
+ */
+@Composable
+internal fun Modifier.oldgePopSoftIn(): Modifier {
+    val motion = OldgeTheme.motion
+    val pop = remember { Animatable(if (motion.reduced) 1f else 0f) }
+    LaunchedEffect(Unit) { pop.animateTo(1f, tween(motion.base, easing = motion.spring)) }
+    return graphicsLayer {
+        val p = pop.value
+        val s = SOFT_FROM + (1 - SOFT_FROM) * p
+        scaleX = s
+        scaleY = s
+        alpha = (SOFT_ALPHA + (1 - SOFT_ALPHA) * p).coerceIn(0f, 1f)
+    }
+}
+
+private const val SOFT_FROM = 0.6f
+private const val SOFT_ALPHA = 0.3f

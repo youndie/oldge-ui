@@ -23,6 +23,7 @@ about half of RadioGroup's 1.8 %: its legend is the label style and is a pixel l
 low. The AC's size list should take in the `title` face.
 *B-28:* Balloon's body, 13 px in an 18 px line, is a pixel low too (best at +1), while its 15 px
 titles are exact. It is about 3 of Balloon's 3.7 %.
+*B-29:* ProgressBar's heads, the label style, are a pixel low as well; they carry most of its 2.6 %.
 
 **What is verified:**
 
