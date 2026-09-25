@@ -7,6 +7,7 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 import io.github.youndie.oldge.theme.LocalOldgeTextStyle
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.oldge.theme.OldgeTypography
@@ -45,10 +46,11 @@ internal fun OldgeText(
     overflow: TextOverflow = TextOverflow.Clip,
 ) {
     val metrics = OldgeTheme.type.metricsOf(style)
+    val laid = style.withHonouredLine()
     BasicText(
         text,
-        if (metrics == null) modifier else modifier.onCssBaseline(metrics, style),
-        style = style,
+        if (metrics == null) modifier else modifier.onCssBaseline(metrics, laid),
+        style = laid,
         maxLines = maxLines,
         softWrap = softWrap,
         overflow = overflow,
@@ -94,6 +96,20 @@ internal fun composeBaseline(
     return floor(ascent + (lineHeightPx - (ascent + descent)) / 2 + 0.5f)
 }
 
+/**
+ * [style] with a line that Compose honours. A line exactly as tall as the font size (a height
+ * multiplier of 1) is laid out as if no line height were set: the face's own, taller line, with the
+ * baseline at its ascent. The lcd readouts drew 2 px low that way, and a node taller than its line
+ * sat off-centre in the Avatar's face (B-49). A hair more line keeps the multiplier off 1, and the
+ * text is laid out and drawn as every other line is.
+ */
+internal fun TextStyle.withHonouredLine(): TextStyle =
+    if (lineHeight.isSp && fontSize.isSp && lineHeight.value == fontSize.value) {
+        copy(lineHeight = (lineHeight.value * SAME_SIZE_NUDGE).sp)
+    } else {
+        this
+    }
+
 /** The bundled face a style of this typography is set in, by its family and weight. */
 internal fun OldgeTypography.metricsOf(style: TextStyle): FontVerticalMetrics? {
     val bold = (style.fontWeight ?: FontWeight.Normal) >= FontWeight.Bold
@@ -107,3 +123,5 @@ internal fun OldgeTypography.metricsOf(style: TextStyle): FontVerticalMetrics? {
         else -> null
     }
 }
+
+private const val SAME_SIZE_NUDGE = 1.0001f

@@ -1584,6 +1584,33 @@
    "replace": "modifier = Modifier.graphicsLayer { rotationZ = 0f * wiggleTurn(wiggle.value, out) },",
    "tests": "*SearchBarBehaviourTest*",
    "expect": "the_magnifier_wiggles_on_focus_and_not_under_reduced_motion"
+  },
+  {
+   "id": "script-line-not-honoured",
+   "item": "B-49",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/ScriptText.kt",
+   "find": "val style = given.withHonouredLine()",
+   "replace": "val style = given",
+   "tests": "*InkMatchesChromeTest*",
+   "expect": "text_ink_lands_where_chromes_does_at_every_size_the_tokens_use"
+  },
+  {
+   "id": "companion-taller-than-primary",
+   "item": "B-49",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/FontCoverage.kt",
+   "find": "FontVerticalMetrics(ascent = 885, descent = 235, unitsPerEm = 1000)",
+   "replace": "FontVerticalMetrics(ascent = 885, descent = 250, unitsPerEm = 1000)",
+   "tests": "*CompanionMetricsTest*",
+   "expect": "each_companion_sits_inside_its_primary_face"
+  },
+  {
+   "id": "script-baseline-not-drawn",
+   "item": "B-49",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/ScriptText.kt",
+   "find": "(cssBaseline(metrics, size, line) - composeBaseline(metrics, size, line)).roundToInt()",
+   "replace": "(cssBaseline(metrics, size, line) - cssBaseline(metrics, size, line)).roundToInt()",
+   "tests": "*InkMatchesChromeTest*",
+   "expect": "text_ink_lands_where_chromes_does_at_every_size_the_tokens_use"
   }
  ]
 }

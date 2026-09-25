@@ -189,6 +189,11 @@ to publish (B-01).
   on the other side of .5 (12.43 reported, 13 drawn, for 13 px in a 16 px line). Place text by
   `composeBaseline`, not by `FirstBaseline`. A fractional translate cannot move text below half a
   pixel; it only resamples it (B-46, research §1.10).
+* **A line height equal to the font size is ignored.** Compose lays `14.sp` in `14.sp` out as if
+  no line height were set: the face's own taller line, the baseline at its ascent. The lcd readouts
+  and the Avatar's initials sat off by it. `OldgeText` and `OldgeScriptText` pass every style
+  through `withHonouredLine()`, which nudges such a line by 1.0001. A text component that
+  bypasses both must do the same (B-49).
 * **An `<input>` has padding the design never wrote.** Chrome's style sheet gives it `1px 2px`, so
   a bare input's text starts 2 px in. `.og-search__input` sets `border` and `background` but not
   `padding`, and the SearchBar's text sat 2 px early until the field took the same padding (B-47).

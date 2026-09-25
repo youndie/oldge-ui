@@ -352,8 +352,24 @@ Fab, Segmented and Icon did not move:
 | RadioGroup | 1.83 / 1.83 / 1.76 % | 1.14 / 1.13 / 1.08 % |
 | Card | 2.48 / 2.55 / 2.60 % | 1.77 / 1.85 / 1.91 % |
 
-`OldgeScriptText` (the lcd and pixel faces) still reads the reported baseline: B-49.
+`OldgeScriptText` (the lcd and pixel faces) still read the reported baseline here; B-49 moved it
+to the drawn one.
 
+*B-49, measured and fixed.* **The lcd and pixel faces follow the same drawn-baseline rule, and a
+line as tall as its font is not honoured at all.** `OldgeScriptText` still placed text by the
+reported baseline. The ink probe was extended to every lcd and pixel size the tokens use. Only
+lcd 14 px in a 14 px line was off, a pixel high: the Stepper's digit. The hypothesis that the rule
+explained the lcd digits generally is refuted for every other size.
+
+The second finding came from the fix. Compose treats a line height exactly equal to the font size
+as no line height: the face's natural, taller line, baseline at the ascent. `composeBaseline`
+assumes the centred line, so the line is nudged by 1.0001 (`withHonouredLine`) wherever the two are
+equal.
+
+A companion face never makes the line taller: PT Mono and Tiny5 sit inside Share Tech Mono and
+Silkscreen per em (`CompanionMetricsTest`). Parity moved Avatar by 0.21–0.26 points, and Stepper
+and NavDrawer by 0.03. Readout, Meter, Switch, DatePicker, Divider, CodeInput and Badge did not
+move, and nothing worsened (the table is in B-49).
 *B-24.* Equal flex slots have the same cause without any text. BottomNav's four items share 330 px,
 82.5 px each. Chrome keeps the half pixel, and Compose's `weight` hands out whole pixels. So the
 icons and labels centred in the second and third slots sit a pixel left of Chrome's (measured:

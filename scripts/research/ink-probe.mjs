@@ -19,10 +19,18 @@ export const CASES = [
   ['ui', 400, 12, 16], ['ui', 700, 12, 16], ['ui', 700, 13, 16], ['ui', 400, 13, 18], ['ui', 700, 13, 20],
   ['ui', 400, 14, 18], ['ui', 400, 15, 20], ['ui', 700, 15, 20], ['ui', 400, 16, 20],
   ['title', 700, 17, 22], ['title', 700, 20, 24], ['title', 700, 28, 32],
+  // The Avatar's initials: the title face at 36 % of the avatar, in a line of its own size.
+  ['title', 700, 11.52, 11.52, 'АК'], ['title', 700, 15.84, 15.84, 'АК'], ['title', 700, 23.04, 23.04, 'АК'],
+  // B-49: the lcd face (readouts, counts, the Stepper's digit, CodeInput) and the pixel face (tags,
+  // the Switch lamp), each at the size and line its components set.
+  ['lcd', 400, 12, 16], ['lcd', 400, 13, 16], ['lcd', 400, 14, 14], ['lcd', 400, 16, 20], ['lcd', 400, 20, 20], ['lcd', 400, 24, 24], ['lcd', 400, 28, 28], ['lcd', 400, 32, 32], ['lcd', 400, 34, 34],
+  ['pixel', 400, 8, 10], ['pixel', 400, 10, 12],
+  // With the companion face in the line: Cyrillic the design's lcd and pixel faces lack.
+  ['lcd', 400, 14, 14, 'ГБ'], ['lcd', 400, 16, 20, 'ГБ'], ['pixel', 400, 10, 12, 'ИЛИ'],
 ];
-const CELL = 40;
-const cells = CASES.map(([family, weight, size, lh], i) =>
-  `<div style="position:absolute; left:0; top:${i * CELL}px; width:120px; height:${lh}px; background:#fff; color:#000; font: ${weight} ${size}px/${lh}px var(--font-${family}); white-space: nowrap">НН</div>`).join('');
+const CELL = 48;
+const cells = CASES.map(([family, weight, size, lh, text], i) =>
+  `<div style="position:absolute; left:0; top:${i * CELL}px; width:120px; height:${lh}px; background:#fff; color:#000; font: ${weight} ${size}px/${lh}px var(--font-${family}); white-space: nowrap">${text ?? (family === 'lcd' || family === 'pixel' ? 'HH' : 'НН')}</div>`).join('');
 const file = join(tmpdir(), 'oldge-ink-probe.html');
 writeFileSync(file, wrap(`<body><div style="position:relative">${cells}</div></body>`, 'toxic', { tokensCss: compileTokensCss(tokens), texture: 'off' }));
 const { cdp, version, close } = await launch(process.env.CHROME);
@@ -49,8 +57,8 @@ try {
   }, sessionId);
   console.log(version);
   out.result.value.forEach(([top, bottom, mass], i) => {
-    const [f, w, s, lh] = CASES[i];
-    console.log(`${f} ${w} ${s}px/${lh}px  ink ${top}..${bottom}  centre ${mass}`);
+    const [f, w, s, lh, text] = CASES[i];
+    console.log(`${f} ${w} ${s}px/${lh}px ${text ?? ''}  ink ${top}..${bottom}  centre ${mass}`);
   });
 } finally {
   await close();

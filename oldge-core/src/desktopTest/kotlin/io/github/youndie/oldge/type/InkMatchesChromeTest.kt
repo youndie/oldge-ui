@@ -22,9 +22,10 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
- * Compose's side of `scripts/research/ink-probe.mjs` (B-46): the ink of «НН» in each line box lands
- * where Chrome's does. The centre of the ink, weighted by coverage, is held to Chrome's within a
- * quarter of a pixel: the fault this guards was a whole pixel, at 13 px and in the 17 px titles.
+ * Compose's side of `scripts/research/ink-probe.mjs` (B-46, B-49): the ink of each case's text in its
+ * line box lands where Chrome's does. The centre of the ink, weighted by coverage, is held to
+ * Chrome's within a quarter of a pixel: the faults this guards were a whole pixel — `OldgeText` at
+ * 13 px and in the 17 px titles, and `OldgeScriptText`'s lcd digit at 14 px in a 14 px line.
  */
 @OptIn(ExperimentalTestApi::class)
 class InkMatchesChromeTest {
@@ -37,13 +38,19 @@ class InkMatchesChromeTest {
                     OldgeTheme {
                         PortableText {
                             val t = OldgeTheme.type
-                            val face = if (case.family == "ui") t.families.ui else t.families.title
+                            val base =
+                                when (case.family) {
+                                    "lcd" -> t.readoutSm
+                                    "pixel" -> t.pixelTag
+                                    "title" -> t.body.copy(fontFamily = t.families.title)
+                                    else -> t.body.copy(fontFamily = t.families.ui)
+                                }
                             val style =
-                                t.body.copy(
-                                    fontFamily = face,
+                                base.copy(
                                     fontWeight = FontWeight(case.weight),
                                     fontSize = case.size.sp,
                                     lineHeight = case.line.sp,
+                                    letterSpacing = 0.sp,
                                     color = Color.Black,
                                 )
                             Box(
@@ -53,7 +60,29 @@ class InkMatchesChromeTest {
                                     .height(case.line.dp)
                                     .background(Color.White),
                             ) {
-                                OldgeText("НН", style = style, softWrap = false)
+                                when (case.family) {
+                                    "lcd" -> {
+                                        OldgeScriptText(
+                                            case.text,
+                                            style,
+                                            t.families.lcdCompanion,
+                                            FontCoverage.shareTechMono,
+                                        )
+                                    }
+
+                                    "pixel" -> {
+                                        OldgeScriptText(
+                                            case.text,
+                                            style,
+                                            t.families.pixelCompanion,
+                                            FontCoverage.silkscreen,
+                                        )
+                                    }
+
+                                    else -> {
+                                        OldgeText(case.text, style = style, softWrap = false)
+                                    }
+                                }
                             }
                         }
                     }
@@ -84,6 +113,7 @@ private data class Case(
     val size: Int,
     val line: Int,
     val chrome: Float,
+    val text: String = "НН",
 )
 
 // Chrome/153 through the reference wrapper: `node scripts/research/ink-probe.mjs`.
@@ -101,4 +131,20 @@ private val CASES =
         Case("title", 700, 17, 22, 9.6f),
         Case("title", 700, 20, 24, 11.56f),
         Case("title", 700, 28, 32, 14.79f),
+        // The lcd and pixel faces through OldgeScriptText (B-49), Latin in the face itself and
+        // Cyrillic from its companion.
+        Case("lcd", 400, 12, 16, 7.29f, "HH"),
+        Case("lcd", 400, 13, 16, 6.95f, "HH"),
+        Case("lcd", 400, 14, 14, 5.5f, "HH"),
+        Case("lcd", 400, 16, 20, 8.89f, "HH"),
+        Case("lcd", 400, 20, 20, 8.5f, "HH"),
+        Case("lcd", 400, 24, 24, 10.1f, "HH"),
+        Case("lcd", 400, 28, 28, 12.69f, "HH"),
+        Case("lcd", 400, 32, 32, 14.29f, "HH"),
+        Case("lcd", 400, 34, 34, 15.6f, "HH"),
+        Case("pixel", 400, 8, 10, 5f, "HH"),
+        Case("pixel", 400, 10, 12, 5.36f, "HH"),
+        Case("lcd", 400, 14, 14, 5.64f, "ГБ"),
+        Case("lcd", 400, 16, 20, 9.07f, "ГБ"),
+        Case("pixel", 400, 10, 12, 5.36f, "ИЛИ"),
     )
