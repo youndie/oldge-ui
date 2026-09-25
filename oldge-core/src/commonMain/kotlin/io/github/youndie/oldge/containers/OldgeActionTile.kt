@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.style.Hyphens
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.icons.OldgeIcon
@@ -167,6 +168,7 @@ private fun TileText(
     val c = OldgeTheme.colors
     val type = OldgeTheme.type
     val align = if (layout == OldgeActionTileLayout.Stack) TextAlign.Center else TextAlign.Start
+    // `.og-tile__text { hyphens: auto }`, inherited by the title and the description: Android hyphenates; desktop and iOS Skia cannot (B-59).
     Column(verticalArrangement = Arrangement.spacedBy(TEXT_GAP)) {
         // `.og-tile__title { font-weight: 700; text-shadow: 0 1px 1px rgba(0,0,0,0.25) }`.
         OldgeText(
@@ -176,12 +178,16 @@ private fun TileText(
                     color = c.ink,
                     textAlign = align,
                     shadow = Shadow(TITLE_SHADOW, Offset(0f, 1f), CSS_BLUR_TO_TEXT_SHADOW),
+                    hyphens = Hyphens.Auto,
                 ),
         )
         if (description !=
             null
         ) {
-            OldgeText(description, style = type.caption.copy(color = c.inkMuted, textAlign = align))
+            OldgeText(
+                description,
+                style = type.caption.copy(color = c.inkMuted, textAlign = align, hyphens = Hyphens.Auto),
+            )
         }
     }
 }

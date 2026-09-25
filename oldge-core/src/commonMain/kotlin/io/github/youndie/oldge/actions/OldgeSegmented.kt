@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.Hyphens
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -160,6 +161,8 @@ private fun <T> RowScope.Segment(
                         // `line-height: 1.1` of the font size, in sp so the CSS baseline can be computed from it.
                         lineHeight = (FONT_SIZE.value * LINE_HEIGHT).sp,
                         textAlign = TextAlign.Center,
+                        // `.og-seg__opt { hyphens: auto }`: Android hyphenates; desktop and iOS Skia cannot (B-59).
+                        hyphens = Hyphens.Auto,
                     ),
             )
         }

@@ -304,3 +304,11 @@ A keyframe used by several components is held through one of them. The others sh
   probe that counts its own steps reads time 1.6 times too slow. For a `steps(1)` animation, the
   halfway mark is a step's edge, and a frame taken there falls on either side of it. `MotionTest`
   takes the Switch lamp's frame 5/8 of the way through, in the middle of the second dim run (B-44).
+* **`Hyphens.Auto` is a no-op on desktop and iOS.** Skiko's paragraph has no hyphenation at all,
+  and only Android's `StaticLayout` honours it. The four texts that bundle.css hyphenates pass it
+  anyway, and `HyphenationTest` holds the request:
+  - ListItem's title and value;
+  - ActionTile's text;
+  - Segmented's option.
+
+  Its canary fails when Skia starts to hyphenate (research §1.10, B-59).

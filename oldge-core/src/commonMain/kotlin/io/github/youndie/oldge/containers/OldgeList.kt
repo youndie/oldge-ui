@@ -37,6 +37,7 @@ import androidx.compose.ui.semantics.collectionInfo
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.Hyphens
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -207,8 +208,13 @@ public fun OldgeListItem(
     val text =
         @Composable { m: Modifier ->
             Column(m) {
-                // `.og-item__title`: the body style, clamped at two lines.
-                OldgeText(title, style = type.body.copy(color = ink), maxLines = 2, overflow = TextOverflow.Ellipsis)
+                // `.og-item__title`: the body style, clamped at two lines; `hyphens: auto`: Android hyphenates; desktop and iOS Skia cannot (B-59).
+                OldgeText(
+                    title,
+                    style = type.body.copy(color = ink, hyphens = Hyphens.Auto),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
                 if (subtitle != null) {
                     OldgeText(
                         subtitle,
@@ -220,7 +226,8 @@ public fun OldgeListItem(
                 }
             }
         }
-    val valueStyle = type.body.copy(fontSize = type.body.fontSize * VALUE_SCALE, color = muted)
+    // `.og-item__value { hyphens: auto }`: Android hyphenates; desktop and iOS Skia cannot (B-59).
+    val valueStyle = type.body.copy(fontSize = type.body.fontSize * VALUE_SCALE, color = muted, hyphens = Hyphens.Auto)
     val tail =
         @Composable {
             trailing?.invoke()

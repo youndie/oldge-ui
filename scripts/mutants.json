@@ -2052,6 +2052,42 @@
    "replace": "cssBox(radius, GlossStops(gloss.hi, null, gloss.lo).background())",
    "tests": "*ConsumerGlossTest*",
    "expect": "a_consumers_gloss_paints_its_familys_three_stops_top_middle_and_bottom"
+  },
+  {
+   "id": "hyphen-item-title",
+   "item": "B-59",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "style = type.body.copy(color = ink, hyphens = Hyphens.Auto),",
+   "replace": "style = type.body.copy(color = ink),",
+   "tests": "*HyphenationTest*",
+   "expect": "the_texts_the_css_hyphenates_ask_for_it_and_a_subtitle_does_not"
+  },
+  {
+   "id": "hyphen-item-value",
+   "item": "B-59",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt",
+   "find": "color = muted, hyphens = Hyphens.Auto)",
+   "replace": "color = muted)",
+   "tests": "*HyphenationTest*",
+   "expect": "the_texts_the_css_hyphenates_ask_for_it_and_a_subtitle_does_not"
+  },
+  {
+   "id": "hyphen-tile-desc",
+   "item": "B-59",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeActionTile.kt",
+   "find": "textAlign = align, hyphens = Hyphens.Auto)",
+   "replace": "textAlign = align)",
+   "tests": "*HyphenationTest*",
+   "expect": "the_texts_the_css_hyphenates_ask_for_it_and_a_subtitle_does_not"
+  },
+  {
+   "id": "hyphen-segment",
+   "item": "B-59",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeSegmented.kt",
+   "find": "                        hyphens = Hyphens.Auto,\n",
+   "replace": "\n",
+   "tests": "*HyphenationTest*",
+   "expect": "the_texts_the_css_hyphenates_ask_for_it_and_a_subtitle_does_not"
   }
  ]
 }

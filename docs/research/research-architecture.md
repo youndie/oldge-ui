@@ -407,6 +407,31 @@ so a page is read band by band, not as one percentage.
 Every page but Chat is within about three times the floor. The difference is the text-heavy
 components' own residual; no page adds a drawing of its own.
 
+*B-59: Skia does not hyphenate, so EdgeNarrow's gap is a platform limit.* Chrome breaks
+EdgeNarrow's German title as «Personalisierte Wer- / bung» by `hyphens: auto`, and Compose on
+desktop breaks it between words. A probe laid out
+«Personalisierte Werbung anzeigen Donaudampfschifffahrtsgesellschaft» in a 90 dp column. It tried
+every combination of three settings:
+
+- `Hyphens.None` and `Hyphens.Auto`;
+- `LineBreak.Simple` and `LineBreak.Paragraph`;
+- the locales `de` and `en-US`.
+
+All eight gave the same eight lines. Each was broken at a letter, with no hyphen: «Personalisi» /
+«erte», an emergency break, not a syllable. The artefacts agree:
+
+| Fact | Where verified |
+|---|---|
+| Skiko's paragraph API has no hyphenation setting. `ParagraphStyle` carries a locale and nothing else about breaking. | `skiko-awt-0.150.1.jar!/org/jetbrains/skia/paragraph/ParagraphStyle.class`; `skiko-iosSimulatorArm64Main-0.150.1.klib!/linkdata/`. The same files give 7 hits for "locale", 5 for "ellipsis" and 0 for "hyphen". |
+| Compose on desktop never reads `Hyphens` past the style classes. | `ui-text-desktop-1.12.0.jar!/androidx/compose/ui/text/`: only `TextStyle`, `ParagraphStyle`, `Savers` and `style/Hyphens*` mention it |
+| Android does hyphenate. | `ui-text-android-1.12.0.aar!/classes.jar!/androidx/compose/ui/text/AndroidParagraph.class` and `…/android/StaticLayoutFactory23.class` set the hyphenation frequency |
+
+*Deviation from B-59's text:* it expected iOS to hyphenate "where the platform does". Compose on
+iOS draws with the same Skiko paragraph, so it does not. The four texts pass `Hyphens.Auto`, and
+only Android honours it. EdgeNarrow stays at 2.97 / 3.09 / 3.16 %, unchanged, and that gap is this
+platform limit. `HyphenationTest.desktop_skia_does_not_hyphenate_yet` is the canary: the day
+`Auto` changes the desktop's breaks, it fails, and this paragraph is out of date.
+
 | Cause | Before → after | Where |
 |---|---|---|
 | A button's content box started inside the padding but not inside the 1 px border; CSS's `box-sizing: border-box` puts the border inside the width, so every button was 2 px narrow and a row drifted 2 px per button. | Button 6.71–6.80 % → 4.36–4.43 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt` |

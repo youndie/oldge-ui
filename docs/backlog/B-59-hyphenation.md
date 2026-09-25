@@ -1,7 +1,7 @@
 ---
 id: B-59
 title: "Hyphenate where the CSS says hyphens: auto"
-status: open
+status: done
 priority: P3
 size: S
 stage: stage-2-components
@@ -38,3 +38,32 @@ hyphenation anywhere.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeList.kt`,
   `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeActionTile.kt`,
   `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeSegmented.kt`.
+
+## Findings (2026-09-25)
+
+- **The probe forced a break.** It laid out a German compound in a 90 dp column, in eight
+  combinations:
+  - `Hyphens.None` and `Hyphens.Auto`;
+  - `LineBreak.Simple` and `LineBreak.Paragraph`;
+  - the locales `de` and `en-US`.
+
+  All eight gave the same eight lines, broken at letters with no hyphen. Skiko's `ParagraphStyle`,
+  on both the JVM and iOS, has no hyphenation setting. On desktop, Compose reads `Hyphens` nowhere
+  past the style classes. Android's `AndroidParagraph` does read it. The evidence, with its
+  addresses, is in research §1.10.
+- **Deviation:** the item expected iOS to hyphenate. It draws with the same Skiko paragraph, so
+  it does not. Hyphenation is real on Android only.
+- **Done as the item's branch "Skia does not hyphenate".** `Hyphens.Auto` is passed on ListItem's
+  title and value, on ActionTile's title and description (`.og-tile__text` is inherited by both),
+  and on Segmented's option. The locale is left to the platform, as `lang` is for Chrome.
+  EdgeNarrow is unchanged at 2.97 / 3.09 / 3.16 %: the gap is the platform limit, and B-39's
+  number stands.
+- **Not verified on a device.** Seeing a hyphen on Android needs an emulator or a device, which is
+  B-41's open question. What this item can hold is that the request reaches the layout.
+- **Tests:** `HyphenationTest`.
+  - The request test reads each text's laid-out style through `GetTextLayoutResult`. Its control
+    is ListItem's subtitle, which does not hyphenate and reads `Unspecified`.
+  - The canary requires `Auto` and `None` to break the desktop lines identically. It checks
+    first that the column forces breaks at all, since two layouts with no breaks could only agree.
+- **Mutants:** 4 of 4 killed, removing `Hyphens.Auto` from the ListItem title, the ListItem value,
+  the ActionTile description and the Segmented option, one at a time.
