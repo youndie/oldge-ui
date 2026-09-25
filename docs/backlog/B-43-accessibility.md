@@ -47,7 +47,12 @@ word; ON/OFF is written in the switch).
     word for the eye that the colour rule asks for. To a screen reader it repeated the switch's own
     state, and it stood in for a missing name: with the list-row switch's hidden label removed, the
     test still counted the switch as named by «ON».
-- **Touch: 44 dp.**
+- **Touch: 44 dp.** *Amended in B-60: this paragraph measured the wrong axis.* Compose extends
+  a small pointer target to its 48 dp `minimumTouchTargetSize` for touch, so the design system's
+  rule holds on touch through the platform. The 35 sizes below are what a mouse reaches.
+  `touchBoundsInRoot` "could never fall short" because the platform guarantees exactly the rule, and
+  that was the right measure for touch. The check is now a test of that guarantee, and B-60 was
+  dropped. What was written:
   - The test reads each control's own laid-out size, which `oldgeHitArea` enlarges. It first read
     `touchBoundsInRoot`, which is at least the platform's minimum target by definition: the
     hit-area mutant survived it, and could never have failed it.

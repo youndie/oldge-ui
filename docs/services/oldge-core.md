@@ -198,6 +198,11 @@ to publish (B-01).
   content.** Give the content the border as padding on all four sides, as CSS lays it out, or a
   child as tall as the box sits over the border and the box does not grow. TextField padded only
   the sides, so its 44 dp reveal orb left the field 44 where Chrome makes it 46 (B-53).
+* **Compose extends a small touch target by itself.** A pointer target under
+  `ViewConfiguration.minimumTouchTargetSize` (48 dp here) is widened to it for a touch that hits
+  nothing else, and not for a mouse. So the design system's 44 dp rule holds on touch for every
+  control without a widening of the library's own. A control's laid-out size is what a mouse
+  reaches, as in Chrome (B-60, which found that B-43 had measured the mouse).
 * **`cssBox`'s blurred outer shadow fills the shape too.** It is Compose's `dropShadow`, drawn
   under the whole shape, where CSS paints an outer `box-shadow` only outside the box. Under an
   opaque fill the two look the same. Under a translucent fill the shadow shows through: PageDots on

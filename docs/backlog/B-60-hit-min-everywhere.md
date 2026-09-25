@@ -1,7 +1,7 @@
 ---
 id: B-60
 title: "Bring every control to hit-min without changing what is drawn"
-status: open
+status: dropped
 priority: P2
 size: M
 stage: stage-2-components
@@ -43,3 +43,34 @@ The CSS widens only the chips' targets, with `::after` insets.
   style), with a mutant.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/press/HitArea.kt`,
   `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/behaviour/AccessibilityTest.kt`.
+
+## Findings (2026-09-25): dropped, its premise refuted
+
+**The controls were never under `hit-min` to touch.** Compose's hit testing extends a pointer target
+smaller than `ViewConfiguration.minimumTouchTargetSize` to that size for a touch that hits nothing
+else directly. On this platform the size is 48 × 48 dp. A mouse gets no extension.
+
+Measured with a probe: a 20 dp clickable is pressed by a touch 10 dp outside it, and not by a mouse
+click at the same point. And in the widened small Button's test, a touch 6 dp above its drawn edge
+pressed it with a 4 dp overhang of the library's own.
+
+So:
+
+- **B-43's 35 "shortfalls" measured the controls' own sizes**, which are what a mouse reaches, not
+  what a touch reaches. B-43 dismissed `touchBoundsInRoot` because it "could never fall short": it
+  cannot, because the platform guarantees exactly what the design system's rule asks for touch.
+- **The widening this item was for** (`oldgeHitArea` on the small Button, Segmented, Tabs and the
+  calendar's days) worked, and no golden moved. It was reverted anyway. It gains nothing for touch,
+  and it makes a mouse differ from the design system's, where a mouse in Chrome reaches only the
+  drawn 36 px of a small button.
+- **What replaces the check** is a test of the guarantee the rule rests on,
+  `AccessibilityTest.touch_reaches_hit_min_through_the_platforms_own_extension`:
+  - the platform's minimum is at least `hit-min`;
+  - a touch 6 dp above a small Button's drawn edge presses it;
+  - a mouse click there does not.
+
+  Its positive control, a `LocalViewConfiguration` with a zero minimum, makes it fail with "did not
+  reach". `KNOWN_TOUCH` is gone.
+- **The chips' own overhang (B-14) stays.** It is the design system's `::after` inset, the one place
+  the CSS widens a target, and for a mouse it is what Chrome does. Its mutant in B-43 is dropped, as
+  it aimed at the removed check; B-14's five still hold the chips.
