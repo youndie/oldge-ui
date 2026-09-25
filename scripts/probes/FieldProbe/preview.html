@@ -1,0 +1,16 @@
+<!-- @dsCard group="Probes" height=260 -->
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>FieldProbe — probe</title></head>
+<body>
+<div id="root"></div>
+<script>
+  // B-53: the two TextField shapes no preview of the design system shows, so that Chrome measures
+  // them: a password field with reveal, and a multiline field of the default three rows.
+  var B = window.OldgeUI, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
+    h(B.TextField, { label: 'Пароль', reveal: true, defaultValue: 'secret' }),
+    h(B.TextField, { label: 'Комментарий', multiline: true, placeholder: 'Пара слов о файле' })));
+</script>
+</body>
+</html>

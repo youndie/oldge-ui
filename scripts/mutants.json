@@ -230,8 +230,8 @@
    "id": "line-minimum",
    "item": "B-17",
    "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
-   "find": "minHeight = line * lines",
-   "replace": "minHeight = line * 0",
+   "find": "else Modifier.height(line)",
+   "replace": "else Modifier",
    "tests": "*TextFieldBehaviourTest*",
    "expect": "the_height_is_a_minimum_and_grows_with_the_system_font"
   },
@@ -1701,6 +1701,24 @@
    "replace": "OldgeComposer({ })",
    "tests": "*ScreenBehaviourTest*",
    "expect": "a_sent_message_joins_my_run_and_takes_the_runs_status"
+  },
+  {
+   "id": "field-content-over-the-border",
+   "item": "B-53",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "                    top = BORDER,\n                    bottom = BORDER,\n",
+   "replace": "",
+   "tests": "*TextFieldBehaviourTest*",
+   "expect": "the_box_is_44_empty_or_not_46_round_the_reveal_orb_and_84_with_three_lines"
+  },
+  {
+   "id": "field-empty-line-free",
+   "item": "B-53",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "Modifier.height(line)",
+   "replace": "Modifier.defaultMinSize(minHeight = line)",
+   "tests": "*TextFieldBehaviourTest*",
+   "expect": "the_box_is_44_empty_or_not_46_round_the_reveal_orb_and_84_with_three_lines"
   }
  ]
 }

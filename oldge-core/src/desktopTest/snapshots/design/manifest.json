@@ -486,6 +486,27 @@
       "page": true,
       "sha256": "d7687c9e379462d8e2fde04397fde006f05f4204008e2dbf2814ca4abfc0cb36"
     },
+    "FieldProbe_Crystal": {
+      "source": "scripts/probes/FieldProbe/preview.html",
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "ea157296d3d6be075dc12eaca1518df1f787c9688a6f0abe15425c83f665c53e"
+    },
+    "FieldProbe_Media": {
+      "source": "scripts/probes/FieldProbe/preview.html",
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "959bee8cdd2627c41369bb1b99959f8d29ccad14352332b00edb9b736aa79023"
+    },
+    "FieldProbe_Toxic": {
+      "source": "scripts/probes/FieldProbe/preview.html",
+      "width": 390,
+      "height": 260,
+      "page": false,
+      "sha256": "02048885d23f2ff7cae1b3dfed090b0daf566fc5b49f64fb5890761070363b66"
+    },
     "Icon_Crystal": {
       "width": 390,
       "height": 580,

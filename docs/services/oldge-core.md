@@ -38,7 +38,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/press/` | `OldgeIndication` (flash, focus ring; the theme's `LocalIndication`), `oldgePressScale`, `oldgePopIn` (`og-pop`, shared by the chip's and the checkbox's marks) and `oldgePopSoftIn` (`og-pop-soft`), and `oldgeHitArea` (a touch target larger than the drawn box that takes no more room) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/CssBox.kt` | the CSS-box painter every material is built on (backgrounds: colour, `linear-gradient`, `radial-gradient(circle at …)`; `CssCorners` for a box rounded only on top, bottom (B-24) or right (B-26), `CssCornerRadii` for a radius per corner (B-34)); `Materials.kt` the materials, `Gloss.kt` the gloss transition |
 | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/harness/` | `OldgeDemo` (the `.og-demo` frame), the pinned text style, `FixtureSizeTest` |
-| `scripts/probes/` | material probes: HTML from the design system's classes, rendered as references for the materials' parity fixtures |
+| `scripts/probes/` | probes: HTML from the design system's classes and components, rendered as references for shapes no preview shows — the materials (B-07) and `FieldProbe`, a reveal field and a three-line field (B-53) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Turbulence.kt` | the grain and speckle alpha, a port of `feTurbulence` that matches Chrome (research §1.3) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/` | `OldgeTheme`, `OldgeSkin`, `OldgeTypography`, `OldgeMotion`, the platform reduced-motion `expect`. `OldgeTheme(platformTextStyle = …)` pins text rendering on every type style for screenshots (B-52); the test harness's `PortableTextStyle` goes through it, and `PlatformTextStyleTest` holds it |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/icons/` | `OldgeIcon` and the generated `OldgeIcons` (`scripts/generate_icons.py`; `checkOldgeIcons` in `check`) |
@@ -194,6 +194,13 @@ to publish (B-01).
   and the Avatar's initials sat off by it. `OldgeText` and `OldgeScriptText` pass every style
   through `withHonouredLine()`, which nudges such a line by 1.0001. A text component that
   bypasses both must do the same (B-49).
+* **A CSS box's content is inside its border; a Compose `cssBox` draws the border over its
+  content.** Give the content the border as padding on all four sides, as CSS lays it out, or a
+  child as tall as the box sits over the border and the box does not grow. TextField padded only
+  the sides, so its 44 dp reveal orb left the field 44 where Chrome makes it 46 (B-53).
+* **An empty single-line `BasicTextField` measures 21 px for a 20 px line**, and 19 with a
+  value. Give a single line exactly its line's height (`Modifier.height(line)`), not a minimum
+  (B-17, B-53).
 * **An `<input>` has padding the design never wrote.** Chrome's style sheet gives it `1px 2px`, so
   a bare input's text starts 2 px in. `.og-search__input` sets `border` and `background` but not
   `padding`, and the SearchBar's text sat 2 px early until the field took the same padding (B-47).

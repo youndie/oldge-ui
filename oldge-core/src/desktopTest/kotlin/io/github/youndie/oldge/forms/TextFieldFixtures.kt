@@ -78,3 +78,26 @@ fun TextFieldStatesMedia() = TextFieldStates(OldgeSkin.Media)
 )
 @Composable
 fun TextFieldStatesCrystal() = TextFieldStates(OldgeSkin.Crystal)
+
+/**
+ * scripts/probes/FieldProbe (B-53): the two shapes no preview shows, held to Chrome — a reveal field,
+ * which the orb's 44 dp box makes 46 dp tall, and a three-line field, 84 dp.
+ */
+@Composable
+private fun FieldProbe(skin: OldgeSkin) =
+    OldgeDemo(skin) {
+        OldgeTextField("Пароль", "secret", {}, reveal = true)
+        OldgeTextField("Комментарий", "", {}, placeholder = "Пара слов о файле", lines = 3)
+    }
+
+@ViddikScreenshot(group = "FieldProbe", name = "Toxic", width = 390, height = 260)
+@Composable
+fun FieldProbeToxic() = FieldProbe(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "FieldProbe", name = "Media", width = 390, height = 260)
+@Composable
+fun FieldProbeMedia() = FieldProbe(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "FieldProbe", name = "Crystal", width = 390, height = 260)
+@Composable
+fun FieldProbeCrystal() = FieldProbe(OldgeSkin.Crystal)

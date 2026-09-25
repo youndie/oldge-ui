@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -105,10 +106,16 @@ public fun OldgeTextField(
                 ).drawWithContent {
                     drawContent()
                     if (focused) drawOldgeFocusRing(shape, c.focus)
-                }.padding(
+                }
+                // Inside the border on all four sides, as CSS lays a box's content out: a 44 dp reveal
+                // orb then makes the field 46 dp, as Chrome's flex box does (B-53), where over the
+                // border it had left it 44.
+                .padding(
                     start = BORDER + OldgeTheme.spacing.space3,
                     end =
                         BORDER + if (reveal) REVEAL_END else OldgeTheme.spacing.space3,
+                    top = BORDER,
+                    bottom = BORDER,
                 ),
             horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space2),
             verticalAlignment = if (multiline) Alignment.Top else Alignment.CenterVertically,
@@ -156,11 +163,12 @@ public fun OldgeTextField(
                         if (value.isEmpty() && placeholder != null) {
                             OldgeText(placeholder, style = type.body.copy(color = c.inkMuted), maxLines = lines)
                         }
-                        // The line is at least `line-height` tall, as the input's content box is:
-                        // Compose's single-line field measured 19 px for a 20 px line, so the row
-                        // centred a 41 px field in 44 and rounded the text a pixel low (B-17, «Павел»).
+                        // A single line is exactly `line-height` tall, as the input's content box is.
+                        // Compose's single-line field measured 19 px for a 20 px line with a value
+                        // (B-17, «Павел»), and 21 empty, which inside the border grew every empty
+                        // field a pixel (B-53). Several lines are `minLines`' own.
                         val line = with(LocalDensity.current) { textStyle.lineHeight.toDp() }
-                        Box(Modifier.defaultMinSize(minHeight = line * lines)) { inner() }
+                        Box(if (multiline) Modifier else Modifier.height(line)) { inner() }
                     }
                 },
             )
