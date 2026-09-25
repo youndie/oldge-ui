@@ -80,7 +80,7 @@ list an item can be checked against in one glance.
 |---|---|---|---|---|
 | [B-38](docs/backlog/B-38-stress-inbox-and-media.md) `[ ]` | Stress screens: the long list and full-screen media | P2 | L | B-20, B-23, B-24, B-26, B-30, B-31, B-32, B-33, B-50, B-51, B-52, B-54, B-55 |
 | [B-39](docs/backlog/B-39-stress-edges.md) `[ ]` | Stress screens: 320 dp with German strings, and the system font at 200 % | P2 | L | B-13, B-15, B-17, B-20, B-21, B-24, B-25, B-31, B-32, B-50, B-51, B-52, B-56 |
-| [B-40](docs/backlog/B-40-showcase-screens.md) `[ ]` | Showcase screens: launcher, feed, settings | P2 | L | B-11, B-12, B-13, B-14, B-15, B-16, B-17, B-18, B-19, B-20, B-21, B-22, B-23, B-24, B-25, B-26, B-27, B-28, B-29, B-30, B-31, B-32, B-33, B-34, B-47, B-50, B-51, B-52 |
+| [B-40](docs/backlog/B-40-showcase-screens.md) `[ ]` | Showcase screens: launcher, feed, settings | P2 | L | B-11, B-12, B-13, B-14, B-15, B-16, B-17, B-18, B-19, B-20, B-21, B-22, B-23, B-24, B-25, B-26, B-27, B-28, B-29, B-30, B-31, B-32, B-33, B-34, B-47, B-50, B-51, B-52, B-37, B-38, B-39 |
 | [B-41](docs/backlog/B-41-sample-app.md) `[ ]` | The sample app on desktop, Android and iOS, with a skin switcher | P2 | M | B-40 |
 | [B-42](docs/backlog/B-42-component-catalogue.md) `[ ]` | The component catalogue: a previews registry and a generated docs/components.md | P2 | S | B-40 |
 | [B-43](docs/backlog/B-43-accessibility.md) `[ ]` | Accessibility: roles, 44 dp targets, colour never alone | P2 | M | B-42 |
