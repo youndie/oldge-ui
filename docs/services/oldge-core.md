@@ -60,9 +60,11 @@ to publish (B-01).
 * **The suite is desktop.** viddik renders on the JVM; fixtures live in `desktopTest`;
   `verifyOnCheck` is on, so `./gradlew check` runs `viddikVerify`. A green `check` says nothing
   about Android or iOS (research D10).
-* **`OldgeCanary`** is a 24 dp lime square with one golden, `Canary_Square`. It is there so the
-  suite is not empty before the first component; a real change to it fails `check` (measured in
-  B-01: a colour change failed `viddikVerify` with 576/576 px differing). B-09 decides its fate.
+* **The set is guarded, not just each image.** `ScreenshotSuiteTest` fails on a fixture without a
+  golden or a golden without a fixture, a parity fixture without a reference or a reference nobody
+  compares, and a design-system component with neither fixtures nor a place on its explicit
+  not-yet-built list — which every component item shrinks. The B-01 canary (`OldgeCanary`) was
+  deleted there, once real fixtures existed.
 
 ## 4. Dependencies
 

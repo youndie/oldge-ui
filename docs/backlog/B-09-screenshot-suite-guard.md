@@ -1,7 +1,7 @@
 ---
 id: B-09
 title: "ScreenshotSuiteTest: every component, every skin, both ways"
-status: open
+status: done
 priority: P0
 size: S
 stage: stage-1-core
@@ -32,3 +32,18 @@ against the inventory research §1.1 fixed.
   commit.
 - Anchors: `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/behaviour/ScreenshotSuiteTest.kt`,
   `kvadrant-ui/kvadrant-core/src/desktopTest/kotlin/` (its `ScreenshotSuiteTest`).
+
+## Findings (2026-09-25)
+
+- Seven checks in `ScreenshotSuiteTest`; the three mutations of the acceptance each fail with the
+  stem named: a deleted golden (`Divider_Toxic` — "fixtures with no golden"), a deleted reference
+  (`Divider_Media` — "parity fixtures with no reference"), a deleted fixture (`Divider_Crystal` —
+  "references no fixture is compared with", "components built in some skins only", "goldens with no
+  fixture").
+- The not-yet-built list is the 49 previewed components other than Divider and the nine pages.
+  `ChipGroup`, the 51st export, has no preview in the design system and so no reference; the test
+  holds that it is the only such export, so a new previewless one is noticed rather than skipped.
+- References rendered from `scripts/probes/` are recognised by their `source` in the manifest and
+  must have fixtures like any other; `design/texture/` is not scanned (it holds no references).
+- The canary is gone (`OldgeCanary`, its fixture and golden): it was public API that existed only to
+  give an empty suite a fixture. The sample now shows an `OldgeDivider`.
