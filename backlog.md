@@ -74,7 +74,7 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-19](docs/backlog/B-19-date-picker.md) `[ ]` | DatePicker | P1 | M | B-12 |
+| [B-48](docs/backlog/B-48-mutation-runner.md) `[ ]` | A mutation runner that names the failing test, and a re-check of B-12…B-18 | P0 | S | - |
 | [B-20](docs/backlog/B-20-panel-list-and-sections.md) `[ ]` | Panel, List, ListItem and ListSection | P1 | M | B-08, B-09, B-10, B-11 |
 | [B-21](docs/backlog/B-21-card-and-action-tile.md) `[ ]` | Card and ActionTile | P1 | M | B-12 |
 | [B-22](docs/backlog/B-22-accordion.md) `[ ]` | Accordion | P1 | S | B-20 |
@@ -104,7 +104,7 @@ list an item can be checked against in one glance.
 | [B-45](docs/backlog/B-45-public-api-and-kdoc.md) `[ ]` | Pin the public API, and make the KDoc name its README rule | P3 | S | B-40 |
 | [B-35](docs/backlog/B-35-viddik-0-6-1.md) `[?]` | Take viddik 0.6.1 and delete the #44 workaround | infra | XS | B-01 |
 
-## Closed (18)
+## Closed (19)
 
 **Answers that decide the architecture**
 
@@ -132,5 +132,6 @@ list an item can be checked against in one glance.
 - [B-16](docs/backlog/B-16-switch-and-slider.md) `[x]` - Switch and Slider
 - [B-17](docs/backlog/B-17-text-field-and-search-bar.md) `[x]` - TextField
 - [B-18](docs/backlog/B-18-select-and-code-input.md) `[x]` - Select and CodeInput
+- [B-19](docs/backlog/B-19-date-picker.md) `[x]` - DatePicker
 
 <!-- END INDEX -->

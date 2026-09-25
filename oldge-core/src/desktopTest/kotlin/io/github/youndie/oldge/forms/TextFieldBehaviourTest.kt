@@ -57,7 +57,7 @@ class TextFieldBehaviourTest {
             setContent { OldgeTheme { OldgeTextField("Пароль", "secret", {}, reveal = true) } }
             onNodeWithContentDescription("Показать пароль").performClick()
             onNodeWithContentDescription("Скрыть пароль").performClick()
-            onNodeWithContentDescription("Показать пароль")
+            onNodeWithContentDescription("Показать пароль").assertExists()
         }
 
     @Test

@@ -46,6 +46,8 @@ kotlin {
             implementation(wip.compose.runtime)
             implementation(wip.compose.foundation)
             implementation(wip.compose.ui)
+            // `api`: DatePicker's value is a `LocalDate` (B-19), so a consumer compiles against it.
+            api(wip.kotlinx.datetime)
             // Not in `wip`, and the plugin's accessor is the one place its version follows the
             // Compose plugin's own; the deprecation warning is the price of not spelling it twice.
             implementation(compose.components.resources)

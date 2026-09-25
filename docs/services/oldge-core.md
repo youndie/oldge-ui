@@ -43,7 +43,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/` | `OldgeTheme`, `OldgeSkin`, `OldgeTypography`, `OldgeMotion`, the platform reduced-motion `expect` |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/icons/` | `OldgeIcon` and the generated `OldgeIcons` (`scripts/generate_icons.py`; `checkOldgeIcons` in `check`) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/` | `OldgeButton`, `OldgeIconButton`, `OldgeOrbButton` (B-12), `OldgeFab`, `OldgeExtendedFab`, `OldgeFabDock`, `OldgeSegmented` (B-13), the three chips and `OldgeChipGroup` (B-14); `ButtonBehaviourTest`, `FabSegmentedBehaviourTest` and `ChipBehaviourTest` hold the READMEs' behaviour rules |
-| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/` | `OldgeCheckbox`, `OldgeRadioGroup` (B-15), `OldgeSwitch`, `OldgeSlider` (B-16), `OldgeTextField` (B-17), `OldgeSelect`, `OldgeCodeInput` (B-18), sharing `Field.kt`'s label and help line; `CheckBehaviourTest`, `SwitchSliderBehaviourTest`, `TextFieldBehaviourTest` and `SelectCodeBehaviourTest` hold their READMEs' behaviour rules |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/` | `OldgeCheckbox`, `OldgeRadioGroup` (B-15), `OldgeSwitch`, `OldgeSlider` (B-16), `OldgeTextField` (B-17), `OldgeSelect`, `OldgeCodeInput` (B-18), `OldgeDatePicker` (B-19), sharing `Field.kt`'s label and help line; `CheckBehaviourTest`, `SwitchSliderBehaviourTest`, `TextFieldBehaviourTest`, `SelectCodeBehaviourTest` and `DatePickerBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt` | text on the CSS baseline — use it, not `BasicText`, for any text a reference shows |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/tokens/OldgeTokens.kt` | the generated token layer (`scripts/generate_tokens.py`; `checkOldgeTokens` in `check`) |
 | `scripts/design-references.mjs` | renders the parity references into `snapshots/design/` (`make references`); `scripts/tokens-css.mjs` compiles the tokens for it |
@@ -115,5 +115,10 @@ to publish (B-01).
   (15 px in a 20 px line) its inner field measures 19 px, so a row that centres it rounds the text a
   pixel low. `OldgeTextField` gives the inner line `line-height × lines` as a minimum; any later
   field built on `BasicTextField` (SearchBar, B-47) needs the same.
+* **A Compose test finder asserts nothing by itself.** `onNodeWithText(…)` is lazy; a line that ends
+  there passes whether the node exists or not. Every lookup ends in an `assert…`, a `perform…` or
+  `assertExists()` (found in B-19; B-48 re-checks the earlier items' mutation claims).
+* **kotlinx-datetime is an `api` dependency** (B-19): `OldgeDatePicker` takes and gives
+  `LocalDate`, so a consumer compiles against it; the version is `wip`'s.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration
   fails with "SDK location not found".
