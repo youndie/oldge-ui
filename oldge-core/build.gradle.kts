@@ -125,6 +125,11 @@ tasks.named<Test>("desktopTest") {
         .dir(rootProject.layout.projectDirectory.dir("reference/design-system"))
         .withPropertyName("designSystem")
         .withPathSensitivity(PathSensitivity.RELATIVE)
+    // ScreenshotSuiteTest counts a page as built from sample's goldens (B-40).
+    inputs
+        .dir(rootProject.layout.projectDirectory.dir("sample/src/desktopTest/snapshots"))
+        .withPropertyName("sampleSnapshots")
+        .withPathSensitivity(PathSensitivity.RELATIVE)
 }
 
 // WORKAROUND for youndie/viddik#44, delete on the viddik bump that carries 10f128b (B-35).

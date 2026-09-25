@@ -384,6 +384,24 @@ so a page is read band by band, not as one percentage.
 - With those bands aligned, what remains is 2.4–2.6 % and 3.8–4.3 %, the text-heavy components'
   own. B-37 has the table.
 
+*B-37 to B-40, all nine pages.* Raw parity, per skin Toxic / Media / Crystal, is read against the
+0.72 % floor. The component gaps each page found are items of their own.
+
+| Page | Raw | Gap |
+|---|---|---|
+| Auth | 1.92 / 1.96 / 2.03 % | after B-53 |
+| Chat | 16.76 / 18.11 / 20.96 % | D11: the Composer's height shifts the lane 14 px |
+| Inbox | 1.86 / 2.00 / 2.26 % | |
+| Media | 1.19 / 1.29 / 1.21 % | B-57, B-58 |
+| EdgeNarrow | 2.97 / 3.09 / 3.16 % | B-59 |
+| EdgeScale | 1.42 / 1.47 / 1.52 % | |
+| Launcher | 1.35 / 1.41 / 1.61 % | |
+| Feed | 1.78 / 1.88 / 1.87 % | |
+| Settings | 1.48 / 1.55 / 1.66 % | |
+
+Every page but Chat is within about three times the floor. The difference is the text-heavy
+components' own residual; no page adds a drawing of its own.
+
 | Cause | Before → after | Where |
 |---|---|---|
 | A button's content box started inside the padding but not inside the 1 px border; CSS's `box-sizing: border-box` puts the border inside the width, so every button was 2 px narrow and a row drifted 2 px per button. | Button 6.71–6.80 % → 4.36–4.43 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt` |

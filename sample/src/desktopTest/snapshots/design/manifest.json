@@ -72,6 +72,24 @@
       "page": true,
       "sha256": "55ee5d66b2a86e09020bbb4561dba758fe108c6c2982906e3fd7730a3793a030"
     },
+    "FeedScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "ce757f5a07ff9476e776fed6d20a5ad2d6c7e8ff9d840b13910fe93813ed1372"
+    },
+    "FeedScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "611af3896de336a74aa8d95d79fb05b398dcb5796d2dc75578a699bd054cf57a"
+    },
+    "FeedScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "d7687c9e379462d8e2fde04397fde006f05f4204008e2dbf2814ca4abfc0cb36"
+    },
     "InboxScreen_Crystal": {
       "width": 390,
       "height": 760,
@@ -90,6 +108,24 @@
       "page": true,
       "sha256": "0493d8e658bd927374d3ade9ee21e2f0a88e333024bd74a70229efd1295dc840"
     },
+    "Launcher_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "4319996ec1da6514d3163800c7ded8cd5f7e771b96fd4021329daad4c72984d4"
+    },
+    "Launcher_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "a906da41901e541a0c257508ce71c94592fff7175a84321bac8caa2cc4b30762"
+    },
+    "Launcher_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "76a1c2d9b9c4289539a98b405056904191747da902f8fd2486522c6d5ac74840"
+    },
     "MediaScreen_Crystal": {
       "width": 390,
       "height": 760,
@@ -107,6 +143,24 @@
       "height": 760,
       "page": true,
       "sha256": "950d795d0ed09149c497b39b8074f4bc8d717f4235bc9e45b5515a46682a9cc2"
+    },
+    "SettingsScreen_Crystal": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "5759f2cc986e397eb4ca6189450882fc7fe0a55f8809b8644fbbda564c5776c3"
+    },
+    "SettingsScreen_Media": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "1aaf3a458caf2b70ea51539b75b7856a85581368fc2dac5f8e202bd925506fd2"
+    },
+    "SettingsScreen_Toxic": {
+      "width": 390,
+      "height": 760,
+      "page": true,
+      "sha256": "928cfc7175a2a2596649dd2a7763dc69f194dbdc0b16b207bb1c52cf6ee701f4"
     }
   },
   "designSystem": {

@@ -129,3 +129,39 @@ fun EdgeScaleMedia() = Phone(OldgeSkin.Media, fontScale = 2f) { EdgeScaleScreen(
 @ViddikScreenshot(group = "EdgeScale", name = "Crystal", width = 390, height = 860)
 @Composable
 fun EdgeScaleCrystal() = Phone(OldgeSkin.Crystal, fontScale = 2f) { EdgeScaleScreen(it) }
+
+@ViddikScreenshot(group = "Launcher", name = "Toxic", width = 390, height = 760)
+@Composable
+fun LauncherToxic() = Phone(OldgeSkin.Toxic) { LauncherScreen(it) }
+
+@ViddikScreenshot(group = "Launcher", name = "Media", width = 390, height = 760)
+@Composable
+fun LauncherMedia() = Phone(OldgeSkin.Media) { LauncherScreen(it) }
+
+@ViddikScreenshot(group = "Launcher", name = "Crystal", width = 390, height = 760)
+@Composable
+fun LauncherCrystal() = Phone(OldgeSkin.Crystal) { LauncherScreen(it) }
+
+@ViddikScreenshot(group = "FeedScreen", name = "Toxic", width = 390, height = 760)
+@Composable
+fun FeedScreenToxic() = Phone(OldgeSkin.Toxic) { FeedScreen(it) }
+
+@ViddikScreenshot(group = "FeedScreen", name = "Media", width = 390, height = 760)
+@Composable
+fun FeedScreenMedia() = Phone(OldgeSkin.Media) { FeedScreen(it) }
+
+@ViddikScreenshot(group = "FeedScreen", name = "Crystal", width = 390, height = 760)
+@Composable
+fun FeedScreenCrystal() = Phone(OldgeSkin.Crystal) { FeedScreen(it) }
+
+@ViddikScreenshot(group = "SettingsScreen", name = "Toxic", width = 390, height = 760)
+@Composable
+fun SettingsScreenToxic() = Phone(OldgeSkin.Toxic) { SettingsScreen(OldgeSkin.Toxic, {}, it) }
+
+@ViddikScreenshot(group = "SettingsScreen", name = "Media", width = 390, height = 760)
+@Composable
+fun SettingsScreenMedia() = Phone(OldgeSkin.Media) { SettingsScreen(OldgeSkin.Media, {}, it) }
+
+@ViddikScreenshot(group = "SettingsScreen", name = "Crystal", width = 390, height = 760)
+@Composable
+fun SettingsScreenCrystal() = Phone(OldgeSkin.Crystal) { SettingsScreen(OldgeSkin.Crystal, {}, it) }

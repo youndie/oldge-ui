@@ -16,7 +16,7 @@ publishes: []
 ## 1. Responsibility
 
 The design system's page previews rebuilt from this library's **public** API. It holds the stress
-screens (B-37 to B-39) and the showcase screens (B-40), each held to the page's reference by
+screens (B-37 to B-39) and the showcase screens (B-40), all nine of the design system's pages, each held to the page's reference by
 parity. Because it is a separate module, nothing in it can reach an `internal`: a screen that
 needs a drawing or a text the library does not offer publicly fails to compile. That is the check
 that the library is enough to build a screen, and it has already found three gaps: B-50, B-51 and
@@ -36,6 +36,8 @@ missing piece becomes a library item, not a private composable (B-37's decision)
 | `sample/src/desktopMain/kotlin/io/github/youndie/oldge/sample/Main.kt` | the desktop window; screens are shown there once B-41 builds the sample app |
 | `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/EdgeScreens.kt` | the Edge stress pages: 320 dp in German, and the system font at 200 % (B-39) |
 | `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/EdgeClippingTest.kt` | no text on the Edge pages is cut but the BottomNav's own ellipses (B-39) |
+| `sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ShowcaseScreens.kt` | the showcase pages: Launcher, Feed, Settings (B-40) |
+| `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/SampleSuiteTest.kt` | the sample's suite as a set: fixtures, goldens and page references, both ways. oldge-core's `ScreenshotSuiteTest` counts the pages from these goldens (B-40) |
 | `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/ScreenFixtures.kt` | `Phone`: the preview's `.phone` harness, and the parity fixtures |
 | `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/ScreenBehaviourTest.kt` | what a page demonstrates as interaction: the sign-in mode switch, a sent message joining its run |
 | `sample/src/desktopTest/kotlin/io/github/youndie/oldge/sample/ConsumerTextTest.kt` | `OldgeText` held to Chrome's ink from outside the library (B-51) |

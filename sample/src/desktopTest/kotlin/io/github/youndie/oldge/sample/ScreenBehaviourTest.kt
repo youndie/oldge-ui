@@ -9,6 +9,7 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.click
+import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasSetTextAction
@@ -22,6 +23,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.compose.ui.unit.dp
+import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -125,5 +127,32 @@ class ScreenBehaviourTest {
             onNodeWithText("3 из 148", useUnmergedTree = true).assertDoesNotExist()
             onNodeWithTag("media").performTouchInput { click(center) }
             onNodeWithText("3 из 148", useUnmergedTree = true).assertExists()
+        }
+
+    @Test
+    fun closing_the_snackbar_lets_the_fab_down_by_60_dp() =
+        runComposeUiTest {
+            setContent { OldgeTheme(reducedMotion = true) { FeedScreen(Modifier.size(390.dp, 760.dp)) } }
+
+            fun fabBottom() = onNodeWithContentDescription("Создать").getUnclippedBoundsInRoot().bottom
+            val over = fabBottom()
+            onNodeWithText("Пост сохранён в черновики", useUnmergedTree = true).assertExists()
+            onNodeWithContentDescription("Закрыть").performClick()
+            onNodeWithText("Пост сохранён в черновики", useUnmergedTree = true).assertDoesNotExist()
+            // The page's `bottom: snack ? 148 : 88`.
+            assertEquals(60.dp, fabBottom() - over)
+        }
+
+    @Test
+    fun choosing_a_skin_asks_the_app_for_it() =
+        runComposeUiTest {
+            val asked = mutableListOf<OldgeSkin>()
+            setContent {
+                OldgeTheme(
+                    reducedMotion = true,
+                ) { SettingsScreen(OldgeSkin.Toxic, { asked += it }, Modifier.size(390.dp, 760.dp)) }
+            }
+            onNodeWithText("Crystal", useUnmergedTree = true).performClick()
+            assertEquals(listOf(OldgeSkin.Crystal), asked)
         }
 }

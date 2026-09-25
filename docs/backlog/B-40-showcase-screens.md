@@ -1,7 +1,7 @@
 ---
 id: B-40
 title: "Showcase screens: launcher, feed, settings"
-status: open
+status: done
 priority: P2
 size: L
 stage: stage-3-screens
@@ -55,3 +55,38 @@ Launcher: WindowBar, CategoryTabs, ActionTiles, BottomNav — the Nero StartSmar
   `sample` rather than from its own registry: from `sample`'s goldens, or from a check in
   `sample`. It must not simply drop the pages from its list. oldge-core still holds its own copy
   of the page references (B-03's output). Each one's hash equals `sample`'s, B-37 checked.
+
+## Iteration 2 (2026-09-25): done
+
+- **The screens.** `LauncherScreen`, `FeedScreen` and `SettingsScreen` are in `sample`, from
+  public components.
+  - Settings takes its `skin` and an `onSkinChange`: the page's Segmented shows the skin it is
+    rendered in, and an app changes the theme above it.
+  - The Launcher's `.grid` stretches each tile to its row, as a grid item is. The first fixture
+    left «Загрузить файлы» at its own height, and the page read 2.71–3.06 %.
+  - The Feed's Fab and Snackbar are placed as the page places them: the Fab 148 dp up while the
+    Snackbar is there and 88 without it.
+- **References** were rendered into `sample` with `--out`. Each `sha256` equals oldge-core's, 27
+  of 27.
+- **Parity, raw, against the floor of 0.72 %:**
+
+  | Page | Toxic | Media | Crystal |
+  |---|---|---|---|
+  | Launcher | 1.35 % | 1.41 % | 1.61 % |
+  | FeedScreen | 1.78 % | 1.88 % | 1.87 % |
+  | SettingsScreen | 1.48 % | 1.55 % | 1.66 % |
+
+  All three match their references as rendered. What is left is the text-heavy components' own
+  residual. No component gap was found.
+- **`ScreenshotSuiteTest`'s not-yet-built list is empty.**
+  - The nine pages live in `sample`, whose registry oldge-core cannot see, so a page now counts as
+    built when `sample` holds its golden in every skin.
+  - `sample`'s new `SampleSuiteTest` holds its fixtures to its goldens and its page references,
+    both ways. So a golden there stands for a fixture.
+  - oldge-core's `desktopTest` declares `sample`'s snapshots as an input, so the count is not left
+    `UP-TO-DATE` over a changed set.
+  - Checked by removing `Launcher_Toxic.png` from `sample`: both suites fail and name it.
+- **Interaction** (`ScreenBehaviourTest`):
+  - Closing the Snackbar lets the Fab down by the page's 60 dp.
+  - Choosing «Crystal» asks the app for `OldgeSkin.Crystal`.
+- **Mutants:** 2 of 2 killed (the Fab stays up, the skin is not asked for).

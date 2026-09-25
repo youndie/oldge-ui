@@ -1854,6 +1854,24 @@
    "replace": "{ OldgeText(\"Имя и значок \".repeat(8), maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis) }",
    "tests": "*EdgeClippingTest*",
    "expect": "nothing_on_the_200_percent_page_is_cut"
+  },
+  {
+   "id": "feed-fab-stays-up",
+   "item": "B-40",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ShowcaseScreens.kt",
+   "find": "if (snack) FAB_OVER_SNACK else FAB_BOTTOM",
+   "replace": "if (snack || !snack) FAB_OVER_SNACK else FAB_BOTTOM",
+   "tests": "*ScreenBehaviourTest*",
+   "expect": "closing_the_snackbar_lets_the_fab_down_by_60_dp"
+  },
+  {
+   "id": "settings-skin-not-asked",
+   "item": "B-40",
+   "file": "sample/src/commonMain/kotlin/io/github/youndie/oldge/sample/ShowcaseScreens.kt",
+   "find": "            onSkinChange,\n",
+   "replace": "            { onSkinChange(skin) },\n",
+   "tests": "*ScreenBehaviourTest*",
+   "expect": "choosing_a_skin_asks_the_app_for_it"
   }
  ]
 }

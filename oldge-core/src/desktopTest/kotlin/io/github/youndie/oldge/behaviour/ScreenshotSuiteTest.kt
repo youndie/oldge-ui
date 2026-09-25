@@ -24,26 +24,20 @@ class ScreenshotSuiteTest {
 
     /**
      * Components and pages of the design system with a preview (and so references) but no parity
-     * fixture yet. Every component item removes its names; B-40 ends the list empty. A name here
-     * that has a fixture fails the suite, so the list cannot outlive the work.
-     *
-     * The nine pages are built in `sample` (B-37…B-40), not here; they stay on this list until the
-     * page items decide where their fixtures live.
+     * fixture yet. Every component and page item removed its names, and B-40 ended the list empty.
+     * A name here that has a fixture fails the suite, so the list cannot outlive the work: a
+     * re-vendored design system with a new component (B-36) puts its name here until it is built.
      */
-    private val notYetBuilt =
-        setOf(
-            // Components (B-11…B-34).
-            // Pages (B-37…B-40).
-            "AuthScreen",
-            "ChatScreen",
-            "EdgeNarrow",
-            "EdgeScale",
-            "FeedScreen",
-            "InboxScreen",
-            "Launcher",
-            "MediaScreen",
-            "SettingsScreen",
-        )
+    private val notYetBuilt = emptySet<String>()
+
+    /**
+     * The nine pages are built in `sample` (B-37…B-40), whose registry this module cannot see. A page
+     * counts as built when `sample` holds its golden in every skin. `sample`'s own `SampleSuiteTest`
+     * holds each golden there to a fixture, so a golden stands for one.
+     */
+    private val sampleGoldens = File("../sample/src/desktopTest/snapshots")
+
+    private fun builtInSample(page: String) = skins.all { File(sampleGoldens, "${page}_$it.png").isFile }
 
     /** Exported by the bundle without a preview of its own, so there is no reference to hold it to. */
     private val exportedWithoutPreview = setOf("ChipGroup")
@@ -116,7 +110,10 @@ class ScreenshotSuiteTest {
     @Test
     fun every_reference_has_a_fixture_unless_its_component_is_not_built_yet() {
         val orphans =
-            (pngs(design) - fixtures).filterNot { it.substringBeforeLast('_') in notYetBuilt }
+            (pngs(design) - fixtures).filterNot {
+                val owner = it.substringBeforeLast('_')
+                owner in notYetBuilt || builtInSample(owner)
+            }
         assertEquals(emptySet(), orphans.toSet(), "references no fixture is compared with")
     }
 
@@ -138,7 +135,7 @@ class ScreenshotSuiteTest {
 
     @Test
     fun every_previewed_component_has_a_fixture_per_skin_or_is_on_the_not_yet_built_list() {
-        val unbuilt = previewed.filterNot { it in fixtureGroups || it in notYetBuilt }
+        val unbuilt = previewed.filterNot { it in fixtureGroups || it in notYetBuilt || builtInSample(it) }
         assertEquals(
             emptyList(),
             unbuilt.sorted(),
@@ -163,7 +160,7 @@ class ScreenshotSuiteTest {
         )
         assertEquals(
             emptySet(),
-            notYetBuilt.intersect(fixtureGroups),
+            notYetBuilt.filter { it in fixtureGroups || builtInSample(it) }.toSet(),
             "built, so take these off the not-yet-built list",
         )
     }
