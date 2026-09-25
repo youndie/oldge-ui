@@ -20,6 +20,7 @@ gate:
 	$(PY) scripts/backlog_index.py --check
 	$(PY) scripts/docs_check.py
 	$(PY) scripts/coverage_map.py --check
+	$(PY) scripts/preview_deps.py --check
 	node --test 'scripts/*.test.mjs'
 	$(PY) -m unittest discover -s scripts -p 'test_*.py'
 

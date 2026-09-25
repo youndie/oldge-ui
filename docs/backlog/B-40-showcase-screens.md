@@ -5,7 +5,7 @@ status: open
 priority: P2
 size: L
 stage: stage-3-screens
-blocked_by: [B-11, B-12, B-13, B-14, B-15, B-16, B-17, B-18, B-19, B-20, B-21, B-22, B-23, B-24, B-25, B-26, B-27, B-28, B-29, B-30, B-31, B-32, B-33, B-34]
+blocked_by: [B-11, B-12, B-13, B-14, B-15, B-16, B-17, B-18, B-19, B-20, B-21, B-22, B-23, B-24, B-25, B-26, B-27, B-28, B-29, B-30, B-31, B-32, B-33, B-34, B-47]
 ---
 
 # B-40 — Showcase screens: launcher, feed, settings

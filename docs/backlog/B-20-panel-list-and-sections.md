@@ -5,7 +5,7 @@ status: open
 priority: P1
 size: M
 stage: stage-2-components
-blocked_by: [B-08, B-09, B-10, B-11]
+blocked_by: [B-08, B-09, B-10, B-11, B-29, B-31]
 ---
 
 # B-20 — Panel, List, ListItem and ListSection

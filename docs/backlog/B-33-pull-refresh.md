@@ -5,7 +5,7 @@ status: open
 priority: P1
 size: S
 stage: stage-2-components
-blocked_by: [B-30]
+blocked_by: [B-20, B-30]
 ---
 
 # B-33 — PullRefresh

@@ -5,7 +5,7 @@ status: open
 priority: P1
 size: M
 stage: stage-2-components
-blocked_by: [B-12]
+blocked_by: [B-12, B-20]
 ---
 
 # B-27 — Dialog and BottomSheet
