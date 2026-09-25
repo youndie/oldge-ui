@@ -9,6 +9,7 @@ plugins {
     alias(wip.plugins.androidKotlinMultiplatformLibrary)
     id("io.github.youndie.sborka.kmp")
     id("io.github.youndie.sborka.lint")
+    id("io.github.youndie.sborka.publish")
 }
 
 kotlin {
@@ -154,3 +155,26 @@ tasks
             false,
         )
     }
+
+// The fonts' licences, which the shared publish convention does not know about (B-67). The bundled
+// faces are not under the code's Apache 2.0, and a consumer's licence tooling reads the POM, not the
+// jar. `sborka.publish` writes the code's licence from `sborka.licence`, and these are added to it.
+publishing.publications.withType<MavenPublication>().configureEach {
+    pom {
+        licenses {
+            license {
+                name.set("SIL Open Font License 1.1")
+                url.set("https://openfontlicense.org/documents/OFL.txt")
+                comments.set(
+                    "Covers the bundled Fira Sans, PT Mono, Share Tech Mono, Silkscreen and Tiny5 faces, " +
+                        "not the code. The full texts ship in the artefact under composeResources/files.",
+                )
+            }
+            license {
+                name.set("Bitstream Vera Fonts License, with DejaVu changes in the public domain")
+                url.set("https://dejavu-fonts.github.io/License.html")
+                comments.set("Covers the bundled DejaVu subset. The full text ships as DejaVu-LICENSE.txt.")
+            }
+        }
+    }
+}

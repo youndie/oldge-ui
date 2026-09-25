@@ -24,14 +24,30 @@ lives, frozen, in [reference/design-system/](reference/design-system/).
 5. The layer document for the area you are touching, once it exists
    ([docs/README.md](docs/README.md) lists what does).
 
-## The loop merges its own branches, locally
+## The loop merges its own pull requests
 
-Said by the owner on 2026-09-25: **this repository has no remote and nothing is pushed anywhere.**
-The `/loop` over the backlog merges an item's branch into `main` itself when the item is done and
-the gates are green on the branch's head commit — `git merge --squash`, one commit per item with
-`Refs: B-NN`, the branch deleted afterwards. The "pull request" of the backlog-item workflow is
-therefore the branch plus the gate log (and the parity summary for a component) in the squash
-commit's body. Red is never merged; a check is never loosened to get green.
+The repository is `youndie/oldge-ui`: public, with CI, since B-67 (2026-09-25). Before that the
+owner had it local only, and the loop merged locally.
+
+- The `/loop` over the backlog pushes an item's branch and opens a pull request.
+- It merges that pull request itself, squashed with `Refs: B-NN` and the branch deleted, when two
+  things hold:
+  - both jobs of `check.yaml` are green;
+  - that green was taken on the pull request's **head commit**, not an earlier one.
+- The pull request's body carries the evidence: the gate results, the mutants, and the parity
+  summary for a component.
+- Red is never merged, and a check is never loosened to get green.
+
+## Releasing
+
+- Raise `version` in `gradle.properties` in a pull request of its own.
+- Once it is merged, publish a GitHub release tagged `v<version>` on that commit. `publish.yaml`
+  checks that the tag names the version, runs `./gradlew publish`, and asks Reposilite for every
+  coordinate's POM.
+- The Reposilite credentials are issued by `vedutsya-raboty/infra`'s `reposilite-token.yaml`, with a
+  route for each coordinate: `oldge-core` and its `-desktop`, `-android`, `-iosarm64`,
+  `-iossimulatorarm64` and `-wasm-js`. They are never created by hand. A new target is a new
+  coordinate, and needs the token reissued with it, or its variant gets a 403.
 
 ## Re-vendoring the design system
 
@@ -77,8 +93,9 @@ make check          # the documentation gate (docs-bootstrap checkers)
 `./gradlew :oldge-core:updateKotlinAbi` in the same commit, and the diff in `oldge-core/api/` is
 read as part of the review. It is never re-recorded just to make `check` green.
 
-Both must be green before a merge. There is no CI; the log of the local run is the evidence and it
-goes into the squash commit's body.
+Both must be green before a merge. CI runs them in `.github/workflows/check.yaml`:
+- `make check` on `ubuntu-latest`;
+- `./gradlew check` on `macos-latest`, since the goldens are a Mac's (research §1.9).
 
 **Mutation checks go through `scripts/mutate.py`** (B-48). Add the item's behaviour-test mutants to
 `scripts/mutants.json` (the file, the literal, its replacement, the test filter, and the test the

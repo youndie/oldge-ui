@@ -21,8 +21,8 @@ design system in [`reference/design-system/`](../../reference/design-system/). I
 screenshot suite and the parity fixtures, in `desktopTest`.
 
 It deliberately does **not** own: any Material artefact (research D2); the screens that stress the
-components — those are `sample` (B-37…B-40); publication — there is no remote, and nothing is wired
-to publish (B-01).
+components — those are `sample` (B-37…B-40). It is published as `io.github.youndie:oldge-core` to
+Reposilite by `.github/workflows/publish.yaml` on a GitHub release (B-67).
 
 ## 2a. Code anchors
 
