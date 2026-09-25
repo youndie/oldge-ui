@@ -36,7 +36,6 @@ class ScreenshotSuiteTest {
             "Accordion",
             "Banner",
             "BottomSheet",
-            "CategoryTabs",
             "ChatBubble",
             "Composer",
             "Dialog",
@@ -48,7 +47,6 @@ class ScreenshotSuiteTest {
             "Snackbar",
             "Stepper",
             "SwipeRow",
-            "Tabs",
             "TypingIndicator",
             // Pages (B-37…B-40).
             "AuthScreen",

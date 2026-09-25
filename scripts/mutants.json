@@ -837,6 +837,114 @@
    "replace": "",
    "tests": "*BarBehaviourTest*",
    "expect": "the_capsule_pops_when_a_section_becomes_current_and_not_under_reduced_motion"
+  },
+  {
+   "id": "cat-label-always",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeCategoryTabs.kt",
+   "find": "            if (current) key(\"label\") { Hook(item.label) }",
+   "replace": "            key(\"label\") { Hook(item.label) }",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "only_the_current_category_shows_its_label_and_the_others_are_named"
+  },
+  {
+   "id": "cat-aria-label",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeCategoryTabs.kt",
+   "find": ".then(if (current) Modifier else Modifier.semantics { contentDescription = item.label })",
+   "replace": ".then(Modifier)",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "only_the_current_category_shows_its_label_and_the_others_are_named"
+  },
+  {
+   "id": "cat-onchange",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeCategoryTabs.kt",
+   "find": "Category(it, it.id == value) { onChange(it.id) }",
+   "replace": "Category(it, it.id == value) { onChange(value) }",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "only_the_current_category_shows_its_label_and_the_others_are_named"
+  },
+  {
+   "id": "cat-min",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeCategoryTabs.kt",
+   "find": "private const val MIN_ITEMS = 4",
+   "replace": "private const val MIN_ITEMS = 3",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "category_tabs_take_four_to_eight_and_tabs_two_to_five"
+  },
+  {
+   "id": "cat-max",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeCategoryTabs.kt",
+   "find": "private const val MAX_ITEMS = 8",
+   "replace": "private const val MAX_ITEMS = 9",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "category_tabs_take_four_to_eight_and_tabs_two_to_five"
+  },
+  {
+   "id": "tabs-min",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTabs.kt",
+   "find": "private const val MIN_ITEMS = 2",
+   "replace": "private const val MIN_ITEMS = 1",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "category_tabs_take_four_to_eight_and_tabs_two_to_five"
+  },
+  {
+   "id": "tabs-max",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTabs.kt",
+   "find": "private const val MAX_ITEMS = 5",
+   "replace": "private const val MAX_ITEMS = 6",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "category_tabs_take_four_to_eight_and_tabs_two_to_five"
+  },
+  {
+   "id": "tabs-panel",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTabs.kt",
+   "find": "        if (content != null) {\n",
+   "replace": "        if (content != null && value.isEmpty()) {\n",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "a_tab_shows_its_page_and_a_tap_changes_it"
+  },
+  {
+   "id": "tabs-role",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTabs.kt",
+   "find": "role = Role.Tab,",
+   "replace": "role = Role.Button,",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "a_tab_shows_its_page_and_a_tap_changes_it"
+  },
+  {
+   "id": "tabs-arrow-focus",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTabs.kt",
+   "find": "        if (moved.value && at >= 0) focus[at].requestFocus()\n",
+   "replace": "",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "the_arrow_keys_move_to_the_next_tab_and_take_focus_with_them"
+  },
+  {
+   "id": "tabs-arrow-wrap",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTabs.kt",
+   "find": "val next = (at + step).mod(items.size)",
+   "replace": "val next = (at + step).coerceIn(0, items.size - 1)",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "the_arrow_keys_move_to_the_next_tab_and_take_focus_with_them"
+  },
+  {
+   "id": "tabs-roving",
+   "item": "B-25",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTabs.kt",
+   "find": ".focusProperties { canFocus = current }",
+   "replace": ".focusProperties { canFocus = true }",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "only_the_current_tab_can_take_focus"
   }
  ]
 }
