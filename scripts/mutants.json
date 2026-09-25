@@ -1386,6 +1386,51 @@
    "replace": "private const val TEXT_CH = 36f",
    "tests": "*NoticeBehaviourTest*",
    "expect": "an_empty_states_sentence_is_at_most_30ch_wide"
+  },
+  {
+   "id": "pull-threshold",
+   "item": "B-33",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgePullRefresh.kt",
+   "find": "private val THRESHOLD = 64.dp",
+   "replace": "private val THRESHOLD = 48.dp",
+   "tests": "*PullRefreshBehaviourTest*",
+   "expect": "let_go_past_64_px_it_refreshes_and_short_of_it_it_does_not"
+  },
+  {
+   "id": "pull-no-refresh",
+   "item": "B-33",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgePullRefresh.kt",
+   "find": "                    if (pull.value >= threshold) refresh()\n",
+   "replace": "",
+   "tests": "*PullRefreshBehaviourTest*",
+   "expect": "let_go_past_64_px_it_refreshes_and_short_of_it_it_does_not"
+  },
+  {
+   "id": "pull-anywhere",
+   "item": "B-33",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgePullRefresh.kt",
+   "find": "                    // Pushing back up takes the pull in before the list scrolls.\n                    if (source != NestedScrollSource.UserInput || available.y >= 0f ||",
+   "replace": "                    // Pushing back up takes the pull in before the list scrolls.\n                    if (source == NestedScrollSource.UserInput && available.y > 0f && !busy) {\n                        finger[0] += available.y\n                        scope.launch { pull.snapTo((finger[0] * RESIST).coerceIn(0f, most)) }\n                        return Offset(0f, available.y)\n                    }\n                    if (source != NestedScrollSource.UserInput || available.y >= 0f ||",
+   "tests": "*PullRefreshBehaviourTest*",
+   "expect": "the_pull_starts_only_at_the_top_of_the_scroll"
+  },
+  {
+   "id": "pull-no-ready",
+   "item": "B-33",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgePullRefresh.kt",
+   "find": "shadows = OldgeTheme.shadows.orb + DISC_RING + if (ready) readyRing(c.accent) else emptyList(),",
+   "replace": "shadows = OldgeTheme.shadows.orb + DISC_RING,",
+   "tests": "*PullRefreshBehaviourTest*",
+   "expect": "past_the_threshold_the_disc_lights_with_the_accent"
+  },
+  {
+   "id": "pull-quiet",
+   "item": "B-33",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgePullRefresh.kt",
+   "find": "                            liveRegion = LiveRegionMode.Polite\n",
+   "replace": "",
+   "tests": "*PullRefreshBehaviourTest*",
+   "expect": "while_it_refreshes_a_screen_reader_hears_it"
   }
  ]
 }

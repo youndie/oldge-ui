@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.ClipOp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
@@ -28,6 +29,7 @@ import io.github.youndie.oldge.material.CssBackground
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.material.drawGlossCap
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.tokens.OldgeColors
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.tokens.OldgeShadow
 import io.github.youndie.oldge.type.OldgeText
@@ -94,40 +96,49 @@ private fun Disc(
         modifier
             .cssBox(OldgeRadii.pill, CssBackground.Solid(Color.Transparent), shadows = DISC_RING)
             .drawBehind {
-                // `::before`: the conic sweep, masked to a ring by `radial-gradient(circle, transparent
-                // 0 13%, #000 14%)` — the hole is 13.5 % of the farthest-corner radius, the box's
-                // half-diagonal. Turned by the loop.
-                val r = size.minDimension / 2
-                val centre = Offset(r, r)
-                val hole = r * sqrt(2f) * HOLE
-                val ring =
-                    Path().apply {
-                        op(
-                            Path().apply { addOval(Rect(centre, r)) },
-                            Path().apply { addOval(Rect(centre, hole)) },
-                            PathOperation.Difference,
-                        )
-                    }
-                val stops =
-                    arrayOf(
-                        0f to c.chromeHi,
-                        0.12f to c.accentHi,
-                        0.25f to c.chromeLo,
-                        0.38f to c.bezelHi,
-                        0.5f to c.chromeHi,
-                        0.62f to c.accent,
-                        0.75f to c.chromeLo,
-                        0.88f to c.pillLo,
-                        1f to c.chromeHi,
-                    )
-                // A conic gradient starts at 12 o'clock; Compose's sweep at 3.
-                rotate(turn * FULL_TURN + CONIC_START, centre) {
-                    drawPath(ring, Brush.sweepGradient(*stops, center = centre))
-                }
+                drawConicRing(c, turn)
                 // `::after`: the gloss cap, 14 % in, 4 % down, 40 % high.
                 drawGlossCap(c.gloss, CAP_SIDE, CAP_TOP, CAP_HEIGHT)
             },
     )
+}
+
+/**
+ * The disc's `::before`, shared with PullRefresh's: the conic sweep of chrome, accent, bezel and pill
+ * stops, masked to a ring by `radial-gradient(circle, transparent 0 13%, #000 14%)` — the hole is
+ * 13.5 % of the farthest-corner radius, the box's half-diagonal — and turned by [turn] of a circle.
+ */
+internal fun DrawScope.drawConicRing(
+    c: OldgeColors,
+    turn: Float,
+) {
+    val r = size.minDimension / 2
+    val centre = Offset(r, r)
+    val hole = r * sqrt(2f) * HOLE
+    val ring =
+        Path().apply {
+            op(
+                Path().apply { addOval(Rect(centre, r)) },
+                Path().apply { addOval(Rect(centre, hole)) },
+                PathOperation.Difference,
+            )
+        }
+    val stops =
+        arrayOf(
+            0f to c.chromeHi,
+            0.12f to c.accentHi,
+            0.25f to c.chromeLo,
+            0.38f to c.bezelHi,
+            0.5f to c.chromeHi,
+            0.62f to c.accent,
+            0.75f to c.chromeLo,
+            0.88f to c.pillLo,
+            1f to c.chromeHi,
+        )
+    // A conic gradient starts at 12 o'clock; Compose's sweep at 3.
+    rotate(turn * FULL_TURN + CONIC_START, centre) {
+        drawPath(ring, Brush.sweepGradient(*stops, center = centre))
+    }
 }
 
 /** `inset 0 0 0 1px rgba(0,0,0,0.35)`, under the sweep, which covers it (`::before` paints over it). */

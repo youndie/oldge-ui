@@ -35,7 +35,6 @@ class ScreenshotSuiteTest {
             // Components (B-11…B-34).
             "ChatBubble",
             "Composer",
-            "PullRefresh",
             "SearchBar",
             "TypingIndicator",
             // Pages (B-37…B-40).
