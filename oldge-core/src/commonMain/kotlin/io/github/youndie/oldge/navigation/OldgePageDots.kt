@@ -18,7 +18,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.graphics.ClipOp
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -103,17 +111,51 @@ private fun Dot(
             ).semantics { contentDescription = "Страница ${i + 1} из $count" },
         contentAlignment = Alignment.Center,
     ) {
-        Box(
-            Modifier
-                .size(pill, PILL)
-                .cssBox(
-                    OldgeRadii.pill,
-                    CssBackground.Solid(premultipliedLerp(rest, c.accent, on)),
-                    BORDER,
-                    premultipliedLerp(restEdge, c.accentRim, on),
-                    listOf(OldgeShadow(false, 0.dp, 0.dp, GLOW, 0.dp, c.accent.copy(alpha = c.accent.alpha * on))),
-                ),
-        )
+        Box(Modifier.size(pill, PILL)) {
+            // The glow outside the pill only, as CSS paints an outer shadow, and apart from the fill:
+            // on a photo the fill is translucent, and a glow drawn under it showed through as green.
+            Box(
+                Modifier
+                    .matchParentSize()
+                    .drawWithContent {
+                        val shape =
+                            Path().apply {
+                                addRoundRect(RoundRect(Rect(Offset.Zero, size), CornerRadius(size.height / 2)))
+                            }
+                        clipPath(shape, ClipOp.Difference) { this@drawWithContent.drawContent() }
+                    }.cssBox(
+                        OldgeRadii.pill,
+                        CssBackground.Solid(Color.Transparent),
+                        shadows =
+                            listOf(
+                                OldgeShadow(
+                                    false,
+                                    0.dp,
+                                    0.dp,
+                                    GLOW,
+                                    0.dp,
+                                    c.accent.copy(
+                                        alpha =
+                                            c.accent.alpha * on,
+                                    ),
+                                ),
+                            ),
+                    ),
+            )
+            Box(
+                Modifier
+                    .matchParentSize()
+                    .cssBox(
+                        OldgeRadii.pill,
+                        // On a photo the current dot keeps the dark dots' fill and edge, and only its width and
+                        // glow say it is current: `.og-dots--dark .og-dots__dot > span` comes after the current
+                        // dot's rule with the same specificity, and wins for those two (B-58).
+                        CssBackground.Solid(if (onDark) rest else premultipliedLerp(rest, c.accent, on)),
+                        BORDER,
+                        if (onDark) restEdge else premultipliedLerp(restEdge, c.accentRim, on),
+                    ),
+            )
+        }
     }
 }
 

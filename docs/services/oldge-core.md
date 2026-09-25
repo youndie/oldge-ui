@@ -198,6 +198,11 @@ to publish (B-01).
   content.** Give the content the border as padding on all four sides, as CSS lays it out, or a
   child as tall as the box sits over the border and the box does not grow. TextField padded only
   the sides, so its 44 dp reveal orb left the field 44 where Chrome makes it 46 (B-53).
+* **`cssBox`'s blurred outer shadow fills the shape too.** It is Compose's `dropShadow`, drawn
+  under the whole shape, where CSS paints an outer `box-shadow` only outside the box. Under an
+  opaque fill the two look the same. Under a translucent fill the shadow shows through: PageDots on
+  a photo was green, not grey. Draw such a glow as its own layer clipped to outside the shape, as
+  PageDots and the Spinner do (B-58, B-30).
 * **A box without `box-sizing` is `content-box`.** Its `min-height` is the content's, and its
   padding adds to it. `.og-winbar--overlay { min-height: 64px; padding-bottom: 8px }` is 72 px in
   Chrome. In Compose that is the padding before `defaultMinSize`, not after it (B-57).

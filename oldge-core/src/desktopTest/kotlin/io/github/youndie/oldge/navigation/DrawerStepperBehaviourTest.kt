@@ -1,5 +1,6 @@
 package io.github.youndie.oldge.navigation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -32,6 +33,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.theme.OldgeTheme
+import kotlin.math.abs
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -200,6 +202,45 @@ class DrawerStepperBehaviourTest {
         frames(reduced = true).let { (a, b) -> assertEquals(a, b, "the ring pulsed under reduced motion") }
     }
 
+    /**
+     * B-58: on a photo the current dot is the stretched capsule in the dark dots' grey, lit only by its
+     * glow, as the CSS cascade has it; on the body it is filled with the accent.
+     */
+    @Test
+    fun on_a_photo_the_current_dot_is_grey_and_on_the_body_it_is_the_accent() {
+        fun centre(onDark: Boolean): Color {
+            var colour = Color.Unspecified
+            runComposeUiTest {
+                setContent {
+                    OldgeTheme {
+                        Box(
+                            Modifier
+                                .testTag(
+                                    "d",
+                                ).width(DOTS_WIDTH)
+                                .background(if (onDark) Color.Black else Color.Unspecified),
+                        ) {
+                            OldgePageDots(5, 0, {}, onDark = onDark)
+                        }
+                    }
+                }
+                val m = onNodeWithTag("d").captureToImage().toPixelMap()
+                // The row is exactly the dots' width, so the current one, the first, is 0 to 36 dp.
+                colour = m[(18 * density.density).toInt(), m.height / 2]
+            }
+            return colour
+        }
+
+        fun lime(c: Color) = c.green > c.red + 0.15f && c.green > c.blue + 0.15f
+        val dark = centre(onDark = true)
+        // Grey and lighter than the black under it: the dark dots' 35 % white, not the background.
+        assertTrue(
+            !lime(dark) && abs(dark.red - dark.green) < 0.05f && dark.red > 0.2f,
+            "on a photo the current dot is not grey: $dark",
+        )
+        assertTrue(lime(centre(onDark = false)), "on the body the current dot is not the accent")
+    }
+
     @Test
     fun steppers_take_three_to_five_steps_and_dots_seven_at_most() {
         for (n in listOf(2, 6)) {
@@ -246,3 +287,6 @@ private fun androidx.compose.ui.test.SemanticsNodeInteraction.performTouchInputA
             .Offset(x * density, y * density),
     )
 }
+
+/** Five dots: the current one's 36 dp, four of 24, and four 2 dp gaps. */
+private val DOTS_WIDTH = 140.dp

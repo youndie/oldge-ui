@@ -1935,6 +1935,24 @@
    "replace": ".padding(bottom = if (overlay) 0.dp else 0.dp)",
    "tests": "*BarBehaviourTest*",
    "expect": "the_overlay_bar_is_72_dp_and_the_plain_one_56"
+  },
+  {
+   "id": "dots-dark-accent-fill",
+   "item": "B-58",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgePageDots.kt",
+   "find": "CssBackground.Solid(if (onDark) rest else premultipliedLerp(rest, c.accent, on)),",
+   "replace": "CssBackground.Solid(premultipliedLerp(rest, c.accent, on)),",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "on_a_photo_the_current_dot_is_grey_and_on_the_body_it_is_the_accent"
+  },
+  {
+   "id": "dots-glow-under-fill",
+   "item": "B-58",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgePageDots.kt",
+   "find": "clipPath(shape, ClipOp.Difference) { this@drawWithContent.drawContent() }",
+   "replace": "this@drawWithContent.drawContent()",
+   "tests": "*DrawerStepperBehaviourTest*",
+   "expect": "on_a_photo_the_current_dot_is_grey_and_on_the_body_it_is_the_accent"
   }
  ]
 }
