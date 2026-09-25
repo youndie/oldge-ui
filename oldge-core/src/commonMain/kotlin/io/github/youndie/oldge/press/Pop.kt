@@ -63,3 +63,32 @@ internal fun Modifier.oldgePopSoftIn(): Modifier {
 
 private const val SOFT_FROM = 0.6f
 private const val SOFT_ALPHA = 0.3f
+
+/**
+ * `@keyframes og-hop` over `dur-slow` on the spring, once, when the element enters the composition:
+ * up 9 px and squashed to 1.12 × 0.92 at 35 %, down past rest by 1 px and stretched to 0.95 × 1.06
+ * at 65 %, then at rest — each keyframe interval eased on its own, as CSS does. The BottomNav's
+ * active icon hops this way. Under reduced motion the element is simply there.
+ */
+@Composable
+internal fun Modifier.oldgeHopIn(): Modifier {
+    val motion = OldgeTheme.motion
+    val hop = remember { Animatable(if (motion.reduced) 1f else 0f) }
+    LaunchedEffect(Unit) { hop.animateTo(1f, tween(motion.slow, easing = LinearEasing)) }
+    val ease = motion.spring
+    return graphicsLayer {
+        val p = hop.value
+        val i = HOP_AT.indexOfLast { it <= p }.coerceAtMost(HOP_AT.size - 2)
+        val k = ease.transform(((p - HOP_AT[i]) / (HOP_AT[i + 1] - HOP_AT[i])).coerceIn(0f, 1f))
+
+        fun lerp(v: FloatArray) = v[i] + (v[i + 1] - v[i]) * k
+        translationY = lerp(HOP_Y) * density
+        scaleX = lerp(HOP_SX)
+        scaleY = lerp(HOP_SY)
+    }
+}
+
+private val HOP_AT = floatArrayOf(0f, 0.35f, 0.65f, 1f)
+private val HOP_Y = floatArrayOf(0f, -9f, 1f, 0f)
+private val HOP_SX = floatArrayOf(1f, 1.12f, 0.95f, 1f)
+private val HOP_SY = floatArrayOf(1f, 0.92f, 1.06f, 1f)

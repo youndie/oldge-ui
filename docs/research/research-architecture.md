@@ -316,6 +316,11 @@ text-bearing component, and was not done in a component item.
 preview are all fractional (78.39, 56.03, 28.05, 77.75, 109.20 and 86.38 px), and each of Compose's
 is exactly its ceiling. A row of short labels is the worst case, since each label adds up to a pixel.
 
+*B-24.* Equal flex slots have the same cause without any text. BottomNav's four items share 330 px,
+82.5 px each. Chrome keeps the half pixel, and Compose's `weight` hands out whole pixels. So the
+icons and labels centred in the second and third slots sit a pixel left of Chrome's (measured:
+search and bell at 135 and 214, against 136 and 215).
+
 | Cause | Before → after | Where |
 |---|---|---|
 | A button's content box started inside the padding but not inside the 1 px border; CSS's `box-sizing: border-box` puts the border inside the width, so every button was 2 px narrow and a row drifted 2 px per button. | Button 6.71–6.80 % → 4.36–4.43 % | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt` |

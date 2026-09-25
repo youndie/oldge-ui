@@ -46,6 +46,9 @@ import kotlin.math.sin
  * fill clipped to and laid out on the padding box, the rim on the border box and seen only through a
  * transparent border (the Fab's chrome frame).
  *
+ * [corners] rounds only some corners, as `border-radius: xl xl 0 0` does (the WindowBar's top, the
+ * BottomNav's bottom); the others are square in every box the painting derives.
+ *
  * Inset shadows are drawn as that path difference, not with `Modifier.innerShadow`: on the Panel
  * probe the difference is 0.04–0.07 % away from Chrome and `innerShadow` 3.3–4.1 %, off along the
  * whole outline (research §1.4, measured in B-07). Blurred outer shadows do use `dropShadow`.
@@ -59,13 +62,16 @@ internal fun Modifier.cssBox(
     extraOuter: List<OldgeShadow> = emptyList(),
     gloss: Color? = null,
     borderBackground: CssBackground? = null,
+    corners: CssCorners = CssCorners.All,
 ): Modifier {
     val all = shadows + extraOuter
     val blurred = all.filter { !it.inset && it.blur > 0.dp }
     val blurredInsets = all.filter { it.inset && it.blur > 0.dp }
+    val top = if (corners == CssCorners.Bottom) 0.dp else radius
+    val bottom = if (corners == CssCorners.Top) 0.dp else radius
     val shape =
         androidx.compose.foundation.shape
-            .RoundedCornerShape(radius)
+            .RoundedCornerShape(top, top, bottom, bottom)
     var modifier = this
     for (drop in blurred) {
         modifier =
@@ -83,9 +89,10 @@ internal fun Modifier.cssBox(
         modifier.drawWithCache {
             val r = radius.toPx()
             val b = border.toPx()
-            val outer = cssRoundRect(Offset.Zero, size, r)
+            val outer = cssRoundRect(Offset.Zero, size, r, corners.radii(r))
+            val inner = (r - b).coerceAtLeast(0f)
             val padding =
-                cssRoundRect(Offset(b, b), Size(size.width - 2 * b, size.height - 2 * b), (r - b).coerceAtLeast(0f))
+                cssRoundRect(Offset(b, b), Size(size.width - 2 * b, size.height - 2 * b), inner, corners.radii(inner))
             val rings = all.filter { !it.inset && it.blur == 0.dp }
             val insets = all.filter { it.inset && it.blur == 0.dp }
             // Blink's `kBackgroundBleedClipLayer`: a rounded box with a visible border is painted
@@ -109,7 +116,7 @@ internal fun Modifier.cssBox(
                     )
                 }
             onDrawBehind {
-                for (ring in rings) drawSpreadRing(outer, r, ring)
+                for (ring in rings) drawSpreadRing(outer, r, ring, corners)
                 if (layered) drawContext.canvas.saveLayer(Rect(Offset.Zero, size), Paint())
                 if (borderBackground == null) {
                     drawBackground(background, if (layered) square else outer, padding)
@@ -117,7 +124,7 @@ internal fun Modifier.cssBox(
                     drawBackground(borderBackground, outer)
                     drawBackground(background, padding)
                 }
-                if (gloss != null) drawGloss(gloss, padding, r)
+                if (gloss != null) drawGloss(gloss, padding, if (corners == CssCorners.Bottom) 0f else r)
                 for (inset in insets) drawInset(padding, inset)
                 if (b > 0f && borderBackground == null) drawBorder(if (layered) square else outer, padding, borderColor)
                 if (layered) {
@@ -258,6 +265,25 @@ internal fun cssRoundRect(
     )
 }
 
+/** Which corners of a box are rounded: all, or only the top or the bottom pair. */
+internal enum class CssCorners {
+    All,
+    Top,
+    Bottom,
+    ;
+
+    /** [r] on the rounded corners and none on the others. */
+    fun radii(r: Float): CssRadii {
+        val round = CornerRadius(r, r)
+        val zero = CornerRadius.Zero
+        return when (this) {
+            All -> CssRadii(round, round, round, round)
+            Top -> CssRadii(round, round, zero, zero)
+            Bottom -> CssRadii(zero, zero, round, round)
+        }
+    }
+}
+
 /** Four elliptical corner radii, in px. */
 internal data class CssRadii(
     val tl: CornerRadius,
@@ -326,11 +352,19 @@ private fun DrawScope.drawInset(
     val spread = shadow.spread.toPx()
     val dx = shadow.offsetX.toPx()
     val dy = shadow.offsetY.toPx()
+
+    fun shrunk(r: CornerRadius) = CornerRadius((r.x - spread).coerceAtLeast(0f), (r.y - spread).coerceAtLeast(0f))
     val hole =
         cssRoundRect(
             Offset(padding.left + dx + spread, padding.top + dy + spread),
             Size(padding.width - 2 * spread, padding.height - 2 * spread),
-            (padding.topLeftCornerRadius.x - spread).coerceAtLeast(0f),
+            0f,
+            CssRadii(
+                shrunk(padding.topLeftCornerRadius),
+                shrunk(padding.topRightCornerRadius),
+                shrunk(padding.bottomRightCornerRadius),
+                shrunk(padding.bottomLeftCornerRadius),
+            ),
         )
     val box = Path().apply { addRoundRect(padding) }
     val band = Path().apply { op(box, Path().apply { addRoundRect(hole) }, PathOperation.Difference) }
@@ -346,6 +380,7 @@ private fun DrawScope.drawSpreadRing(
     outer: RoundRect,
     radius: Float,
     shadow: OldgeShadow,
+    corners: CssCorners,
 ) {
     val s = shadow.spread.toPx()
     val dx = shadow.offsetX.toPx()
@@ -355,6 +390,7 @@ private fun DrawScope.drawSpreadRing(
             Offset(outer.left - s + dx, outer.top - s + dy),
             Size(outer.width + 2 * s, outer.height + 2 * s),
             radius + s,
+            corners.radii(radius + s),
         )
     val ring =
         Path().apply {

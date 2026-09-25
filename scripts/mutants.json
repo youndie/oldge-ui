@@ -756,6 +756,87 @@
    "replace": "item(key = SectionHead(s.key))",
    "tests": "*PanelListBehaviourTest*",
    "expect": "a_section_header_holds_at_the_top_while_its_section_scrolls_under_it"
+  },
+  {
+   "id": "bar-title-heading",
+   "item": "B-24",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeWindowBar.kt",
+   "find": "Modifier.semantics { heading() }",
+   "replace": "Modifier",
+   "tests": "*BarBehaviourTest*",
+   "expect": "a_bar_title_is_a_heading_and_its_orbs_are_named_buttons"
+  },
+  {
+   "id": "bar-back-label",
+   "item": "B-24",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeWindowBar.kt",
+   "find": "OldgeOrbButton(OldgeIcons.Back, backLabel, onBack",
+   "replace": "OldgeOrbButton(OldgeIcons.Back, \"\", onBack",
+   "tests": "*BarBehaviourTest*",
+   "expect": "a_bar_title_is_a_heading_and_its_orbs_are_named_buttons"
+  },
+  {
+   "id": "bar-max-actions",
+   "item": "B-24",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeWindowBar.kt",
+   "find": "private const val MAX_ACTIONS = 3",
+   "replace": "private const val MAX_ACTIONS = 4",
+   "tests": "*BarBehaviourTest*",
+   "expect": "a_bar_takes_at_most_three_actions"
+  },
+  {
+   "id": "nav-min-items",
+   "item": "B-24",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBottomNav.kt",
+   "find": "private const val MIN_ITEMS = 3",
+   "replace": "private const val MIN_ITEMS = 2",
+   "tests": "*BarBehaviourTest*",
+   "expect": "a_bottom_nav_has_three_to_five_sections"
+  },
+  {
+   "id": "nav-max-items",
+   "item": "B-24",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBottomNav.kt",
+   "find": "private const val MAX_ITEMS = 5",
+   "replace": "private const val MAX_ITEMS = 6",
+   "tests": "*BarBehaviourTest*",
+   "expect": "a_bottom_nav_has_three_to_five_sections"
+  },
+  {
+   "id": "nav-selected",
+   "item": "B-24",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBottomNav.kt",
+   "find": ".semantics { selected = current }",
+   "replace": ".semantics { selected = false }",
+   "tests": "*BarBehaviourTest*",
+   "expect": "the_current_section_is_selected_and_a_tap_changes_it"
+  },
+  {
+   "id": "nav-onchange",
+   "item": "B-24",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBottomNav.kt",
+   "find": "{ onChange(it.id) }",
+   "replace": "{ onChange(value) }",
+   "tests": "*BarBehaviourTest*",
+   "expect": "the_current_section_is_selected_and_a_tap_changes_it"
+  },
+  {
+   "id": "nav-item-height",
+   "item": "B-24",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBottomNav.kt",
+   "find": "private val ITEM_HEIGHT = 56.dp",
+   "replace": "private val ITEM_HEIGHT = 40.dp",
+   "tests": "*BarBehaviourTest*",
+   "expect": "the_current_section_is_selected_and_a_tap_changes_it"
+  },
+  {
+   "id": "nav-no-pop",
+   "item": "B-24",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBottomNav.kt",
+   "find": "            .oldgePopSoftIn()\n",
+   "replace": "",
+   "tests": "*BarBehaviourTest*",
+   "expect": "the_capsule_pops_when_a_section_becomes_current_and_not_under_reduced_motion"
   }
  ]
 }

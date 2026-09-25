@@ -61,13 +61,17 @@ internal fun Modifier.lcdGlass(): Modifier {
  * the skin's material over it ([bezelTexture]).
  */
 @Composable
-internal fun Modifier.bezel(radius: Dp): Modifier {
+internal fun Modifier.bezel(
+    radius: Dp,
+    corners: CssCorners = CssCorners.All,
+): Modifier {
     val c = OldgeTheme.colors
     return cssBox(
         radius,
         CssBackground.Linear(listOf(0f to c.bezelHi, 0.5f to c.bezel, 1f to c.bezelLo)),
         shadows = OldgeTheme.shadows.bezel,
-    ).bezelTexture(radius)
+        corners = corners,
+    ).bezelTexture(radius, corners)
 }
 
 /**
@@ -75,7 +79,10 @@ internal fun Modifier.bezel(radius: Dp): Modifier {
  * `bezel-speckle` (Crystal); a skin without one makes the token transparent and nothing is drawn.
  */
 @Composable
-internal fun Modifier.bezelTexture(radius: Dp): Modifier {
+internal fun Modifier.bezelTexture(
+    radius: Dp,
+    corners: CssCorners = CssCorners.All,
+): Modifier {
     if (!OldgeTheme.texture) return this
     val c = OldgeTheme.colors
     val weave = remember(c.bezelWeave) { if (c.bezelWeave.alpha > 0f) weaveTile(c.bezelWeave) else null }
@@ -91,7 +98,12 @@ internal fun Modifier.bezelTexture(radius: Dp): Modifier {
         }
     if (weave == null && speckle == null) return this
     return drawWithCache {
-        val clip = Path().apply { addRoundRect(cssRoundRect(Offset.Zero, size, radius.toPx())) }
+        val clip =
+            Path().apply {
+                addRoundRect(
+                    cssRoundRect(Offset.Zero, size, radius.toPx(), corners.radii(radius.toPx())),
+                )
+            }
         onDrawBehind {
             clipPath(clip) {
                 weave?.let { drawRect(tiled(it)) }

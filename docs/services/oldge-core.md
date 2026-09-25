@@ -36,7 +36,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/composeResources/font/` | the seven bundled font files; their licences are in `composeResources/files/` |
 | `scripts/fonts/` | the DejaVu subset and the coverage generator (fontTools, run by hand; the tests hold their output) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/press/` | `OldgeIndication` (flash, focus ring; the theme's `LocalIndication`), `oldgePressScale`, `oldgePopIn` (`og-pop`, shared by the chip's and the checkbox's marks) and `oldgePopSoftIn` (`og-pop-soft`), and `oldgeHitArea` (a touch target larger than the drawn box that takes no more room) |
-| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/CssBox.kt` | the CSS-box painter every material is built on (backgrounds: colour, `linear-gradient`, `radial-gradient(circle at …)`); `Materials.kt` the materials, `Gloss.kt` the gloss transition |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/CssBox.kt` | the CSS-box painter every material is built on (backgrounds: colour, `linear-gradient`, `radial-gradient(circle at …)`; `CssCorners` for a box rounded only on top or bottom, B-24); `Materials.kt` the materials, `Gloss.kt` the gloss transition |
 | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/harness/` | `OldgeDemo` (the `.og-demo` frame), the pinned text style, `FixtureSizeTest` |
 | `scripts/probes/` | material probes: HTML from the design system's classes, rendered as references for the materials' parity fixtures |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Turbulence.kt` | the grain and speckle alpha, a port of `feTurbulence` that matches Chrome (research §1.3) |
@@ -44,7 +44,7 @@ to publish (B-01).
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/icons/` | `OldgeIcon` and the generated `OldgeIcons` (`scripts/generate_icons.py`; `checkOldgeIcons` in `check`) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/` | `OldgeButton`, `OldgeIconButton`, `OldgeOrbButton` (B-12), `OldgeFab`, `OldgeExtendedFab`, `OldgeFabDock`, `OldgeSegmented` (B-13), the three chips and `OldgeChipGroup` (B-14); `ButtonBehaviourTest`, `FabSegmentedBehaviourTest` and `ChipBehaviourTest` hold the READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/` | `OldgeDivider` (B-11), `OldgeCard`, `OldgeActionTile` (B-21), `OldgePanel`, `OldgeList` with `OldgeListItem`, and `oldgeListSections` with `OldgeListSectionHeader` for a `LazyColumn` (B-20); `CardTileBehaviourTest` and `PanelListBehaviourTest` hold their READMEs' behaviour rules |
-| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/` | `OldgeMenu`, `OldgeTooltip`, `OldgeBalloon` (B-28); `MenuTooltipBalloonBehaviourTest` holds their READMEs' behaviour rules |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/` | `OldgeMenu`, `OldgeTooltip`, `OldgeBalloon` (B-28), `OldgeWindowBar`, `OldgeBottomNav` (B-24); `MenuTooltipBalloonBehaviourTest` and `BarBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/` | `OldgeReadout`, `OldgeMeter`, `OldgeProgressBar` (B-29), `OldgeSpinner`, `OldgeSkeleton` (B-30), `OldgeBadge`, `OldgeAvatar` (B-31), with the LCD tag and text in `Lcd.kt` and the frozen loop phase in `Loop.kt`; `LcdBehaviourTest`, `LoopBehaviourTest` and `BadgeAvatarBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/` | `OldgeCheckbox`, `OldgeRadioGroup` (B-15), `OldgeSwitch`, `OldgeSlider` (B-16), `OldgeTextField` (B-17), `OldgeSelect`, `OldgeCodeInput` (B-18), `OldgeDatePicker` (B-19), sharing `Field.kt`'s label and help line; `CheckBehaviourTest`, `SwitchSliderBehaviourTest`, `TextFieldBehaviourTest`, `SelectCodeBehaviourTest` and `DatePickerBehaviourTest` hold their READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt` | text on the CSS baseline — use it, not `BasicText`, for any text a reference shows |
@@ -145,6 +145,10 @@ to publish (B-01).
   and the narrow layout are drawn by `OldgeListItem` from `LocalOldgeListRow`. A row that is not an
   `OldgeListItem` gets none of them, as in CSS, where they belong to `.og-item`. The divider is
   drawn inside the row's 52 dp, as the CSS `border-top` is (B-20).
+* **Under reduced motion every duration is zero, so a component's own `if (reduced)` guard is often
+  unobservable.** An animation of 0 ms is at rest by the first frame a test can capture. B-24's
+  mutant that dropped the hop's guard was equivalent and was taken out of the manifest. The guards
+  that matter are on loops, which have no duration to zero.
 * **kotlinx-datetime is an `api` dependency** (B-19): `OldgeDatePicker` takes and gives
   `LocalDate`, so a consumer compiles against it; the version is `wip`'s.
 * **`local.properties`** (git-ignored) must name the Android SDK (`sdk.dir=…`), or configuration
