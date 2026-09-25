@@ -140,7 +140,7 @@ is written and reported as a failure, never passed silently.
 | `og-seg-in` | Meter segments, 28 ms apart | `MotionTest` `seg-in` |
 | `og-sheet-in` | BottomSheet | `MotionTest` `sheet-in` |
 | `og-shimmer` | — | **Not applicable:** defined, and no rule in `bundle.css` uses it |
-| `og-shine` | primary Button while pressed | `MotionTest` `shine` |
+| `og-shine` | primary Button while pressed | `MotionTest` `shine`; `ButtonBehaviourTest.quick_presses_leave_no_glints_queued_after_the_last_release` (B-62) |
 | `og-slide` | indeterminate ProgressBar | `LoopBehaviourTest.an_indeterminate_bar_slides_and_stands_still_under_reduced_motion` |
 | `og-slide-l` | DatePicker, next month | `MotionTest` `slide-l` |
 | `og-slide-r` | NavDrawer items; DatePicker, previous month | `DrawerStepperBehaviourTest.the_items_come_in_one_after_another` |

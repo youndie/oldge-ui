@@ -55,7 +55,7 @@ import io.github.youndie.oldge.tokens.OldgeEasings
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.tokens.OldgeShadow
 import io.github.youndie.oldge.type.OldgeText
-import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.collectLatest
 
 /**
  * The design system's three kinds of button (reference/design-system/components/Button).
@@ -311,7 +311,8 @@ private fun OldgeButtonSize.minHeight(): Dp =
  * The primary's glint (`.og-btn--primary::after`, `@keyframes og-shine`): a band 30 % wide of
  * `transparent → gloss → transparent`, skewed −20°, swept from −120 % to 360 % of its own width over
  * `dur-press`, fading out in the last fifth; above the content, and never shown under reduced motion
- * or while at rest. Returns the running progress, or null.
+ * or while at rest. It runs only while the button is held, as `:active` does. Returns the running
+ * progress, or null.
  */
 @Composable
 private fun rememberShine(
@@ -322,9 +323,21 @@ private fun rememberShine(
     val progress = remember { Animatable(1f) }
     LaunchedEffect(source, active, motion.reduced) {
         if (!active || motion.reduced) return@LaunchedEffect
-        source.interactions.filterIsInstance<PressInteraction.Press>().collect {
-            progress.snapTo(0f)
-            progress.animateTo(1f, tween(motion.press, easing = LinearEasing))
+        // `:active::after`: the sweep runs while the button is held. A press restarts it and a
+        // release or a cancel ends it. Collected one at a time instead, a run of quick presses
+        // queued a whole sweep each, and they flew by one after another after the clicking had
+        // stopped (B-62).
+        source.interactions.collectLatest { interaction ->
+            when (interaction) {
+                is PressInteraction.Press -> {
+                    progress.snapTo(0f)
+                    progress.animateTo(1f, tween(motion.press, easing = LinearEasing))
+                }
+
+                is PressInteraction.Release, is PressInteraction.Cancel -> {
+                    progress.snapTo(1f)
+                }
+            }
         }
     }
     return { progress.value.takeIf { it < 1f } }

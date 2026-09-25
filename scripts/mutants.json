@@ -2115,6 +2115,24 @@
    "replace": "",
    "tests": "*DrawerStepperBehaviourTest*",
    "expect": "a_screen_reader_closes_it_through_the_scrims_close_button"
+  },
+  {
+   "id": "shine-queued",
+   "item": "B-62",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
+   "find": "source.interactions.collectLatest { interaction ->",
+   "replace": "source.interactions.collect { interaction ->",
+   "tests": "*ButtonBehaviourTest*",
+   "expect": "quick_presses_leave_no_glints_queued_after_the_last_release"
+  },
+  {
+   "id": "shine-outlives-release",
+   "item": "B-62",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
+   "find": "is PressInteraction.Release, is PressInteraction.Cancel -> {\n                    progress.snapTo(1f)\n                }",
+   "replace": "is PressInteraction.Release, is PressInteraction.Cancel -> {}",
+   "tests": "*ButtonBehaviourTest*",
+   "expect": "quick_presses_leave_no_glints_queued_after_the_last_release"
   }
  ]
 }

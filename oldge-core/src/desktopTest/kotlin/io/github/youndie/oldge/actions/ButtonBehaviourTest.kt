@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.ExperimentalTestApi
@@ -12,9 +15,12 @@ import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertWidthIsEqualTo
+import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.icons.OldgeIcons
@@ -98,4 +104,38 @@ class ButtonBehaviourTest {
             onNodeWithText("Отправить").performClick()
             assertEquals(100, taps)
         }
+
+    /**
+     * The glint runs only while the primary is held (`:active::after`). A run of quick presses must
+     * not queue a sweep per press: 700 ms after the last release, the button is at rest (B-62).
+     */
+    @Test
+    fun quick_presses_leave_no_glints_queued_after_the_last_release() =
+        runComposeUiTest {
+            mainClock.autoAdvance = false
+            setContent {
+                OldgeTheme(reducedMotion = false) {
+                    OldgeButton("Войти", {}, Modifier.testTag("go"), variant = OldgeButtonVariant.Primary)
+                }
+            }
+            mainClock.advanceTimeBy(SETTLE)
+            val rest = onNodeWithTag("go").captureToImage().toPixelMap()
+            repeat(PRESSES) {
+                onNodeWithTag("go").performTouchInput { down(center) }
+                mainClock.advanceTimeBy(HELD)
+                onNodeWithTag("go").performTouchInput { up() }
+                mainClock.advanceTimeBy(BETWEEN)
+            }
+            mainClock.advanceTimeBy(AFTER)
+            val later = onNodeWithTag("go").captureToImage().toPixelMap()
+            var off = 0
+            for (y in 0 until rest.height) for (x in 0 until rest.width) if (rest[x, y] != later[x, y]) off++
+            assertEquals(0, off, "pixels still off the resting button ${AFTER + BETWEEN} ms after the last release")
+        }
 }
+
+private const val SETTLE = 100L
+private const val PRESSES = 5
+private const val HELD = 50L
+private const val BETWEEN = 50L
+private const val AFTER = 650L
