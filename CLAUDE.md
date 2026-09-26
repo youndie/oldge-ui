@@ -38,16 +38,20 @@ owner had it local only, and the loop merged locally.
   summary for a component.
 - Red is never merged, and a check is never loosened to get green.
 
-## Releasing
+## Publishing
 
-- Raise `version` in `gradle.properties` in a pull request of its own.
-- Once it is merged, publish a GitHub release tagged `v<version>` on that commit. `publish.yaml`
-  checks that the tag names the version, runs `./gradlew publish`, and asks Reposilite for every
-  coordinate's POM.
+- **Every push to `main` publishes** `oldge-core` as `<version>.<run number>`, for example
+  `0.1.0.7` (B-68). `publish.yaml` calls sborka's reusable `publish-wip.yaml` on `macos-latest`.
+  It runs `./gradlew check` first, in a step of its own, then
+  `publishAllPublicationsToWipRepository`. Its consumer job resolves the published root
+  afterwards.
+- **`version` in `gradle.properties` is only the head.** Raise it, in a pull request of its own, to
+  start a new line: `0.2.0` gives `0.2.0.<run>`.
 - The Reposilite credentials are issued by `vedutsya-raboty/infra`'s `reposilite-token.yaml`, with a
   route for each coordinate: `oldge-core` and its `-desktop`, `-android`, `-iosarm64`,
   `-iossimulatorarm64` and `-wasm-js`. They are never created by hand. A new target is a new
   coordinate, and needs the token reissued with it, or its variant gets a 403.
+- `0.1.0` itself was published by a GitHub release (B-67), and stays on the host as it is.
 
 ## Re-vendoring the design system
 
