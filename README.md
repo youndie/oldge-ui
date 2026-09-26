@@ -68,9 +68,12 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.youndie:oldge-core:0.1.0")
+    implementation("io.github.youndie:oldge-core:0.1.0.<build>")
 }
 ```
+
+Every build of `main` publishes a version: `0.1.0.<build>`. The latest is the last `<version>` in
+[maven-metadata.xml](https://reposilite.kotlin.website/snapshots/io/github/youndie/oldge-core/maven-metadata.xml).
 
 ```kotlin
 OldgeTheme(OldgeSkin.Toxic) {

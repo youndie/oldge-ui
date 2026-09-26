@@ -22,7 +22,7 @@ screenshot suite and the parity fixtures, in `desktopTest`.
 
 It deliberately does **not** own: any Material artefact (research D2); the screens that stress the
 components — those are `sample` (B-37…B-40). It is published as `io.github.youndie:oldge-core` to
-Reposilite by `.github/workflows/publish.yaml` on a GitHub release (B-67).
+Reposilite by `.github/workflows/publish.yaml`, as `0.1.0.<run>` on every push to `main` (B-68).
 
 ## 2a. Code anchors
 
