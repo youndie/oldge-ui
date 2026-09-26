@@ -1,7 +1,7 @@
 ---
 id: B-68
 title: "Every build of main publishes 0.1.0.<build>, through sborka's publish-wip"
-status: wip
+status: done
 priority: infra
 size: XS
 stage: stage-4-product
@@ -26,3 +26,17 @@ portfolio. B-67 published by a GitHub release, with `version` as the whole numbe
 - AC: a push to `main` publishes `0.1.0.<run>` for all six coordinates, and the consumer job
   resolves the root.
 - Anchors: `.github/workflows/publish.yaml`, `gradle.properties`.
+
+## Findings (2026-09-27)
+
+- **`0.1.0.2` is the first build-number version:** publish run 36278903385, the push of PR #5's
+  merge `3873af0`. The run number carries on from B-67's release run, which was #1.
+  `determine-version` gave `0.1.0.2`, `./gradlew check` passed in its own step, and then the
+  publish ran.
+- **On the host:** all six coordinates answer 200 for their POM and their artefact. The root's
+  `maven-metadata.xml` lists `0.1.0` and `0.1.0.2`, with `<latest>0.1.0.2`. The consumer job
+  (proba) resolved `io.github.youndie:oldge-core:0.1.0.2`.
+- **The check's tests came from the build cache** (`desktopTest FROM-CACHE`), and that is sound. A
+  squash merge leaves the tree identical to the pull request's head, so every test input was the
+  same as in the pull request's `gradle` job, which had just passed. `viddikVerify` and
+  `checkKotlinAbi` ran.
