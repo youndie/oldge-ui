@@ -112,19 +112,19 @@
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "4319996ec1da6514d3163800c7ded8cd5f7e771b96fd4021329daad4c72984d4"
+      "sha256": "d47e103b3bde61758e0d2f9efae177b77c78883736ddf4ccfd3029c0389dab20"
     },
     "Launcher_Media": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "a906da41901e541a0c257508ce71c94592fff7175a84321bac8caa2cc4b30762"
+      "sha256": "99ca94cc835fa9b9af3cb54a343f74f62f18443afe74c602fd052a3df7219fde"
     },
     "Launcher_Toxic": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "76a1c2d9b9c4289539a98b405056904191747da902f8fd2486522c6d5ac74840"
+      "sha256": "b5a4d201f3b81dccecf66d5244343ed349c011aab354d42180667ddb2fd27863"
     },
     "MediaScreen_Crystal": {
       "width": 390,
@@ -165,9 +165,9 @@
   },
   "designSystem": {
     "artifact": "CL8BafGgX4GgYdJXNEZttC",
-    "lastChange": "2026-09-24T21:57:36Z"
+    "lastChange": "2026-09-27T19:12:58Z"
   },
-  "chrome": "Chrome/153.0.8010.49",
+  "chrome": "Chrome/154.0.8037.58",
   "texture": "on",
   "wrapper": [
     "tokens.css compiled from tokens.json by scripts/tokens-css.mjs (the artifact publishes none)",

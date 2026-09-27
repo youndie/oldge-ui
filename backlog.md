@@ -78,7 +78,7 @@ list an item can be checked against in one glance.
 
 No open tasks.
 
-## Closed (69)
+## Closed (70)
 
 **Answers that decide the architecture**
 
@@ -163,5 +163,6 @@ No open tasks.
 - [B-45](docs/backlog/B-45-public-api-and-kdoc.md) `[x]` - Pin the public API, and make the KDoc name its README rule
 - [B-67](docs/backlog/B-67-public-repository-and-publishing.md) `[x]` - A public repository, CI, and 0.1.0 published to Reposilite
 - [B-68](docs/backlog/B-68-build-number-versions.md) `[x]` - Every build of main publishes 0.1.0.<build>, through sborka's publish-wip
+- [B-70](docs/backlog/B-70-vendor-design-system-2026-09-27.md) `[x]` - Re-vendor the design system: the hook under the glyph, in the design itself
 
 <!-- END INDEX -->

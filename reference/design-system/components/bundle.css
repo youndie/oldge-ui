@@ -80,7 +80,7 @@ body, .og-body { margin: 0; color: var(--ink); font-family: var(--font-ui); font
 .og-cat { position: relative; flex: none; display: grid; place-items: center; width: 56px; height: 52px; padding: 0; border: 0; background: none; color: var(--ink-muted); cursor: pointer; border-radius: var(--radius-md); }
 .og-cat__glyph { filter: drop-shadow(0 2px 2px rgba(0,0,0,0.35)); }
 .og-cat[aria-selected="true"] { color: var(--ink); }
-.og-cat__label { position: absolute; left: 6px; top: calc(100% + 4px); font: 700 1.25rem/1.5rem var(--font-title); color: var(--ink); padding: 0 12px 3px 6px; border-left: 2px solid var(--ink); border-bottom: 2px solid var(--ink); white-space: nowrap; pointer-events: none; }
+.og-cat__label { position: absolute; left: calc(50% - 1px); top: calc(100% + 4px); font: 700 1.25rem/1.5rem var(--font-title); color: var(--ink); padding: 0 12px 3px 6px; border-left: 2px solid var(--ink); border-bottom: 2px solid var(--ink); white-space: nowrap; pointer-events: none; }
 
 /* ── Panel ────────────────────────────────────────────── */
 .og-panel { background: var(--surface); border: 1px solid var(--edge); border-radius: var(--radius-md); box-shadow: var(--shadow-raised); overflow: hidden; }

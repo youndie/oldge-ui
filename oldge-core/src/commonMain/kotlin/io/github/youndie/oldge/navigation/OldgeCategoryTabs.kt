@@ -118,8 +118,7 @@ private val LabelEnd = VerticalAlignmentLine(::maxOf)
 /**
  * `.og-cat`: a 56 × 52 target with the 36 px glyph in its middle, casting `drop-shadow(0 2px 2px
  * rgba(0,0,0,0.35))`; the current one's label hangs under it, 4 px down and outside the button's
- * box, as CSS's `position: absolute` puts it. Its hook's leg stands under the glyph's centre, where
- * the design has it 6 px in (B-69).
+ * box, as CSS's `position: absolute` puts it. Its hook's leg stands under the glyph's centre (B-69).
  */
 @Composable
 private fun Category(
@@ -240,7 +239,7 @@ private val LABEL_BOTTOM = 3.dp // css literal: bundle.css `.og-cat__label { pad
 private val LABEL_ROOM = 16.dp // css literal: bundle.css `.og-cats { padding-bottom: calc(1.5rem + 16px) }`
 private val HOOK = 2.dp // css literal: bundle.css `.og-cat__label { border-left: 2px; border-bottom: 2px }`
 
-// Not the design's `.og-cat__label { left: 6px }`: the owner put the hook's leg under the glyph's centre
-// (B-69). The label starts where the 2 px leg's centre is the tab's centre line, and the glyph is
-// centred in the tab (`place-items: center`).
+// bundle.css `.og-cat__label { left: calc(50% - 1px) }`: the 2 px leg's centre on the tab's centre line,
+// under the glyph centred there (`place-items: center`). It was `left: 6px` until the owner moved it
+// (B-69, B-70).
 private val LABEL_X = (CAT_WIDTH - HOOK) / 2

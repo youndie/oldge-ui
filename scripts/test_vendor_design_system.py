@@ -42,7 +42,8 @@ class VendorDesignSystemTest(unittest.TestCase):
         preview.write_text(preview.read_text(encoding="utf-8") + "\n", encoding="utf-8")
 
         lines = v.diff(fetched)
-        self.assertEqual("Design system 2026-09-24T21:57:36Z -> 2026-09-26T09:00:00Z.", lines[0])
+        # The snapshot's own version, read rather than written here: re-vendoring moves it (B-70).
+        self.assertEqual(f"Design system {v.snapshot_version()} -> 2026-09-26T09:00:00Z.", lines[0])
         self.assertIn("Tokens changed: hit-min.", lines)
         self.assertIn("Components added: Knob.", lines)
         self.assertIn("preview.html changed: Button.", lines)

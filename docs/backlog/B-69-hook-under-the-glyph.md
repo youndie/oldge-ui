@@ -63,3 +63,9 @@ reference draws it there, and the golden matched it.
   All are still within the 5 % report threshold; the totals stay 168/174 and 24/27.
 - **Mutants:** 2 of 2 killed: the leg back at the design's 6 px, and the row ignoring the label's
   end.
+
+## Amendment (2026-09-27)
+
+The deviation is closed: the owner asked for the same change in the design system. B-70 made it
+there, `left: calc(50% - 1px)`, and re-vendored it, and parity came back to the numbers from before
+this item.
