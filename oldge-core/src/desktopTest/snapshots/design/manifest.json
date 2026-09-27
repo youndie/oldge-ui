@@ -223,19 +223,19 @@
       "width": 390,
       "height": 130,
       "page": false,
-      "sha256": "3e19549be81d40dc81796fa96bf0951c721350641f2b9b13a57dccd202d65505"
+      "sha256": "0bb638e3f940d4b1df1184c51683f1c474ff2606138d597b3ed2e562f49b6d75"
     },
     "CategoryTabs_Media": {
       "width": 390,
       "height": 130,
       "page": false,
-      "sha256": "f4a6c10089a5fa3788b33e2b8fd14b287b1358fdf044e9f6a096fc69a35d1762"
+      "sha256": "563b0af7dab41f08f785b1cf26594e85213aaf852d8430ac850c6b63d42bfa91"
     },
     "CategoryTabs_Toxic": {
       "width": 390,
       "height": 130,
       "page": false,
-      "sha256": "2e4616c8ece313ece30e84d833a7e2bafb885dba4c3478028a063108f3e8c79a"
+      "sha256": "ff13436cfed598132d2ff42e270b43060b05e12eb68d7f51a2aec6a489a1f961"
     },
     "ChatBubble_Crystal": {
       "width": 390,
@@ -568,19 +568,19 @@
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "4319996ec1da6514d3163800c7ded8cd5f7e771b96fd4021329daad4c72984d4"
+      "sha256": "d47e103b3bde61758e0d2f9efae177b77c78883736ddf4ccfd3029c0389dab20"
     },
     "Launcher_Media": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "a906da41901e541a0c257508ce71c94592fff7175a84321bac8caa2cc4b30762"
+      "sha256": "99ca94cc835fa9b9af3cb54a343f74f62f18443afe74c602fd052a3df7219fde"
     },
     "Launcher_Toxic": {
       "width": 390,
       "height": 760,
       "page": true,
-      "sha256": "76a1c2d9b9c4289539a98b405056904191747da902f8fd2486522c6d5ac74840"
+      "sha256": "b5a4d201f3b81dccecf66d5244343ed349c011aab354d42180667ddb2fd27863"
     },
     "List_Crystal": {
       "width": 390,
@@ -1323,9 +1323,9 @@
   },
   "designSystem": {
     "artifact": "CL8BafGgX4GgYdJXNEZttC",
-    "lastChange": "2026-09-24T21:57:36Z"
+    "lastChange": "2026-09-27T19:12:58Z"
   },
-  "chrome": "Chrome/153.0.8010.49",
+  "chrome": "Chrome/154.0.8037.58",
   "texture": "on",
   "now": "2026-09-24T12:00:00",
   "wrapper": [
