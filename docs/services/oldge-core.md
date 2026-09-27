@@ -324,3 +324,7 @@ A keyframe used by several components is held through one of them. The others sh
   it does in a browser. So a `:focus-within` look on a control that is not a text field has to be
   keyboard focus (`InputMode.Keyboard`), or it stays on after the first click. The Select's arrow
   and ring did (B-66).
+* **CategoryTabs deviates from the design, on the owner's decision.** The hook's leg stands under
+  the glyph's centre, where the design has it 6 px in, so its parity gap is the deviation's
+  (research §1.10). The row grows to the hanging label, as CSS's scroll overflow does, because a
+  current last tab's label no longer fits in the end padding (B-69).

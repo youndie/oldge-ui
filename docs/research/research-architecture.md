@@ -407,6 +407,14 @@ so a page is read band by band, not as one percentage.
 Every page but Chat is within about three times the floor. The difference is the text-heavy
 components' own residual; no page adds a drawing of its own.
 
+*B-69: CategoryTabs' hook is a deviation from the design, the owner's.* The design hangs the
+current label 6 px in from the tab's left edge (`.og-cat__label { left: 6px }`). The owner asked
+for the hook's leg under the glyph's centre, and the library puts it there. The references are the
+design system's rendering and are not edited, so CategoryTabs' parity is 2.76 / 2.79 / 3.33 %
+(0.48 / 0.50 / 1.01 % before), and the Launcher's is 1.75 / 1.80 / 2.00 % (1.35 / 1.41 / 1.61 %).
+That gap is the deviation, not a defect. It closes if the design system's artifact is changed to
+match and re-vendored (B-36).
+
 *B-59: Skia does not hyphenate, so EdgeNarrow's gap is a platform limit.* Chrome breaks
 EdgeNarrow's German title as «Personalisierte Wer- / bung» by `hyphens: auto`, and Compose on
 desktop breaks it between words. A probe laid out
