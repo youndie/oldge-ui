@@ -78,7 +78,7 @@ list an item can be checked against in one glance.
 
 No open tasks.
 
-## Closed (68)
+## Closed (69)
 
 **Answers that decide the architecture**
 
@@ -142,6 +142,7 @@ No open tasks.
 - [B-62](docs/backlog/B-62-shine-queue.md) `[x]` - The primary button's glint queues up across quick presses
 - [B-63](docs/backlog/B-63-select-strip.md) `[x]` - Select's list shows the Menu's empty icon strip
 - [B-66](docs/backlog/B-66-select-arrow-sticks.md) `[x]` - Select's arrow stays dipped, and its focus ring stays, after a click
+- [B-69](docs/backlog/B-69-hook-under-the-glyph.md) `[x]` - CategoryTabs: the hook's leg stands under the glyph's centre
 
 **Screens that stress the system**
 

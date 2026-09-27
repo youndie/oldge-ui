@@ -2223,6 +2223,24 @@
    "replace": "OldgeWindowAction(OldgeIcons.Refresh, \"Обновить\", {}),",
    "tests": "*SampleAppBehaviourTest*",
    "expect": "the_apps_feed_refreshes_by_a_pull_and_by_the_bars_button"
+  },
+  {
+   "id": "hook-leg-at-six",
+   "item": "B-69",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeCategoryTabs.kt",
+   "find": "private val LABEL_X = (CAT_WIDTH - HOOK) / 2",
+   "replace": "private val LABEL_X = 6.dp",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "the_hooks_leg_stands_under_the_current_glyphs_centre"
+  },
+  {
+   "id": "row-ignores-label",
+   "item": "B-69",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeCategoryTabs.kt",
+   "find": "layout(maxOf(tabsEnd, labelEnd), tabs.maxOf { it.height })",
+   "replace": "layout(tabsEnd, tabs.maxOf { it.height })",
+   "tests": "*TabsBehaviourTest*",
+   "expect": "a_current_last_tabs_label_is_inside_the_row"
   }
  ]
 }

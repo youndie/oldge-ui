@@ -29,11 +29,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.icons.OldgeIcon
 import io.github.youndie.oldge.press.OldgeIndication
@@ -82,22 +85,41 @@ public fun OldgeCategoryTabs(
             OldgeTheme.type.heading.lineHeight
                 .toDp()
         } + LABEL_ROOM
-    Row(
-        modifier
-            .semantics { contentDescription = label }
-            .horizontalScroll(rememberScrollState())
-            .padding(start = s.space4, end = s.space4, top = s.space2, bottom = labelRoom),
-        horizontalArrangement = Arrangement.spacedBy(s.space1),
-        verticalAlignment = Alignment.Top,
-    ) {
-        for (it in items) key(it.id) { Category(it, it.id == value) { onChange(it.id) } }
+    // Not a `Row`: the current tab's label hangs outside its tab, and in CSS an absolutely placed
+    // child still adds to its scroll container's scrollable overflow. So the row is as wide as the
+    // tabs and their end padding, or as the furthest label reaches, whichever is more. With the
+    // hook under the glyph's centre (B-69), a current last tab's label no longer fits in the padding.
+    Layout(
+        content = { for (it in items) key(it.id) { Category(it, it.id == value) { onChange(it.id) } } },
+        modifier =
+            modifier
+                .semantics { contentDescription = label }
+                .horizontalScroll(rememberScrollState())
+                .padding(start = s.space4, top = s.space2, bottom = labelRoom),
+    ) { measurables, _ ->
+        val gap = s.space1.roundToPx()
+        val tabs = measurables.map { it.measure(Constraints()) }
+        val xs = tabs.runningFold(0) { x, tab -> x + tab.width + gap }
+        val tabsEnd = xs[tabs.size - 1] + tabs.last().width + s.space4.roundToPx()
+        val labelEnd =
+            tabs.indices.maxOf { i ->
+                val end = tabs[i][LabelEnd]
+                if (end == AlignmentLine.Unspecified) 0 else xs[i] + end
+            }
+        layout(maxOf(tabsEnd, labelEnd), tabs.maxOf { it.height }) {
+            tabs.forEachIndexed { i, tab -> tab.place(xs[i], 0) }
+        }
     }
 }
 
+/** Where the current tab's hanging label ends, from the tab's left edge; it can be past the tab. */
+private val LabelEnd = VerticalAlignmentLine(::maxOf)
+
 /**
  * `.og-cat`: a 56 × 52 target with the 36 px glyph in its middle, casting `drop-shadow(0 2px 2px
- * rgba(0,0,0,0.35))`; the current one's label hangs under it, 6 px in and 4 px down, outside the
- * button's box, as CSS's `position: absolute` puts it.
+ * rgba(0,0,0,0.35))`; the current one's label hangs under it, 4 px down and outside the button's
+ * box, as CSS's `position: absolute` puts it. Its hook's leg stands under the glyph's centre, where
+ * the design has it 6 px in (B-69).
  */
 @Composable
 private fun Category(
@@ -146,9 +168,10 @@ private fun Category(
                 .getOrNull(
                     1,
                 )?.measure(constraints.copy(minWidth = 0, minHeight = 0, maxWidth = Int.MAX_VALUE))
-        layout(w, h) {
+        val x = LABEL_X.roundToPx()
+        layout(w, h, if (hook != null) mapOf(LabelEnd to x + hook.width) else emptyMap()) {
             cat.place(0, 0)
-            hook?.place(LABEL_X.roundToPx(), h + LABEL_Y.roundToPx())
+            hook?.place(x, h + LABEL_Y.roundToPx())
         }
     }
 }
@@ -210,10 +233,14 @@ private val CAT_HEIGHT = 52.dp // css literal: bundle.css `.og-cat { height: 52p
 private val GLYPH = 36.dp // css literal: bundle.js `CategoryTabs`, `Icon size: 36`
 private val SHADOW_Y = 2.dp // css literal: bundle.css `.og-cat__glyph { filter: drop-shadow(0 2px 2px …) }`
 private val SHADOW_BLUR = 0.87.dp // css literal: bundle.css `drop-shadow(… 2px …)`, σ 1 as Compose's blur radius
-private val LABEL_X = 6.dp // css literal: bundle.css `.og-cat__label { left: 6px }`
 private val LABEL_Y = 4.dp // css literal: bundle.css `.og-cat__label { top: calc(100% + 4px) }`
 private val LABEL_START = 6.dp // css literal: bundle.css `.og-cat__label { padding: 0 12px 3px 6px }`
 private val LABEL_END = 12.dp // css literal: bundle.css `.og-cat__label { padding: 0 12px 3px 6px }`
 private val LABEL_BOTTOM = 3.dp // css literal: bundle.css `.og-cat__label { padding: 0 12px 3px 6px }`
 private val LABEL_ROOM = 16.dp // css literal: bundle.css `.og-cats { padding-bottom: calc(1.5rem + 16px) }`
 private val HOOK = 2.dp // css literal: bundle.css `.og-cat__label { border-left: 2px; border-bottom: 2px }`
+
+// Not the design's `.og-cat__label { left: 6px }`: the owner put the hook's leg under the glyph's centre
+// (B-69). The label starts where the 2 px leg's centre is the tab's centre line, and the glyph is
+// centred in the tab (`place-items: center`).
+private val LABEL_X = (CAT_WIDTH - HOOK) / 2
