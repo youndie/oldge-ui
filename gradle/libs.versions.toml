@@ -1,7 +1,7 @@
 [versions]
 # The shared build conventions. The compiler, KSP, AGP and Compose Multiplatform are NOT here: they
 # come from `wip`, the catalog a sborka release publishes (research §1.8).
-sborka = "0.4.0.91"
+sborka = "0.4.0.111"
 # 0.6.0 records only the goldens a verification would reject and has the glyph check. Build 40 of its
 # wip line is youndie/viddik@10f128b, the fix for the KSP srcDir bug (#44). 0.6.1 on Central, which
 # will carry it, is not released yet, so this is the wip build from reposilite (B-35).
