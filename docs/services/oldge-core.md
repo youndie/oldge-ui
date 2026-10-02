@@ -102,7 +102,7 @@ Reposilite by `.github/workflows/publish.yaml`, as `0.1.0.<run>` on every push t
 
 | Kind | Name | What for |
 |---|---|---|
-| Build | sborka `0.4.0.91` (`io.github.youndie.sborka.settings`, `.kmp`, `.lint`) | repositories, the `wip` catalog, toolchain 25, explicit API, warnings as errors, ktlint |
+| Build | sborka (`io.github.youndie.sborka.settings`, `.kmp`, `.lint`), at the version `sborka` names in `gradle/libs.versions.toml`, and the settings plugin's line in `settings.gradle.kts` names the same one | repositories, the `wip` catalog, toolchain 25, explicit API, warnings as errors, ktlint |
 | Test | viddik `0.6.0.40`, the wip build of `10f128b` from reposilite, until 0.6.1 is on Central | goldens, design parity |
 
 ## 5. Motion
