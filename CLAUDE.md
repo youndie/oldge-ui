@@ -101,6 +101,12 @@ Both must be green before a merge. CI runs them in `.github/workflows/check.yaml
 - `make check` on `ubuntu-latest`;
 - `./gradlew check` on `macos-latest`, since the goldens are a Mac's (research §1.9).
 
+The documentation checkers are docs-bootstrap's, at the version the `uses: youndie/docs-bootstrap@…`
+line in `.github/workflows/check.yaml` pins: the first `make check` fetches that version into
+`.docs-bootstrap/` (it ignores itself), and there are no copies under `scripts/` to run by hand.
+`make fix` regenerates the backlog index and the component catalogue. The checks of this
+repository's own are recipe lines of the `gate` target in the Makefile.
+
 **Mutation checks go through `scripts/mutate.py`** (B-48). Add the item's behaviour-test mutants to
 `scripts/mutants.json` (the file, the literal, its replacement, the test filter, and the test the
 mutant is aimed at), and run `python3 scripts/mutate.py scripts/mutants.json --only B-NN`. A mutant is

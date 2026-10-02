@@ -44,6 +44,12 @@ pip install pyyaml
 make check
 ```
 
+The checks are [docs-bootstrap](https://github.com/youndie/docs-bootstrap)'s, at the version
+`.github/workflows/check.yaml` pins, fetched into `.docs-bootstrap/` by the first run, plus this
+repository's own under the Makefile's `gate`. `make fix` regenerates the backlog index and the
+component catalogue and fills in missing coverage-map lines; `make report` is the two non-blocking
+reports.
+
 ## Coverage map
 
 The list below is **checked** against the files on disk: a document missing here, or an entry with

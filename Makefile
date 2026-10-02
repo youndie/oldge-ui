@@ -1,25 +1,70 @@
-# The documentation gate. `./gradlew check` is the code gate (B-01 creates it); both are green before
-# a branch is merged, and there is no CI, so the log of a local run goes into the squash commit.
+# The documentation gate. Copied from docs-bootstrap's templates/Makefile to the root of the
+# repository, next to .github/workflows/check.yaml copied from templates/workflow-check.yaml.
 #
-# Whatever is not in `make check` is not a gate.
+#   make check    the gate and the reports - exactly what CI runs
+#   make fix      regenerate the backlog index, append missing coverage-map lines
+#
+# ONE VERSION OF THE CHECKS, WRITTEN DOWN ONCE: the `uses: youndie/docs-bootstrap@<ref>` line in
+# .github/workflows/check.yaml. CI runs the checks at that ref because the runner resolves the line.
+# This file reads the same line and fetches the same ref into .docs-bootstrap/, a directory that
+# ignores itself, so `make check` here runs what CI runs - the same scripts, the same guard, the same
+# flags. Renovate bumps the line, and the next `make check` fetches what CI already moved to.
+#
+# WHY THE SCRIPTS ARE NOT COPIED IN. A copied check runs, but at the version of the day it was copied,
+# and a fix upstream never arrives: across one portfolio 18 copies of backlog_index.py were found in
+# three versions, eleven of them without the guard that makes `--check` fail when the backlog has
+# gone missing - a guard that existed upstream the whole time.
+#
+# WHY THE VERSION IS NOT ALSO WRITTEN HERE. A version pinned in the workflow and again in this file is
+# two pins, and two pins drift: one is bumped, the other is found months later, and "green here, red
+# there" comes back with nobody able to say which side is right. So this file holds none; if the
+# workflow names two different refs, it refuses to choose.
+#
+# WHAT LIVES HERE is what is this repository's own: where the tree is, how the backlog is kept, and
+# checks of its own under `gate`. How the documents are checked - including the guard that fails the
+# gate when docs/ or the backlog is not there - is in check.mk at the pinned version, and changes
+# arrive with a bump instead of with a re-copy.
+#
+# OVERRIDES. `DOCS_BOOTSTRAP=<dir>` runs the checks from a directory instead of the pinned ref: a
+# clone of docs-bootstrap you are changing, or - offline, or without GitHub Actions - a committed
+# copy of its check.mk, scripts/ and .claude-plugin/. That last one is the copy route again, with its
+# drift; it is the fallback, not the default.
 
+DOCS ?= docs
+BACKLOG ?= backlog.md
+# How the backlog is kept (docs-bootstrap SKILL.md, step 7): `files` - one file per item in
+# $(DOCS)/backlog/ and the generated index in $(BACKLOG); `milestones` - one hand-kept file at
+# $(BACKLOG), usually BACKLOG.md; `none` - no backlog, yet.
+BACKLOG_FORM ?= files
+# A directory whose subdirectories are the repositories the code anchors point into. `..` is the
+# directory this clone sits in - in CI, a directory holding this clone and nothing else; on a laptop,
+# its siblings too, which a suffix match can mistake for this repository.
+REPOS ?= ..
 PY ?= python3
 
-.PHONY: check gate report fix help references
+# Where the pin is, and what it names.
+DOCS_BOOTSTRAP_PIN ?= .github/workflows/check.yaml
+DOCS_BOOTSTRAP_REPO ?= youndie/docs-bootstrap
+DOCS_BOOTSTRAP_CACHE ?= .docs-bootstrap
+# The revision of this file. check.mk says so when a newer docs-bootstrap expects a newer one.
+DOCS_BOOTSTRAP_SHIM := 1
+
+.DEFAULT_GOAL := help
+.PHONY: help check gate report fix references
 
 help:
-	@echo "make check   - the documentation gate plus the reports"
-	@echo "make gate    - blocking: the backlog index, the documents, the coverage map"
+	@echo "make check   - the gate and the reports: exactly what CI runs"
+	@echo "make gate    - the blocking half alone"
 	@echo "make report  - non-blocking: BDD coverage, code anchors"
 	@echo "make fix     - regenerate the backlog index and the component catalogue, fill in missing coverage-map lines"
 	@echo "make references - render the parity references from the design system (node, Chrome)"
 
 check: gate report
 
-gate:
-	$(PY) scripts/backlog_index.py --check
-	$(PY) scripts/docs_check.py
-	$(PY) scripts/coverage_map.py --check
+# Blocking. Checks of this repository's own are recipe lines of `gate`, so that CI, which runs
+# `make check`, runs them too: the preview dependencies, the component catalogue, the vendored
+# design system, and the unit tests of the scripts themselves (node and python).
+gate: docs-gate
 	$(PY) scripts/preview_deps.py --check
 	$(PY) scripts/component_catalog.py --check
 	$(PY) scripts/vendor_design_system.py check
@@ -28,16 +73,43 @@ gate:
 
 # Non-blocking, read by a person. Sibling repositories are searched because anchors point at
 # kvadrant-ui and viddik; addresses inside a published artefact are written with `!/`.
-report:
-	$(PY) scripts/bdd_report.py
-	$(PY) scripts/code_anchors.py --repos ..
+report: docs-report
 
-fix:
-	$(PY) scripts/backlog_index.py
-	$(PY) scripts/coverage_map.py --fix
+fix: docs-fix
 	$(PY) scripts/component_catalog.py
 
 # B-03. Not in the gate: it needs Chrome and rewrites 177 PNGs. Render twice and compare before
 # committing a change to the renderer; `git status` shows which references moved.
 references:
 	node scripts/design-references.mjs
+
+# -- where the checks come from. Nothing below is meant to be edited. ------------------------------
+
+ifndef DOCS_BOOTSTRAP
+DOCS_BOOTSTRAP_REF := $(sort $(shell sed -n -E 's|^[[:space:]]*(-[[:space:]]*)?uses:[[:space:]]*"?$(DOCS_BOOTSTRAP_REPO)@([^"[:space:]]+).*|\2|p' $(DOCS_BOOTSTRAP_PIN) 2>/dev/null))
+ifeq ($(words $(DOCS_BOOTSTRAP_REF)),0)
+$(error no `uses: $(DOCS_BOOTSTRAP_REPO)@<ref>` in $(DOCS_BOOTSTRAP_PIN). That line is the version of the checks, for CI and for this file alike - copy templates/workflow-check.yaml, or run with DOCS_BOOTSTRAP=<a local copy>)
+endif
+ifneq ($(words $(DOCS_BOOTSTRAP_REF)),1)
+$(error $(DOCS_BOOTSTRAP_PIN) pins $(DOCS_BOOTSTRAP_REPO) at more than one ref: $(DOCS_BOOTSTRAP_REF). One version of the checks, one ref - make every uses: line name the same one)
+endif
+DOCS_BOOTSTRAP := $(DOCS_BOOTSTRAP_CACHE)/$(DOCS_BOOTSTRAP_REF)
+else ifeq ($(wildcard $(DOCS_BOOTSTRAP)/check.mk),)
+$(error DOCS_BOOTSTRAP=$(DOCS_BOOTSTRAP) holds no check.mk)
+endif
+
+include $(DOCS_BOOTSTRAP)/check.mk
+
+# The fetch. A tarball of the ref rather than a clone: a tag, a branch and a commit SHA (what
+# Renovate writes when it pins digests) are all one URL, and no history is needed. Unpacked next to
+# its final place and moved in only once complete, so an interrupted fetch never leaves a directory
+# that looks like a version. GNU make 3.81 - the one macOS ships - announces the missing file
+# ("check.mk: No such file or directory") just before fetching it; that line is not the error.
+$(DOCS_BOOTSTRAP_CACHE)/%/check.mk:
+	@echo "docs-bootstrap: fetching $(DOCS_BOOTSTRAP_REPO)@$* - the ref $(DOCS_BOOTSTRAP_PIN) pins"
+	@rm -rf "$(@D).part" && mkdir -p "$(@D).part"
+	@curl -fsSL --retry 2 -o "$(@D).part/src.tar.gz" "https://codeload.github.com/$(DOCS_BOOTSTRAP_REPO)/tar.gz/$*" || { rm -rf "$(@D).part"; echo "could not fetch $(DOCS_BOOTSTRAP_REPO)@$* - offline, or a ref that does not exist? DOCS_BOOTSTRAP=<dir> runs a local copy instead" >&2; exit 1; }
+	@tar -xzf "$(@D).part/src.tar.gz" -C "$(@D).part" --strip-components=1 && rm -f "$(@D).part/src.tar.gz"
+	@test -f "$(@D).part/check.mk" || { echo "$(DOCS_BOOTSTRAP_REPO)@$* has no check.mk - versions before 0.3.0 cannot be pinned this way" >&2; rm -rf "$(@D).part"; exit 1; }
+	@rm -rf "$(@D)" && mv "$(@D).part" "$(@D)"
+	@echo '*' > "$(DOCS_BOOTSTRAP_CACHE)/.gitignore"
