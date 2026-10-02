@@ -105,7 +105,12 @@ The documentation checkers are docs-bootstrap's, at the version the `uses: yound
 line in `.github/workflows/check.yaml` pins: the first `make check` fetches that version into
 `.docs-bootstrap/` (it ignores itself), and there are no copies under `scripts/` to run by hand.
 `make fix` regenerates the backlog index and the component catalogue. The checks of this
-repository's own are recipe lines of the `gate` target in the Makefile.
+repository's own are recipe lines of the `gate` target in the Makefile. Only `check`, `gate`,
+`report`, `fix` and the `docs-` targets load docs-bootstrap (`DOCS_BOOTSTRAP_GOALS`, template
+revision 2), so `make references` reads no pin and fetches nothing; a new target that leads to
+`docs-gate` goes into that list. A file in a sibling repository is cited in the documents as
+`youndie/<repo>@<commit>!/<path>`: the anchors check clones this repository alone and looks a path
+up in its own repository only, so a bare `kvadrant-ui/CLAUDE.md` is reported missing.
 
 **Mutation checks go through `scripts/mutate.py`** (B-48). Add the item's behaviour-test mutants to
 `scripts/mutants.json` (the file, the literal, its replacement, the test filter, and the test the

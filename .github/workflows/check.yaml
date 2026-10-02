@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: youndie/docs-bootstrap@v0.3.0
+      - uses: youndie/docs-bootstrap@v0.3.5
 
   # The code gate: tests, ktlint, `viddikVerify`, `checkKotlinAbi` and the token and icon `--check`s,
   # the one target a contributor runs.
@@ -104,7 +104,7 @@ jobs:
 
       # The code lives in this checkout, so its parent is a directory whose one subdirectory is
       # this repository - which is exactly what REPOS (`..` by default) expects.
-      - uses: youndie/docs-bootstrap@v0.3.0
+      - uses: youndie/docs-bootstrap@v0.3.5
         with:
           target: report
 
@@ -126,6 +126,6 @@ jobs:
       #       done
       #     env:
       #       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   - uses: youndie/docs-bootstrap@v0.3.0
+      #   - uses: youndie/docs-bootstrap@v0.3.5
       #     with:
       #       target: report REPOS=repos

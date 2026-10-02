@@ -28,7 +28,7 @@ goes at the point of divergence and keeps the reason the first idea failed.
 | The design system, vendored in `reference/design-system/` | **authoritative for intent**, not for implementation | It is the brief. Its CSS is a web implementation of the intent; where the CSS and the README disagree, the README states the intent and the CSS is evidence of how one renderer realised it. |
 | A render of the design system's preview in headless Chrome | **authoritative for the reference** | This is what parity measures against (D3). It is a measurement of Chrome, not of the design. |
 | Published artefacts (Maven Central, the Reposilite at `reposilite.kotlin.website`, the Gradle cache) | **verified** | Read at the version pinned, by unpacking or by `maven-metadata.xml`. |
-| Sibling repositories (`kvadrant-ui`, `viddik`, `sborka`) | **verified for what they say about themselves** | kvadrant-ui is the closest precedent — a design-language component library on the same toolchain — and its lessons are cited by file, not by recollection. |
+| Sibling repositories (`kvadrant-ui`, `viddik`, `sborka`) | **verified for what they say about themselves** | kvadrant-ui is the closest precedent — a design-language component library on the same toolchain — and its lessons are cited by file, not by recollection. A file there is cited as `youndie/<repo>@<commit>!/<path>`, at the commit its `main` was at when the fact was read (written so since 2026-10-02: the anchors check clones this repository alone, and a bare `kvadrant-ui/…` path resolves nowhere). |
 | Recollection of how Compose behaves | **not a source** | Anything from memory is written as a hypothesis below, with the item that checks it. |
 
 ## 1. Verified facts
@@ -200,7 +200,7 @@ design system's two playful curves are the tokens themselves, not approximations
 `foundation-metadata-1.12.0.jar!/commonMain/…/package_androidx.compose.foundation/07_foundation.knm`,
 not yet by decoded signature, so its exact shape is B-10's to confirm) installed as the theme's
 `LocalIndication`, which is also how kvadrant-ui made one press feedback reach every clickable
-(`kvadrant-ui/CLAUDE.md`, "The focus ring lives in the indication").
+(`youndie/kvadrant-ui@2a925c9!/CLAUDE.md`, "The focus ring lives in the indication").
 
 ### 1.6 Fonts: three of the four families cannot be shipped as specified
 
@@ -261,7 +261,7 @@ pads the `LazyColumn` itself, so that nothing scrolls in the band.
 |---|---|
 | viddik's latest release is **0.6.0** (2026-09-20); 0.4.0 and 0.5.0 before it. Design parity (`viddikDesignParity`) arrived in 0.5.0. | `repo1.maven.org/maven2/io/github/youndie/viddik/viddik-annotations/maven-metadata.xml` |
 | 0.6.0 records **only the goldens a verification would reject** (#30), refuses to photograph text its font cannot draw when `glyphCheck` is on (#41), shards fixtures and shares one scene (#42, #43). | `youndie/viddik@v0.6.0` log, `v0.5.0..v0.6.0` |
-| **0.6.0 has an unreleased bug in exactly this module's shape:** it adds `build/generated/ksp/metadata/commonMain/kotlin` to commonMain unconditionally, so a KMP module with KSP, several targets and `showroomTargets` off fails `build` with an implicit-dependency error on every per-target KSP task. `viddikRecord` alone passes. Fixed on `main` by `10f128b` (#45, closes #44), not released. | `youndie/viddik@10f128b`, `viddik-gradle-plugin/src/main/kotlin/io/github/youndie/viddik/gradle/ViddikPlugin.kt` |
+| **0.6.0 has an unreleased bug in exactly this module's shape:** it adds `build/generated/ksp/metadata/commonMain/kotlin` to commonMain unconditionally, so a KMP module with KSP, several targets and `showroomTargets` off fails `build` with an implicit-dependency error on every per-target KSP task. `viddikRecord` alone passes. Fixed on `main` by `10f128b` (#45, closes #44), not released. | `youndie/viddik@10f128b!/viddik-gradle-plugin/src/main/kotlin/io/github/youndie/viddik/gradle/ViddikPlugin.kt` |
 | `viddik-annotations` 0.6.0 publishes android, desktop, iosArm64, iosSimulatorArm64 — **no wasmJs**. It is built on CMP 1.12.0 and Kotlin 2.4.20. | `viddik-annotations-0.6.0.module`, `viddik-annotations-desktop-0.6.0.module` on Central |
 | `ViddikPlatformTextStyle`, `viddikTypography`, `normalizeVerticalMetrics` are JVM-only, in `viddik-testing-core`; `Modifier.viddikStableGlyphs()` is common. | `youndie/viddik@v0.6.0:viddik-testing-core/src/jvmMain/…/core/ViddikFonts.kt`; `…/viddik-annotations/src/commonMain/…/ViddikStableGlyphs.kt` |
 | Parity reads references from `<snapshotsDir>/design/<group>_<name>.png` (anything outside `[A-Za-z0-9_.-]` becomes `_`), defaults 5 % of pixels and ±16 per channel, report-only unless `designStrict`, results in `build/reports/screenshots/design/`. Golden defaults: 0.05 % and ±2. | `youndie/viddik@v0.6.0:README.md` "Design parity"; `ViddikExtension.kt` |
@@ -275,12 +275,12 @@ these are lessons it recorded in its own files, cited so they can be re-read rat
 
 | Lesson | Where it is recorded |
 |---|---|
-| A golden with text records the **rasteriser**: macOS and FreeType agree on glyph boxes and disagree on edge pixels, and no tolerance that absorbs the second rasteriser still catches a weight change. The suite runs where it was recorded. | `kvadrant-ui/CLAUDE.md`, "Documentation checks" (B-35) |
-| Every fixture builds its type ramp with a test-only `portableTypography(...)` that pins hinting and smoothing through `ViddikPlatformTextStyle`; the library never overrides the platform's hinting for its consumers. | `kvadrant-ui/CLAUDE.md`, "Every glyph in a golden comes from a bundled file" |
+| A golden with text records the **rasteriser**: macOS and FreeType agree on glyph boxes and disagree on edge pixels, and no tolerance that absorbs the second rasteriser still catches a weight change. The suite runs where it was recorded. | `youndie/kvadrant-ui@2a925c9!/CLAUDE.md`, "Documentation checks" (B-35) |
+| Every fixture builds its type ramp with a test-only `portableTypography(...)` that pins hinting and smoothing through `ViddikPlatformTextStyle`; the library never overrides the platform's hinting for its consumers. | `youndie/kvadrant-ui@2a925c9!/CLAUDE.md`, "Every glyph in a golden comes from a bundled file" |
 | `ScreenshotSuiteTest` guards the set both ways: empty registry, fixture without a golden, golden without a fixture. A test reading the golden directory declares it as a task input. | `kvadrant-core/src/desktopTest/…/behaviour/ScreenshotSuiteTest.kt` |
-| Name goldens in ASCII. | `kvadrant-ui/CLAUDE.md`, "Screenshots" |
-| `androidResources { enable = true }` in every module with an Android target, or the AAR ships without its fonts, green. | `kvadrant-ui/CLAUDE.md` (B-37) |
-| AGP must be declared in the **root** build file, `apply false`, or the Compose plugin cannot see its classes. | `kvadrant-ui/build.gradle.kts` |
+| Name goldens in ASCII. | `youndie/kvadrant-ui@2a925c9!/CLAUDE.md`, "Screenshots" |
+| `androidResources { enable = true }` in every module with an Android target, or the AAR ships without its fonts, green. | `youndie/kvadrant-ui@2a925c9!/CLAUDE.md` (B-37) |
+| AGP must be declared in the **root** build file, `apply false`, or the Compose plugin cannot see its classes. | `youndie/kvadrant-ui@2a925c9!/build.gradle.kts` |
 
 ### 1.10 What parity's residual looks like here
 
@@ -676,4 +676,4 @@ the design system's own groups, stage 3 the screens that stress them.
 | viddik parity | `youndie/viddik@v0.6.0!/README.md` |
 | viddik #44 fix | `youndie/viddik@10f128b!/viddik-gradle-plugin/src/main/kotlin/io/github/youndie/viddik/gradle/ViddikPlugin.kt` |
 | Compose shadows | `ui-metadata-1.12.0.jar!/commonMain/default/linkdata/package_androidx.compose.ui.draw/7_draw.knm` |
-| Precedent | `kvadrant-ui/CLAUDE.md` |
+| Precedent | `youndie/kvadrant-ui@2a925c9!/CLAUDE.md` |
