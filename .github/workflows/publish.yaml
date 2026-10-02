@@ -1,7 +1,9 @@
-# Every build of main publishes oldge-core as 0.1.0.<run number> (B-68), through sborka's reusable
+# Every build of main publishes oldge-core as <head>.<run number> (B-68), through sborka's reusable
 # workflow, as the rest of the portfolio does. `gradle.properties`' `version` is the head, and
 # `determine-version` puts the run number on the tail through -PVERSION: two publishes never share a
-# coordinate, or a consumer could not tell them apart and would keep the cached older one.
+# coordinate, or a consumer could not tell them apart and would keep the cached older one. No step
+# here spells the version. The head names the next release, never a tagged one (CLAUDE.md,
+# "Publishing"): X.Y.Z.N sorts above X.Y.Z.
 #
 # The credentials are put here by `vedutsya-raboty/infra`'s `reposilite-token.yaml`, with a route for
 # each of the six coordinates: `oldge-core` and one per target. A new target is a new coordinate, and

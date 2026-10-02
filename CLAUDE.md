@@ -40,13 +40,22 @@ owner had it local only, and the loop merged locally.
 
 ## Publishing
 
-- **Every push to `main` publishes** `oldge-core` as `<version>.<run number>`, for example
-  `0.1.0.7` (B-68). `publish.yaml` calls sborka's reusable `publish-wip.yaml` on `macos-latest`.
+- **Every push to `main` publishes** `oldge-core` as `<version>.<run number>`, `0.1.1.<run>`
+  now (B-68). `publish.yaml` calls sborka's reusable `publish-wip.yaml` on `macos-latest`.
   It runs `./gradlew check` first, in a step of its own, then
   `publishAllPublicationsToWipRepository`. Its consumer job resolves the published root
   afterwards.
 - **`version` in `gradle.properties` is only the head.** Raise it, in a pull request of its own, to
   start a new line: `0.2.0` gives `0.2.0.<run>`.
+- **The head names the next release, never one already tagged.** In Maven's ordering (and
+  Renovate's) `X.Y.Z.N` sorts *above* `X.Y.Z`. After `v0.1.0` the head stayed `0.1.0`, so the
+  builds that followed went out as `0.1.0.2` to `0.1.0.10`: named after a release they came after,
+  ranked above it, and what a consumer's Renovate offers in its place. The head is `0.1.1` since then. So once a
+  release is published and tagged, the next change moves the head to the next patch, before
+  anything else lands on `main`; a release that is not that patch moves the head to its own number
+  first. sborka's `determine-version` asks the remote for `v<head>` on every publish, and flags a
+  head that already has it. Published builds are never removed: the first build under the new
+  head supersedes them.
 - The Reposilite credentials are issued by `vedutsya-raboty/infra`'s `reposilite-token.yaml`, with a
   route for each coordinate: `oldge-core` and its `-desktop`, `-android`, `-iosarm64`,
   `-iossimulatorarm64` and `-wasm-js`. They are never created by hand. A new target is a new
