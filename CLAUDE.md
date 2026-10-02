@@ -120,7 +120,10 @@ repository's own are recipe lines of the `gate` target in the Makefile. Only `ch
 revision 2), so `make references` reads no pin and fetches nothing; a new target that leads to
 `docs-gate` goes into that list. A file in a sibling repository is cited in the documents as
 `youndie/<repo>@<commit>!/<path>`: the anchors check clones this repository alone and looks a path
-up in its own repository only, so a bare `kvadrant-ui/CLAUDE.md` is reported missing.
+up in its own repository only, so a bare `kvadrant-ui/CLAUDE.md` is reported missing. The report blocks
+(`ANCHORS_ARGS ?= --check` in the Makefile): such a path, or one of this repository's own that was
+renamed without its document, fails `make check`. A build output directory is named without a
+trailing slash ("the `build` directory"), so that it does not read as a path.
 
 **Mutation checks go through `scripts/mutate.py`** (B-48). Add the item's behaviour-test mutants to
 `scripts/mutants.json` (the file, the literal, its replacement, the test filter, and the test the
