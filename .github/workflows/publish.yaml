@@ -5,9 +5,9 @@
 # here spells the version. The head names the next release, never a tagged one (CLAUDE.md,
 # "Publishing"): X.Y.Z.N sorts above X.Y.Z.
 #
-# The credentials are put here by `vedutsya-raboty/infra`'s `reposilite-token.yaml`, with a route for
-# each of the six coordinates: `oldge-core` and one per target. A new target is a new coordinate, and
-# needs the token reissued with it.
+# The credentials are put here by the `reposilite-token.yaml` workflow of the portfolio's private
+# infrastructure repository, with a route for each of the six coordinates: `oldge-core` and one per
+# target. A new target is a new coordinate, and needs the token reissued with it.
 name: publish
 
 on:

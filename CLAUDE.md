@@ -56,10 +56,11 @@ owner had it local only, and the loop merged locally.
   first. sborka's `determine-version` asks the remote for `v<head>` on every publish, and flags a
   head that already has it. Published builds are never removed: the first build under the new
   head supersedes them.
-- The Reposilite credentials are issued by `vedutsya-raboty/infra`'s `reposilite-token.yaml`, with a
-  route for each coordinate: `oldge-core` and its `-desktop`, `-android`, `-iosarm64`,
-  `-iossimulatorarm64` and `-wasm-js`. They are never created by hand. A new target is a new
-  coordinate, and needs the token reissued with it, or its variant gets a 403.
+- The Reposilite credentials are issued by the `reposilite-token.yaml` workflow of the portfolio's
+  private infrastructure repository, with a route for each coordinate: `oldge-core` and its
+  `-desktop`, `-android`, `-iosarm64`, `-iossimulatorarm64` and `-wasm-js`. They are never created
+  by hand. A new target is a new coordinate, and needs the token reissued with it, or its variant
+  gets a 403.
 - `0.1.0` itself was published by a GitHub release (B-67), and stays on the host as it is.
 
 ## Re-vendoring the design system
