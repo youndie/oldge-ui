@@ -47,8 +47,9 @@ make check
 The checks are [docs-bootstrap](https://github.com/youndie/docs-bootstrap)'s, at the version
 `.github/workflows/check.yaml` pins, fetched into `.docs-bootstrap/` by the first run, plus this
 repository's own under the Makefile's `gate`. `make fix` regenerates the backlog index and the
-component catalogue and fills in missing coverage-map lines; `make report` is the two non-blocking
-reports.
+component catalogue and fills in missing coverage-map lines; `make report` is the two reports: BDD
+coverage, which does not block, and code anchors, which does (`ANCHORS_ARGS ?= --check` in the
+Makefile) - a path in `docs/` that resolves to nothing fails `make check`.
 
 ## Coverage map
 
