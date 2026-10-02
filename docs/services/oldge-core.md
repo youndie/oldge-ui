@@ -22,7 +22,9 @@ screenshot suite and the parity fixtures, in `desktopTest`.
 
 It deliberately does **not** own: any Material artefact (research D2); the screens that stress the
 components — those are `sample` (B-37…B-40). It is published as `io.github.youndie:oldge-core` to
-Reposilite by `.github/workflows/publish.yaml`, as `0.1.0.<run>` on every push to `main` (B-68).
+Reposilite by `.github/workflows/publish.yaml`, as `<head>.<run>` on every push to `main` (B-68).
+The head is `version` in `gradle.properties` and names the next release: `0.1.1`, since `0.1.0` is
+tagged.
 
 ## 2a. Code anchors
 

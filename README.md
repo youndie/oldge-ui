@@ -68,12 +68,16 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.youndie:oldge-core:0.1.0.<build>")
+    implementation("io.github.youndie:oldge-core:0.1.1.<build>")
 }
 ```
 
-Every build of `main` publishes a version: `0.1.0.<build>`. The latest is the last `<version>` in
+Every build of `main` publishes a version: `<head>.<build>`, where the head is the next release —
+`0.1.1.<build>` now. The latest is the last `<version>` in
 [maven-metadata.xml](https://reposilite.kotlin.website/snapshots/io/github/youndie/oldge-core/maven-metadata.xml).
+`0.1.0` is the one release so far. The `0.1.0.2` to `0.1.0.10` beside it were built after it,
+before the head moved on; they sort above it, but they are builds on the way to `0.1.1`, not
+releases.
 
 ```kotlin
 OldgeTheme(OldgeSkin.Toxic) {
