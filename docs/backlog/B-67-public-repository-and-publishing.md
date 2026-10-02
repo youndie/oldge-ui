@@ -27,8 +27,9 @@ This lifts B-01's "not covered: publication".
     `macos-latest`, because the goldens are a claim about the Mac rasteriser (research §1.9).
   - **`publish.yaml`.** A GitHub release publishes from `ubuntu-latest`, after checking that the
     tag names `gradle.properties`' version.
-  - **The Reposilite token** comes from `vedutsya-raboty/infra`'s `reposilite-token.yaml`, routed to
-    every published coordinate, the per-target ones included.
+  - **The Reposilite token** comes from the `reposilite-token.yaml` workflow of the portfolio's
+    private infrastructure repository, routed to every published coordinate, the per-target ones
+    included.
   - **The loop** stops merging locally. It opens a pull request, and merges on green from the pull
     request's own head.
 - *Rejected:* publishing from this Mac with a token in `~/.gradle`. Nothing would record what was
@@ -43,8 +44,8 @@ This lifts B-01's "not covered: publication".
 - **The repository:** `youndie/oldge-ui`, public. Before the first push, the history was scanned
   for tokens, keys, private addresses and oversized blobs. None were found, and the only email is
   the commit author's, as in kvadrant-ui.
-- **The credentials:** `vedutsya-raboty/infra`'s `reposilite-token.yaml` (run 36133523546) was
-  given the six coordinates:
+- **The credentials:** the `reposilite-token.yaml` workflow of the portfolio's private
+  infrastructure repository (run 36133523546) was given the six coordinates:
   - `oldge-core`;
   - its `-desktop`, `-android`, `-iosarm64`, `-iossimulatorarm64` and `-wasm-js`.
 
