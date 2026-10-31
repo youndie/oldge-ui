@@ -1,7 +1,7 @@
 ---
 id: B-72
 title: "OldgeTextField: a read-only state, a hidden label, and a label heard once"
-status: open
+status: wip
 priority: P1
 size: S
 stage: stage-5-consumers
