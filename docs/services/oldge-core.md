@@ -42,7 +42,7 @@ tagged.
 | `oldge-core/src/desktopTest/kotlin/io/github/youndie/oldge/harness/` | `OldgeDemo` (the `.og-demo` frame), the pinned text style, `FixtureSizeTest` |
 | `scripts/probes/` | probes: HTML from the design system's classes and components, rendered as references for shapes no preview shows — the materials (B-07), `FieldProbe`, a reveal field and a three-line field (B-53), and `ActionsProbe`, the `og-actions` row (B-56) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/material/Turbulence.kt` | the grain and speckle alpha, a port of `feTurbulence` that matches Chrome (research §1.3) |
-| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/` | `OldgeTheme`, `OldgeSkin`, `OldgeTypography`, `OldgeMotion`, the platform reduced-motion `expect`. `OldgeTheme(platformTextStyle = …)` pins text rendering on every type style for screenshots (B-52); the test harness's `PortableTextStyle` goes through it, and `PlatformTextStyleTest` holds it |
+| `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/` | `OldgeTheme`, `OldgeSkin`, `OldgeTypography`, `OldgeMotion`, the platform reduced-motion `expect`. `OldgeTheme(platformTextStyle = …)` pins text rendering on every type style for screenshots (B-52); the test harness's `PortableTextStyle` goes through it, and `PlatformTextStyleTest` holds it. `OldgeStrings`, given as `OldgeTheme(strings = …)` or over a subtree through `LocalOldgeStrings`, holds the accessible names of the library's own orbs and actions, Russian by default; `OldgeStringsTest` holds it (B-71) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/icons/` | `OldgeIcon` and the generated `OldgeIcons` (`scripts/generate_icons.py`; `checkOldgeIcons` in `check`) |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/` | `OldgeButton`, `OldgeIconButton`, `OldgeOrbButton` (B-12), `OldgeActions` — `og-actions`, the button row that wraps to a column (B-56), `OldgeFab`, `OldgeExtendedFab`, `OldgeFabDock`, `OldgeSegmented` (B-13), the three chips and `OldgeChipGroup` (B-14); `ButtonBehaviourTest`, `FabSegmentedBehaviourTest` and `ChipBehaviourTest` hold the READMEs' behaviour rules |
 | `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/` | `OldgeDivider` (B-11), `OldgeCard`, `OldgeActionTile` (B-21), `OldgePanel`, `OldgeList` with `OldgeListItem` (an icon or, since B-54, any `lead` element), and `oldgeListSections` with `OldgeListSectionHeader` for a `LazyColumn` (B-20), `OldgeAccordion` (B-22), `OldgeSwipeRow` (B-23), `OldgeDialog`, `OldgeBottomSheet` (B-27), `OldgeScreenBody` — `.og-body`, a screen's root, which the test harness's `OldgeDemo` stands on too (B-50); `CardTileBehaviourTest`, `PanelListBehaviourTest`, `AccordionBehaviourTest`, `SwipeRowBehaviourTest`, `WindowBehaviourTest` and `ScreenBodyBehaviourTest` hold their READMEs' behaviour rules |
@@ -318,6 +318,11 @@ A keyframe used by several components is held through one of them. The others sh
   orb, but the drawer has none, so it could be left only by choosing an entry. At the owner's
   choice, its scrim is announced as a «Закрыть» button whose action calls `onClose`, as Material's
   scrim is. Nothing drawn changed (B-61).
+* **The library's own accessible names are the theme's, not the call's.** The close orb of the
+  dialog, the sheet, the snackbar and the balloon, the drawer's scrim, the search bar's clear orb and
+  the text field's reveal orb all read `OldgeTheme.strings`, the design system's Russian by default.
+  One value for all of them, rather than a parameter on each, so that an app sets its language once
+  and a new control follows without a new parameter (B-71, from #18 and #28).
 * **Menu's left strip is its icon column.** `.og-menu` paints `pill-lo` under its first 40 px, the
   XP-menu gutter, and each item's icon sits in it. A Select opens its options in the same Menu.
   The strip goes when no option has an icon, because empty it reads as a stray stripe. Menu keeps

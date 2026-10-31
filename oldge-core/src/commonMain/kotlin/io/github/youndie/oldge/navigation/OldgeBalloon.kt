@@ -151,6 +151,7 @@ public fun OldgeBalloon(
 private fun Close(onClose: () -> Unit) {
     val c = OldgeTheme.colors
     val source = remember { MutableInteractionSource() }
+    val name = OldgeTheme.strings.close
     Box(
         Modifier
             .layout { measurable, constraints ->
@@ -159,7 +160,7 @@ private fun Close(onClose: () -> Unit) {
                 val right = CLOSE_PULL_RIGHT.roundToPx()
                 layout(p.width - right, p.height - up) { p.place(0, -up) }
             }.size(OldgeTheme.spacing.hitMin)
-            .semantics { contentDescription = "Закрыть" }
+            .semantics { contentDescription = name }
             .clickable(
                 source,
                 OldgeIndication(RoundedCornerShape(OldgeRadii.sm), flash = false),

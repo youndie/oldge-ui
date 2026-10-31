@@ -120,6 +120,7 @@ public fun OldgeNavDrawer(
     val motion = OldgeTheme.motion
     val fade = remember { Animatable(if (motion.reduced) 1f else 0f) }
     LaunchedEffect(Unit) { fade.animateTo(1f, tween(motion.base, easing = motion.out)) }
+    val close = OldgeTheme.strings.close
     Box(modifier.fillMaxSize()) {
         // `.og-drawer-scrim`: `rgba(0,0,0,0.5)` over the screen, fading in; a tap closes.
         Box(
@@ -134,9 +135,9 @@ public fun OldgeNavDrawer(
                 // action, as Material's scrim is. It is invisible, and nothing drawn changes (B-61,
                 // the owner's choice).
                 .semantics {
-                    contentDescription = CLOSE
+                    contentDescription = close
                     role = Role.Button
-                    onClick(CLOSE) {
+                    onClick(close) {
                         onClose()
                         true
                     }
@@ -145,9 +146,6 @@ public fun OldgeNavDrawer(
         Drawer(entries, value, onChange, title, subtitle, avatar, label, Modifier.fillMaxHeight(), slideIn = true)
     }
 }
-
-// The word the library's other close controls say: the dialog's and the sheet's «Закрыть» orb.
-private const val CLOSE = "Закрыть"
 
 /**
  * `.og-drawer`: `min(304px, 86vw)` wide, `body-hi` to `ground` under a `glow` ellipse at its bottom

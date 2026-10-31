@@ -190,7 +190,9 @@ internal fun WindowBar(
             Modifier.weight(1f).semantics { heading() },
             style = OldgeTheme.type.title.copy(color = c.onBezel, shadow = TITLE_SHADOW),
         )
-        if (onClose != null) OldgeOrbButton(OldgeIcons.Close, "Закрыть", onClose, size = OldgeOrbSize.Small)
+        if (onClose != null) {
+            OldgeOrbButton(OldgeIcons.Close, OldgeTheme.strings.close, onClose, size = OldgeOrbSize.Small)
+        }
     }
 }
 

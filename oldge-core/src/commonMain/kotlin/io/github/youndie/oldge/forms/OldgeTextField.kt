@@ -175,7 +175,7 @@ public fun OldgeTextField(
             if (reveal) {
                 OldgeOrbButton(
                     if (shown) OldgeIcons.EyeOff else OldgeIcons.Eye,
-                    if (shown) "Скрыть пароль" else "Показать пароль",
+                    if (shown) OldgeTheme.strings.hidePassword else OldgeTheme.strings.showPassword,
                     { shown = !shown },
                     size = OldgeOrbSize.Small,
                     tone = OldgeOrbTone.Chrome,
