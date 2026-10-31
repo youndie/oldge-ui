@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.icons.OldgeIcon
@@ -15,8 +16,10 @@ import io.github.youndie.oldge.type.OldgeText
 
 /** `.og-field__label`: 0.8125rem / 1rem bold, `ink`. */
 @Composable
-internal fun FieldLabel(text: String) =
-    OldgeText(text, style = OldgeTheme.type.label.copy(color = OldgeTheme.colors.ink))
+internal fun FieldLabel(
+    text: String,
+    modifier: Modifier = Modifier,
+) = OldgeText(text, modifier, style = OldgeTheme.type.label.copy(color = OldgeTheme.colors.ink))
 
 /**
  * `.og-field__help`: 0.75rem / 1rem in `ink-muted`; an error is `danger`, bold, and led by the error

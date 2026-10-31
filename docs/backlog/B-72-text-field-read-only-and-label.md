@@ -1,7 +1,7 @@
 ---
 id: B-72
 title: "OldgeTextField: a read-only state, a hidden label, and a label heard once"
-status: open
+status: done
 priority: P1
 size: S
 stage: stage-5-consumers
@@ -35,3 +35,21 @@ Filed as #25 by the owner. `oldge-core/src/commonMain/kotlin/io/github/youndie/o
   with it visible, a semantics dump finds the label once. Mutants for each.
 - Closes #25.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt`, `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/Field.kt`.
+
+## Findings (2026-10-31)
+
+- **`readOnly: Boolean = false`**, passed to `BasicTextField`. A read-only field draws exactly as an
+  enabled one (pixel for pixel in `TextFieldReadOnlyLabelTest`), takes focus, lets its text be
+  selected and copied, and shows no caret: Compose hides the cursor of a read-only field itself.
+  It takes no typing in the strongest way: its node has no `SetText` action at all, and
+  `IsEditable` is false. The reveal orb keeps working, since showing a value is not typing.
+- **`showLabel: Boolean = true`**, as on `OldgeSwitch`. Off, the field is only its 44 dp box, and the
+  label still names it.
+- **Heard once.** Compose has no "labelled by" relation, so the issue's "name the field by its label
+  node" has no direct form. The field keeps its `contentDescription = label`, and the visible label
+  is drawn with `clearAndSetSemantics {}`: one node says the label, the field's own. The existing
+  tests that find a field by its label (`onNodeWithContentDescription`) pass unchanged.
+- **Found on the way:** `OldgeSelect` and `OldgeCodeInput` read their label twice the same way. Filed
+  as [B-81](B-81-select-code-input-label-once.md), not folded in.
+- **ABI:** `OldgeTextField` gained two parameters; recompile against this build (source-compatible).
+- **Goldens:** none moved. **Mutants:** 3 of 3 killed (`--only B-72`).

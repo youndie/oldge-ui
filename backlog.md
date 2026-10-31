@@ -82,7 +82,6 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-72](docs/backlog/B-72-text-field-read-only-and-label.md) `[ ]` | OldgeTextField: a read-only state, a hidden label, and a label heard once | P1 | S | B-71 |
 | [B-73](docs/backlog/B-73-segmented-disabled.md) `[ ]` | OldgeSegmented: a disabled state | P2 | XS | - |
 | [B-74](docs/backlog/B-74-dialog-max-width.md) `[ ]` | OldgeDialog: a maxWidth for the window, modal and not | P2 | XS | - |
 | [B-75](docs/backlog/B-75-text-on-text-layout.md) `[ ]` | OldgeText: an onTextLayout callback | P2 | XS | - |
@@ -91,8 +90,9 @@ list an item can be checked against in one glance.
 | [B-78](docs/backlog/B-78-icon-button-selected.md) `[ ]` | OldgeIconButton: a selected state for a toolbar toggle | P2 | S | - |
 | [B-79](docs/backlog/B-79-progress-well.md) `[ ]` | OldgeProgressWell: the compact well with a caller's fill, for a list row | P2 | S | - |
 | [B-80](docs/backlog/B-80-pointer-density.md) `[ ]` | OldgeDensity.Pointer: control sizes for a mouse-driven desktop window | P2 | M | B-71, B-78 |
+| [B-81](docs/backlog/B-81-select-code-input-label-once.md) `[ ]` | Select and CodeInput: the label is heard twice, as TextField's was | P2 | XS | - |
 
-## Closed (71)
+## Closed (72)
 
 **Answers that decide the architecture**
 
@@ -182,5 +182,6 @@ list an item can be checked against in one glance.
 **What the apps on it asked for**
 
 - [B-71](docs/backlog/B-71-oldge-strings.md) `[x]` - OldgeStrings: the library's accessible names, provided through the theme
+- [B-72](docs/backlog/B-72-text-field-read-only-and-label.md) `[x]` - OldgeTextField: a read-only state, a hidden label, and a label heard once
 
 <!-- END INDEX -->
