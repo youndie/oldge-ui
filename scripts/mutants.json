@@ -2358,6 +2358,15 @@
    "replace": "            Modifier.padding(OldgeTheme.spacing.space4),\n            WIDTH,",
    "tests": "*WindowBehaviourTest*",
    "expect": "max_width_caps_the_window_modal_or_not_and_stays_a_cap"
+  },
+  {
+   "id": "text-layout-not-forwarded",
+   "item": "B-75",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt",
+   "find": "        onTextLayout = onTextLayout,",
+   "replace": "        onTextLayout = null,",
+   "tests": "*OldgeTextLayoutTest*",
+   "expect": "the_layout_is_the_drawn_texts_and_the_callback_changes_nothing_drawn"
   }
  ]
 }
