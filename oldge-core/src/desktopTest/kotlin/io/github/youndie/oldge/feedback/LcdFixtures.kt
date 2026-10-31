@@ -3,8 +3,11 @@ package io.github.youndie.oldge.feedback
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.harness.OldgeDemo
 import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
@@ -86,3 +89,30 @@ fun ProgressBarMedia() = ProgressDemo(OldgeSkin.Media)
 @ViddikScreenshot(group = "ProgressBar", name = "Crystal", width = 390, height = 290)
 @Composable
 fun ProgressBarCrystal() = ProgressDemo(OldgeSkin.Crystal)
+
+// B-79: the compact well a list row uses — the accent at 0, 45 % and 100 %, a failed row in
+// `danger`, a stopping one in `inkMuted`, and the 10 dp default beside a 14 dp one. No preview shows
+// it, so no reference; the golden is this library's own.
+@Composable
+private fun WellDemo(skin: OldgeSkin) =
+    OldgeDemo(skin) {
+        val c = OldgeTheme.colors
+        OldgeProgressWell(0f)
+        OldgeProgressWell(0.45f)
+        OldgeProgressWell(1f)
+        OldgeProgressWell(0.62f, fill = c.danger)
+        OldgeProgressWell(0.3f, fill = c.inkMuted)
+        OldgeProgressWell(0.8f, Modifier.height(14.dp))
+    }
+
+@ViddikScreenshot(group = "ProgressWell", name = "Toxic", width = 390, height = 150)
+@Composable
+fun ProgressWellToxic() = WellDemo(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "ProgressWell", name = "Media", width = 390, height = 150)
+@Composable
+fun ProgressWellMedia() = WellDemo(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "ProgressWell", name = "Crystal", width = 390, height = 150)
+@Composable
+fun ProgressWellCrystal() = WellDemo(OldgeSkin.Crystal)
