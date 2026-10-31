@@ -1,7 +1,7 @@
 ---
 id: B-74
 title: "OldgeDialog: a maxWidth for the window, modal and not"
-status: wip
+status: done
 priority: P2
 size: XS
 stage: stage-5-consumers
@@ -31,3 +31,19 @@ kachok's dialogs are 520 and 420 dp, non-modal with a fixed width and the app's 
   the same. Goldens unchanged. With a mutant.
 - Closes #27.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeDialog.kt`.
+
+## Findings (2026-10-31)
+
+- **`maxWidth: Dp = 358.dp`** on `OldgeDialog` (the default is the old `WIDTH`, `.og-dialog
+  { max-width: 358px }`). Both windows read it, the modal one included, where the caller's
+  `modifier` never reached the window.
+- **A cap, applied after the caller's modifier, as before.** So a caller's own size placed first
+  still decides, as any Compose size modifier ahead of a constraint does. That keeps kachok's current
+  fixed `width(520.dp)` working unchanged, and the item's "fillMaxWidth() in a wide parent" stays what
+  it asks for: the parent's width. "As wide as 520, narrower in a narrow window" is `maxWidth = 520.dp`
+  with no size modifier, and that is what the test holds.
+- **Test:** `WindowBehaviourTest.max_width_caps_the_window_modal_or_not_and_stays_a_cap`. A 520 cap
+  in a 900 parent gives 520, modal and in place. In a 400 parent it gives 368 modal (16 px each side)
+  and 400 in place. The default gives 358.
+- **Goldens:** none moved. **Mutants:** 2 of 2 killed (`--only B-74`). **ABI:** `OldgeDialog` gained
+  a parameter.

@@ -2354,8 +2354,8 @@
    "id": "dialog-max-width-modal-dropped",
    "item": "B-74",
    "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeDialog.kt",
-   "find": "Modifier.padding(OldgeTheme.spacing.space4), maxWidth, modal = true",
-   "replace": "Modifier.padding(OldgeTheme.spacing.space4), WIDTH, modal = true",
+   "find": "            Modifier.padding(OldgeTheme.spacing.space4),\n            maxWidth,",
+   "replace": "            Modifier.padding(OldgeTheme.spacing.space4),\n            WIDTH,",
    "tests": "*WindowBehaviourTest*",
    "expect": "max_width_caps_the_window_modal_or_not_and_stays_a_cap"
   }
