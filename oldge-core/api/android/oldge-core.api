@@ -695,14 +695,20 @@ public final class io/github/youndie/oldge/theme/OldgeMotion {
 }
 
 public final class io/github/youndie/oldge/theme/OldgeSkin : java/lang/Enum {
+	public static final field Companion Lio/github/youndie/oldge/theme/OldgeSkin$Companion;
 	public static final field Crystal Lio/github/youndie/oldge/theme/OldgeSkin;
 	public static final field Media Lio/github/youndie/oldge/theme/OldgeSkin;
 	public static final field Toxic Lio/github/youndie/oldge/theme/OldgeSkin;
 	public final fun getColors ()Lio/github/youndie/oldge/tokens/OldgeColors;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getId ()Ljava/lang/String;
 	public final fun getShadows ()Lio/github/youndie/oldge/tokens/OldgeShadows;
 	public static fun valueOf (Ljava/lang/String;)Lio/github/youndie/oldge/theme/OldgeSkin;
 	public static fun values ()[Lio/github/youndie/oldge/theme/OldgeSkin;
+}
+
+public final class io/github/youndie/oldge/theme/OldgeSkin$Companion {
+	public final fun byId (Ljava/lang/String;)Lio/github/youndie/oldge/theme/OldgeSkin;
 }
 
 public final class io/github/youndie/oldge/theme/OldgeStrings {
