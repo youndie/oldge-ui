@@ -1,7 +1,7 @@
 ---
 id: B-75
 title: "OldgeText: an onTextLayout callback"
-status: open
+status: done
 priority: P2
 size: XS
 stage: stage-5-consumers
@@ -23,3 +23,16 @@ loses `OldgeText`'s placement on the CSS baseline (B-51), so the two can sit a p
   forwarded).
 - Closes #23.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt`.
+
+## Findings (2026-10-31)
+
+- **`onTextLayout: ((TextLayoutResult) -> Unit)? = null`**, forwarded to the `BasicText` that
+  `OldgeText` lays out, so the result is the text actually drawn: its lines, widths and offsets.
+- **Its vertical positions are before the baseline move.** `onCssBaseline` moves the laid-out text
+  by a whole pixel or none, in a layout modifier outside `BasicText`; the result is in `BasicText`'s
+  own coordinates. That serves what the issue asks for (widths, line count, an ellipsis's offset
+  along a line); the KDoc says so for a caller that draws at a line's top.
+- **Test:** `OldgeTextLayoutTest`. The callback is called. A 160 dp sentence wraps, and the result's
+  size is the node's. The text draws the same pixels with the callback and without it.
+- **Goldens:** none moved. **Mutants:** 1 of 1 killed (`--only B-75`). **ABI:** `OldgeText` gained a
+  parameter.

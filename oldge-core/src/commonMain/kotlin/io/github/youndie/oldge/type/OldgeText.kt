@@ -4,6 +4,7 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -44,6 +45,11 @@ import kotlin.math.roundToInt
  * them: `OldgeReadout`, `OldgeMeter`, `OldgeStepper` and the rest. Those faces have no Cyrillic of
  * their own, and the components join each with its companion face (research D6). Here, Cyrillic
  * in them falls back to whatever the platform has.
+ *
+ * [onTextLayout] gets the layout of the text as `BasicText` laid it out (B-75): its lines, widths
+ * and offsets, for a caller that measures text — to fit a column, or to place an ellipsis — without
+ * falling back to `BasicText` and losing the placement above. Its vertical positions are the
+ * layout's own, before the baseline move, which is a whole pixel or none.
  */
 @Composable
 public fun OldgeText(
@@ -53,6 +59,7 @@ public fun OldgeText(
     maxLines: Int = Int.MAX_VALUE,
     softWrap: Boolean = true,
     overflow: TextOverflow = TextOverflow.Clip,
+    onTextLayout: ((TextLayoutResult) -> Unit)? = null,
 ) {
     val metrics = OldgeTheme.type.metricsOf(style)
     val laid = style.withHonouredLine()
@@ -63,6 +70,7 @@ public fun OldgeText(
         maxLines = maxLines,
         softWrap = softWrap,
         overflow = overflow,
+        onTextLayout = onTextLayout,
     )
 }
 
