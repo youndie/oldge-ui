@@ -1,7 +1,7 @@
 ---
 id: B-79
 title: "OldgeProgressWell: the compact well with a caller's fill, for a list row"
-status: open
+status: wip
 priority: P2
 size: S
 stage: stage-5-consumers
