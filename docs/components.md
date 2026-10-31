@@ -95,11 +95,12 @@ stale. The prose around them is hand-written.
 | TypingIndicator | `OldgeTypingIndicator` | [OldgeChat.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeChat.kt) | Чат | `TypingIndicator_{Toxic,Media,Crystal}` | `TypingIndicator`, `TypingIndicatorStates` | [README](../reference/design-system/components/TypingIndicator/README.md) | «Печатает…» — the design system's `TypingIndicator` |
 | WindowBar | `OldgeWindowBar` | [OldgeWindowBar.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeWindowBar.kt) | Навигация | `WindowBar_{Toxic,Media,Crystal}` | `WindowBar`, `WindowBarStates` | [README](../reference/design-system/components/WindowBar/README.md) | The top of a screen — the design system's `WindowBar` |
 
-### Beyond the design system's exports: 6
+### Beyond the design system's exports: 7
 
 | Composable | File | What it is |
 |---|---|---|
 | `OldgeActions` | [OldgeActions.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeActions.kt) | A row of buttons — the design system's `og-actions`, its answer to a row that squeezes its labels |
+| `OldgeProgressWell` | [OldgeProgressBar.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeProgressBar.kt) | The well of an [OldgeProgressBar] and its accent blocks, without the head line or the detail |
 | `OldgeScreenBody` | [OldgeScreenBody.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeScreenBody.kt) | A screen's body — the design system's `.og-body`, the surface its README gives a screen container (`og-textured`). |
 | `OldgeText` | [OldgeText.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt) | Plain text in the skin's type — what a screen sets between the components |
 | `OldgeTheme` | [OldgeTheme.kt](../oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeTheme.kt) | The oldge-ui theme |
