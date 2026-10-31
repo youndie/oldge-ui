@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -110,6 +111,13 @@ public fun OldgeButton(
  * A button that is only an icon: the design system's `Button` with an icon and no text. The design
  * system requires an accessible name for it — "icon only: `aria-label` is mandatory" — so
  * [contentDescription] is not optional. For a round action there is [OldgeOrbButton].
+ *
+ * [selected] makes it a toggle (B-78): a toolbar's "details shown" or "settings open". `null`, the
+ * default, is a plain button. `false` looks the same but is heard as a toggle that is off. `true` is
+ * latched on, in the look the design system gives every "on" it has — the checked Segmented option,
+ * the selected chip, the lit Switch: the accent's gloss under a dark `on-accent` icon. It has no
+ * `accent-rim`, so a toggle that is on does not read as the screen's one Primary action. Pressing it
+ * calls [onClick], and the caller flips [selected].
  */
 @Composable
 public fun OldgeIconButton(
@@ -120,6 +128,7 @@ public fun OldgeIconButton(
     variant: OldgeButtonVariant = OldgeButtonVariant.Secondary,
     size: OldgeButtonSize = OldgeButtonSize.Medium,
     enabled: Boolean = true,
+    selected: Boolean? = null,
     interactionSource: MutableInteractionSource? = null,
 ): Unit =
     ButtonBox(
@@ -133,6 +142,7 @@ public fun OldgeIconButton(
         enabled,
         block = false,
         interactionSource,
+        selected,
     )
 
 @Composable
@@ -147,6 +157,7 @@ private fun ButtonBox(
     enabled: Boolean,
     block: Boolean,
     interactionSource: MutableInteractionSource?,
+    selected: Boolean? = null,
 ) {
     val c = OldgeTheme.colors
     val s = OldgeTheme.shadows
@@ -154,7 +165,7 @@ private fun ButtonBox(
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val shape = RoundedCornerShape(OldgeRadii.sm)
     val t = pressFraction(source, enabled)
-    val look = variant.look(c, s, enabled, t)
+    val look = if (selected == true && enabled) latchedLook(c, s, t) else variant.look(c, s, enabled, t)
     val iconOnly = text == null
     val padding =
         when {
@@ -177,8 +188,25 @@ private fun ButtonBox(
                 .then(if (iconOnly) Modifier.width(spacing.hitMin) else Modifier)
                 .cssBox(OldgeRadii.sm, look.background, BORDER, look.border, look.shadows, look.ring, look.gloss)
                 .semantics { if (contentDescription != null) this.contentDescription = contentDescription }
-                .clickable(source, OldgeIndication(shape), enabled = enabled, role = Role.Button, onClick = onClick)
-                .drawWithContent {
+                .then(
+                    if (selected == null) {
+                        Modifier.clickable(
+                            source,
+                            OldgeIndication(shape),
+                            enabled = enabled,
+                            role = Role.Button,
+                            onClick = onClick,
+                        )
+                    } else {
+                        Modifier.toggleable(
+                            selected,
+                            source,
+                            OldgeIndication(shape),
+                            enabled,
+                            Role.Checkbox,
+                        ) { onClick() }
+                    },
+                ).drawWithContent {
                     drawContent()
                     // `.og-press { overflow: hidden }`: the glint stays inside the button; the focus
                     // ring, drawn by the indication, is outside it and must not be clipped.
@@ -233,6 +261,28 @@ private class Look(
     val gloss: Color?,
     val content: Color,
 )
+
+/**
+ * A toggle button latched on: `.og-seg__opt[aria-checked="true"]`'s accent gloss, `on-accent` and
+ * `accent-lo` border, pressing as a primary does, and without the primary's `accent-rim` (B-78).
+ */
+private fun latchedLook(
+    c: OldgeColors,
+    s: io.github.youndie.oldge.tokens.OldgeShadows,
+    t: Float,
+): Look =
+    Look(
+        lerpGloss(
+            GlossStops(c.accentHi, c.accent, c.accentLo),
+            GlossStops(c.accentLo, c.accent, c.accentHi),
+            t,
+        ).background(),
+        c.accentLo,
+        lerpShadows(s.raised, s.sunken, t),
+        emptyList(),
+        c.gloss.copy(alpha = c.gloss.alpha * (1 - t)),
+        c.onAccent,
+    )
 
 private fun OldgeButtonVariant.look(
     c: OldgeColors,

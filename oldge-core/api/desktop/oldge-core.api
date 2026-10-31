@@ -4,7 +4,7 @@ public final class io/github/youndie/oldge/actions/OldgeActionsKt {
 
 public final class io/github/youndie/oldge/actions/OldgeButtonKt {
 	public static final fun OldgeButton (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lio/github/youndie/oldge/actions/OldgeButtonVariant;Lio/github/youndie/oldge/actions/OldgeButtonSize;Landroidx/compose/ui/graphics/vector/ImageVector;ZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/runtime/Composer;II)V
-	public static final fun OldgeIconButton (Landroidx/compose/ui/graphics/vector/ImageVector;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lio/github/youndie/oldge/actions/OldgeButtonVariant;Lio/github/youndie/oldge/actions/OldgeButtonSize;ZLandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/runtime/Composer;II)V
+	public static final fun OldgeIconButton (Landroidx/compose/ui/graphics/vector/ImageVector;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lio/github/youndie/oldge/actions/OldgeButtonVariant;Lio/github/youndie/oldge/actions/OldgeButtonSize;ZLjava/lang/Boolean;Landroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/youndie/oldge/actions/OldgeButtonSize : java/lang/Enum {
