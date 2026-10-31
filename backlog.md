@@ -82,7 +82,7 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-74](docs/backlog/B-74-dialog-max-width.md) `[ ]` | OldgeDialog: a maxWidth for the window, modal and not | P2 | XS | - |
+| [B-74](docs/backlog/B-74-dialog-max-width.md) `[~]` | OldgeDialog: a maxWidth for the window, modal and not | P2 | XS | - |
 | [B-75](docs/backlog/B-75-text-on-text-layout.md) `[ ]` | OldgeText: an onTextLayout callback | P2 | XS | - |
 | [B-76](docs/backlog/B-76-skin-stable-id.md) `[ ]` | OldgeSkin: a stable id to persist a choice by | P2 | XS | - |
 | [B-77](docs/backlog/B-77-button-danger.md) `[ ]` | OldgeButton: a Danger variant for an irreversible confirm | P2 | S | - |

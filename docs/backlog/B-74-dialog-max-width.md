@@ -1,7 +1,7 @@
 ---
 id: B-74
 title: "OldgeDialog: a maxWidth for the window, modal and not"
-status: open
+status: wip
 priority: P2
 size: XS
 stage: stage-5-consumers
