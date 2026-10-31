@@ -2340,6 +2340,24 @@
    "replace": "                enabled = true,\n                role = Role.RadioButton,",
    "tests": "*FabSegmentedBehaviourTest*",
    "expect": "a_disabled_segmented_takes_no_press_and_says_so"
+  },
+  {
+   "id": "dialog-max-width-ignored",
+   "item": "B-74",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeDialog.kt",
+   "find": ".widthIn(max = maxWidth)",
+   "replace": ".widthIn(max = WIDTH)",
+   "tests": "*WindowBehaviourTest*",
+   "expect": "max_width_caps_the_window_modal_or_not_and_stays_a_cap"
+  },
+  {
+   "id": "dialog-max-width-modal-dropped",
+   "item": "B-74",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeDialog.kt",
+   "find": "Modifier.padding(OldgeTheme.spacing.space4), maxWidth, modal = true",
+   "replace": "Modifier.padding(OldgeTheme.spacing.space4), WIDTH, modal = true",
+   "tests": "*WindowBehaviourTest*",
+   "expect": "max_width_caps_the_window_modal_or_not_and_stays_a_cap"
   }
  ]
 }

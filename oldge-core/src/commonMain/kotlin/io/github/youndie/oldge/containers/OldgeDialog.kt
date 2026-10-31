@@ -33,6 +33,7 @@ import androidx.compose.ui.semantics.dialog
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.paneTitle
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.actions.OldgeOrbButton
 import io.github.youndie.oldge.actions.OldgeOrbSize
@@ -64,6 +65,9 @@ import io.github.youndie.oldge.type.OldgeText
  * - moving the focus on opening is the app's.
  *
  * The window opens on the spring from under its centre.
+ *
+ * [maxWidth] caps the window, modal or not: the design system's 358 dp phone width by default, wider
+ * for a desktop window. It is a cap, so in a narrower parent the window is the parent's width (B-74).
  */
 @Composable
 public fun OldgeDialog(
@@ -73,12 +77,13 @@ public fun OldgeDialog(
     onClose: (() -> Unit)? = null,
     modal: Boolean = false,
     open: Boolean = true,
+    maxWidth: Dp = WIDTH,
     actions: (@Composable () -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     if (!open) return
     if (!modal) {
-        Window(title, icon, onClose, actions, content, modifier, modal = false)
+        Window(title, icon, onClose, actions, content, modifier, maxWidth, modal = false)
         return
     }
     val motion = OldgeTheme.motion
@@ -95,12 +100,21 @@ public fun OldgeDialog(
                 // It takes the taps under it; a modal closes only by its own buttons.
                 .oldgeScrimTaps {},
         )
-        Window(title, icon, onClose, actions, content, Modifier.padding(OldgeTheme.spacing.space4), modal = true)
+        Window(
+            title,
+            icon,
+            onClose,
+            actions,
+            content,
+            Modifier.padding(OldgeTheme.spacing.space4),
+            maxWidth,
+            modal = true,
+        )
     }
 }
 
 /**
- * `.og-dialog`: the bezel, `radius-xl`, `shadow-bezel` and `shadow-window`, at most 358 px wide and
+ * `.og-dialog`: the bezel, `radius-xl`, `shadow-bezel` and `shadow-window`, at most `maxWidth` wide and
  * padded 0 6 6; `og-window-in` opens it from 0.82 and 14 px down, over `dur-slow` on the spring.
  */
 @OptIn(ExperimentalLayoutApi::class)
@@ -112,6 +126,7 @@ private fun Window(
     actions: (@Composable () -> Unit)?,
     content: @Composable () -> Unit,
     modifier: Modifier,
+    maxWidth: Dp,
     modal: Boolean,
 ) {
     val c = OldgeTheme.colors
@@ -121,7 +136,7 @@ private fun Window(
     LaunchedEffect(Unit) { open.animateTo(1f, tween(motion.slow, easing = motion.spring)) }
     Column(
         modifier
-            .widthIn(max = WIDTH)
+            .widthIn(max = maxWidth)
             .fillMaxWidth()
             .graphicsLayer {
                 val k = open.value
