@@ -1,7 +1,7 @@
 ---
 id: B-73
 title: "OldgeSegmented: a disabled state"
-status: open
+status: wip
 priority: P2
 size: XS
 stage: stage-5-consumers
