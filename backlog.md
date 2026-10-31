@@ -83,11 +83,11 @@ list an item can be checked against in one glance.
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
 | [B-77](docs/backlog/B-77-button-danger.md) `[?]` | OldgeButton: a Danger variant for an irreversible confirm | P2 | S | - |
-| [B-80](docs/backlog/B-80-pointer-density.md) `[~]` | OldgeDensity.Pointer: control sizes for a mouse-driven desktop window | P2 | M | B-71, B-78 |
 | [B-81](docs/backlog/B-81-select-code-input-label-once.md) `[ ]` | Select and CodeInput: the label is heard twice, as TextField's was | P2 | XS | - |
 | [B-82](docs/backlog/B-82-remaining-fixed-names.md) `[ ]` | The fixed Russian accessible names B-71 missed: Stepper, PageDots, DatePicker, ProgressBar | P2 | S | - |
+| [B-83](docs/backlog/B-83-pointer-density-everywhere.md) `[ ]` | OldgeDensity.Pointer for the controls B-80 left at hit-min | P3 | M | - |
 
-## Closed (78)
+## Closed (79)
 
 **Answers that decide the architecture**
 
@@ -184,5 +184,6 @@ list an item can be checked against in one glance.
 - [B-76](docs/backlog/B-76-skin-stable-id.md) `[x]` - OldgeSkin: a stable id to persist a choice by
 - [B-78](docs/backlog/B-78-icon-button-selected.md) `[x]` - OldgeIconButton: a selected state for a toolbar toggle
 - [B-79](docs/backlog/B-79-progress-well.md) `[x]` - OldgeProgressWell: the compact well with a caller's fill, for a list row
+- [B-80](docs/backlog/B-80-pointer-density.md) `[x]` - OldgeDensity.Pointer: control sizes for a mouse-driven desktop window
 
 <!-- END INDEX -->
