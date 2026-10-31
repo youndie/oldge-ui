@@ -66,6 +66,44 @@ class WindowBehaviourTest {
             ).assertExists()
         }
 
+    /**
+     * B-74: [OldgeDialog]'s `maxWidth` caps the window, modal or not, and stays a cap: in a narrow
+     * parent the window is the parent's width, less the modal's 16 px each side. "As wide as 520,
+     * narrower in a narrow window" takes no size modifier from the caller.
+     */
+    @Test
+    fun max_width_caps_the_window_modal_or_not_and_stays_a_cap() =
+        runComposeUiTest {
+            var parent by mutableStateOf(900.dp)
+            var cap by mutableStateOf(520.dp)
+            setContent {
+                OldgeTheme {
+                    Column {
+                        Box(Modifier.width(parent).height(300.dp)) {
+                            OldgeDialog("Удалить папку?", modal = true, maxWidth = cap) { DemoText("Текст") }
+                        }
+                        Box(Modifier.width(parent)) {
+                            OldgeDialog("Готово", Modifier.testTag("window"), maxWidth = cap) {
+                                DemoText("Текст")
+                            }
+                        }
+                    }
+                }
+            }
+
+            fun modalWidth() = onNode(isDialog).getUnclippedBoundsInRoot().let { it.right - it.left }
+
+            fun windowWidth() = onNodeWithTag("window").getUnclippedBoundsInRoot().let { it.right - it.left }
+            assertEquals(520.dp, modalWidth(), "modal, 520 cap in 900")
+            assertEquals(520.dp, windowWidth(), "in place, 520 cap in 900")
+            parent = 400.dp
+            assertEquals(368.dp, modalWidth(), "modal, 520 cap in 400")
+            assertEquals(400.dp, windowWidth(), "in place, 520 cap in 400")
+            parent = 900.dp
+            cap = 358.dp
+            assertEquals(358.dp, modalWidth(), "the default cap")
+        }
+
     @Test
     fun a_modal_dialog_takes_the_taps_meant_for_the_screen_under_it() =
         runComposeUiTest {

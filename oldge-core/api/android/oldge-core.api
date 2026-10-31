@@ -120,7 +120,7 @@ public final class io/github/youndie/oldge/containers/OldgeCardKt {
 }
 
 public final class io/github/youndie/oldge/containers/OldgeDialogKt {
-	public static final fun OldgeDialog (Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/graphics/vector/ImageVector;Lkotlin/jvm/functions/Function0;ZZLkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun OldgeDialog-V-95POc (Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/graphics/vector/ImageVector;Lkotlin/jvm/functions/Function0;ZZFLkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/youndie/oldge/containers/OldgeListKt {
