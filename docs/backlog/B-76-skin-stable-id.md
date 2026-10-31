@@ -1,7 +1,7 @@
 ---
 id: B-76
 title: "OldgeSkin: a stable id to persist a choice by"
-status: wip
+status: done
 priority: P2
 size: XS
 stage: stage-5-consumers
@@ -24,3 +24,18 @@ kachok falls back to the first skin (`OldgeKit.skinOf`) and the choice is lost.
   a test pins the three released ids as literals, so changing one fails. With a mutant.
 - Closes #24.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeSkin.kt`.
+
+## Findings (2026-11-01)
+
+- **`OldgeSkin.id`**: `"toxic"`, `"media"`, `"crystal"`. Read back with
+  `OldgeSkin.byId(id): OldgeSkin?`, `null` for an id no skin has (one written by a newer release,
+  say), so the caller decides the fallback. The KDoc names `id` as the persistence key, and `name` as
+  source that a rename may change.
+- **The sample app stores no skin**, so nothing in this repository moves to the id.
+- **Test:** `OldgeSkinIdTest`:
+  - the three released ids pinned as literals;
+  - every skin found by its own id;
+  - ids distinct and lowercase;
+  - an unknown id, and a skin's `name`, give `null`.
+- **Goldens:** none moved. **Mutants:** 2 of 2 killed (`--only B-76`): a released id renamed, and
+  `byId` falling back to the name. **ABI:** `id`, and `byId` on a new companion.
