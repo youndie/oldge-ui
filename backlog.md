@@ -82,7 +82,7 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-71](docs/backlog/B-71-oldge-strings.md) `[ ]` | OldgeStrings: the library's accessible names, provided through the theme | P1 | S | - |
+| [B-71](docs/backlog/B-71-oldge-strings.md) `[~]` | OldgeStrings: the library's accessible names, provided through the theme | P1 | S | - |
 | [B-72](docs/backlog/B-72-text-field-read-only-and-label.md) `[ ]` | OldgeTextField: a read-only state, a hidden label, and a label heard once | P1 | S | B-71 |
 | [B-73](docs/backlog/B-73-segmented-disabled.md) `[ ]` | OldgeSegmented: a disabled state | P2 | XS | - |
 | [B-74](docs/backlog/B-74-dialog-max-width.md) `[ ]` | OldgeDialog: a maxWidth for the window, modal and not | P2 | XS | - |

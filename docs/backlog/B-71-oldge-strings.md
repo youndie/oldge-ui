@@ -1,7 +1,7 @@
 ---
 id: B-71
 title: "OldgeStrings: the library's accessible names, provided through the theme"
-status: open
+status: wip
 priority: P1
 size: S
 stage: stage-5-consumers
