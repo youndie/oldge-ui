@@ -1,7 +1,7 @@
 ---
 id: B-77
 title: "OldgeButton: a Danger variant for an irreversible confirm"
-status: open
+status: wip
 priority: P2
 size: S
 stage: stage-5-consumers
