@@ -61,6 +61,11 @@ public class OldgeSegment<T>(
  *
  * The selection's gloss, border, shadow and label colour blend over `dur-base`; the newly selected
  * option pops in from 0.6 on the spring, and a pressed one squashes to 0.95. There is no press flash.
+ *
+ * With [enabled] false the choice is shown but cannot be changed (a setting fixed for the running
+ * session): the group is drawn at the text field's 75 %, takes no press, neither squashes nor shows
+ * an indication, and a screen reader hears each option as disabled (B-73). The design system has no
+ * disabled Segmented; the 75 % is its `.og-field--disabled`.
  */
 @Composable
 public fun <T> OldgeSegmented(
@@ -69,6 +74,7 @@ public fun <T> OldgeSegmented(
     onSelect: (T) -> Unit,
     label: String,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     require(options.size in MIN_OPTIONS..MAX_OPTIONS) {
         "Segmented takes 2 to 4 options, got ${options.size}; more want a Select or a RadioGroup"
@@ -76,6 +82,7 @@ public fun <T> OldgeSegmented(
     val c = OldgeTheme.colors
     Row(
         modifier
+            .graphicsLayer { alpha = if (enabled) 1f else DISABLED_ALPHA }
             .cssBox(
                 OldgeRadii.pill,
                 CssBackground.Linear(listOf(0f to c.pillHi, 1f to c.pillLo)),
@@ -88,7 +95,7 @@ public fun <T> OldgeSegmented(
         horizontalArrangement = Arrangement.spacedBy(INNER),
     ) {
         for (option in options) {
-            Segment(option, option.value == selected) { onSelect(option.value) }
+            Segment(option, option.value == selected, enabled) { onSelect(option.value) }
         }
     }
 }
@@ -97,6 +104,7 @@ public fun <T> OldgeSegmented(
 private fun <T> RowScope.Segment(
     option: OldgeSegment<T>,
     on: Boolean,
+    enabled: Boolean,
     onClick: () -> Unit,
 ) {
     val c = OldgeTheme.colors
@@ -144,6 +152,7 @@ private fun <T> RowScope.Segment(
                 on,
                 source,
                 OldgeIndication(shape, flash = false),
+                enabled = enabled,
                 role = Role.RadioButton,
                 onClick = onClick,
             ).padding(horizontal = BORDER + OldgeTheme.spacing.space3, vertical = BORDER + BLOCK_PADDING),
@@ -184,3 +193,4 @@ private const val LINE_HEIGHT = 1.1f
 private const val PRESSED_SCALE = 0.95f
 private const val POP_FROM_SCALE = 0.6f
 private const val POP_FROM_ALPHA = 0.3f
+private const val DISABLED_ALPHA = 0.75f // css literal: bundle.css `.og-field--disabled { opacity: .75 }`

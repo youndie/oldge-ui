@@ -108,3 +108,20 @@ fun SegmentedStatesMedia() = SegmentedStates(OldgeSkin.Media)
 @ViddikScreenshot(group = "SegmentedStates", name = "Icons and first Crystal", width = 390, height = 140)
 @Composable
 fun SegmentedStatesCrystal() = SegmentedStates(OldgeSkin.Crystal)
+
+// B-73: no preview shows it, so no reference; the golden is this library's own.
+@Composable
+private fun SegmentedDisabled(skin: OldgeSkin) =
+    OldgeDemo(skin) { OldgeSegmented(periods, "week", {}, label = "Период", enabled = false) }
+
+@ViddikScreenshot(group = "SegmentedDisabled", name = "Toxic", width = 390, height = 80)
+@Composable
+fun SegmentedDisabledToxic() = SegmentedDisabled(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "SegmentedDisabled", name = "Media", width = 390, height = 80)
+@Composable
+fun SegmentedDisabledMedia() = SegmentedDisabled(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "SegmentedDisabled", name = "Crystal", width = 390, height = 80)
+@Composable
+fun SegmentedDisabledCrystal() = SegmentedDisabled(OldgeSkin.Crystal)
