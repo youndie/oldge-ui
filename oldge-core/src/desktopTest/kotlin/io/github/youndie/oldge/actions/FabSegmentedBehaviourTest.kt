@@ -3,6 +3,9 @@ package io.github.youndie.oldge.actions
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
@@ -10,12 +13,16 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertHeightIsEqualTo
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertWidthIsEqualTo
+import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.icons.OldgeIcons
@@ -23,6 +30,7 @@ import io.github.youndie.oldge.theme.OldgeTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 /** The rules in the Fab and Segmented READMEs that are behaviour rather than look. */
 @OptIn(ExperimentalTestApi::class)
@@ -79,6 +87,40 @@ class FabSegmentedBehaviourTest {
             assertEquals("day", period)
             onNodeWithText("День").assertIsSelected()
             onNodeWithContentDescription("Период").assertHeightIsEqualTo(46.dp)
+        }
+
+    /** B-73: shown but fixed — no press, no squash, and every option disabled for a screen reader. */
+    @Test
+    fun a_disabled_segmented_takes_no_press_and_says_so() =
+        runComposeUiTest {
+            var period by mutableStateOf("week")
+            var calls = 0
+            setContent {
+                OldgeTheme {
+                    OldgeSegmented(
+                        listOf(OldgeSegment("day", "День"), OldgeSegment("week", "Неделя")),
+                        period,
+                        {
+                            calls++
+                            period = it
+                        },
+                        label = "Период",
+                        modifier = Modifier.testTag("seg"),
+                        enabled = false,
+                    )
+                }
+            }
+            onNodeWithText("День").assertIsNotEnabled()
+            onNodeWithText("Неделя").assertIsNotEnabled().assertIsSelected()
+            val rest = onNodeWithTag("seg").captureToImage().toPixelMap()
+            onNodeWithText("День").performTouchInput { down(center) }
+            mainClock.advanceTimeBy(500)
+            val held = onNodeWithTag("seg").captureToImage().toPixelMap()
+            onNodeWithText("День").performTouchInput { up() }
+            assertEquals(0, calls, "onSelect")
+            assertEquals("week", period)
+            val same = (0 until rest.width).all { x -> (0 until rest.height).all { y -> rest[x, y] == held[x, y] } }
+            assertTrue(same, "a held press changed what is drawn")
         }
 
     @Test

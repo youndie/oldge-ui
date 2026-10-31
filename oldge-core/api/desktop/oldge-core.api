@@ -78,7 +78,7 @@ public final class io/github/youndie/oldge/actions/OldgeSegment {
 }
 
 public final class io/github/youndie/oldge/actions/OldgeSegmentedKt {
-	public static final fun OldgeSegmented (Ljava/util/List;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+	public static final fun OldgeSegmented (Ljava/util/List;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Landroidx/compose/ui/Modifier;ZLandroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/youndie/oldge/containers/DividerKt {

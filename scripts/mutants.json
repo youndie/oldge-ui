@@ -2331,6 +2331,15 @@
    "replace": "if (true) FieldLabel",
    "tests": "*TextFieldReadOnlyLabelTest*",
    "expect": "without_its_label_the_field_is_only_the_well_and_still_named"
+  },
+  {
+   "id": "segmented-disabled-still-selectable",
+   "item": "B-73",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeSegmented.kt",
+   "find": "                enabled = enabled,\n                role = Role.RadioButton,",
+   "replace": "                enabled = true,\n                role = Role.RadioButton,",
+   "tests": "*FabSegmentedBehaviourTest*",
+   "expect": "a_disabled_segmented_takes_no_press_and_says_so"
   }
  ]
 }

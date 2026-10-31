@@ -1,7 +1,7 @@
 ---
 id: B-73
 title: "OldgeSegmented: a disabled state"
-status: open
+status: done
 priority: P2
 size: XS
 stage: stage-5-consumers
@@ -26,3 +26,17 @@ shown but fixed for the running session has nothing to draw with; kachok swallow
   carry `Disabled` on each option, and a golden shows it at 75 %. With a mutant.
 - Closes #26.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeSegmented.kt`.
+
+## Findings (2026-10-31)
+
+- **`enabled: Boolean = true`** on `OldgeSegmented`. Off, the group is drawn at 75 %, the text field's
+  `.og-field--disabled` (the design system has no disabled Segmented, so the number is borrowed and
+  marked as a CSS literal). Each option is `selectable(enabled = false)`: no press, so neither the
+  squash nor the indication, and `Disabled` in the semantics.
+- **Golden:** `SegmentedDisabled` in three skins, the library's own (no preview shows it, so there is
+  no reference and no parity number). Looked at: the selection still reads, dimmed. No other golden
+  moved.
+- **Test:** `FabSegmentedBehaviourTest.a_disabled_segmented_takes_no_press_and_says_so` — a click
+  changes nothing and calls nothing, both options are not enabled, and a held press draws the same
+  pixels as rest.
+- **Mutants:** 1 of 1 killed (`--only B-73`). **ABI:** `OldgeSegmented` gained a parameter.
