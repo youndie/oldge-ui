@@ -5,12 +5,14 @@ import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.harness.OldgeDemo
 import io.github.youndie.oldge.icons.OldgeIcons
 import io.github.youndie.oldge.theme.OldgeSkin
@@ -151,3 +153,29 @@ fun OrbButtonStatesPressedMedia() = OrbStates(OldgeSkin.Media)
 @ViddikScreenshot(group = "OrbButtonStates", name = "Pressed Crystal", width = 390, height = 80)
 @Composable
 fun OrbButtonStatesPressedCrystal() = OrbStates(OldgeSkin.Crystal)
+
+// B-78: a toolbar's toggles — a plain icon button, one off, one on, one on beside a Primary. No
+// preview shows a toggle, so no reference; the golden is this library's own.
+@Composable
+private fun IconToggles(skin: OldgeSkin) =
+    OldgeDemo(skin) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OldgeIconButton(OldgeIcons.Search, "Поиск", {})
+            OldgeIconButton(OldgeIcons.Info, "Подробности", {}, selected = false)
+            OldgeIconButton(OldgeIcons.Info, "Подробности", {}, selected = true)
+            OldgeIconButton(OldgeIcons.Gear, "Настройки", {}, selected = true)
+            OldgeButton("Сохранить", {}, variant = OldgeButtonVariant.Primary)
+        }
+    }
+
+@ViddikScreenshot(group = "IconToggle", name = "Toxic", width = 390, height = 80)
+@Composable
+fun IconToggleToxic() = IconToggles(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "IconToggle", name = "Media", width = 390, height = 80)
+@Composable
+fun IconToggleMedia() = IconToggles(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "IconToggle", name = "Crystal", width = 390, height = 80)
+@Composable
+fun IconToggleCrystal() = IconToggles(OldgeSkin.Crystal)
