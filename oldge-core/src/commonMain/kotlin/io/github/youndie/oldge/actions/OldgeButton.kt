@@ -50,7 +50,12 @@ import io.github.youndie.oldge.press.OldgeIndication
 import io.github.youndie.oldge.press.oldgePressScale
 import io.github.youndie.oldge.press.pressFraction
 import io.github.youndie.oldge.theme.LocalOldgeContentColor
+import io.github.youndie.oldge.theme.OldgeDensity
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.POINTER_LARGE
+import io.github.youndie.oldge.theme.POINTER_MEDIUM
+import io.github.youndie.oldge.theme.POINTER_SMALL
+import io.github.youndie.oldge.theme.hitMin
 import io.github.youndie.oldge.tokens.OldgeColors
 import io.github.youndie.oldge.tokens.OldgeEasings
 import io.github.youndie.oldge.tokens.OldgeRadii
@@ -162,6 +167,7 @@ private fun ButtonBox(
     val c = OldgeTheme.colors
     val s = OldgeTheme.shadows
     val spacing = OldgeTheme.spacing
+    val density = OldgeTheme.density
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val shape = RoundedCornerShape(OldgeRadii.sm)
     val t = pressFraction(source, enabled)
@@ -184,8 +190,8 @@ private fun ButtonBox(
                     if (enabled) PRESSED_SCALE else 1f,
                     pressedOffsetY = if (enabled) 1.dp else 0.dp,
                 ).then(if (block) Modifier.fillMaxWidth() else Modifier)
-                .defaultMinSize(minWidth = spacing.hitMin, minHeight = size.minHeight())
-                .then(if (iconOnly) Modifier.width(spacing.hitMin) else Modifier)
+                .defaultMinSize(minWidth = density.hitMin, minHeight = size.minHeight())
+                .then(if (iconOnly) Modifier.width(size.iconWidth()) else Modifier)
                 .cssBox(OldgeRadii.sm, look.background, BORDER, look.border, look.shadows, look.ring, look.gloss)
                 .semantics { if (contentDescription != null) this.contentDescription = contentDescription }
                 .then(
@@ -351,10 +357,30 @@ private fun OldgeButtonSize.textStyle(): TextStyle {
 
 @Composable
 private fun OldgeButtonSize.minHeight(): Dp =
-    when (this) {
-        OldgeButtonSize.Small -> SMALL_HEIGHT
-        OldgeButtonSize.Medium -> OldgeTheme.spacing.hitMin
-        OldgeButtonSize.Large -> LARGE_HEIGHT
+    when (OldgeTheme.density) {
+        OldgeDensity.Touch -> {
+            when (this) {
+                OldgeButtonSize.Small -> SMALL_HEIGHT
+                OldgeButtonSize.Medium -> OldgeTheme.spacing.hitMin
+                OldgeButtonSize.Large -> LARGE_HEIGHT
+            }
+        }
+
+        OldgeDensity.Pointer -> {
+            when (this) {
+                OldgeButtonSize.Small -> POINTER_SMALL
+                OldgeButtonSize.Medium -> POINTER_MEDIUM
+                OldgeButtonSize.Large -> POINTER_LARGE
+            }
+        }
+    }
+
+/** An icon button's width: `hit-min` for a finger, as the design system has it; square for a pointer (B-80). */
+@Composable
+private fun OldgeButtonSize.iconWidth(): Dp =
+    when (OldgeTheme.density) {
+        OldgeDensity.Touch -> OldgeTheme.spacing.hitMin
+        OldgeDensity.Pointer -> minHeight()
     }
 
 /**

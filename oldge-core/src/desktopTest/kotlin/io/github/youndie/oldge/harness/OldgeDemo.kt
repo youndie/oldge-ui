@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.containers.OldgeScreenBody
 import io.github.youndie.oldge.theme.LocalOldgeTextStyle
 import io.github.youndie.oldge.theme.LocalOldgeTypography
+import io.github.youndie.oldge.theme.OldgeDensity
 import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.oldge.theme.OldgeTypography
@@ -31,8 +32,9 @@ import io.github.youndie.oldge.type.OldgeText
 fun OldgeDemo(
     skin: OldgeSkin,
     padded: Boolean = true,
+    density: OldgeDensity = OldgeDensity.Touch,
     content: @Composable ColumnScope.() -> Unit,
-) = OldgeTheme(skin = skin, reducedMotion = true, platformTextStyle = PortableTextStyle) {
+) = OldgeTheme(skin = skin, reducedMotion = true, platformTextStyle = PortableTextStyle, density = density) {
     OldgeScreenBody(Modifier.fillMaxSize()) {
         Column(
             Modifier

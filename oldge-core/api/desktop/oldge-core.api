@@ -677,6 +677,14 @@ public final class io/github/youndie/oldge/press/OldgeIndication : androidx/comp
 	public fun rememberUpdatedInstance (Landroidx/compose/foundation/interaction/InteractionSource;Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/IndicationInstance;
 }
 
+public final class io/github/youndie/oldge/theme/OldgeDensity : java/lang/Enum {
+	public static final field Pointer Lio/github/youndie/oldge/theme/OldgeDensity;
+	public static final field Touch Lio/github/youndie/oldge/theme/OldgeDensity;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/youndie/oldge/theme/OldgeDensity;
+	public static fun values ()[Lio/github/youndie/oldge/theme/OldgeDensity;
+}
+
 public final class io/github/youndie/oldge/theme/OldgeMotion {
 	public static final field $stable I
 	public fun <init> (Z)V
@@ -731,6 +739,7 @@ public final class io/github/youndie/oldge/theme/OldgeTheme {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/youndie/oldge/theme/OldgeTheme;
 	public final fun getColors (Landroidx/compose/runtime/Composer;I)Lio/github/youndie/oldge/tokens/OldgeColors;
+	public final fun getDensity (Landroidx/compose/runtime/Composer;I)Lio/github/youndie/oldge/theme/OldgeDensity;
 	public final fun getMotion (Landroidx/compose/runtime/Composer;I)Lio/github/youndie/oldge/theme/OldgeMotion;
 	public final fun getPressFlash (Landroidx/compose/runtime/Composer;I)Z
 	public final fun getRadii ()Lio/github/youndie/oldge/tokens/OldgeRadii;
@@ -743,7 +752,7 @@ public final class io/github/youndie/oldge/theme/OldgeTheme {
 }
 
 public final class io/github/youndie/oldge/theme/OldgeThemeKt {
-	public static final fun OldgeTheme (Lio/github/youndie/oldge/theme/OldgeSkin;ZZZLandroidx/compose/ui/text/PlatformTextStyle;Lio/github/youndie/oldge/theme/OldgeStrings;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun OldgeTheme (Lio/github/youndie/oldge/theme/OldgeSkin;ZZZLandroidx/compose/ui/text/PlatformTextStyle;Lio/github/youndie/oldge/theme/OldgeStrings;Lio/github/youndie/oldge/theme/OldgeDensity;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun getLocalOldgeContentColor ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 	public static final fun getLocalOldgeTextStyle ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }

@@ -44,7 +44,9 @@ import io.github.youndie.oldge.material.CssBackground
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.press.drawOldgeFocusRing
 import io.github.youndie.oldge.press.oldgePopSoftIn
+import io.github.youndie.oldge.theme.OldgeDensity
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.POINTER_MEDIUM
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.tokens.OldgeShadow
 import io.github.youndie.oldge.type.OldgeText
@@ -95,6 +97,8 @@ public fun OldgeSearchBar(
     val out = motion.out
     val focus = c.focus
     val pill = RoundedCornerShape(OldgeRadii.pill)
+    // B-80: for a pointer the bar is a medium button's height, its input the bar inside its border.
+    val pointer = OldgeTheme.density == OldgeDensity.Pointer
     // `.og-search__input`: 1rem / 1.25rem in `ink`.
     val style = OldgeTheme.type.body.copy(fontSize = INPUT_SIZE, color = c.ink)
     Row(
@@ -110,7 +114,7 @@ public fun OldgeSearchBar(
                 BORDER,
                 c.edge,
                 OldgeTheme.shadows.sunken + chromeRing(c.chromeLo),
-            ).defaultMinSize(minHeight = HEIGHT)
+            ).defaultMinSize(minHeight = if (pointer) POINTER_MEDIUM else HEIGHT)
             .padding(start = BORDER + OldgeTheme.spacing.space3, end = BORDER + END, top = BORDER, bottom = BORDER),
         horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space2),
         verticalAlignment = Alignment.CenterVertically,
@@ -145,7 +149,10 @@ public fun OldgeSearchBar(
                 val line = with(LocalDensity.current) { style.lineHeight.toDp() }
                 // An `<input>`'s own padding, `1px 2px` from the browser's style sheet, sets the text in.
                 Box(
-                    Modifier.defaultMinSize(minHeight = INPUT_HEIGHT).padding(horizontal = INPUT_SIDE),
+                    Modifier
+                        .defaultMinSize(
+                            minHeight = if (pointer) POINTER_MEDIUM - BORDER * 2 else INPUT_HEIGHT,
+                        ).padding(horizontal = INPUT_SIDE),
                     contentAlignment = Alignment.CenterStart,
                 ) {
                     if (text.isEmpty()) OldgeText(placeholder, style = style.copy(color = c.inkMuted), maxLines = 1)
