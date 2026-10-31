@@ -97,12 +97,12 @@ fun ProgressBarCrystal() = ProgressDemo(OldgeSkin.Crystal)
 private fun WellDemo(skin: OldgeSkin) =
     OldgeDemo(skin) {
         val c = OldgeTheme.colors
-        OldgeProgressWell(0f)
-        OldgeProgressWell(0.45f)
-        OldgeProgressWell(1f)
-        OldgeProgressWell(0.62f, fill = c.danger)
-        OldgeProgressWell(0.3f, fill = c.inkMuted)
-        OldgeProgressWell(0.8f, Modifier.height(14.dp))
+        OldgeProgressWell(0f, "Ожидание")
+        OldgeProgressWell(0.45f, "Загрузка")
+        OldgeProgressWell(1f, "Раздача")
+        OldgeProgressWell(0.62f, "Ошибка", fill = c.danger)
+        OldgeProgressWell(0.3f, "Остановка", fill = c.inkMuted)
+        OldgeProgressWell(0.8f, "Проверка", Modifier.height(14.dp))
     }
 
 @ViddikScreenshot(group = "ProgressWell", name = "Toxic", width = 390, height = 150)

@@ -284,7 +284,7 @@ public final class io/github/youndie/oldge/feedback/OldgeMeterKt {
 
 public final class io/github/youndie/oldge/feedback/OldgeProgressBarKt {
 	public static final fun OldgeProgressBar (Ljava/lang/Float;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lio/github/youndie/oldge/feedback/OldgeProgressStatus;Landroidx/compose/runtime/Composer;II)V
-	public static final fun OldgeProgressWell-drOMvmE (Ljava/lang/Float;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/graphics/Color;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+	public static final fun OldgeProgressWell-xqIIw2o (Ljava/lang/Float;Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/graphics/Color;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/youndie/oldge/feedback/OldgeProgressStatus : java/lang/Enum {

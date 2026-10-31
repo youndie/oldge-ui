@@ -31,8 +31,8 @@ class ProgressWellBehaviourTest {
             setContent {
                 OldgeTheme {
                     Column(Modifier.width(300.dp)) {
-                        OldgeProgressWell(0.5f, Modifier.testTag("compact"))
-                        OldgeProgressWell(0.5f, Modifier.height(14.dp).testTag("taller"))
+                        OldgeProgressWell(0.5f, "a", Modifier.testTag("compact"))
+                        OldgeProgressWell(0.5f, "b", Modifier.height(14.dp).testTag("taller"))
                         OldgeProgressBar(0.5f, label = "Загрузка")
                     }
                 }
@@ -48,8 +48,8 @@ class ProgressWellBehaviourTest {
             setContent {
                 OldgeTheme {
                     Column {
-                        OldgeProgressWell(0.45f, contentDescription = "Ubuntu ISO")
-                        OldgeProgressWell(null, contentDescription = "Linux Mint")
+                        OldgeProgressWell(0.45f, "Ubuntu ISO")
+                        OldgeProgressWell(null, "Linux Mint")
                     }
                 }
             }
@@ -77,7 +77,7 @@ class ProgressWellBehaviourTest {
             val red = Color(0xFFC42B1C)
             setContent {
                 OldgeTheme(reducedMotion = true) {
-                    OldgeProgressWell(1f, Modifier.width(200.dp).height(20.dp).testTag("w"), fill = red)
+                    OldgeProgressWell(1f, "c", Modifier.width(200.dp).height(20.dp).testTag("w"), fill = red)
                 }
             }
             val m = onNodeWithTag("w").captureToImage().toPixelMap()

@@ -78,7 +78,7 @@ public fun OldgeProgressBar(
                 if (pct != null) LcdText("$pct%", type.label.copy(fontWeight = FontWeight.Normal, color = c.ink))
             }
         }
-        OldgeProgressWell(value, Modifier.height(WELL), contentDescription = label ?: "Выполнение")
+        OldgeProgressWell(value, label ?: "Выполнение", Modifier.height(WELL))
         if (status != OldgeProgressStatus.None || detail != null) Detail(status, detail)
     }
 }
@@ -96,14 +96,15 @@ public fun OldgeProgressBar(
  *
  * The blocks are drawn inside the 1 dp border and 2 dp padding, so a well 6 dp high or less shows none.
  *
- * [contentDescription] names it for a screen reader; a row usually has its own title beside it.
+ * [contentDescription] names it for a screen reader, and is not optional: a progress nobody can name
+ * is one `AccessibilityTest` rejects. In a row it is usually the row's own title.
  */
 @Composable
 public fun OldgeProgressWell(
     value: Float?,
+    contentDescription: String,
     modifier: Modifier = Modifier,
     fill: Color? = null,
-    contentDescription: String? = null,
 ) {
     val c = OldgeTheme.colors
     val motion = OldgeTheme.motion
@@ -133,7 +134,7 @@ public fun OldgeProgressWell(
             .cssBox(OldgeRadii.sm, CssBackground.Solid(c.well), BORDER, c.edge, OldgeTheme.shadows.sunken)
             .clip(RoundedCornerShape(OldgeRadii.sm - BORDER))
             .clearAndSetSemantics {
-                if (contentDescription != null) this.contentDescription = contentDescription
+                this.contentDescription = contentDescription
                 progressBarRangeInfo =
                     if (pct == null) ProgressBarRangeInfo.Indeterminate else ProgressBarRangeInfo(pct / 100f, 0f..1f)
             }.drawBehind {
