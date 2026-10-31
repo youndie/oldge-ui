@@ -2399,8 +2399,8 @@
    "id": "toggle-heard-as-button",
    "item": "B-78",
    "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
-   "find": "if (selected == null) {",
-   "replace": "if (true) {",
+   "find": "                        Modifier.toggleable(\n                            selected,\n                            source,\n                            OldgeIndication(shape),\n                            enabled,\n                            Role.Checkbox,\n                        ) { onClick() }",
+   "replace": "                        Modifier.clickable(source, OldgeIndication(shape), enabled = enabled, role = Role.Button, onClick = onClick)",
    "tests": "*IconToggleBehaviourTest*",
    "expect": "a_toggle_is_heard_on_or_off_and_a_plain_icon_button_is_not_a_toggle"
   }
