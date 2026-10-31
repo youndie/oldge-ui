@@ -264,11 +264,17 @@ final enum class io.github.youndie.oldge.theme/OldgeSkin : kotlin/Enum<io.github
         final fun <get-colors>(): io.github.youndie.oldge.tokens/OldgeColors // io.github.youndie.oldge.theme/OldgeSkin.colors.<get-colors>|<get-colors>(){}[0]
     final val entries // io.github.youndie.oldge.theme/OldgeSkin.entries|#static{}entries[0]
         final fun <get-entries>(): kotlin.enums/EnumEntries<io.github.youndie.oldge.theme/OldgeSkin> // io.github.youndie.oldge.theme/OldgeSkin.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val id // io.github.youndie.oldge.theme/OldgeSkin.id|{}id[0]
+        final fun <get-id>(): kotlin/String // io.github.youndie.oldge.theme/OldgeSkin.id.<get-id>|<get-id>(){}[0]
     final val shadows // io.github.youndie.oldge.theme/OldgeSkin.shadows|{}shadows[0]
         final fun <get-shadows>(): io.github.youndie.oldge.tokens/OldgeShadows // io.github.youndie.oldge.theme/OldgeSkin.shadows.<get-shadows>|<get-shadows>(){}[0]
 
     final fun valueOf(kotlin/String): io.github.youndie.oldge.theme/OldgeSkin // io.github.youndie.oldge.theme/OldgeSkin.valueOf|valueOf#static(kotlin.String){}[0]
     final fun values(): kotlin/Array<io.github.youndie.oldge.theme/OldgeSkin> // io.github.youndie.oldge.theme/OldgeSkin.values|values#static(){}[0]
+
+    final object Companion { // io.github.youndie.oldge.theme/OldgeSkin.Companion|null[0]
+        final fun byId(kotlin/String): io.github.youndie.oldge.theme/OldgeSkin? // io.github.youndie.oldge.theme/OldgeSkin.Companion.byId|byId(kotlin.String){}[0]
+    }
 }
 
 final enum class io.github.youndie.oldge.tokens/OldgeFontFamilyKey : kotlin/Enum<io.github.youndie.oldge.tokens/OldgeFontFamilyKey> { // io.github.youndie.oldge.tokens/OldgeFontFamilyKey|null[0]

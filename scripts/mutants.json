@@ -2367,6 +2367,24 @@
    "replace": "        onTextLayout = null,",
    "tests": "*OldgeTextLayoutTest*",
    "expect": "the_layout_is_the_drawn_texts_and_the_callback_changes_nothing_drawn"
+  },
+  {
+   "id": "skin-by-name",
+   "item": "B-76",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeSkin.kt",
+   "find": "entries.firstOrNull { it.id == id }",
+   "replace": "entries.firstOrNull { it.id == id || it.name == id }",
+   "tests": "*OldgeSkinIdTest*",
+   "expect": "an_unknown_id_is_no_skin"
+  },
+  {
+   "id": "skin-id-renamed",
+   "item": "B-76",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeSkin.kt",
+   "find": "Toxic(\"toxic\",",
+   "replace": "Toxic(\"lime\",",
+   "tests": "*OldgeSkinIdTest*",
+   "expect": "the_released_ids_stay_what_they_are"
   }
  ]
 }
