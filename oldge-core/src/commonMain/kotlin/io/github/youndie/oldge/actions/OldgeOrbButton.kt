@@ -28,6 +28,7 @@ import io.github.youndie.oldge.press.oldgePressScale
 import io.github.youndie.oldge.press.pressFraction
 import io.github.youndie.oldge.theme.LocalOldgeContentColor
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.hitMin
 import io.github.youndie.oldge.tokens.OldgeShadow
 
 /** The orb's sizes: [Small] 30 dp in a 44 dp touch zone, [Medium] 48 dp, [Large] 60 dp. */
@@ -77,7 +78,7 @@ public fun OldgeOrbButton(
             OldgeOrbTone.Accent -> glossGradient(c.accentHi, c.accent, c.accentLo) to c.onAccent
             OldgeOrbTone.Chrome -> glossGradient(c.chromeHi, null, c.chromeLo) to c.onChrome
         }
-    val hit = maxOf(size.orb, OldgeTheme.spacing.hitMin)
+    val hit = maxOf(size.orb, OldgeTheme.density.hitMin)
     Box(
         modifier
             .size(hit)

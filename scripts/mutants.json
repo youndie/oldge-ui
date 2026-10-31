@@ -2421,6 +2421,42 @@
    "replace": ".height(WELL)",
    "tests": "*ProgressWellBehaviourTest*",
    "expect": "the_well_is_10_dp_unless_its_modifier_says_otherwise_and_the_bars_is_20"
+  },
+  {
+   "id": "density-button-height",
+   "item": "B-80",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
+   "find": "OldgeButtonSize.Medium -> POINTER_MEDIUM",
+   "replace": "OldgeButtonSize.Medium -> OldgeTheme.spacing.hitMin",
+   "tests": "*OldgeDensityTest*",
+   "expect": "pointer_sizes_need_no_outer_modifier_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "density-icon-not-square",
+   "item": "B-80",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
+   "find": "OldgeDensity.Pointer -> minHeight()",
+   "replace": "OldgeDensity.Pointer -> OldgeTheme.spacing.hitMin",
+   "tests": "*OldgeDensityTest*",
+   "expect": "pointer_sizes_need_no_outer_modifier_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "density-search-height",
+   "item": "B-80",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSearchBar.kt",
+   "find": "if (pointer) POINTER_MEDIUM else HEIGHT",
+   "replace": "HEIGHT",
+   "tests": "*OldgeDensityTest*",
+   "expect": "pointer_sizes_need_no_outer_modifier_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "density-orb-hit",
+   "item": "B-80",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeOrbButton.kt",
+   "find": "OldgeTheme.density.hitMin",
+   "replace": "OldgeTheme.spacing.hitMin",
+   "tests": "*OldgeDensityTest*",
+   "expect": "pointer_sizes_need_no_outer_modifier_and_touch_keeps_the_design_systems"
   }
  ]
 }

@@ -11,10 +11,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
+import io.github.youndie.oldge.forms.OldgeSearchBar
 import io.github.youndie.oldge.harness.OldgeDemo
 import io.github.youndie.oldge.icons.OldgeIcons
+import io.github.youndie.oldge.theme.OldgeDensity
 import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
 import io.github.youndie.viddik.annotations.ViddikScreenshot
@@ -179,3 +182,34 @@ fun IconToggleMedia() = IconToggles(OldgeSkin.Media)
 @ViddikScreenshot(group = "IconToggle", name = "Crystal", width = 390, height = 80)
 @Composable
 fun IconToggleCrystal() = IconToggles(OldgeSkin.Crystal)
+
+// B-80: a desktop toolbar under OldgeDensity.Pointer — square icon buttons and a toggle, the search
+// bar with text (so its clear orb shows), and the three button sizes. The design system has no
+// pointer sizes, so no reference; the golden is this library's own.
+@Composable
+private fun PointerToolbar(skin: OldgeSkin) =
+    OldgeDemo(skin, density = OldgeDensity.Pointer) {
+        Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
+            OldgeIconButton(OldgeIcons.Plus, "Добавить", {})
+            OldgeIconButton(OldgeIcons.Info, "Подробности", {}, selected = true)
+            OldgeIconButton(OldgeIcons.Gear, "Настройки", {}, size = OldgeButtonSize.Small)
+            OldgeSearchBar(Modifier.weight(1f), defaultValue = "ubuntu")
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            OldgeButton("Отмена", {}, size = OldgeButtonSize.Small)
+            OldgeButton("Сохранить", {}, variant = OldgeButtonVariant.Primary)
+            OldgeButton("Готово", {}, size = OldgeButtonSize.Large)
+        }
+    }
+
+@ViddikScreenshot(group = "PointerDensity", name = "Toxic", width = 390, height = 120)
+@Composable
+fun PointerDensityToxic() = PointerToolbar(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "PointerDensity", name = "Media", width = 390, height = 120)
+@Composable
+fun PointerDensityMedia() = PointerToolbar(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "PointerDensity", name = "Crystal", width = 390, height = 120)
+@Composable
+fun PointerDensityCrystal() = PointerToolbar(OldgeSkin.Crystal)

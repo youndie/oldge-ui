@@ -29,6 +29,8 @@ import io.github.youndie.oldge.tokens.OldgeSpacing
  *   rendering (hinting, smoothing, subpixel positioning) pinned, for screenshots that mean the same
  *   on another machine — viddik's `ViddikPlatformTextStyle`, say. `null`, the default, leaves the
  *   platform's own, which is what an app wants. The faces stay the design system's either way.
+ * @param density [OldgeDensity.Touch], the design system's sizes, or [OldgeDensity.Pointer] for a
+ *   mouse-driven desktop window (B-80).
  * @param strings the accessible names of the library's own orbs and actions (B-71); the design
  *   system's Russian by default.
  */
@@ -40,6 +42,7 @@ public fun OldgeTheme(
     pressFlash: Boolean = true,
     platformTextStyle: PlatformTextStyle? = null,
     strings: OldgeStrings = OldgeStrings(),
+    density: OldgeDensity = OldgeDensity.Touch,
     content: @Composable () -> Unit,
 ) {
     val typography = oldgeTypography(platformTextStyle)
@@ -51,6 +54,7 @@ public fun OldgeTheme(
         LocalOldgeTextStyle provides typography.body,
         LocalOldgeContentColor provides skin.colors.ink,
         LocalOldgeStrings provides strings,
+        LocalOldgeDensity provides density,
         // The press flash and the focus ring reach every clickable through this (B-10).
         LocalIndication provides OldgeIndication(),
         content = content,
@@ -96,6 +100,10 @@ public object OldgeTheme {
     public val strings: OldgeStrings
         @Composable @ReadOnlyComposable
         get() = LocalOldgeStrings.current
+
+    public val density: OldgeDensity
+        @Composable @ReadOnlyComposable
+        get() = LocalOldgeDensity.current
 }
 
 /** The text style a component's text inherits: `body` under [OldgeTheme]. */

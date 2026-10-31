@@ -255,6 +255,17 @@ final enum class io.github.youndie.oldge.navigation/OldgeTooltipPlacement : kotl
     final fun values(): kotlin/Array<io.github.youndie.oldge.navigation/OldgeTooltipPlacement> // io.github.youndie.oldge.navigation/OldgeTooltipPlacement.values|values#static(){}[0]
 }
 
+final enum class io.github.youndie.oldge.theme/OldgeDensity : kotlin/Enum<io.github.youndie.oldge.theme/OldgeDensity> { // io.github.youndie.oldge.theme/OldgeDensity|null[0]
+    enum entry Pointer // io.github.youndie.oldge.theme/OldgeDensity.Pointer|null[0]
+    enum entry Touch // io.github.youndie.oldge.theme/OldgeDensity.Touch|null[0]
+
+    final val entries // io.github.youndie.oldge.theme/OldgeDensity.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.github.youndie.oldge.theme/OldgeDensity> // io.github.youndie.oldge.theme/OldgeDensity.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.github.youndie.oldge.theme/OldgeDensity // io.github.youndie.oldge.theme/OldgeDensity.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.github.youndie.oldge.theme/OldgeDensity> // io.github.youndie.oldge.theme/OldgeDensity.values|values#static(){}[0]
+}
+
 final enum class io.github.youndie.oldge.theme/OldgeSkin : kotlin/Enum<io.github.youndie.oldge.theme/OldgeSkin> { // io.github.youndie.oldge.theme/OldgeSkin|null[0]
     enum entry Crystal // io.github.youndie.oldge.theme/OldgeSkin.Crystal|null[0]
     enum entry Media // io.github.youndie.oldge.theme/OldgeSkin.Media|null[0]
@@ -889,6 +900,8 @@ final object io.github.youndie.oldge.icons/OldgeIcons { // io.github.youndie.old
 final object io.github.youndie.oldge.theme/OldgeTheme { // io.github.youndie.oldge.theme/OldgeTheme|null[0]
     final val colors // io.github.youndie.oldge.theme/OldgeTheme.colors|{}colors[0]
         final fun <get-colors>(androidx.compose.runtime/Composer?, kotlin/Int): io.github.youndie.oldge.tokens/OldgeColors // io.github.youndie.oldge.theme/OldgeTheme.colors.<get-colors>|<get-colors>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final val density // io.github.youndie.oldge.theme/OldgeTheme.density|{}density[0]
+        final fun <get-density>(androidx.compose.runtime/Composer?, kotlin/Int): io.github.youndie.oldge.theme/OldgeDensity // io.github.youndie.oldge.theme/OldgeTheme.density.<get-density>|<get-density>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
     final val motion // io.github.youndie.oldge.theme/OldgeTheme.motion|{}motion[0]
         final fun <get-motion>(androidx.compose.runtime/Composer?, kotlin/Int): io.github.youndie.oldge.theme/OldgeMotion // io.github.youndie.oldge.theme/OldgeTheme.motion.<get-motion>|<get-motion>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
     final val pressFlash // io.github.youndie.oldge.theme/OldgeTheme.pressFlash|{}pressFlash[0]
@@ -1128,7 +1141,7 @@ final fun io.github.youndie.oldge.resources/io_github_youndie_oldge_resources_Re
 final fun io.github.youndie.oldge.resources/io_github_youndie_oldge_resources_Res_font$stableprop_getter(): kotlin/Int // io.github.youndie.oldge.resources/io_github_youndie_oldge_resources_Res_font$stableprop_getter|io_github_youndie_oldge_resources_Res_font$stableprop_getter(){}[0]
 final fun io.github.youndie.oldge.resources/io_github_youndie_oldge_resources_Res_plurals$stableprop_getter(): kotlin/Int // io.github.youndie.oldge.resources/io_github_youndie_oldge_resources_Res_plurals$stableprop_getter|io_github_youndie_oldge_resources_Res_plurals$stableprop_getter(){}[0]
 final fun io.github.youndie.oldge.resources/io_github_youndie_oldge_resources_Res_string$stableprop_getter(): kotlin/Int // io.github.youndie.oldge.resources/io_github_youndie_oldge_resources_Res_string$stableprop_getter|io_github_youndie_oldge_resources_Res_string$stableprop_getter(){}[0]
-final fun io.github.youndie.oldge.theme/OldgeTheme(io.github.youndie.oldge.theme/OldgeSkin?, kotlin/Boolean, kotlin/Boolean, kotlin/Boolean, androidx.compose.ui.text/PlatformTextStyle?, io.github.youndie.oldge.theme/OldgeStrings?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // io.github.youndie.oldge.theme/OldgeTheme|OldgeTheme(io.github.youndie.oldge.theme.OldgeSkin?;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;androidx.compose.ui.text.PlatformTextStyle?;io.github.youndie.oldge.theme.OldgeStrings?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun io.github.youndie.oldge.theme/OldgeTheme(io.github.youndie.oldge.theme/OldgeSkin?, kotlin/Boolean, kotlin/Boolean, kotlin/Boolean, androidx.compose.ui.text/PlatformTextStyle?, io.github.youndie.oldge.theme/OldgeStrings?, io.github.youndie.oldge.theme/OldgeDensity?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // io.github.youndie.oldge.theme/OldgeTheme|OldgeTheme(io.github.youndie.oldge.theme.OldgeSkin?;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;androidx.compose.ui.text.PlatformTextStyle?;io.github.youndie.oldge.theme.OldgeStrings?;io.github.youndie.oldge.theme.OldgeDensity?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun io.github.youndie.oldge.theme/io_github_youndie_oldge_theme_OldgeMotion$stableprop_getter(): kotlin/Int // io.github.youndie.oldge.theme/io_github_youndie_oldge_theme_OldgeMotion$stableprop_getter|io_github_youndie_oldge_theme_OldgeMotion$stableprop_getter(){}[0]
 final fun io.github.youndie.oldge.theme/io_github_youndie_oldge_theme_OldgeStrings$stableprop_getter(): kotlin/Int // io.github.youndie.oldge.theme/io_github_youndie_oldge_theme_OldgeStrings$stableprop_getter|io_github_youndie_oldge_theme_OldgeStrings$stableprop_getter(){}[0]
 final fun io.github.youndie.oldge.theme/io_github_youndie_oldge_theme_OldgeTheme$stableprop_getter(): kotlin/Int // io.github.youndie.oldge.theme/io_github_youndie_oldge_theme_OldgeTheme$stableprop_getter|io_github_youndie_oldge_theme_OldgeTheme$stableprop_getter(){}[0]
