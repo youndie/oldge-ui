@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
@@ -61,6 +62,14 @@ import io.github.youndie.oldge.type.OldgeText
  *
  * Focused, the well carries the focus ring whatever the input mode, as `:focus-within` does for an
  * input. Disabled, the whole field is drawn at 75 % and does not take input.
+ *
+ * [readOnly] is a value that is current and in use but not typed into — a folder chosen through
+ * *Browse…*: drawn as an enabled field, it takes focus, its text can be selected and copied, and it
+ * shows no caret and takes no typing. A screen reader hears it as enabled (B-72).
+ *
+ * The [label] is the field's accessible name and is heard once, as the field's: the visible label
+ * above the well is drawn but left out of the semantics tree. With [showLabel] false it is not drawn
+ * at all, for a row that shows its own label beside the field; it still names the field.
  */
 @Composable
 public fun OldgeTextField(
@@ -75,6 +84,8 @@ public fun OldgeTextField(
     reveal: Boolean = false,
     lines: Int = 1,
     enabled: Boolean = true,
+    readOnly: Boolean = false,
+    showLabel: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource? = null,
@@ -92,7 +103,8 @@ public fun OldgeTextField(
         modifier.graphicsLayer { alpha = if (enabled) 1f else DISABLED_ALPHA },
         verticalArrangement = Arrangement.spacedBy(FIELD_GAP),
     ) {
-        FieldLabel(label)
+        // The field's own node says the label (below); the visible one would say it a second time.
+        if (showLabel) FieldLabel(label, Modifier.clearAndSetSemantics {})
         Row(
             Modifier
                 .fillMaxWidth()
@@ -136,6 +148,7 @@ public fun OldgeTextField(
                             if (error != null) error(error)
                         },
                 enabled = enabled,
+                readOnly = readOnly,
                 textStyle = textStyle,
                 keyboardOptions =
                     if (reveal && keyboardOptions == KeyboardOptions.Default) {

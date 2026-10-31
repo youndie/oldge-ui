@@ -2304,6 +2304,33 @@
    "replace": "if (shown) \"Скрыть пароль\" else OldgeTheme.strings.showPassword,",
    "tests": "*OldgeStringsTest*",
    "expect": "the_reveal_orb_says_the_apps_words_both_ways"
+  },
+  {
+   "id": "field-read-only-dropped",
+   "item": "B-72",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "readOnly = readOnly,",
+   "replace": "readOnly = false,",
+   "tests": "*TextFieldReadOnlyLabelTest*",
+   "expect": "a_read_only_field_is_enabled_focusable_and_selectable_and_takes_no_typing"
+  },
+  {
+   "id": "field-label-heard-twice",
+   "item": "B-72",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "FieldLabel(label, Modifier.clearAndSetSemantics {})",
+   "replace": "FieldLabel(label)",
+   "tests": "*TextFieldReadOnlyLabelTest*",
+   "expect": "a_visible_label_is_heard_once_as_the_fields_name"
+  },
+  {
+   "id": "field-show-label-ignored",
+   "item": "B-72",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "if (showLabel) FieldLabel",
+   "replace": "if (true) FieldLabel",
+   "tests": "*TextFieldReadOnlyLabelTest*",
+   "expect": "without_its_label_the_field_is_only_the_well_and_still_named"
   }
  ]
 }
