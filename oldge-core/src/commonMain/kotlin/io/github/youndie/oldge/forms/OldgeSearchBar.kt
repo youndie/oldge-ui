@@ -161,7 +161,7 @@ public fun OldgeSearchBar(
                     Box(Modifier.oldgePopSoftIn()) {
                         OldgeOrbButton(
                             OldgeIcons.Close,
-                            "Очистить",
+                            OldgeTheme.strings.clear,
                             { set("") },
                             size = OldgeOrbSize.Small,
                             tone = OldgeOrbTone.Chrome,

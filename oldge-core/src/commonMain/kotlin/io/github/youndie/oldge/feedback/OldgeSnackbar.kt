@@ -142,7 +142,7 @@ private fun Plate(
             style = OldgeTheme.type.body.copy(fontSize = MESSAGE_SIZE, lineHeight = MESSAGE_LINE, color = c.onBezel),
         )
         if (actionLabel != null) OldgeButton(actionLabel, onAction, size = OldgeButtonSize.Small)
-        if (onClose != null) OldgeOrbButton(OldgeIcons.Close, "Закрыть", onClose, size = OldgeOrbSize.Small)
+        if (onClose != null) OldgeOrbButton(OldgeIcons.Close, OldgeTheme.strings.close, onClose, size = OldgeOrbSize.Small)
     }
 }
 

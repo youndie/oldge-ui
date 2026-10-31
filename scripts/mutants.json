@@ -2241,6 +2241,69 @@
    "replace": "layout(tabsEnd, tabs.maxOf { it.height })",
    "tests": "*TabsBehaviourTest*",
    "expect": "a_current_last_tabs_label_is_inside_the_row"
+  },
+  {
+   "id": "strings-not-provided",
+   "item": "B-71",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeTheme.kt",
+   "find": "        LocalOldgeStrings provides strings,\n",
+   "replace": "",
+   "tests": "*OldgeStringsTest*",
+   "expect": "the_dialogs_close_orb_says_the_apps_word"
+  },
+  {
+   "id": "strings-dialog-literal",
+   "item": "B-71",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/containers/OldgeDialog.kt",
+   "find": "OldgeIcons.Close, OldgeTheme.strings.close, onClose",
+   "replace": "OldgeIcons.Close, \"Закрыть\", onClose",
+   "tests": "*OldgeStringsTest*",
+   "expect": "the_bottom_sheets_close_orb_says_the_apps_word"
+  },
+  {
+   "id": "strings-snackbar-literal",
+   "item": "B-71",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeSnackbar.kt",
+   "find": "OldgeIcons.Close, OldgeTheme.strings.close, onClose",
+   "replace": "OldgeIcons.Close, \"Закрыть\", onClose",
+   "tests": "*OldgeStringsTest*",
+   "expect": "the_snackbars_close_orb_says_the_apps_word"
+  },
+  {
+   "id": "strings-balloon-literal",
+   "item": "B-71",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBalloon.kt",
+   "find": "val name = OldgeTheme.strings.close",
+   "replace": "val name = \"Закрыть\"",
+   "tests": "*OldgeStringsTest*",
+   "expect": "the_balloons_close_button_says_the_apps_word"
+  },
+  {
+   "id": "strings-drawer-literal",
+   "item": "B-71",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeNavDrawer.kt",
+   "find": "val close = OldgeTheme.strings.close",
+   "replace": "val close = \"Закрыть\"",
+   "tests": "*OldgeStringsTest*",
+   "expect": "the_drawers_scrim_says_the_apps_word"
+  },
+  {
+   "id": "strings-search-literal",
+   "item": "B-71",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSearchBar.kt",
+   "find": "OldgeTheme.strings.clear,",
+   "replace": "\"Очистить\",",
+   "tests": "*OldgeStringsTest*",
+   "expect": "the_search_bars_clear_orb_says_the_apps_word"
+  },
+  {
+   "id": "strings-reveal-literal",
+   "item": "B-71",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "if (shown) OldgeTheme.strings.hidePassword else OldgeTheme.strings.showPassword,",
+   "replace": "if (shown) \"Скрыть пароль\" else OldgeTheme.strings.showPassword,",
+   "tests": "*OldgeStringsTest*",
+   "expect": "the_reveal_orb_says_the_apps_words_both_ways"
   }
  ]
 }
