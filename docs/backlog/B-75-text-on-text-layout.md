@@ -1,7 +1,7 @@
 ---
 id: B-75
 title: "OldgeText: an onTextLayout callback"
-status: open
+status: wip
 priority: P2
 size: XS
 stage: stage-5-consumers
