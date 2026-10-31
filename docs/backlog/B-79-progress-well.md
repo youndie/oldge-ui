@@ -1,7 +1,7 @@
 ---
 id: B-79
 title: "OldgeProgressWell: the compact well with a caller's fill, for a list row"
-status: wip
+status: done
 priority: P2
 size: S
 stage: stage-5-consumers
@@ -27,3 +27,25 @@ the library's changes never reach it.
   mutant.
 - Closes #22.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeProgressBar.kt`.
+
+## Findings (2026-11-01)
+
+- **`OldgeProgressWell(value, contentDescription, modifier, fill)`**, public. `OldgeProgressBar` now
+  draws its 20 dp well with it. That move was pixel-exact: no ProgressBar golden moved, so the two
+  cannot drift.
+- **10 dp by default, and a caller's height first wins.** The well's own `height(10.dp)` comes after
+  the caller's modifier, so `Modifier.height(14.dp)` gives 14. The blocks are drawn inside the 1 dp
+  border and 2 dp padding, so a well of 6 dp or less shows none; the KDoc says so.
+- **A caller's fill without a typed colour.** The accent's gradient has no counterpart for an
+  arbitrary colour, so a `fill` is drawn solid under the skin's `gloss` as a 1 px inset line along the
+  top. That is `.og-select__arrow`'s `inset 0 1px 0 var(--gloss)`, the design system's own treatment
+  of a small glossy part. The blocks and gaps are the same.
+- **The name is required.** A first cut made `contentDescription` optional with no default, and the
+  library's own `AccessibilityTest` rejected the unnamed wells in the fixture. A Russian default would
+  have repeated B-71's problem. So the caller names it, as `OldgeIconButton`'s caller must.
+- **Found on the way:** four fixed Russian names B-71 missed: ProgressBar's «Выполнение», Stepper's
+  «готово», PageDots' «Страница N из M» and DatePicker's day names. Filed as
+  [B-82](B-82-remaining-fixed-names.md).
+- **Goldens:** `ProgressWell` in three skins: the accent at 0, 45 and 100 %, `danger`, `inkMuted`, and
+  a 14 dp well; looked at. **Tests:** `ProgressWellBehaviourTest`, three cases: heights, semantics, and
+  the caller's colour in a block. **Mutants:** 2 of 2 killed (`--only B-79`).
