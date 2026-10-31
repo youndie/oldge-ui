@@ -82,7 +82,7 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-76](docs/backlog/B-76-skin-stable-id.md) `[ ]` | OldgeSkin: a stable id to persist a choice by | P2 | XS | - |
+| [B-76](docs/backlog/B-76-skin-stable-id.md) `[~]` | OldgeSkin: a stable id to persist a choice by | P2 | XS | - |
 | [B-77](docs/backlog/B-77-button-danger.md) `[ ]` | OldgeButton: a Danger variant for an irreversible confirm | P2 | S | - |
 | [B-78](docs/backlog/B-78-icon-button-selected.md) `[ ]` | OldgeIconButton: a selected state for a toolbar toggle | P2 | S | - |
 | [B-79](docs/backlog/B-79-progress-well.md) `[ ]` | OldgeProgressWell: the compact well with a caller's fill, for a list row | P2 | S | - |

@@ -1,7 +1,7 @@
 ---
 id: B-76
 title: "OldgeSkin: a stable id to persist a choice by"
-status: open
+status: wip
 priority: P2
 size: XS
 stage: stage-5-consumers
