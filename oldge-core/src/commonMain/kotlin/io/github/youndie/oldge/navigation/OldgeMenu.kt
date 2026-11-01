@@ -58,6 +58,7 @@ import io.github.youndie.oldge.material.CssBackground
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.material.cssRoundRect
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.hitMin
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.type.OldgeText
 import kotlinx.coroutines.delay
@@ -273,7 +274,7 @@ private fun MenuRow(
                 alpha = p
             }.fillMaxWidth()
             .padding(horizontal = ROW_INSET)
-            .defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)
+            .defaultMinSize(minHeight = OldgeTheme.density.hitMin)
             .cssBox(ROW_RADIUS, CssBackground.Solid(if (lit) c.select else Color.Transparent))
             .clickable(source, indication = null, role = Role.Button) { pick(item.id) }
             .padding(end = OldgeTheme.spacing.space3),

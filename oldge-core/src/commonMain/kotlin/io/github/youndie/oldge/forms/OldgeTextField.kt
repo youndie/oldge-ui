@@ -42,7 +42,9 @@ import io.github.youndie.oldge.icons.OldgeIcons
 import io.github.youndie.oldge.material.CssBackground
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.press.drawOldgeFocusRing
+import io.github.youndie.oldge.theme.OldgeDensity
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.POINTER_MEDIUM
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.type.OldgeText
 
@@ -99,6 +101,8 @@ public fun OldgeTextField(
     val multiline = lines > 1
     val shape = RoundedCornerShape(OldgeRadii.xs)
     val textStyle = type.body.copy(color = c.ink)
+    // B-83: for a pointer the box is the search bar's 32 dp, the input's line centred in it.
+    val pointer = OldgeTheme.density == OldgeDensity.Pointer
     Column(
         modifier.graphicsLayer { alpha = if (enabled) 1f else DISABLED_ALPHA },
         verticalArrangement = Arrangement.spacedBy(FIELD_GAP),
@@ -108,7 +112,7 @@ public fun OldgeTextField(
         Row(
             Modifier
                 .fillMaxWidth()
-                .defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)
+                .defaultMinSize(minHeight = if (pointer) POINTER_MEDIUM else OldgeTheme.spacing.hitMin)
                 .cssBox(
                     OldgeRadii.xs,
                     CssBackground.Solid(c.well),
@@ -172,7 +176,16 @@ public fun OldgeTextField(
                 cursorBrush = SolidColor(c.ink),
                 decorationBox = { inner ->
                     // `.og-field__input { padding: 11px 0; min-height: 42px }`.
-                    Box(Modifier.padding(vertical = INPUT_PADDING)) {
+                    val line = with(LocalDensity.current) { textStyle.lineHeight.toDp() }
+                    val padY =
+                        if (pointer) {
+                            ((POINTER_MEDIUM - BORDER * 2 - line) / 2).coerceAtLeast(
+                                0.dp,
+                            )
+                        } else {
+                            INPUT_PADDING
+                        }
+                    Box(Modifier.padding(vertical = padY)) {
                         if (value.isEmpty() && placeholder != null) {
                             OldgeText(placeholder, style = type.body.copy(color = c.inkMuted), maxLines = lines)
                         }
@@ -180,7 +193,6 @@ public fun OldgeTextField(
                         // Compose's single-line field measured 19 px for a 20 px line with a value
                         // (B-17, «Павел»), and 21 empty, which inside the border grew every empty
                         // field a pixel (B-53). Several lines are `minLines`' own.
-                        val line = with(LocalDensity.current) { textStyle.lineHeight.toDp() }
                         Box(if (multiline) Modifier else Modifier.height(line)) { inner() }
                     }
                 },

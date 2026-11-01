@@ -14,9 +14,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
+import io.github.youndie.oldge.forms.OldgeCheckbox
 import io.github.youndie.oldge.forms.OldgeSearchBar
+import io.github.youndie.oldge.forms.OldgeSelect
+import io.github.youndie.oldge.forms.OldgeSelectOption
+import io.github.youndie.oldge.forms.OldgeSlider
+import io.github.youndie.oldge.forms.OldgeSwitch
+import io.github.youndie.oldge.forms.OldgeTextField
 import io.github.youndie.oldge.harness.OldgeDemo
 import io.github.youndie.oldge.icons.OldgeIcons
+import io.github.youndie.oldge.navigation.OldgeBalloon
 import io.github.youndie.oldge.theme.OldgeDensity
 import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
@@ -213,3 +220,33 @@ fun PointerDensityMedia() = PointerToolbar(OldgeSkin.Media)
 @ViddikScreenshot(group = "PointerDensity", name = "Crystal", width = 390, height = 120)
 @Composable
 fun PointerDensityCrystal() = PointerToolbar(OldgeSkin.Crystal)
+
+// B-83: a settings form under OldgeDensity.Pointer — a text field, a select, a switch, a checkbox,
+// a slider and a balloon with its close. The library's own golden, as PointerDensity's is.
+@Composable
+private fun PointerForm(skin: OldgeSkin) =
+    OldgeDemo(skin, density = OldgeDensity.Pointer) {
+        OldgeTextField("Папка загрузок", "/home/pavel/Downloads", {}, readOnly = true)
+        OldgeSelect(
+            "Шифрование",
+            listOf(OldgeSelectOption("on", "Предпочитать"), OldgeSelectOption("off", "Выключено")),
+            "on",
+            {},
+        )
+        OldgeSwitch("Запускать при входе", true, {})
+        OldgeCheckbox("Показывать скорость в заголовке", true, {})
+        OldgeSlider(0.4f, {}, label = "Лимит отдачи", valueText = "400 КБ/с")
+        OldgeBalloon("Настройки сохранены", onClose = {})
+    }
+
+@ViddikScreenshot(group = "PointerForm", name = "Toxic", width = 390, height = 420)
+@Composable
+fun PointerFormToxic() = PointerForm(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "PointerForm", name = "Media", width = 390, height = 420)
+@Composable
+fun PointerFormMedia() = PointerForm(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "PointerForm", name = "Crystal", width = 390, height = 420)
+@Composable
+fun PointerFormCrystal() = PointerForm(OldgeSkin.Crystal)

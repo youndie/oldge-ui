@@ -41,6 +41,7 @@ import io.github.youndie.oldge.material.lerpGloss
 import io.github.youndie.oldge.material.premultipliedLerp
 import io.github.youndie.oldge.press.OldgeIndication
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.hitMin
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.tokens.OldgeShadow
 import io.github.youndie.oldge.type.FontCoverage
@@ -82,7 +83,7 @@ public fun OldgeSwitch(
                 enabled = enabled,
                 role = Role.Switch,
                 onValueChange = onCheckedChange,
-            ).defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)
+            ).defaultMinSize(minHeight = OldgeTheme.density.hitMin)
             .then(if (showLabel) Modifier else Modifier.semantics { contentDescription = label }),
         horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space3),
         verticalAlignment = Alignment.CenterVertically,
