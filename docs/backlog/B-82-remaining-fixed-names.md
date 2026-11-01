@@ -1,7 +1,7 @@
 ---
 id: B-82
 title: "The fixed Russian accessible names B-71 missed: Stepper, PageDots, DatePicker, ProgressBar"
-status: open
+status: wip
 priority: P2
 size: S
 stage: stage-5-consumers
