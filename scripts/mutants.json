@@ -2583,6 +2583,33 @@
    "replace": ".defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)",
    "tests": "*OldgeDensityControlsTest*",
    "expect": "a_menu_item_is_28_dp_for_a_pointer_and_44_for_a_finger"
+  },
+  {
+   "id": "danger-in-accent",
+   "item": "B-77",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
+   "find": "GlossStops(c.dangerHi, c.dangerFill, c.dangerLo),",
+   "replace": "GlossStops(c.accentHi, c.accent, c.accentLo),",
+   "tests": "*DangerButtonBehaviourTest*",
+   "expect": "the_fill_below_the_gloss_is_the_skins_danger_not_its_accent"
+  },
+  {
+   "id": "danger-label-white",
+   "item": "B-77",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
+   "find": "                c.onDanger,\n",
+   "replace": "                c.onSelect,\n",
+   "tests": "*DangerButtonBehaviourTest*",
+   "expect": "the_label_is_on_danger"
+  },
+  {
+   "id": "danger-no-glint",
+   "item": "B-77",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt",
+   "find": "private val GLINTED = setOf(OldgeButtonVariant.Primary, OldgeButtonVariant.Danger)",
+   "replace": "private val GLINTED = setOf(OldgeButtonVariant.Primary)",
+   "tests": "*MotionTest*",
+   "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
   }
  ]
 }

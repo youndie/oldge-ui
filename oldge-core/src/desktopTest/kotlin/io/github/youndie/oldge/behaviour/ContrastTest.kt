@@ -44,6 +44,8 @@ class ContrastTest {
             for ((b, back) in bodies.take(2)) {
                 add(Claim("focus", b, NON_TEXT) { it.focus to back(it) })
                 add(Claim("accent-rim", b, NON_TEXT) { it.accentRim to back(it) })
+                // `danger-rim`: «≥3:1 к фонам тела».
+                add(Claim("danger-rim", b, NON_TEXT) { it.dangerRim to back(it) })
             }
             // `on-bezel`: «≥4.5:1 на всех трёх остановках».
             add(Claim("on-bezel", "bezel-hi", TEXT) { it.onBezel to it.bezelHi })
@@ -56,6 +58,10 @@ class ContrastTest {
             add(Claim("on-accent", "accent-hi", TEXT) { it.onAccent to it.accentHi })
             add(Claim("on-accent", "accent", TEXT) { it.onAccent to it.accent })
             add(Claim("on-accent", "accent-lo", TEXT) { it.onAccent to it.accentLo })
+            // `on-danger`: «≥4.5:1 на всех остановках во всех скинах».
+            add(Claim("on-danger", "danger-hi", TEXT) { it.onDanger to it.dangerHi })
+            add(Claim("on-danger", "danger-fill", TEXT) { it.onDanger to it.dangerFill })
+            add(Claim("on-danger", "danger-lo", TEXT) { it.onDanger to it.dangerLo })
             // `lcd-dim`: «Подписи и единицы на lcd — ≥4.5:1»; `meter-low`: «≥3:1 на lcd».
             add(Claim("lcd-dim", "lcd", TEXT) { it.lcdDim to it.lcd })
             add(Claim("meter-low", "lcd", NON_TEXT) { it.meterLow to it.lcd })

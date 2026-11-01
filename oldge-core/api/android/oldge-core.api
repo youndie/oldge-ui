@@ -17,6 +17,7 @@ public final class io/github/youndie/oldge/actions/OldgeButtonSize : java/lang/E
 }
 
 public final class io/github/youndie/oldge/actions/OldgeButtonVariant : java/lang/Enum {
+	public static final field Danger Lio/github/youndie/oldge/actions/OldgeButtonVariant;
 	public static final field Plain Lio/github/youndie/oldge/actions/OldgeButtonVariant;
 	public static final field Primary Lio/github/youndie/oldge/actions/OldgeButtonVariant;
 	public static final field Secondary Lio/github/youndie/oldge/actions/OldgeButtonVariant;

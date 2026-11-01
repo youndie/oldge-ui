@@ -217,6 +217,14 @@ class MotionTest {
                 70,
                 trigger = { onNodeWithText("Отправить", useUnmergedTree = true).performTouchInput { down(center) } },
             ) { OldgeButton("Отправить", {}, variant = OldgeButtonVariant.Primary) },
+            // B-77: the danger confirm has the primary's glint, `.og-btn--danger::after`.
+            Scene(
+                "shine-danger",
+                OldgeDurations.press,
+                200,
+                70,
+                trigger = { onNodeWithText("Удалить", useUnmergedTree = true).performTouchInput { down(center) } },
+            ) { OldgeButton("Удалить", {}, variant = OldgeButtonVariant.Danger) },
         )
 
     @Test

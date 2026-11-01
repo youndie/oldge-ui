@@ -178,6 +178,40 @@ private fun IconToggles(skin: OldgeSkin) =
         }
     }
 
+// B-77: the destructive confirm. The Dialog reference shows it at rest; its sizes, press and
+// disabled state have no reference, so these goldens are this library's own.
+@Composable
+private fun DangerButtons(skin: OldgeSkin) =
+    OldgeDemo(skin) {
+        DemoRow {
+            OldgeButton("Удалить", {}, variant = OldgeButtonVariant.Danger, icon = OldgeIcons.Trash)
+            OldgeButton("Стереть", {}, variant = OldgeButtonVariant.Danger, size = OldgeButtonSize.Small)
+            OldgeButton("Удалить", {}, variant = OldgeButtonVariant.Danger, enabled = false)
+        }
+        DemoRow {
+            OldgeButton("Отмена", {})
+            OldgeButton(
+                "Удалить",
+                {},
+                variant = OldgeButtonVariant.Danger,
+                icon = OldgeIcons.Trash,
+                interactionSource = pressed(),
+            )
+        }
+    }
+
+@ViddikScreenshot(group = "ButtonDanger", name = "Toxic", width = 390, height = 130)
+@Composable
+fun ButtonDangerToxic() = DangerButtons(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "ButtonDanger", name = "Media", width = 390, height = 130)
+@Composable
+fun ButtonDangerMedia() = DangerButtons(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "ButtonDanger", name = "Crystal", width = 390, height = 130)
+@Composable
+fun ButtonDangerCrystal() = DangerButtons(OldgeSkin.Crystal)
+
 @ViddikScreenshot(group = "IconToggle", name = "Toxic", width = 390, height = 80)
 @Composable
 fun IconToggleToxic() = IconToggles(OldgeSkin.Toxic)

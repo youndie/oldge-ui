@@ -64,14 +64,18 @@ import io.github.youndie.oldge.type.OldgeText
 import kotlinx.coroutines.flow.collectLatest
 
 /**
- * The design system's three kinds of button (reference/design-system/components/Button).
+ * The design system's four kinds of button (reference/design-system/components/Button).
  *
  * - [Primary] — the screen's one main action, in the skin's accent, always inside its `accent-rim`,
  *   its label the dark `on-accent`, never white. One per screen.
  * - [Secondary] — silver chrome, beside a primary for the way out.
  * - [Plain] — a text link in `accent-ink`.
+ * - [Danger] — the confirm of an action that cannot be undone («Удалить», «Стереть»), one per dialog,
+ *   always with an icon (`trash`) and the verb, a [Secondary] beside it for the way out. [Primary]'s
+ *   gloss, bevel, press and glint, in `danger-hi` → `danger-fill` → `danger-lo` inside its
+ *   `danger-rim`, its label the dark `on-danger`. A screen's main action stays [Primary].
  */
-public enum class OldgeButtonVariant { Primary, Secondary, Plain }
+public enum class OldgeButtonVariant { Primary, Secondary, Plain, Danger }
 
 /**
  * Button heights: [Small] 36 dp — dense rows only; [Medium] 44 dp; [Large] 52 dp — the main action at
@@ -84,8 +88,8 @@ public enum class OldgeButtonSize { Small, Medium, Large }
  * «Отправить»); an [icon] goes before it.
  *
  * Pressed, the gradient turns over, the bevel sinks, it squashes to 0.94 and moves down a pixel, and
- * springs back; a gloss flash spreads from the finger, and across a primary a glint runs and fades at
- * its right edge. There is no hover state, by the design system's rule.
+ * springs back; a gloss flash spreads from the finger, and across a primary or a danger a glint runs and
+ * fades at its right edge. There is no hover state, by the design system's rule.
  */
 @Composable
 public fun OldgeButton(
@@ -181,7 +185,7 @@ private fun ButtonBox(
             size == OldgeButtonSize.Large -> spacing.space5
             else -> spacing.space4
         }
-    val shine = rememberShine(source, enabled && variant == OldgeButtonVariant.Primary)
+    val shine = rememberShine(source, enabled && variant in GLINTED)
     CompositionLocalProvider(LocalOldgeContentColor provides look.content) {
         Row(
             modifier
@@ -340,8 +344,26 @@ private fun OldgeButtonVariant.look(
         OldgeButtonVariant.Plain -> {
             Look(CssBackground.Solid(Color.Transparent), Color.Transparent, emptyList(), emptyList(), null, c.accentInk)
         }
+
+        OldgeButtonVariant.Danger -> {
+            Look(
+                lerpGloss(
+                    GlossStops(c.dangerHi, c.dangerFill, c.dangerLo),
+                    GlossStops(c.dangerLo, c.dangerFill, c.dangerHi),
+                    t,
+                ).background(),
+                c.dangerLo,
+                lerpShadows(s.raised, s.sunken, t),
+                listOf(OldgeShadow(false, 0.dp, 0.dp, 0.dp, 1.dp, c.dangerRim)),
+                gloss,
+                c.onDanger,
+            )
+        }
     }
 }
+
+/** The variants with the glint, `.og-btn--primary::after, .og-btn--danger::after`. */
+private val GLINTED = setOf(OldgeButtonVariant.Primary, OldgeButtonVariant.Danger)
 
 @Composable
 private fun OldgeButtonSize.textStyle(): TextStyle {
@@ -384,7 +406,7 @@ private fun OldgeButtonSize.iconWidth(): Dp =
     }
 
 /**
- * The primary's glint (`.og-btn--primary::after`, `@keyframes og-shine`): a band 30 % wide of
+ * The primary's and the danger's glint (`.og-btn--primary::after`, `@keyframes og-shine`): a band 30 % wide of
  * `transparent → gloss → transparent`, skewed −20°, swept from −120 % to 360 % of its own width over
  * `dur-press`, fading out in the last fifth; above the content, and never shown under reduced motion
  * or while at rest. It runs only while the button is held, as `:active` does. Returns the running
