@@ -1,12 +1,16 @@
 package io.github.youndie.oldge.feedback
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.harness.OldgeDemo
 import io.github.youndie.oldge.theme.OldgeSkin
@@ -116,3 +120,29 @@ fun ProgressWellMedia() = WellDemo(OldgeSkin.Media)
 @ViddikScreenshot(group = "ProgressWell", name = "Crystal", width = 390, height = 150)
 @Composable
 fun ProgressWellCrystal() = WellDemo(OldgeSkin.Crystal)
+
+// B-88: the well in its row's colour — a selected row in `select`, a failed one in a red tint, and
+// the skin's own well on the selected row for comparison. The library's own golden, as B-79's.
+@Composable
+private fun WellGroundDemo(skin: OldgeSkin) =
+    OldgeDemo(skin) {
+        val c = OldgeTheme.colors
+        val failed = c.danger.copy(alpha = 0.18f).compositeOver(c.surface)
+        Box(Modifier.background(c.select).padding(8.dp)) { OldgeProgressWell(0.45f, "Выбрана", well = c.select) }
+        Box(Modifier.background(c.select).padding(8.dp)) { OldgeProgressWell(0.45f, "Выбрана, свой жёлоб") }
+        Box(Modifier.background(failed).padding(8.dp)) {
+            OldgeProgressWell(0.62f, "Ошибка", fill = c.danger, well = failed)
+        }
+    }
+
+@ViddikScreenshot(group = "ProgressWellGround", name = "Toxic", width = 390, height = 150)
+@Composable
+fun ProgressWellGroundToxic() = WellGroundDemo(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "ProgressWellGround", name = "Media", width = 390, height = 150)
+@Composable
+fun ProgressWellGroundMedia() = WellGroundDemo(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "ProgressWellGround", name = "Crystal", width = 390, height = 150)
+@Composable
+fun ProgressWellGroundCrystal() = WellGroundDemo(OldgeSkin.Crystal)

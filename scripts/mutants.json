@@ -2664,6 +2664,24 @@
    "replace": "        text = AnnotatedString(text.text),\n",
    "tests": "*OldgeTextAnnotatedTest*",
    "expect": "a_span_keeps_its_own_style"
+  },
+  {
+   "id": "well-gaps-skin",
+   "item": "B-88",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeProgressBar.kt",
+   "find": "drawRect(ground, Offset(x, at.y)",
+   "replace": "drawRect(c.well, Offset(x, at.y)",
+   "tests": "*ProgressWellBehaviourTest*",
+   "expect": "a_callers_well_is_the_ground_and_the_gaps"
+  },
+  {
+   "id": "well-ground-skin",
+   "item": "B-88",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeProgressBar.kt",
+   "find": "CssBackground.Solid(ground)",
+   "replace": "CssBackground.Solid(c.well)",
+   "tests": "*ProgressWellBehaviourTest*",
+   "expect": "a_callers_well_is_the_ground_and_the_gaps"
   }
  ]
 }
