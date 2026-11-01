@@ -1652,8 +1652,8 @@
    "id": "consumer-text-reported-baseline",
    "item": "B-51",
    "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt",
-   "find": "if (metrics == null) modifier else modifier.onCssBaseline(metrics, laid),",
-   "replace": "modifier,",
+   "find": "    return onCssBaseline(metrics, style)\n",
+   "replace": "    return this\n",
    "tests": "*ConsumerTextTest*",
    "expect": "a_consumers_text_lands_on_chromes_ink_where_basic_text_does_not"
   },
@@ -2646,6 +2646,24 @@
    "replace": "                    null,\n",
    "tests": "*CheckDescriptionTest*",
    "expect": "a_radio_description_is_heard_after_the_label_and_a_press_on_it_picks_the_option"
+  },
+  {
+   "id": "annotated-unplaced",
+   "item": "B-87",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt",
+   "find": "        modifier = modifier.onCssBaselineOf(laid),\n",
+   "replace": "        modifier = modifier,\n",
+   "tests": "*OldgeTextAnnotatedTest*",
+   "expect": "an_annotated_text_lands_where_the_plain_one_does_and_not_where_basic_text_does"
+  },
+  {
+   "id": "annotated-spans-dropped",
+   "item": "B-87",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/type/OldgeText.kt",
+   "find": "        text = text,\n",
+   "replace": "        text = AnnotatedString(text.text),\n",
+   "tests": "*OldgeTextAnnotatedTest*",
+   "expect": "a_span_keeps_its_own_style"
   }
  ]
 }

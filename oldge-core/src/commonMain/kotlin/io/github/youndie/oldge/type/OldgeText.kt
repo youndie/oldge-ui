@@ -4,6 +4,7 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -61,17 +62,54 @@ public fun OldgeText(
     overflow: TextOverflow = TextOverflow.Clip,
     onTextLayout: ((TextLayoutResult) -> Unit)? = null,
 ) {
-    val metrics = OldgeTheme.type.metricsOf(style)
     val laid = style.withHonouredLine()
     BasicText(
         text,
-        if (metrics == null) modifier else modifier.onCssBaseline(metrics, laid),
+        modifier.onCssBaselineOf(laid),
         style = laid,
         maxLines = maxLines,
         softWrap = softWrap,
         overflow = overflow,
         onTextLayout = onTextLayout,
     )
+}
+
+/**
+ * [OldgeText] for text with styled spans — a word in bold, a file extension in mono (B-87). The line
+ * is placed on the CSS baseline of [style], as the plain text's is; a span set in another face or size
+ * keeps its own metrics inside that line.
+ *
+ * It is drawn by `BasicText`'s annotated overload, and the plain one by its string overload: the two
+ * lay out an ellipsis differently, and the string text keeps the drawing it had (six goldens of long
+ * titles moved when it went through this one).
+ */
+@Composable
+public fun OldgeText(
+    text: AnnotatedString,
+    modifier: Modifier = Modifier,
+    style: TextStyle = LocalOldgeTextStyle.current,
+    maxLines: Int = Int.MAX_VALUE,
+    softWrap: Boolean = true,
+    overflow: TextOverflow = TextOverflow.Clip,
+    onTextLayout: ((TextLayoutResult) -> Unit)? = null,
+) {
+    val laid = style.withHonouredLine()
+    BasicText(
+        text = text,
+        modifier = modifier.onCssBaselineOf(laid),
+        style = laid,
+        maxLines = maxLines,
+        softWrap = softWrap,
+        overflow = overflow,
+        onTextLayout = onTextLayout,
+    )
+}
+
+/** [onCssBaseline] for a style of the theme's typography; text in any other face is left alone. */
+@Composable
+private fun Modifier.onCssBaselineOf(style: TextStyle): Modifier {
+    val metrics = OldgeTheme.type.metricsOf(style) ?: return this
+    return onCssBaseline(metrics, style)
 }
 
 /** Moves laid-out text so that its first baseline is where CSS puts it for [metrics] and [style]. */
