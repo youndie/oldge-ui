@@ -1,7 +1,7 @@
 ---
 id: B-87
 title: "OldgeText: an AnnotatedString overload"
-status: open
+status: wip
 priority: P2
 size: S
 stage: stage-5-consumers

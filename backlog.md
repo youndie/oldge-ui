@@ -82,7 +82,7 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-87](docs/backlog/B-87-text-annotated.md) `[ ]` | OldgeText: an AnnotatedString overload | P2 | S | - |
+| [B-87](docs/backlog/B-87-text-annotated.md) `[~]` | OldgeText: an AnnotatedString overload | P2 | S | - |
 | [B-88](docs/backlog/B-88-progress-well-ground.md) `[ ]` | OldgeProgressWell: a caller's colour for the well | P2 | S | - |
 | [B-89](docs/backlog/B-89-read-only-overflow.md) `[ ]` | OldgeTextField: a read-only value with the overflow the caller chooses | P2 | M | - |
 | [B-84](docs/backlog/B-84-pointer-segmented-tabs.md) `[ ]` | OldgeDensity.Pointer for Segmented and Tabs | P3 | S | - |
