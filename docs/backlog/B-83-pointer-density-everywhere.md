@@ -1,7 +1,7 @@
 ---
 id: B-83
 title: "OldgeDensity.Pointer for the controls B-80 left at hit-min"
-status: open
+status: done
 priority: P3
 size: M
 stage: stage-5-consumers
@@ -27,3 +27,31 @@ control read its size from the theme. These still hold `hit-min`, 44 dp, under `
 - AC: under `Pointer` each listed control measures its pointer size with no outer modifier, its
   content uncut; under `Touch` no golden moves. Mutant per control.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeDensity.kt`.
+
+## Findings (2026-11-01)
+
+- **Under `Pointer`, measured with no outer modifier** (`OldgeDensityControlsTest`):
+
+  | | Touch | Pointer |
+  |---|---|---|
+  | TextField's box | 44 | 32 |
+  | Select | 44 | 32 |
+  | Switch row | 44 | 30, its track |
+  | Checkbox row | 44 | 28 |
+  | Slider | 44 | 28 |
+  | Menu item | 44 | 28 |
+  | Balloon's close | 44 | 28 |
+
+- **TextField and Select take the search bar's 32 dp**, so the fields of a form line up with
+  it. The other five take the pointer `hit-min`, 28. The TextField's input is not just
+  shrunk: its vertical padding becomes whatever centres its line in 32 dp (5 dp for the 20 dp line),
+  in place of the CSS's 11. Otherwise the 42 dp input would hold the box at 44 whatever its minimum
+  said (B-53).
+- **Everything fits inside the smaller boxes:** the Switch's 30 dp track, the Checkbox's 20 dp box,
+  the Slider's 26 dp thumb, the menu's 18 dp icons on 20 dp lines, and the reveal orb's 30 dp.
+- **Golden:** `PointerForm` in three skins: a read-only field, a select, a switch, a checkbox, a
+  slider and a balloon. Looked at: nothing cut. No `Touch` golden moved.
+- **Mutants:** 8 of 8 killed (`--only B-83`), one per control and one for the field's padding.
+- A first full gate stopped with "Gradle build daemon has been stopped: stop command received". That
+  came from outside this session (another project's 9.7.1 daemon was running on the mac), not from a
+  test, and the rerun was green.

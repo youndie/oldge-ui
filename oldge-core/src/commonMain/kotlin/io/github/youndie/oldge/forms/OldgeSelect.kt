@@ -64,7 +64,9 @@ import io.github.youndie.oldge.navigation.OldgeMenuEntry
 import io.github.youndie.oldge.navigation.OldgeMenuPopup
 import io.github.youndie.oldge.press.drawOldgeFocusRing
 import io.github.youndie.oldge.theme.LocalOldgeContentColor
+import io.github.youndie.oldge.theme.OldgeDensity
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.POINTER_MEDIUM
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.tokens.OldgeShadow
 import io.github.youndie.oldge.type.OldgeText
@@ -133,8 +135,16 @@ public fun <T> OldgeSelect(
                 Modifier
                     .fillMaxWidth()
                     .height(IntrinsicSize.Min)
-                    .defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)
-                    .cssBox(
+                    .defaultMinSize(
+                        minHeight =
+                            if (OldgeTheme.density ==
+                                OldgeDensity.Pointer
+                            ) {
+                                POINTER_MEDIUM
+                            } else {
+                                OldgeTheme.spacing.hitMin
+                            },
+                    ).cssBox(
                         OldgeRadii.sm,
                         CssBackground.Linear(listOf(0f to c.chromeHi, 1f to c.chromeLo)),
                         BORDER,

@@ -33,6 +33,7 @@ import io.github.youndie.oldge.press.OldgeIndication
 import io.github.youndie.oldge.press.oldgePopIn
 import io.github.youndie.oldge.press.oldgePressScale
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.hitMin
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.type.OldgeText
 
@@ -137,7 +138,7 @@ private fun CheckRow(
     val c = OldgeTheme.colors
     val ink = if (enabled) c.ink else c.inkMuted
     Row(
-        interaction.defaultMinSize(minHeight = OldgeTheme.spacing.hitMin),
+        interaction.defaultMinSize(minHeight = OldgeTheme.density.hitMin),
         horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space2),
         verticalAlignment = Alignment.CenterVertically,
     ) {

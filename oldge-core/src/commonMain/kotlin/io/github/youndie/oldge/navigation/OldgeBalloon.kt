@@ -39,6 +39,7 @@ import io.github.youndie.oldge.material.CssBackground
 import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.press.OldgeIndication
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.hitMin
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.type.OldgeText
 
@@ -159,7 +160,7 @@ private fun Close(onClose: () -> Unit) {
                 val up = CLOSE_PULL_UP.roundToPx()
                 val right = CLOSE_PULL_RIGHT.roundToPx()
                 layout(p.width - right, p.height - up) { p.place(0, -up) }
-            }.size(OldgeTheme.spacing.hitMin)
+            }.size(OldgeTheme.density.hitMin)
             .semantics { contentDescription = name }
             .clickable(
                 source,

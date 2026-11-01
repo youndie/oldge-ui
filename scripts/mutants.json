@@ -2511,6 +2511,78 @@
    "replace": "contentDescription = io.github.youndie.oldge.theme.OldgeStrings().day(date)",
    "tests": "*OldgeStringsTest*",
    "expect": "a_calendar_day_says_the_apps_words"
+  },
+  {
+   "id": "density-field-box",
+   "item": "B-83",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "if (pointer) POINTER_MEDIUM else OldgeTheme.spacing.hitMin",
+   "replace": "OldgeTheme.spacing.hitMin",
+   "tests": "*OldgeDensityControlsTest*",
+   "expect": "the_form_controls_take_their_pointer_sizes_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "density-field-padding",
+   "item": "B-83",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "((POINTER_MEDIUM - BORDER * 2 - line) / 2)",
+   "replace": "(INPUT_PADDING)",
+   "tests": "*OldgeDensityControlsTest*",
+   "expect": "the_form_controls_take_their_pointer_sizes_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "density-select",
+   "item": "B-83",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSelect.kt",
+   "find": "                                POINTER_MEDIUM",
+   "replace": "                                OldgeTheme.spacing.hitMin",
+   "tests": "*OldgeDensityControlsTest*",
+   "expect": "the_form_controls_take_their_pointer_sizes_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "density-switch",
+   "item": "B-83",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSwitch.kt",
+   "find": ").defaultMinSize(minHeight = OldgeTheme.density.hitMin)",
+   "replace": ").defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)",
+   "tests": "*OldgeDensityControlsTest*",
+   "expect": "the_form_controls_take_their_pointer_sizes_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "density-checkbox",
+   "item": "B-83",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCheckbox.kt",
+   "find": "interaction.defaultMinSize(minHeight = OldgeTheme.density.hitMin),",
+   "replace": "interaction.defaultMinSize(minHeight = OldgeTheme.spacing.hitMin),",
+   "tests": "*OldgeDensityControlsTest*",
+   "expect": "the_form_controls_take_their_pointer_sizes_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "density-slider",
+   "item": "B-83",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSlider.kt",
+   "find": ".height(OldgeTheme.density.hitMin)",
+   "replace": ".height(OldgeTheme.spacing.hitMin)",
+   "tests": "*OldgeDensityControlsTest*",
+   "expect": "the_form_controls_take_their_pointer_sizes_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "density-balloon",
+   "item": "B-83",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeBalloon.kt",
+   "find": "}.size(OldgeTheme.density.hitMin)",
+   "replace": "}.size(OldgeTheme.spacing.hitMin)",
+   "tests": "*OldgeDensityControlsTest*",
+   "expect": "the_form_controls_take_their_pointer_sizes_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "density-menu",
+   "item": "B-83",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeMenu.kt",
+   "find": ".defaultMinSize(minHeight = OldgeTheme.density.hitMin)",
+   "replace": ".defaultMinSize(minHeight = OldgeTheme.spacing.hitMin)",
+   "tests": "*OldgeDensityControlsTest*",
+   "expect": "a_menu_item_is_28_dp_for_a_pointer_and_44_for_a_finger"
   }
  ]
 }

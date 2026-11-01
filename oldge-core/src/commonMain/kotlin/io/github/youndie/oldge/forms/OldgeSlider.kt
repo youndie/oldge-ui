@@ -44,6 +44,7 @@ import io.github.youndie.oldge.material.cssBox
 import io.github.youndie.oldge.press.OldgeIndication
 import io.github.youndie.oldge.press.oldgePressScale
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.hitMin
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.type.FontCoverage
 import io.github.youndie.oldge.type.OldgeScriptText
@@ -96,7 +97,7 @@ public fun OldgeSlider(
         BoxWithConstraints(
             Modifier
                 .fillMaxWidth()
-                .height(OldgeTheme.spacing.hitMin)
+                .height(OldgeTheme.density.hitMin)
                 .sliderSemantics(v, label, valueText, enabled) { change(it) }
                 .focusable(enabled, source)
                 .onKeyEvent { e ->
