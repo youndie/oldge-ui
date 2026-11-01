@@ -1,7 +1,7 @@
 ---
 id: B-77
 title: "OldgeButton: a Danger variant for an irreversible confirm"
-status: question
+status: done
 priority: P2
 size: S
 stage: stage-5-consumers
@@ -14,21 +14,39 @@ Filed as #19 by the owner. `OldgeButtonVariant` has `Primary`, `Secondary` and `
 irreversible *Delete* a consumer chooses between the lime "go" of `Primary` and a `Secondary` that no
 longer marks the action as different; kachok's remove dialog uses `Secondary`.
 
-- **The decision, the owner's: a deviation from the design system,** which has no such button. A
-  `Danger` variant drawn from the skin's `danger` token, with `Primary`'s gloss, bevel and press, in
-  every skin. The KDoc says when: the confirm of an action that cannot be undone, one per dialog.
-- **No reference exists for it**, so it closes on its own goldens, looked at in three skins, not on a
-  parity number. If the owner adds it to the design system artifact, re-vendoring (B-36) brings a
-  reference.
+- **The decision, the owner's (2026-11-01): change the design system first, then build.** The
+  design system gained Button `danger` (tokens `danger-hi`, `danger-fill`, `danger-lo`, `on-danger`,
+  `danger-rim`, `.og-btn--danger`), and its Dialog README now names it for a destructive action. It
+  was vendored in a change of its own (B-36). The library's `Danger` follows it. The KDoc says when: the confirm of
+  an action that cannot be undone, one per dialog.
+- **The Dialog reference shows it at rest**, so the variant closes on a parity number there. Its
+  sizes, press and disabled state have no reference, and close on this library's goldens.
 - Rejected: a `colors` override on `Primary`. It gives every caller a way to break the one-accent rule.
 
-- AC: `OldgeButton(variant = Danger)` is drawn in `danger` with `Primary`'s materials (goldens in three
+- AC: `OldgeButton(variant = Danger)` is drawn in `danger-*` with `Primary`'s materials (goldens in three
   skins, both sizes, pressed and disabled), and its label passes the contrast check the other variants
   pass. With a mutant.
 - Closes #19.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeButton.kt`.
 
-## Question for the owner (2026-11-01)
+## Result (2026-11-01)
+
+- **The owner's answer was choice 2.** The design system artifact (version 26) gained the button, with
+  these contrasts:
+  - `on-danger` on its three stops: 10.39 / 7.79 / 5.30 in Toxic and Media, and 9.15 / 6.15 / 4.88 in
+    Crystal;
+  - `danger-rim` on the body: at least 4.17.
+
+  `ContrastTest` now holds both claims.
+- **`Dialog` parity against the new reference:** 2.44 % Toxic, 2.47 % Media, 2.60 % Crystal (5 %
+  tolerance). Its fixture draws `Danger`, as the preview does.
+- **`ButtonDanger_*` goldens**, looked at in three skins:
+  - medium with `trash`, small, and disabled (the shared `surface-2` look);
+  - a pressed one beside a Secondary: the gradient turns over and the bevel sinks.
+- **The glint runs on a held Danger** as on a Primary, as `MotionTest`'s `shine-danger` scene shows.
+- **Mutants:** 3 of 3 killed — the fill drawn in the accent, a light label, and no glint.
+
+## The question as it was put (2026-11-01)
 
 **The design system already decides this, and decides it the other way.** Two of its own sentences:
 
