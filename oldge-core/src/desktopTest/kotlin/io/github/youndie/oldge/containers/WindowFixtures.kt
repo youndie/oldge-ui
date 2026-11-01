@@ -28,7 +28,7 @@ private fun DialogDemo(skin: OldgeSkin) =
             onClose = {},
             actions = {
                 OldgeButton("Отмена", {})
-                OldgeButton("Удалить", {}, variant = OldgeButtonVariant.Primary, icon = OldgeIcons.Trash)
+                OldgeButton("Удалить", {}, variant = OldgeButtonVariant.Danger, icon = OldgeIcons.Trash)
             },
         ) { DemoText("Папка «Отчёты 2006» и 48 файлов в ней будут удалены. Действие нельзя отменить.") }
     }
