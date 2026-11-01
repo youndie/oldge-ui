@@ -82,7 +82,7 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-89](docs/backlog/B-89-read-only-overflow.md) `[ ]` | OldgeTextField: a read-only value with the overflow the caller chooses | P2 | M | - |
+| [B-89](docs/backlog/B-89-read-only-overflow.md) `[~]` | OldgeTextField: a read-only value with the overflow the caller chooses | P2 | M | - |
 | [B-84](docs/backlog/B-84-pointer-segmented-tabs.md) `[ ]` | OldgeDensity.Pointer for Segmented and Tabs | P3 | S | - |
 
 ## Closed (87)
