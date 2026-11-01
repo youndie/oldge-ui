@@ -98,6 +98,7 @@ private fun Dot(
     )
     val rest = if (onDark) DARK_GROUND else c.lcdGhost
     val restEdge = if (onDark) DARK_EDGE else c.edge
+    val page = OldgeTheme.strings.page
     Box(
         Modifier
             .width(target)
@@ -108,7 +109,7 @@ private fun Dot(
                 OldgeIndication(RoundedCornerShape(FOCUS_RADIUS), ringOffset = -FOCUS_INSET),
                 role = Role.Button,
                 onClick = onClick,
-            ).semantics { contentDescription = "Страница ${i + 1} из $count" },
+            ).semantics { contentDescription = page(i + 1, count) },
         contentAlignment = Alignment.Center,
     ) {
         Box(Modifier.size(pill, PILL)) {

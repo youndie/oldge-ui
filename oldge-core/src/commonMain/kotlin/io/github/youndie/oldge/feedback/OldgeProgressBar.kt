@@ -78,7 +78,7 @@ public fun OldgeProgressBar(
                 if (pct != null) LcdText("$pct%", type.label.copy(fontWeight = FontWeight.Normal, color = c.ink))
             }
         }
-        OldgeProgressWell(value, label ?: "Выполнение", Modifier.height(WELL))
+        OldgeProgressWell(value, label ?: OldgeTheme.strings.progress, Modifier.height(WELL))
         if (status != OldgeProgressStatus.None || detail != null) Detail(status, detail)
     }
 }

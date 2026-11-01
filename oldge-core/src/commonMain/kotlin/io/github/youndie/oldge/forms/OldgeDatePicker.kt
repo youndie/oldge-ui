@@ -275,6 +275,7 @@ private fun Day(
         } else {
             CssBackground.Solid(Color.Transparent)
         }
+    val day = OldgeTheme.strings.day
     Box(
         Modifier
             .graphicsLayer {
@@ -294,7 +295,7 @@ private fun Day(
                 role = Role.Button,
                 onClick = onClick,
             ).semantics {
-                contentDescription = "${date.day} ${MONTHS[date.month.number - 1].lowercase()} ${date.year}"
+                contentDescription = day(date)
             },
         contentAlignment = Alignment.Center,
     ) {
@@ -313,7 +314,7 @@ private fun Day(
 private fun YearMonth.plus(months: Int): YearMonth = firstDay.plus(DatePeriod(months = months)).yearMonth
 
 /** bundle.js `MONTHS` and `WD`, verbatim. */
-private val MONTHS =
+internal val MONTHS =
     listOf(
         "Январь",
         "Февраль",
