@@ -83,7 +83,7 @@ list an item can be checked against in one glance.
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
 | [B-77](docs/backlog/B-77-button-danger.md) `[?]` | OldgeButton: a Danger variant for an irreversible confirm | P2 | S | - |
-| [B-81](docs/backlog/B-81-select-code-input-label-once.md) `[ ]` | Select and CodeInput: the label is heard twice, as TextField's was | P2 | XS | - |
+| [B-81](docs/backlog/B-81-select-code-input-label-once.md) `[~]` | Select and CodeInput: the label is heard twice, as TextField's was | P2 | XS | - |
 | [B-82](docs/backlog/B-82-remaining-fixed-names.md) `[ ]` | The fixed Russian accessible names B-71 missed: Stepper, PageDots, DatePicker, ProgressBar | P2 | S | - |
 | [B-83](docs/backlog/B-83-pointer-density-everywhere.md) `[ ]` | OldgeDensity.Pointer for the controls B-80 left at hit-min | P3 | M | - |
 

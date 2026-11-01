@@ -1,7 +1,7 @@
 ---
 id: B-81
 title: "Select and CodeInput: the label is heard twice, as TextField's was"
-status: open
+status: wip
 priority: P2
 size: XS
 stage: stage-5-consumers
