@@ -19,6 +19,7 @@ final enum class io.github.youndie.oldge.actions/OldgeButtonSize : kotlin/Enum<i
 }
 
 final enum class io.github.youndie.oldge.actions/OldgeButtonVariant : kotlin/Enum<io.github.youndie.oldge.actions/OldgeButtonVariant> { // io.github.youndie.oldge.actions/OldgeButtonVariant|null[0]
+    enum entry Danger // io.github.youndie.oldge.actions/OldgeButtonVariant.Danger|null[0]
     enum entry Plain // io.github.youndie.oldge.actions/OldgeButtonVariant.Plain|null[0]
     enum entry Primary // io.github.youndie.oldge.actions/OldgeButtonVariant.Primary|null[0]
     enum entry Secondary // io.github.youndie.oldge.actions/OldgeButtonVariant.Secondary|null[0]
