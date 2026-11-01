@@ -972,6 +972,7 @@ public final class io/github/youndie/oldge/tokens/OldgeTypeStyles {
 }
 
 public final class io/github/youndie/oldge/type/OldgeTextKt {
+	public static final fun OldgeText-7zs97cc (Landroidx/compose/ui/text/AnnotatedString;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;IZILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun OldgeText-7zs97cc (Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;IZILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
 
