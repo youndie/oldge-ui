@@ -2682,6 +2682,33 @@
    "replace": "CssBackground.Solid(c.well)",
    "tests": "*ProgressWellBehaviourTest*",
    "expect": "a_callers_well_is_the_ground_and_the_gaps"
+  },
+  {
+   "id": "cut-while-focused",
+   "item": "B-89",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "val cut = readOnly && !focused && ",
+   "replace": "val cut = readOnly && ",
+   "tests": "*TextFieldOverflowTest*",
+   "expect": "a_read_only_value_is_cut_as_asked_at_rest_and_whole_when_focused"
+  },
+  {
+   "id": "cut-editable",
+   "item": "B-89",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "val cut = readOnly && ",
+   "replace": "val cut = ",
+   "tests": "*TextFieldOverflowTest*",
+   "expect": "an_editable_field_keeps_its_own_cut"
+  },
+  {
+   "id": "middle-as-start",
+   "item": "B-89",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "else kept - kept / 2",
+   "replace": "else kept",
+   "tests": "*TextFieldOverflowTest*",
+   "expect": "a_read_only_value_is_cut_as_asked_at_rest_and_whole_when_focused"
   }
  ]
 }

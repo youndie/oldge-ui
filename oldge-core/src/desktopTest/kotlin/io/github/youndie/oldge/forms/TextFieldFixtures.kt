@@ -2,10 +2,16 @@ package io.github.youndie.oldge.forms
 
 import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.harness.OldgeDemo
 import io.github.youndie.oldge.icons.OldgeIcons
 import io.github.youndie.oldge.theme.OldgeSkin
@@ -124,3 +130,37 @@ fun TextFieldHighlightedMedia() = TextFieldHighlighted(OldgeSkin.Media)
 @ViddikScreenshot(group = "TextFieldHighlighted", name = "Crystal", width = 390, height = 220)
 @Composable
 fun TextFieldHighlightedCrystal() = TextFieldHighlighted(OldgeSkin.Crystal)
+
+/**
+ * B-89: a read-only path in a 220 dp field, cut at its end (the input's own), at its start and in its
+ * middle. Not a design system state, so there is no reference to hold it to.
+ */
+@Composable
+private fun TextFieldOverflow(skin: OldgeSkin) =
+    OldgeDemo(skin) {
+        val path = "/home/user/Downloads/iso/ubuntu-24.04"
+        Column(Modifier.width(220.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            OldgeTextField("Папка", path, {}, readOnly = true, showLabel = false)
+            OldgeTextField("Папка", path, {}, readOnly = true, showLabel = false, overflow = TextOverflow.StartEllipsis)
+            OldgeTextField(
+                "Папка",
+                path,
+                {},
+                readOnly = true,
+                showLabel = false,
+                overflow = TextOverflow.MiddleEllipsis,
+            )
+        }
+    }
+
+@ViddikScreenshot(group = "TextFieldOverflow", name = "Toxic", width = 390, height = 190)
+@Composable
+fun TextFieldOverflowToxic() = TextFieldOverflow(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "TextFieldOverflow", name = "Media", width = 390, height = 190)
+@Composable
+fun TextFieldOverflowMedia() = TextFieldOverflow(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "TextFieldOverflow", name = "Crystal", width = 390, height = 190)
+@Composable
+fun TextFieldOverflowCrystal() = TextFieldOverflow(OldgeSkin.Crystal)
