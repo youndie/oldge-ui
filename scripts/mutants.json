@@ -2709,6 +2709,24 @@
    "replace": "else kept",
    "tests": "*TextFieldOverflowTest*",
    "expect": "a_read_only_value_is_cut_as_asked_at_rest_and_whole_when_focused"
+  },
+  {
+   "id": "segmented-pointer-touch",
+   "item": "B-84",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeSegmented.kt",
+   "find": "OldgeDensity.Pointer -> POINTER_MEDIUM - (BORDER + INNER) * 2",
+   "replace": "OldgeDensity.Pointer -> MIN_HEIGHT",
+   "tests": "*OldgeDensityControlsTest*",
+   "expect": "segmented_and_tabs_are_32_dp_for_a_pointer_and_keep_their_touch_heights"
+  },
+  {
+   "id": "tabs-pointer-touch",
+   "item": "B-84",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTabs.kt",
+   "find": "OldgeDensity.Pointer -> if (current) POINTER_MEDIUM else POINTER_SMALL",
+   "replace": "OldgeDensity.Pointer -> if (current) TAB_CURRENT else TAB",
+   "tests": "*OldgeDensityControlsTest*",
+   "expect": "segmented_and_tabs_are_32_dp_for_a_pointer_and_keep_their_touch_heights"
   }
  ]
 }

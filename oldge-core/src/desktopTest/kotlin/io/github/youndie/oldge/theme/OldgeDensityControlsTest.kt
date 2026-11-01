@@ -17,6 +17,8 @@ import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.actions.OldgeButton
+import io.github.youndie.oldge.actions.OldgeSegment
+import io.github.youndie.oldge.actions.OldgeSegmented
 import io.github.youndie.oldge.forms.OldgeCheckbox
 import io.github.youndie.oldge.forms.OldgeSelect
 import io.github.youndie.oldge.forms.OldgeSelectOption
@@ -25,6 +27,8 @@ import io.github.youndie.oldge.forms.OldgeSwitch
 import io.github.youndie.oldge.forms.OldgeTextField
 import io.github.youndie.oldge.navigation.OldgeBalloon
 import io.github.youndie.oldge.navigation.OldgeMenu
+import io.github.youndie.oldge.navigation.OldgeTab
+import io.github.youndie.oldge.navigation.OldgeTabs
 import io.github.youndie.oldge.navigation.fileMenu
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -88,5 +92,41 @@ class OldgeDensityControlsTest {
             density = OldgeDensity.Touch
             waitForIdle()
             assertEquals(44.dp, onNodeWithText("Открыть").height(), "touch")
+        }
+
+    /**
+     * B-84: under a pointer the segmented group is the text field's 32 dp, and the tabs' list is too
+     * (the current tab 32, one at rest 28, 4 below the list's top); a finger keeps 46, 44 and 40.
+     */
+    @Test
+    fun segmented_and_tabs_are_32_dp_for_a_pointer_and_keep_their_touch_heights() =
+        runComposeUiTest {
+            var density by mutableStateOf(OldgeDensity.Pointer)
+            setContent {
+                OldgeTheme(density = density) {
+                    Column(Modifier.width(360.dp)) {
+                        OldgeSegmented(
+                            listOf(OldgeSegment(1, "Авто"), OldgeSegment(2, "Вручную")),
+                            1,
+                            {},
+                            "Порт",
+                            Modifier.testTag("seg"),
+                        )
+                        OldgeTabs(listOf(OldgeTab("a", "Файлы"), OldgeTab("b", "Пиры")), "a", {}, "Детали")
+                    }
+                }
+            }
+
+            fun all(): List<Dp> =
+                listOf(
+                    onNodeWithTag("seg").height(),
+                    onNodeWithText("Файлы").height(),
+                    onNodeWithText("Пиры").height(),
+                )
+            // the segmented group, the current tab, a tab at rest
+            assertEquals(listOf(32.dp, 32.dp, 28.dp), all(), "pointer")
+            density = OldgeDensity.Touch
+            waitForIdle()
+            assertEquals(listOf(46.dp, 44.dp, 40.dp), all(), "touch")
         }
 }
