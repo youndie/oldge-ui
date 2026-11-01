@@ -207,7 +207,7 @@ private fun Orb(
         if (state == StepState.Done) {
             OldgeIcon(
                 OldgeIcons.Check,
-                contentDescription = "готово",
+                contentDescription = OldgeTheme.strings.stepDone,
                 modifier = Modifier.oldgePopIn(),
                 size = TICK,
                 tint = ink,

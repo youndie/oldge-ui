@@ -2475,6 +2475,42 @@
    "replace": "FieldLabel(label)",
    "tests": "*LabelOnceTest*",
    "expect": "a_code_inputs_label_is_heard_once"
+  },
+  {
+   "id": "strings-progress-literal",
+   "item": "B-82",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeProgressBar.kt",
+   "find": "label ?: OldgeTheme.strings.progress",
+   "replace": "label ?: \"Выполнение\"",
+   "tests": "*OldgeStringsTest*",
+   "expect": "an_unlabelled_progress_bar_says_the_apps_word"
+  },
+  {
+   "id": "strings-step-literal",
+   "item": "B-82",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeStepper.kt",
+   "find": "contentDescription = OldgeTheme.strings.stepDone,",
+   "replace": "contentDescription = \"готово\",",
+   "tests": "*OldgeStringsTest*",
+   "expect": "a_done_steps_tick_says_the_apps_word"
+  },
+  {
+   "id": "strings-page-literal",
+   "item": "B-82",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgePageDots.kt",
+   "find": "contentDescription = page(i + 1, count)",
+   "replace": "contentDescription = \"Страница ${i + 1} из $count\"",
+   "tests": "*OldgeStringsTest*",
+   "expect": "a_page_dot_says_the_apps_words"
+  },
+  {
+   "id": "strings-day-literal",
+   "item": "B-82",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeDatePicker.kt",
+   "find": "contentDescription = day(date)",
+   "replace": "contentDescription = io.github.youndie.oldge.theme.OldgeStrings().day(date)",
+   "tests": "*OldgeStringsTest*",
+   "expect": "a_calendar_day_says_the_apps_words"
   }
  ]
 }

@@ -1,7 +1,7 @@
 ---
 id: B-82
 title: "The fixed Russian accessible names B-71 missed: Stepper, PageDots, DatePicker, ProgressBar"
-status: open
+status: done
 priority: P2
 size: S
 stage: stage-5-consumers
@@ -28,3 +28,23 @@ whole of it. These still say Russian to a screen reader, whatever the app's lang
   none by the Russian; with the default theme nothing changes and no golden moves. Mutant per site.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeStrings.kt`, `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeStepper.kt`, `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgePageDots.kt`,
   `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeDatePicker.kt`, `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/feedback/OldgeProgressBar.kt`.
+
+## Findings (2026-11-01)
+
+- **`OldgeStrings` gained four values,** with defaults that say exactly what the controls said before
+  (`the_default_words_are_the_ones_said_before`):
+  - `progress`: «Выполнение»;
+  - `stepDone`: «готово»;
+  - `page: (number, count) -> String`;
+  - `day: (LocalDate) -> String`.
+- **The two with numbers are functions**, read from the theme in the composable and called in the
+  semantics block, so English can say "november 12, 2026" in its own order. `MONTHS` became
+  `internal` so that `day`'s default can reuse the DatePicker's list.
+- **The Russian default for a day is kept as it was: «12 ноябрь 2026»,** the nominative, not the
+  genitive «ноября». That is a pre-existing slip of grammar, and changing it would change what a
+  screen reader says today. Left for the owner to ask for.
+- **Still Russian, on purpose:** the caller's parameters `label = "Шаги"`, `"Страницы"`,
+  `"Выбор даты"` and NavDrawer's `"Меню"`. A caller can already change each, which is the line B-71
+  drew. The drawn calendar's month and weekday names are the design system's demo.
+- **Tests:** `OldgeStringsTest`, five new cases. **Mutants:** 4 of 4 killed (`--only B-82`).
+  **Goldens:** none moved. **ABI:** four new constructor parameters and getters on `OldgeStrings`.

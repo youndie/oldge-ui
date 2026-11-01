@@ -576,16 +576,24 @@ final class io.github.youndie.oldge.theme/OldgeMotion { // io.github.youndie.old
 }
 
 final class io.github.youndie.oldge.theme/OldgeStrings { // io.github.youndie.oldge.theme/OldgeStrings|null[0]
-    constructor <init>(kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ...) // io.github.youndie.oldge.theme/OldgeStrings.<init>|<init>(kotlin.String;kotlin.String;kotlin.String;kotlin.String){}[0]
+    constructor <init>(kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/Function2<kotlin/Int, kotlin/Int, kotlin/String> = ..., kotlin/Function1<kotlinx.datetime/LocalDate, kotlin/String> = ...) // io.github.youndie.oldge.theme/OldgeStrings.<init>|<init>(kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.Function2<kotlin.Int,kotlin.Int,kotlin.String>;kotlin.Function1<kotlinx.datetime.LocalDate,kotlin.String>){}[0]
 
     final val clear // io.github.youndie.oldge.theme/OldgeStrings.clear|{}clear[0]
         final fun <get-clear>(): kotlin/String // io.github.youndie.oldge.theme/OldgeStrings.clear.<get-clear>|<get-clear>(){}[0]
     final val close // io.github.youndie.oldge.theme/OldgeStrings.close|{}close[0]
         final fun <get-close>(): kotlin/String // io.github.youndie.oldge.theme/OldgeStrings.close.<get-close>|<get-close>(){}[0]
+    final val day // io.github.youndie.oldge.theme/OldgeStrings.day|{}day[0]
+        final fun <get-day>(): kotlin/Function1<kotlinx.datetime/LocalDate, kotlin/String> // io.github.youndie.oldge.theme/OldgeStrings.day.<get-day>|<get-day>(){}[0]
     final val hidePassword // io.github.youndie.oldge.theme/OldgeStrings.hidePassword|{}hidePassword[0]
         final fun <get-hidePassword>(): kotlin/String // io.github.youndie.oldge.theme/OldgeStrings.hidePassword.<get-hidePassword>|<get-hidePassword>(){}[0]
+    final val page // io.github.youndie.oldge.theme/OldgeStrings.page|{}page[0]
+        final fun <get-page>(): kotlin/Function2<kotlin/Int, kotlin/Int, kotlin/String> // io.github.youndie.oldge.theme/OldgeStrings.page.<get-page>|<get-page>(){}[0]
+    final val progress // io.github.youndie.oldge.theme/OldgeStrings.progress|{}progress[0]
+        final fun <get-progress>(): kotlin/String // io.github.youndie.oldge.theme/OldgeStrings.progress.<get-progress>|<get-progress>(){}[0]
     final val showPassword // io.github.youndie.oldge.theme/OldgeStrings.showPassword|{}showPassword[0]
         final fun <get-showPassword>(): kotlin/String // io.github.youndie.oldge.theme/OldgeStrings.showPassword.<get-showPassword>|<get-showPassword>(){}[0]
+    final val stepDone // io.github.youndie.oldge.theme/OldgeStrings.stepDone|{}stepDone[0]
+        final fun <get-stepDone>(): kotlin/String // io.github.youndie.oldge.theme/OldgeStrings.stepDone.<get-stepDone>|<get-stepDone>(){}[0]
 }
 
 final class io.github.youndie.oldge.theme/OldgeTypography { // io.github.youndie.oldge.theme/OldgeTypography|null[0]
