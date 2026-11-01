@@ -69,6 +69,10 @@ import io.github.youndie.oldge.type.OldgeText
  * *Browse…*: drawn as an enabled field, it takes focus, its text can be selected and copied, and it
  * shows no caret and takes no typing. A screen reader hears it as enabled (B-72).
  *
+ * [highlighted] rings the well in `accent-ink` in place of `edge` — a value set apart from the rest,
+ * such as one changed from its default on a settings screen (B-85). The design system has no such
+ * state; it is `accent-ink`'s own use, an accent line on the page. An [error] wins over it.
+ *
  * The [label] is the field's accessible name and is heard once, as the field's: the visible label
  * above the well is drawn but left out of the semantics tree. With [showLabel] false it is not drawn
  * at all, for a row that shows its own label beside the field; it still names the field.
@@ -88,6 +92,7 @@ public fun OldgeTextField(
     enabled: Boolean = true,
     readOnly: Boolean = false,
     showLabel: Boolean = true,
+    highlighted: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource? = null,
@@ -117,7 +122,11 @@ public fun OldgeTextField(
                     OldgeRadii.xs,
                     CssBackground.Solid(c.well),
                     BORDER,
-                    if (error != null) c.danger else c.edge,
+                    when {
+                        error != null -> c.danger
+                        highlighted -> c.accentInk
+                        else -> c.edge
+                    },
                     OldgeTheme.shadows.sunken,
                 ).drawWithContent {
                     drawContent()
