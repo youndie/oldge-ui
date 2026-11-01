@@ -2628,6 +2628,24 @@
    "replace": "                        highlighted -> c.accentInk\n                        error != null -> c.danger\n",
    "tests": "*TextFieldHighlightedTest*",
    "expect": "a_highlighted_well_is_ringed_in_accent_ink_and_an_error_wins"
+  },
+  {
+   "id": "description-dropped",
+   "item": "B-86",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCheckbox.kt",
+   "find": "if (description != null) {\n",
+   "replace": "if (description == \"\") {\n",
+   "tests": "*CheckDescriptionTest*",
+   "expect": "a_checkbox_description_is_heard_after_the_label_and_a_press_on_it_toggles"
+  },
+  {
+   "id": "radio-description-lost",
+   "item": "B-86",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCheckbox.kt",
+   "find": "                    option.description,\n",
+   "replace": "                    null,\n",
+   "tests": "*CheckDescriptionTest*",
+   "expect": "a_radio_description_is_heard_after_the_label_and_a_press_on_it_picks_the_option"
   }
  ]
 }

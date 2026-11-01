@@ -1,7 +1,7 @@
 ---
 id: B-86
 title: "OldgeCheckbox and OldgeRadioOption: a muted second line under the label"
-status: open
+status: done
 priority: P2
 size: M
 stage: stage-5-consumers
@@ -31,3 +31,22 @@ description.
   description is announced; mutants.
 - Closes #47.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCheckbox.kt`.
+
+## Findings (2026-11-01)
+
+- **`OldgeCheckbox(description = null)` and `OldgeRadioOption(description = null)`.** The line is
+  the TextField help line's style (`caption` in `ink-muted`), under the label and aligned with its
+  text, inside the clickable row. The row is still at least `hit-min` and grows to fit two lines.
+- **Alignment:** with a description, the box sits on the label's line rather than in the middle of
+  both lines. The box and the `body` line are both 20 px, so the box's top is the line's top. Without
+  a description the row is laid out as before (`align-items: center`). No golden recorded before moved.
+- **For a screen reader:** the row's merged node says the label, then the description. The issue
+  offered `stateDescription`, but that would replace "checked" / "not checked", so it was not used.
+- **The badge #47 offers as optional is left out.** The description line already covers "a choice
+  shown but not offered yet": a disabled option with «Появится позже» under it. A badge beside the
+  label would be a second layout for one row and a new size the design system does not give. If
+  kachok still wants it, it is a new ask.
+- **Goldens:** `CheckDescription` in three skins: a checked box with a path, a disabled box, and a
+  radio group with a described option and a described disabled one. I looked at all three.
+  **Tests:** `CheckDescriptionTest`, two cases: what is heard, and a press on the description
+  toggling or picking. **Mutants:** `--only B-86`.

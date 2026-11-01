@@ -76,3 +76,36 @@ fun RadioGroupMedia() = RadioDemo(OldgeSkin.Media)
 @ViddikScreenshot(group = "RadioGroup", name = "Crystal", width = 390, height = 182)
 @Composable
 fun RadioGroupCrystal() = RadioDemo(OldgeSkin.Crystal)
+
+/**
+ * B-86: a second, muted line under a choice's label. Not a design system state, so there is no
+ * reference to hold it to; the strings are a removal dialog's and an add dialog's.
+ */
+@Composable
+private fun CheckDescription(skin: OldgeSkin) =
+    OldgeDemo(skin) {
+        OldgeCheckbox("Удалить скачанные данные", true, {}, description = "~/Downloads/ubuntu-24.04")
+        OldgeCheckbox("Шифрование", false, {}, enabled = false, description = "Управляется организацией")
+        OldgeRadioGroup(
+            "Порядок загрузки",
+            listOf(
+                OldgeRadioOption("any", "Как удобнее раздаче"),
+                OldgeRadioOption("seq", "По порядку", description = "Видео можно смотреть сразу, раздаче хуже"),
+                OldgeRadioOption("paused", "На паузе", enabled = false, description = "Появится позже"),
+            ),
+            "seq",
+            {},
+        )
+    }
+
+@ViddikScreenshot(group = "CheckDescription", name = "Toxic", width = 390, height = 330)
+@Composable
+fun CheckDescriptionToxic() = CheckDescription(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "CheckDescription", name = "Media", width = 390, height = 330)
+@Composable
+fun CheckDescriptionMedia() = CheckDescription(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "CheckDescription", name = "Crystal", width = 390, height = 330)
+@Composable
+fun CheckDescriptionCrystal() = CheckDescription(OldgeSkin.Crystal)

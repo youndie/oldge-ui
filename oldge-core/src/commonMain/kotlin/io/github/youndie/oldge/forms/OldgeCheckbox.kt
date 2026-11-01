@@ -44,6 +44,11 @@ import io.github.youndie.oldge.type.OldgeText
  *
  * Checked, the check pops in with a turn; pressed, the square squashes to 0.88. Disabled, the square
  * goes to `surface-2` with a `line` border and everything goes to `ink-muted`, and taps do nothing.
+ *
+ * A [description] is a muted second line under the label — what the choice means or what it acts on
+ * (B-86). It is drawn in the field help line's style, aligned with the label's text, inside the
+ * row, so a press on it toggles the box, and a screen reader hears it after the label. The design
+ * system has no such line; it is the help line of a TextField, moved under a choice.
  */
 @Composable
 public fun OldgeCheckbox(
@@ -52,10 +57,12 @@ public fun OldgeCheckbox(
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    description: String? = null,
 ) {
     val source = remember { MutableInteractionSource() }
     CheckRow(
         label,
+        description,
         enabled,
         modifier.toggleable(
             checked,
@@ -74,11 +81,15 @@ public fun OldgeCheckbox(
     }
 }
 
-/** One choice of an [OldgeRadioGroup]: its [value], its [label], and whether it can be chosen. */
+/**
+ * One choice of an [OldgeRadioGroup]: its [value], its [label], whether it can be chosen, and a
+ * muted second line under the label, its [description], drawn and heard as an [OldgeCheckbox]'s is.
+ */
 public class OldgeRadioOption<T>(
     public val value: T,
     public val label: String,
     public val enabled: Boolean = true,
+    public val description: String? = null,
 )
 
 /**
@@ -107,6 +118,7 @@ public fun <T> OldgeRadioGroup(
                 val on = option.value == selected
                 CheckRow(
                     option.label,
+                    option.description,
                     option.enabled,
                     Modifier.selectable(
                         on,
@@ -125,10 +137,15 @@ public fun <T> OldgeRadioGroup(
     }
 }
 
-/** `label.og-check`: the box and the label in a row at least `hit-min` high, `space-2` apart. */
+/**
+ * `label.og-check`: the box and the label in a row at least `hit-min` high, `space-2` apart. With a
+ * [description] the label and it are a column, centred in the row as the label alone is, and the box
+ * sits on the label's line: the box and the line are both 20 px.
+ */
 @Composable
 private fun CheckRow(
     label: String,
+    description: String?,
     enabled: Boolean,
     interaction: Modifier,
     source: MutableInteractionSource,
@@ -137,11 +154,7 @@ private fun CheckRow(
 ) {
     val c = OldgeTheme.colors
     val ink = if (enabled) c.ink else c.inkMuted
-    Row(
-        interaction.defaultMinSize(minHeight = OldgeTheme.density.hitMin),
-        horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space2),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
+    val box: @Composable () -> Unit = {
         Box(
             Modifier
                 .oldgePressScale(source, if (enabled) PRESSED_SCALE else 1f)
@@ -156,7 +169,24 @@ private fun CheckRow(
                 ).indication(source, OldgeIndication(shape, flash = false)),
             contentAlignment = Alignment.Center,
         ) { mark(if (enabled) c.success else c.inkMuted) }
-        OldgeText(label, style = OldgeTheme.type.body.copy(color = ink))
+    }
+    Row(
+        interaction.defaultMinSize(minHeight = OldgeTheme.density.hitMin),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(OldgeTheme.spacing.space2),
+            // `align-items: center`, as before; under two lines the box stays on the first.
+            verticalAlignment = if (description == null) Alignment.CenterVertically else Alignment.Top,
+        ) {
+            box()
+            Column {
+                OldgeText(label, style = OldgeTheme.type.body.copy(color = ink))
+                if (description != null) {
+                    OldgeText(description, style = OldgeTheme.type.caption.copy(color = c.inkMuted))
+                }
+            }
+        }
     }
 }
 
