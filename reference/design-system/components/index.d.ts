@@ -8,7 +8,7 @@ export declare function Icon(props: IconProps): React.ReactElement;
 
 /* ── Actions ── */
 /** Glossy push button. primary = the skin accent (one per screen), secondary = silver chrome, plain = text link. */
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> { variant?: 'primary' | 'secondary' | 'plain'; size?: 'sm' | 'md' | 'lg'; icon?: IconName; block?: boolean }
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> { variant?: 'primary' | 'secondary' | 'plain' | 'danger'; size?: 'sm' | 'md' | 'lg'; icon?: IconName; block?: boolean }
 export declare function Button(props: ButtonProps): React.ReactElement;
 
 /** Round glossy button in a chrome rim. `label` is required (it is the accessible name). */

@@ -85,6 +85,16 @@ public class OldgeColors(
     public val warning: Color,
     /** Token `danger`; its usage note is in reference/design-system/tokens.json. */
     public val danger: Color,
+    /** Token `danger-hi`; its usage note is in reference/design-system/tokens.json. */
+    public val dangerHi: Color,
+    /** Token `danger-fill`; its usage note is in reference/design-system/tokens.json. */
+    public val dangerFill: Color,
+    /** Token `danger-lo`; its usage note is in reference/design-system/tokens.json. */
+    public val dangerLo: Color,
+    /** Token `on-danger`; its usage note is in reference/design-system/tokens.json. */
+    public val onDanger: Color,
+    /** Token `danger-rim`; its usage note is in reference/design-system/tokens.json. */
+    public val dangerRim: Color,
     /** Token `lcd`; its usage note is in reference/design-system/tokens.json. */
     public val lcd: Color,
     /** Token `lcd-ink`; its usage note is in reference/design-system/tokens.json. */
@@ -149,6 +159,11 @@ public class OldgeColors(
                 success = Color(0xFF6FE8A8),
                 warning = Color(0xFFFFC94D),
                 danger = Color(0xFFFF7B6E),
+                dangerHi = Color(0xFFFFA598),
+                dangerFill = Color(0xFFFF7B6E),
+                dangerLo = Color(0xFFE8503F),
+                onDanger = Color(0xFF1A0503),
+                dangerRim = Color(0xFF9FAD98),
                 lcd = Color(0xFF030A03),
                 lcdInk = Color(0xFF8DFF3A),
                 lcdDim = Color(0xFF4F9A1F),
@@ -200,6 +215,11 @@ public class OldgeColors(
                 success = Color(0xFF7EF0B0),
                 warning = Color(0xFFFFD166),
                 danger = Color(0xFFFFACA3),
+                dangerHi = Color(0xFFFFA598),
+                dangerFill = Color(0xFFFF7B6E),
+                dangerLo = Color(0xFFE8503F),
+                onDanger = Color(0xFF1A0503),
+                dangerRim = Color(0xFFA8B8D8),
                 lcd = Color(0xFF041330),
                 lcdInk = Color(0xFF9FE0FF),
                 lcdDim = Color(0xFF5F95C8),
@@ -251,6 +271,11 @@ public class OldgeColors(
                 success = Color(0xFF1B6E42),
                 warning = Color(0xFF8A5A00),
                 danger = Color(0xFFC42B1C),
+                dangerHi = Color(0xFFFF9384),
+                dangerFill = Color(0xFFF2604F),
+                dangerLo = Color(0xFFE04A38),
+                onDanger = Color(0xFF1A0503),
+                dangerRim = Color(0xFF8A1C10),
                 lcd = Color(0xFFC3D6A0),
                 lcdInk = Color(0xFF1F2A12),
                 lcdDim = Color(0xFF46552C),
@@ -595,6 +620,11 @@ internal object OldgeTokenIndex {
             "success" to c.success,
             "warning" to c.warning,
             "danger" to c.danger,
+            "danger-hi" to c.dangerHi,
+            "danger-fill" to c.dangerFill,
+            "danger-lo" to c.dangerLo,
+            "on-danger" to c.onDanger,
+            "danger-rim" to c.dangerRim,
             "lcd" to c.lcd,
             "lcd-ink" to c.lcdInk,
             "lcd-dim" to c.lcdDim,

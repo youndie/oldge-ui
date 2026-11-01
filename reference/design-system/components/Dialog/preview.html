@@ -8,7 +8,7 @@
   var B = window.OldgeUI, h = React.createElement;
   ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'og-demo' },
     h(B.Dialog, { title: 'Удалить папку?', icon: 'warn', onClose: function () {},
-      actions: [h(B.Button, { key: 'c' }, 'Отмена'), h(B.Button, { key: 'd', variant: 'primary', icon: 'trash' }, 'Удалить')] },
+      actions: [h(B.Button, { key: 'c' }, 'Отмена'), h(B.Button, { key: 'd', variant: 'danger', icon: 'trash' }, 'Удалить')] },
       'Папка «Отчёты 2006» и 48 файлов в ней будут удалены. Действие нельзя отменить.')));
 </script>
 </body>
