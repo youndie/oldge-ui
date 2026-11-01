@@ -1,7 +1,7 @@
 ---
 id: B-83
 title: "OldgeDensity.Pointer for the controls B-80 left at hit-min"
-status: open
+status: wip
 priority: P3
 size: M
 stage: stage-5-consumers

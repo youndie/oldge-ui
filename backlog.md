@@ -83,7 +83,7 @@ list an item can be checked against in one glance.
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
 | [B-77](docs/backlog/B-77-button-danger.md) `[?]` | OldgeButton: a Danger variant for an irreversible confirm | P2 | S | - |
-| [B-83](docs/backlog/B-83-pointer-density-everywhere.md) `[ ]` | OldgeDensity.Pointer for the controls B-80 left at hit-min | P3 | M | - |
+| [B-83](docs/backlog/B-83-pointer-density-everywhere.md) `[~]` | OldgeDensity.Pointer for the controls B-80 left at hit-min | P3 | M | - |
 
 ## Closed (81)
 
