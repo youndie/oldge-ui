@@ -779,7 +779,7 @@ public final class io/github/youndie/oldge/theme/OldgeTypography {
 public final class io/github/youndie/oldge/tokens/OldgeColors {
 	public static final field $stable I
 	public static final field Companion Lio/github/youndie/oldge/tokens/OldgeColors$Companion;
-	public synthetic fun <init> (JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getAccent-0d7_KjU ()J
 	public final fun getAccentHi-0d7_KjU ()J
 	public final fun getAccentInk-0d7_KjU ()J
@@ -796,6 +796,10 @@ public final class io/github/youndie/oldge/tokens/OldgeColors {
 	public final fun getChromeHi-0d7_KjU ()J
 	public final fun getChromeLo-0d7_KjU ()J
 	public final fun getDanger-0d7_KjU ()J
+	public final fun getDangerFill-0d7_KjU ()J
+	public final fun getDangerHi-0d7_KjU ()J
+	public final fun getDangerLo-0d7_KjU ()J
+	public final fun getDangerRim-0d7_KjU ()J
 	public final fun getEdge-0d7_KjU ()J
 	public final fun getFocus-0d7_KjU ()J
 	public final fun getGloss-0d7_KjU ()J
@@ -816,6 +820,7 @@ public final class io/github/youndie/oldge/tokens/OldgeColors {
 	public final fun getOnBalloon-0d7_KjU ()J
 	public final fun getOnBezel-0d7_KjU ()J
 	public final fun getOnChrome-0d7_KjU ()J
+	public final fun getOnDanger-0d7_KjU ()J
 	public final fun getOnPill-0d7_KjU ()J
 	public final fun getOnSelect-0d7_KjU ()J
 	public final fun getPillHi-0d7_KjU ()J

@@ -385,19 +385,19 @@
       "width": 390,
       "height": 270,
       "page": false,
-      "sha256": "eb418f245b1bf107f1cfcbebf7a5853f8fc9fe1bd700c96a8366b71944f02888"
+      "sha256": "8cf903b20d379449c8fdf201e94fca7f0f2bec3fee7cbc290ff198908b308883"
     },
     "Dialog_Media": {
       "width": 390,
       "height": 270,
       "page": false,
-      "sha256": "81b479d381afbd2fb5061c112da29fadcbb5b81b7943e00932c7c2c93617a1a2"
+      "sha256": "69712cba3f1fedc6dab82a55c42f71dc0cd0672a88c8ab4c10c2e9ada79ca42f"
     },
     "Dialog_Toxic": {
       "width": 390,
       "height": 270,
       "page": false,
-      "sha256": "efb757dfd8e3d29bb67020e2b27e487edc6748ff82521026ecd5d68cdb0184ca"
+      "sha256": "7124863e44e9d4a681dc1f5d9063bfaea219b778e6412981a98cc36fc58cd780"
     },
     "Divider_Crystal": {
       "width": 390,
@@ -1323,9 +1323,9 @@
   },
   "designSystem": {
     "artifact": "CL8BafGgX4GgYdJXNEZttC",
-    "lastChange": "2026-09-27T19:12:58Z"
+    "lastChange": "2026-11-01T04:42:14Z"
   },
-  "chrome": "Chrome/154.0.8037.58",
+  "chrome": "Chrome/156.0.8078.74",
   "texture": "on",
   "now": "2026-09-24T12:00:00",
   "wrapper": [

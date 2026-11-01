@@ -12,9 +12,9 @@
   "groups": [],
   "lastChange": {
     "by": "Pavel",
-    "at": "2026-09-27T19:12:58Z",
+    "at": "2026-11-01T04:42:14Z",
     "via": "Claude Code",
-    "note": "CategoryTabs: ножка «крючка» под центром глифа (left: calc(50% - 1px) вместо 6px)"
+    "note": "Button danger: красная глянцевая кнопка для подтверждения необратимого действия (danger-hi/-fill/-lo, on-danger, danger-rim); Dialog удаляет через неё"
   },
   "layout": "files",
   "libraries": [
