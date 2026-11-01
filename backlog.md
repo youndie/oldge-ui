@@ -82,7 +82,7 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-86](docs/backlog/B-86-choice-description.md) `[ ]` | OldgeCheckbox and OldgeRadioOption: a muted second line under the label | P2 | M | - |
+| [B-86](docs/backlog/B-86-choice-description.md) `[~]` | OldgeCheckbox and OldgeRadioOption: a muted second line under the label | P2 | M | - |
 | [B-87](docs/backlog/B-87-text-annotated.md) `[ ]` | OldgeText: an AnnotatedString overload | P2 | S | - |
 | [B-88](docs/backlog/B-88-progress-well-ground.md) `[ ]` | OldgeProgressWell: a caller's colour for the well | P2 | S | - |
 | [B-89](docs/backlog/B-89-read-only-overflow.md) `[ ]` | OldgeTextField: a read-only value with the overflow the caller chooses | P2 | M | - |

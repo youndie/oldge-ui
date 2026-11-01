@@ -1,7 +1,7 @@
 ---
 id: B-86
 title: "OldgeCheckbox and OldgeRadioOption: a muted second line under the label"
-status: open
+status: wip
 priority: P2
 size: M
 stage: stage-5-consumers
