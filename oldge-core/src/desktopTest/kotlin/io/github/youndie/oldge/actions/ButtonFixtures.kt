@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -24,6 +25,8 @@ import io.github.youndie.oldge.forms.OldgeTextField
 import io.github.youndie.oldge.harness.OldgeDemo
 import io.github.youndie.oldge.icons.OldgeIcons
 import io.github.youndie.oldge.navigation.OldgeBalloon
+import io.github.youndie.oldge.navigation.OldgeTab
+import io.github.youndie.oldge.navigation.OldgeTabs
 import io.github.youndie.oldge.theme.OldgeDensity
 import io.github.youndie.oldge.theme.OldgeSkin
 import io.github.youndie.oldge.theme.OldgeTheme
@@ -284,3 +287,38 @@ fun PointerFormMedia() = PointerForm(OldgeSkin.Media)
 @ViddikScreenshot(group = "PointerForm", name = "Crystal", width = 390, height = 420)
 @Composable
 fun PointerFormCrystal() = PointerForm(OldgeSkin.Crystal)
+
+// B-84: Segmented and Tabs under OldgeDensity.Pointer — a settings row with a 32 dp field and a
+// segmented choice level with it, and a details panel's tabs. The library's own golden.
+@Composable
+private fun PointerChoices(skin: OldgeSkin) =
+    OldgeDemo(skin, density = OldgeDensity.Pointer) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            OldgeTextField("Порт", "51413", {}, Modifier.width(120.dp), showLabel = false)
+            OldgeSegmented(
+                listOf(OldgeSegment("auto", "Авто"), OldgeSegment("manual", "Вручную")),
+                "manual",
+                {},
+                "Выбор порта",
+                Modifier.width(200.dp),
+            )
+        }
+        OldgeTabs(
+            listOf(OldgeTab("files", "Файлы"), OldgeTab("peers", "Пиры"), OldgeTab("info", "Сведения")),
+            "peers",
+            {},
+            "Детали",
+        )
+    }
+
+@ViddikScreenshot(group = "PointerChoices", name = "Toxic", width = 390, height = 150)
+@Composable
+fun PointerChoicesToxic() = PointerChoices(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "PointerChoices", name = "Media", width = 390, height = 150)
+@Composable
+fun PointerChoicesMedia() = PointerChoices(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "PointerChoices", name = "Crystal", width = 390, height = 150)
+@Composable
+fun PointerChoicesCrystal() = PointerChoices(OldgeSkin.Crystal)

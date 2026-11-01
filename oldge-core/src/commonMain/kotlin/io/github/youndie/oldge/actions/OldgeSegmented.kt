@@ -27,6 +27,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.Hyphens
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.youndie.oldge.icons.OldgeIcon
@@ -39,7 +40,9 @@ import io.github.youndie.oldge.material.premultipliedLerp
 import io.github.youndie.oldge.press.OldgeIndication
 import io.github.youndie.oldge.press.oldgePressScale
 import io.github.youndie.oldge.theme.LocalOldgeContentColor
+import io.github.youndie.oldge.theme.OldgeDensity
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.POINTER_MEDIUM
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.tokens.OldgeShadow
 import io.github.youndie.oldge.type.OldgeText
@@ -136,7 +139,7 @@ private fun <T> RowScope.Segment(
                 scaleY = scale
                 alpha = (POP_FROM_ALPHA + (1 - POP_FROM_ALPHA) * p).coerceIn(0f, 1f)
             }.oldgePressScale(source, PRESSED_SCALE)
-            .defaultMinSize(minHeight = MIN_HEIGHT)
+            .defaultMinSize(minHeight = optionMinHeight())
             .cssBox(
                 OldgeRadii.pill,
                 lerpGloss(
@@ -177,6 +180,18 @@ private fun <T> RowScope.Segment(
         }
     }
 }
+
+/**
+ * `.og-seg__opt { min-height: 40px }` for a finger. For a pointer (B-84) the whole group is the
+ * medium pointer height, the text field's and the medium button's, so it sits level with them in a
+ * settings row: the option is that less the group's border and padding.
+ */
+@Composable
+private fun optionMinHeight(): Dp =
+    when (OldgeTheme.density) {
+        OldgeDensity.Touch -> MIN_HEIGHT
+        OldgeDensity.Pointer -> POINTER_MEDIUM - (BORDER + INNER) * 2
+    }
 
 private fun OldgeShadow.none(): OldgeShadow =
     copy(offsetX = 0.dp, offsetY = 0.dp, blur = 0.dp, spread = 0.dp, color = Color.Transparent)

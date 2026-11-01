@@ -1,7 +1,7 @@
 ---
 id: B-84
 title: "OldgeDensity.Pointer for Segmented and Tabs"
-status: open
+status: done
 priority: P3
 size: S
 stage: stage-5-consumers
@@ -29,3 +29,18 @@ modifier-order trick #21 asked to replace, and its details tabs keep a 44 dp cur
   behaviour test of the heights at both densities, with a mutant.
 - Closes #45.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/actions/OldgeSegmented.kt`, `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/navigation/OldgeTabs.kt`, `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/theme/OldgeDensity.kt`.
+
+## Findings (2026-11-01)
+
+- **Segmented:** under `Pointer`, the whole group is 32 dp (`POINTER_MEDIUM`), the text field's and
+  the medium button's height. So an option's minimum is 32 less the group's 1 dp border and 2 dp
+  padding on each side, 26 dp. "A segment at 32 dp" in #45 is read as the group: that is what kachok
+  set from outside, and what stands level with the field beside it.
+- **Tabs:** under `Pointer`, the current tab is 32 dp and a tab at rest is 28 dp (`POINTER_SMALL`). The
+  4 dp step and the rest tab's `margin-top: 4px` are kept, so the list is 32 dp, as 44 is for a finger.
+- Both read the existing pointer heights: no new size, and nothing changes under `Touch`. No golden
+  recorded before moved, and the public API is unchanged.
+- **Goldens:** `PointerChoices` in three skins: a 32 dp field with a segmented choice level with it,
+  and three tabs; I looked at all three. **Test:**
+  `OldgeDensityControlsTest.segmented_and_tabs_are_32_dp_for_a_pointer_and_keep_their_touch_heights`
+  checks 32/32/28 dp under `Pointer` and 46/44/40 dp under `Touch`. **Mutants:** `--only B-84`.

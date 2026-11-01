@@ -56,7 +56,10 @@ import io.github.youndie.oldge.feedback.OldgeBadgeTone
 import io.github.youndie.oldge.icons.OldgeIcon
 import io.github.youndie.oldge.press.OldgeIndication
 import io.github.youndie.oldge.theme.LocalOldgeTextStyle
+import io.github.youndie.oldge.theme.OldgeDensity
 import io.github.youndie.oldge.theme.OldgeTheme
+import io.github.youndie.oldge.theme.POINTER_MEDIUM
+import io.github.youndie.oldge.theme.POINTER_SMALL
 import io.github.youndie.oldge.tokens.OldgeRadii
 import io.github.youndie.oldge.type.OldgeText
 
@@ -153,7 +156,12 @@ private fun Tab(
     val c = OldgeTheme.colors
     val motion = OldgeTheme.motion
     val height by animateDpAsState(
-        if (current) TAB_CURRENT else TAB,
+        // B-84: for a pointer the list is the medium pointer height, 32 dp, the current tab with it
+        // and a tab at rest the 4 dp below it, at the small pointer height.
+        when (OldgeTheme.density) {
+            OldgeDensity.Touch -> if (current) TAB_CURRENT else TAB
+            OldgeDensity.Pointer -> if (current) POINTER_MEDIUM else POINTER_SMALL
+        },
         tween(motion.base, easing = motion.spring),
         label = "oldge tab height",
     )
