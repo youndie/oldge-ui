@@ -2457,6 +2457,24 @@
    "replace": "OldgeTheme.spacing.hitMin",
    "tests": "*OldgeDensityTest*",
    "expect": "pointer_sizes_need_no_outer_modifier_and_touch_keeps_the_design_systems"
+  },
+  {
+   "id": "label-twice-select",
+   "item": "B-81",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeSelect.kt",
+   "find": "FieldLabel(label, Modifier.clearAndSetSemantics {})",
+   "replace": "FieldLabel(label)",
+   "tests": "*LabelOnceTest*",
+   "expect": "a_selects_label_is_heard_once"
+  },
+  {
+   "id": "label-twice-codeinput",
+   "item": "B-81",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeCodeInput.kt",
+   "find": "FieldLabel(label, Modifier.clearAndSetSemantics {})",
+   "replace": "FieldLabel(label)",
+   "tests": "*LabelOnceTest*",
+   "expect": "a_code_inputs_label_is_heard_once"
   }
  ]
 }

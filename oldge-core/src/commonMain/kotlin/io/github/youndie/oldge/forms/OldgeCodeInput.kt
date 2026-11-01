@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.contentType
 import androidx.compose.ui.semantics.error
@@ -78,7 +79,8 @@ public fun OldgeCodeInput(
     val focused by source.collectIsFocusedAsState()
     val code = value.filter { it.isDigit() }.take(length)
     Column(modifier, verticalArrangement = Arrangement.spacedBy(FIELD_GAP)) {
-        FieldLabel(label)
+        // The control's own node says the label; the visible one would say it a second time (B-81).
+        FieldLabel(label, Modifier.clearAndSetSemantics {})
         Box {
             Cells(code, length, focused, error != null)
             BasicTextField(

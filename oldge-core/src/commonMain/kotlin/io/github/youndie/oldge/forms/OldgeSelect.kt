@@ -43,6 +43,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -114,7 +115,8 @@ public fun <T> OldgeSelect(
     )
     val shape = RoundedCornerShape(OldgeRadii.sm)
     Column(modifier, verticalArrangement = Arrangement.spacedBy(FIELD_GAP)) {
-        FieldLabel(label)
+        // The control's own node says the label; the visible one would say it a second time (B-81).
+        FieldLabel(label, Modifier.clearAndSetSemantics {})
         // The list a tap opens is Menu's (B-28), as a phone's is the system's. The strip under the
         // icons goes when no option has one: empty, it read as a stray stripe (B-63).
         OldgeMenuPopup(

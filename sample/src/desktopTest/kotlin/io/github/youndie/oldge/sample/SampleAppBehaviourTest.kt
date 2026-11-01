@@ -10,6 +10,7 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -34,7 +35,7 @@ class SampleAppBehaviourTest {
             // The page choice opens its menu and takes Settings.
             onNodeWithText(SamplePage.Launcher.label, useUnmergedTree = true).performClick()
             onNodeWithText(SamplePage.Settings.label, useUnmergedTree = true).performClick()
-            onNodeWithText("Синхронизировать через", useUnmergedTree = true).assertExists()
+            onNode(hasContentDescription("Синхронизировать через")).assertExists()
 
             // Choosing Crystal in Settings' own Segmented makes it the app's: the app's switcher says so too.
             val crystal =
