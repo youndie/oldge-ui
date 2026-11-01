@@ -1,7 +1,7 @@
 ---
 id: B-85
 title: "OldgeTextField: a highlighted border in accent-ink"
-status: open
+status: done
 priority: P2
 size: S
 stage: stage-5-consumers
@@ -28,3 +28,17 @@ The design system has no such state; `accent-ink` is its accent for text and lin
   `ContrastTest` at the non-text 3:1; a behaviour test with a mutant.
 - Closes #46.
 - Anchors: `oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt`.
+
+## Findings (2026-11-01)
+
+- **`OldgeTextField(highlighted = false)`**: the well's border is `accent-ink` in place of `edge`; an
+  `error` still draws it in `danger`. Nothing else moves: no golden recorded before changed.
+- **Contrast:** `ContrastTest` now claims `accent-ink` against `well` at the non-text 3:1, as `edge`
+  is held. The design system names `accent-ink` for text and icons only, so the claim is the
+  library's own; it holds in all three skins.
+- **The ABI:** the new parameter changes `OldgeTextField`'s JVM signature, as B-72's `readOnly` and
+  `showLabel` did; a consumer recompiles against it.
+- **Goldens:** `TextFieldHighlighted` in three skins: a highlighted field with help, and a
+  highlighted field with an error; looked at. There is no reference, since the design system has no
+  such state. **Test:** `TextFieldHighlightedTest` reads the border pixel of a plain, a highlighted
+  and a highlighted field in error, in every skin. **Mutants:** `--only B-85`.

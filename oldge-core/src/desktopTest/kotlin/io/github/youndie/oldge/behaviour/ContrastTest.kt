@@ -40,6 +40,8 @@ class ContrastTest {
                 // tokens.json `edge`: «≥3:1 к ground, body-hi, surface, surface-2, well».
                 add(Claim("edge", b, NON_TEXT) { it.edge to back(it) })
             }
+            // B-85: a highlighted field's border is `accent-ink` on the well, held to `edge`'s 3:1.
+            add(Claim("accent-ink", "well", NON_TEXT) { it.accentInk to it.well })
             // `focus` and `accent-rim`: «≥3:1 на всех фонах тела» — the body's two ends.
             for ((b, back) in bodies.take(2)) {
                 add(Claim("focus", b, NON_TEXT) { it.focus to back(it) })

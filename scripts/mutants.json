@@ -2610,6 +2610,24 @@
    "replace": "private val GLINTED = setOf(OldgeButtonVariant.Primary)",
    "tests": "*MotionTest*",
    "expect": "every_entrance_moves_halfway_and_lands_where_reduced_motion_puts_it"
+  },
+  {
+   "id": "highlight-in-edge",
+   "item": "B-85",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "highlighted -> c.accentInk",
+   "replace": "highlighted -> c.edge",
+   "tests": "*TextFieldHighlightedTest*",
+   "expect": "a_highlighted_well_is_ringed_in_accent_ink_and_an_error_wins"
+  },
+  {
+   "id": "highlight-beats-error",
+   "item": "B-85",
+   "file": "oldge-core/src/commonMain/kotlin/io/github/youndie/oldge/forms/OldgeTextField.kt",
+   "find": "                        error != null -> c.danger\n                        highlighted -> c.accentInk\n",
+   "replace": "                        highlighted -> c.accentInk\n                        error != null -> c.danger\n",
+   "tests": "*TextFieldHighlightedTest*",
+   "expect": "a_highlighted_well_is_ringed_in_accent_ink_and_an_error_wins"
   }
  ]
 }

@@ -101,3 +101,26 @@ fun FieldProbeMedia() = FieldProbe(OldgeSkin.Media)
 @ViddikScreenshot(group = "FieldProbe", name = "Crystal", width = 390, height = 260)
 @Composable
 fun FieldProbeCrystal() = FieldProbe(OldgeSkin.Crystal)
+
+/**
+ * B-85: a highlighted field, ringed in `accent-ink`, and one that is highlighted and in error, where
+ * the error wins. Not a design system state, so there is no reference to hold it to.
+ */
+@Composable
+private fun TextFieldHighlighted(skin: OldgeSkin) =
+    OldgeDemo(skin) {
+        OldgeTextField("Порт", "6881", {}, help = "По умолчанию 51413", highlighted = true)
+        OldgeTextField("Порт", "68", {}, error = "Порт ниже 1024", highlighted = true)
+    }
+
+@ViddikScreenshot(group = "TextFieldHighlighted", name = "Toxic", width = 390, height = 220)
+@Composable
+fun TextFieldHighlightedToxic() = TextFieldHighlighted(OldgeSkin.Toxic)
+
+@ViddikScreenshot(group = "TextFieldHighlighted", name = "Media", width = 390, height = 220)
+@Composable
+fun TextFieldHighlightedMedia() = TextFieldHighlighted(OldgeSkin.Media)
+
+@ViddikScreenshot(group = "TextFieldHighlighted", name = "Crystal", width = 390, height = 220)
+@Composable
+fun TextFieldHighlightedCrystal() = TextFieldHighlighted(OldgeSkin.Crystal)
