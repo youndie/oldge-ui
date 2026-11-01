@@ -85,4 +85,23 @@ class ProgressWellBehaviourTest {
             val px = with(density) { 7.dp.roundToPx() } to with(density) { 14.dp.roundToPx() }
             assertEquals(red, m[px.first, px.second])
         }
+
+    /** B-88: the caller's well is the ground beside the fill and the gap between two blocks. */
+    @Test
+    fun a_callers_well_is_the_ground_and_the_gaps() =
+        runComposeUiTest {
+            val ground = Color(0xFF2A3F6B)
+            setContent {
+                OldgeTheme(reducedMotion = true) {
+                    OldgeProgressWell(0.5f, "c", Modifier.width(200.dp).height(20.dp).testTag("w"), well = ground)
+                }
+            }
+            val m = onNodeWithTag("w").captureToImage().toPixelMap()
+
+            fun px(dp: Int) = with(density) { dp.dp.roundToPx() }
+            // Low in the well, clear of the sunken bevel along the top: past the half-full fill at
+            // x 150, and the 2 px gap after the first 8 px block, at x 3 + 8 = 11.
+            assertEquals(ground, m[px(150), px(14)], "the ground")
+            assertEquals(ground, m[px(11), px(14)], "a gap")
+        }
 }

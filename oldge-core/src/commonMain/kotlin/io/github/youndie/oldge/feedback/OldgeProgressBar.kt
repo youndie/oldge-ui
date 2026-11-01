@@ -94,6 +94,10 @@ public fun OldgeProgressBar(
  * the accent's gradient. A colour alone does not tell an outcome: the row says it in words, as the
  * README asks of the bar.
  *
+ * [well] is the ground under the blocks and the gaps between them, for a row whose state tints the
+ * whole row (the selected row in `select`, a failed one in red): the well then belongs to its row
+ * (B-88). `null` is the skin's `well`. The border and the sunken bevel stay the skin's.
+ *
  * The blocks are drawn inside the 1 dp border and 2 dp padding, so a well 6 dp high or less shows none.
  *
  * [contentDescription] names it for a screen reader, and is not optional: a progress nobody can name
@@ -105,8 +109,10 @@ public fun OldgeProgressWell(
     contentDescription: String,
     modifier: Modifier = Modifier,
     fill: Color? = null,
+    well: Color? = null,
 ) {
     val c = OldgeTheme.colors
+    val ground = well ?: c.well
     val motion = OldgeTheme.motion
     val pct = value?.let { (it.coerceIn(0f, 1f) * 100).roundToInt() }
     val width by animateFloatAsState(
@@ -131,7 +137,7 @@ public fun OldgeProgressWell(
         modifier
             .fillMaxWidth()
             .height(COMPACT_WELL)
-            .cssBox(OldgeRadii.sm, CssBackground.Solid(c.well), BORDER, c.edge, OldgeTheme.shadows.sunken)
+            .cssBox(OldgeRadii.sm, CssBackground.Solid(ground), BORDER, c.edge, OldgeTheme.shadows.sunken)
             .clip(RoundedCornerShape(OldgeRadii.sm - BORDER))
             .clearAndSetSemantics {
                 this.contentDescription = contentDescription
@@ -142,11 +148,11 @@ public fun OldgeProgressWell(
                 val inner = Size(size.width - 2 * inset, size.height - 2 * inset)
                 when {
                     pct != null -> {
-                        drawFill(Offset(inset, inset), Size(inner.width * width, inner.height), 1f, c, fill)
+                        drawFill(Offset(inset, inset), Size(inner.width * width, inner.height), 1f, c, fill, ground)
                     }
 
                     motion.reduced -> {
-                        drawFill(Offset(inset, inset), inner, INDETERMINATE_STILL, c, fill)
+                        drawFill(Offset(inset, inset), inner, INDETERMINATE_STILL, c, fill, ground)
                     }
 
                     else -> {
@@ -154,7 +160,7 @@ public fun OldgeProgressWell(
                         val w = inner.width * RUN_WIDTH
                         val x = inset + w * (RUN_FROM + (RUN_TO - RUN_FROM) * slide)
                         clipRect(inset, inset, inset + inner.width, inset + inner.height) {
-                            drawFill(Offset(x, inset), Size(w, inner.height), 1f, c, fill)
+                            drawFill(Offset(x, inset), Size(w, inner.height), 1f, c, fill, ground)
                         }
                     }
                 }
@@ -167,6 +173,7 @@ public fun OldgeProgressWell(
  * `repeating-linear-gradient(90deg, transparent 0 8px, well 8px 10px)` — 8 px blocks with 2 px of the
  * well between — its box snapped to whole pixels. A caller's [fill] is solid, under the skin's
  * `gloss` as a 1 px inset line along its top (`.og-select__arrow`'s `inset 0 1px 0 var(--gloss)`).
+ * The gaps are the [ground] the well is drawn in.
  */
 private fun DrawScope.drawFill(
     at: Offset,
@@ -174,6 +181,7 @@ private fun DrawScope.drawFill(
     alpha: Float,
     c: OldgeColors,
     fill: Color?,
+    ground: Color,
 ) {
     val left = at.x.roundToInt().toFloat()
     val right = (at.x + size.width).roundToInt().toFloat()
@@ -211,7 +219,7 @@ private fun DrawScope.drawFill(
     var x = left + block
     clipRect(left, at.y, right, at.y + size.height) {
         while (x < right) {
-            drawRect(c.well, Offset(x, at.y), Size(gap, size.height))
+            drawRect(ground, Offset(x, at.y), Size(gap, size.height))
             x += block + gap
         }
     }
