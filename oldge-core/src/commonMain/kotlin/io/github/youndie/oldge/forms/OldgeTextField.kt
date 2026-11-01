@@ -4,6 +4,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
@@ -30,9 +31,12 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.github.youndie.oldge.actions.OldgeOrbButton
 import io.github.youndie.oldge.actions.OldgeOrbSize
@@ -69,6 +73,12 @@ import io.github.youndie.oldge.type.OldgeText
  * *Browse…*: drawn as an enabled field, it takes focus, its text can be selected and copied, and it
  * shows no caret and takes no typing. A screen reader hears it as enabled (B-72).
  *
+ * [overflow] is how a single-line read-only value too long for the field is cut while the field is
+ * not focused (B-89): a path keeps its end with [TextOverflow.MiddleEllipsis] or
+ * [TextOverflow.StartEllipsis]. Focused, the field shows the whole value to select and copy, and a
+ * screen reader hears the whole value either way. [TextOverflow.Clip], the default, is the input's own
+ * cut at the end. An editable, multiline or password field ignores it.
+ *
  * [highlighted] rings the well in `accent-ink` in place of `edge` — a value set apart from the rest,
  * such as one changed from its default on a settings screen (B-85). The design system has no such
  * state; it is `accent-ink`'s own use, an accent line on the page. An [error] wins over it.
@@ -93,6 +103,7 @@ public fun OldgeTextField(
     readOnly: Boolean = false,
     showLabel: Boolean = true,
     highlighted: Boolean = false,
+    overflow: TextOverflow = TextOverflow.Clip,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource? = null,
@@ -108,6 +119,8 @@ public fun OldgeTextField(
     val textStyle = type.body.copy(color = c.ink)
     // B-83: for a pointer the box is the search bar's 32 dp, the input's line centred in it.
     val pointer = OldgeTheme.density == OldgeDensity.Pointer
+    // B-89: at rest, a read-only value is drawn as text with the caller's cut, over the hidden input.
+    val cut = readOnly && !focused && !multiline && !reveal && overflow != TextOverflow.Clip
     Column(
         modifier.graphicsLayer { alpha = if (enabled) 1f else DISABLED_ALPHA },
         verticalArrangement = Arrangement.spacedBy(FIELD_GAP),
@@ -202,7 +215,13 @@ public fun OldgeTextField(
                         // Compose's single-line field measured 19 px for a 20 px line with a value
                         // (B-17, «Павел»), and 21 empty, which inside the border grew every empty
                         // field a pixel (B-53). Several lines are `minLines`' own.
-                        Box(if (multiline) Modifier else Modifier.height(line)) { inner() }
+                        Box(if (multiline) Modifier else Modifier.height(line)) {
+                            Box(if (cut) Modifier.graphicsLayer { alpha = 0f } else Modifier) { inner() }
+                            if (cut) {
+                                // The input's node says the whole value; this is only its drawing.
+                                CutValue(value, overflow, textStyle, Modifier.clearAndSetSemantics {})
+                            }
+                        }
                     }
                 },
             )
@@ -220,6 +239,60 @@ public fun OldgeTextField(
         FieldHelp(help, error)
     }
 }
+
+/**
+ * [value] on one line, cut as [overflow] says when it is wider than the field (B-89). Compose Desktop
+ * 1.12 draws [TextOverflow.StartEllipsis] and [TextOverflow.MiddleEllipsis] as a plain end ellipsis
+ * (Skia's paragraph has only that one), so those two are cut here: the most characters that fit
+ * with an ellipsis, kept from the end, or from both ends with the end taking the odd one.
+ */
+@Composable
+private fun CutValue(
+    value: String,
+    overflow: TextOverflow,
+    style: TextStyle,
+    modifier: Modifier,
+) {
+    if (overflow != TextOverflow.StartEllipsis && overflow != TextOverflow.MiddleEllipsis) {
+        OldgeText(value, modifier, style = style, maxLines = 1, overflow = overflow)
+        return
+    }
+    val measurer = rememberTextMeasurer()
+    BoxWithConstraints(modifier) {
+        val room = constraints.maxWidth
+        val shown =
+            remember(value, overflow, style, room) {
+                fun cut(kept: Int): String {
+                    val tail = if (overflow == TextOverflow.StartEllipsis) kept else kept - kept / 2
+                    val head = kept - tail
+                    return value.take(head).trimDanglingHigh() + ELLIPSIS + value.takeLast(tail).trimDanglingLow()
+                }
+
+                fun fits(text: String) =
+                    measurer.measure(text, style, maxLines = 1, softWrap = false).size.width <= room
+                if (fits(value)) {
+                    value
+                } else {
+                    var lo = 0
+                    var hi = value.length - 1
+                    while (lo < hi) {
+                        val mid = (lo + hi + 1) / 2
+                        if (fits(cut(mid))) lo = mid else hi = mid - 1
+                    }
+                    cut(lo)
+                }
+            }
+        OldgeText(shown, style = style, maxLines = 1)
+    }
+}
+
+/** Drops a high surrogate left alone at the end, so that a cut never splits a character in two. */
+private fun String.trimDanglingHigh() = if (isNotEmpty() && last().isHighSurrogate()) dropLast(1) else this
+
+/** Drops a low surrogate left alone at the start. */
+private fun String.trimDanglingLow() = if (isNotEmpty() && first().isLowSurrogate()) drop(1) else this
+
+private const val ELLIPSIS = "\u2026"
 
 private const val DISABLED_ALPHA = 0.75f
 private val BORDER = 1.dp
