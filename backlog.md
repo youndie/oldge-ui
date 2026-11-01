@@ -82,7 +82,7 @@ list an item can be checked against in one glance.
 
 | Task | | Priority | Size | Blocked by |
 |---|---|---|---|---|
-| [B-84](docs/backlog/B-84-pointer-segmented-tabs.md) `[ ]` | OldgeDensity.Pointer for Segmented and Tabs | P3 | S | - |
+| [B-84](docs/backlog/B-84-pointer-segmented-tabs.md) `[~]` | OldgeDensity.Pointer for Segmented and Tabs | P3 | S | - |
 
 ## Closed (88)
 

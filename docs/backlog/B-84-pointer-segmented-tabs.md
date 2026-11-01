@@ -1,7 +1,7 @@
 ---
 id: B-84
 title: "OldgeDensity.Pointer for Segmented and Tabs"
-status: open
+status: wip
 priority: P3
 size: S
 stage: stage-5-consumers
