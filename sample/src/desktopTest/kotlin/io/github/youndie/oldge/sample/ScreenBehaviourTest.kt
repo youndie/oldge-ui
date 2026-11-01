@@ -36,10 +36,10 @@ class ScreenBehaviourTest {
         runComposeUiTest {
             setContent { OldgeTheme(reducedMotion = true) { AuthScreen(Modifier.size(390.dp, 760.dp)) } }
             onNode(hasSetTextAction() and hasContentDescription("Эл. почта", substring = true)).assertExists()
-            onNodeWithText("Код из СМС", useUnmergedTree = true).assertDoesNotExist()
+            onNode(hasContentDescription("Код из СМС")).assertDoesNotExist()
 
             onNodeWithText("Код", useUnmergedTree = true).performClick()
-            onNodeWithText("Код из СМС", useUnmergedTree = true).assertExists()
+            onNode(hasContentDescription("Код из СМС")).assertExists()
             onNodeWithText("Отправить ещё раз", useUnmergedTree = true).assertExists()
             onNode(hasText("Отправить ещё раз") and hasClickAction()).assertIsNotEnabled()
             onNode(hasSetTextAction() and hasContentDescription("Эл. почта", substring = true)).assertDoesNotExist()
