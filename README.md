@@ -17,6 +17,9 @@ buttons, LCD readouts, XP tray balloons — around a toxic lime accent, in three
   </tr>
 </table>
 
+**[Try it in the browser →](https://youndie.github.io/oldge-ui/)** The sample app, compiled to
+WebAssembly from these sources, with its page and skin switchers.
+
 All 51 components of the design system are built, with the nine pages of its demo as the sample
 app. Each component is held to the design by pixel parity against references rendered from the
 design system itself.
