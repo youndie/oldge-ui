@@ -38,6 +38,13 @@ kotlin {
                 .toInt()
     }
 
+    // The sample in a browser, the GitHub Pages site: `:sample:wasmJsBrowserDistribution`.
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
+    wasmJs {
+        browser { commonWebpackConfig { outputFileName = "sample.js" } }
+        binaries.executable()
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(project(":oldge-core"))

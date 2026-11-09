@@ -62,6 +62,9 @@ owner had it local only, and the loop merged locally.
   by hand. A new target is a new coordinate, and needs the token reissued with it, or its variant
   gets a 403.
 - `0.1.0` itself was published by a GitHub release (B-67), and stays on the host as it is.
+- **The sample in a browser** is `pages.yaml`: `:sample:wasmJsBrowserDistribution`, deployed to
+  https://youndie.github.io/oldge-ui/ from `main`. kotlin.website embeds that page, so it is public
+  surface: a sample that stops compiling for wasm is a red pull request.
 
 ## Re-vendoring the design system
 
