@@ -39,7 +39,7 @@ jobs:
           test -f "$site/sample.js"
           test -n "$(find "$site" -name '*.wasm' -print -quit)"
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: sample/build/dist/wasmJs/productionExecutable
 
@@ -56,4 +56,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
