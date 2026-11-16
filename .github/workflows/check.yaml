@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: youndie/docs-bootstrap@v0.4.0
+      - uses: youndie/docs-bootstrap@v0.4.2
 
   # The code gate: tests, ktlint, `viddikVerify`, `checkKotlinAbi` and the token and icon `--check`s,
   # the one target a contributor runs.
@@ -62,7 +62,7 @@ jobs:
 
       # Java and Gradle in one step and at one version for the portfolio: the action installs 21
       # and 25 and leaves 25 the default, which is sborka's default toolchain.
-      - uses: youndie/sborka/.github/actions/setup-kotlin@v0.5.0.135
+      - uses: youndie/sborka/.github/actions/setup-kotlin@v0.5.0.136
 
       # `check` shells out to python3: the token and icon generators compare a committed file with
       # its source. The runner ships a python3, so this step buys a *declared* version rather than a
@@ -104,7 +104,7 @@ jobs:
 
       # The code lives in this checkout, so its parent is a directory whose one subdirectory is
       # this repository - which is exactly what REPOS (`..` by default) expects.
-      - uses: youndie/docs-bootstrap@v0.4.0
+      - uses: youndie/docs-bootstrap@v0.4.2
         with:
           target: report
 
